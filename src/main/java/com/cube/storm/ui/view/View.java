@@ -13,7 +13,9 @@ import com.cube.storm.ui.view.holder.TextListItemHolder;
  */
 public enum View
 {
-	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class);
+	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class),
+
+	ListPage(com.cube.storm.ui.model.page.ListPage.class, null);
 
 	private Class<? extends Model> model;
 	private Class<? extends Holder> holder;
