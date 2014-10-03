@@ -6,6 +6,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Base model class for all Storm objects
+ *
+ * @author Callum Taylor
+ * @project StormUI
+ */
 public abstract class Model implements Serializable, Parcelable
 {
 	@SerializedName("class") protected String className;
