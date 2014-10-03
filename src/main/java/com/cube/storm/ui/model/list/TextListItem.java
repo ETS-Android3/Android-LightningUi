@@ -7,7 +7,7 @@ import com.cube.storm.ui.model.property.TextProperty;
 import lombok.Getter;
 
 /**
- * Base list item class
+ * A view model with a description property
  *
  * @author Callum Taylor
  * @project StormUI
