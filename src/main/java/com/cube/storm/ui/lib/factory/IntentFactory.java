@@ -7,7 +7,6 @@ package com.cube.storm.ui.lib.factory;
  * @author Callum Taylor
  * @project StormUI
  */
-public class IntentFactory
+public abstract class IntentFactory
 {
-
 }
