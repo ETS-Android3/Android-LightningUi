@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+
 /**
  * Base model class for all Storm objects
  *
@@ -14,5 +16,5 @@ import java.io.Serializable;
  */
 public abstract class Model implements Serializable, Parcelable
 {
-	@SerializedName("class") protected String className;
+	@SerializedName("class") @Getter protected String className;
 }
