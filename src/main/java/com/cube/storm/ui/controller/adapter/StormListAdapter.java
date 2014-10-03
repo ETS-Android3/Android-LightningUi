@@ -4,11 +4,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.cube.storm.ui.model.Model;
+
 import java.util.ArrayList;
 
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
  * the benefit of view recycling which makes the content smooth to scroll.
+ *
+ * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.Holder} counter-class.
  *
  * <b>Usage</b>
  *
@@ -30,7 +34,7 @@ public class StormListAdapter extends BaseAdapter
 	 * in this list, the models have to be traversed in order to build the 1 dimensional list for the
 	 * adapter to work correctly.
 	 */
-	private ArrayList<Object> items = new ArrayList<Object>();
+	private ArrayList<Model> items = new ArrayList<Model>();
 
 	/**
 	 * The different unique item types. This is used to tell the adapter how many unique views we're
@@ -45,14 +49,14 @@ public class StormListAdapter extends BaseAdapter
 		return items.size();
 	}
 
-	@Override public Object getItem(int position)
+	@Override public Model getItem(int position)
 	{
 		return items.get(position);
 	}
 
 	@Override public long getItemId(int position)
 	{
-		return getItem(position).hashCode();
+		return ((Object)getItem(position)).hashCode();
 	}
 
 	@Override public int getViewTypeCount()
