@@ -1,12 +1,17 @@
 package com.cube.storm.ui.controller.adapter;
 
+import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.view.holder.Holder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
@@ -42,7 +47,54 @@ public class StormListAdapter extends BaseAdapter
 	 * convenience, the object type in the list is a reference to the view holder class we will use
 	 * to render said view.
 	 */
-	private ArrayList<Class> itemTypes = new ArrayList<Class>();
+	private ArrayList<Class<? extends Holder>> itemTypes = new ArrayList<Class<? extends Holder>>();
+
+	private Context context;
+
+	public StormListAdapter(Context context)
+	{
+		this.context = context;
+	}
+
+	public StormListAdapter(Context context, Collection<Model> items)
+	{
+		this.context = context;
+		setItems(items);
+	}
+
+	/**
+	 * Sets the items in the collection. Filters out any model that does not have a defined {@link com.cube.storm.ui.view.holder.Holder}
+	 *
+	 * @param items The new items to set. Can be null to clear the list.
+	 */
+	public void setItems(@Nullable Collection<Model> items)
+	{
+		if (items != null)
+		{
+			this.items = new ArrayList<Model>(items.size());
+			this.itemTypes = new ArrayList<Class<? extends Holder>>(items.size() / 2);
+
+			for (Model item : items)
+			{
+				Class<? extends Holder> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
+
+				if (holderClass != null)
+				{
+					this.items.add(item);
+
+					if (!this.itemTypes.contains(holderClass))
+					{
+						this.itemTypes.add(holderClass);
+					}
+				}
+			}
+		}
+		else
+		{
+			this.items = new ArrayList<Model>(0);
+			this.itemTypes = new ArrayList<Class<? extends Holder>>(0);
+		}
+	}
 
 	@Override public int getCount()
 	{
@@ -64,8 +116,39 @@ public class StormListAdapter extends BaseAdapter
 		return itemTypes.size();
 	}
 
+	@Override public int getItemViewType(int position)
+	{
+		Model view = items.get(position);
+		return itemTypes.indexOf(UiSettings.getInstance().getViewFactory().getHolderForView(view.getClassName()));
+	}
+
 	@Override public View getView(int position, View convertView, ViewGroup parent)
 	{
+		Model model = getItem(position);
+		Holder holder = null;
+
+		if (convertView != null)
+		{
+			holder = (Holder)convertView.getTag();
+		}
+		else
+		{
+			try
+			{
+				holder = itemTypes.get(getItemViewType(position)).newInstance();
+				convertView = holder.createView(parent);
+			}
+			catch (Exception e)
+			{
+				throw new InstantiationError("Could not instantiate a new holder for model " + model.getClassName());
+			}
+		}
+
+		if (holder != null)
+		{
+			holder.populateView(model);
+		}
+
 		return convertView;
 	}
 }
