@@ -1,4 +1,6 @@
-package com.cube.storm.ui.model;
+package com.cube.storm.ui.model.list;
+
+import com.cube.storm.ui.model.Model;
 
 /**
  * Base list item class

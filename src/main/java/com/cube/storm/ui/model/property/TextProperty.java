@@ -1,6 +1,8 @@
-package com.cube.storm.ui.model;
+package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
+
+import com.cube.storm.ui.model.Model;
 
 import lombok.Getter;
 
