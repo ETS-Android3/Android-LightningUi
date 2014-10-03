@@ -5,6 +5,7 @@ import com.cube.storm.ui.lib.factory.ViewFactory;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
+import com.cube.storm.ui.model.page.Page;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -97,6 +98,7 @@ public class UiSettings
 				}
 			};
 
+			registerType(Page.class, baseProcessor);
 			registerType(ListItem.class, baseProcessor);
 		}
 
