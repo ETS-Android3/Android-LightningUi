@@ -1,5 +1,9 @@
 package com.cube.storm;
 
+import com.cube.storm.ui.lib.factory.IntentFactory;
+
+import lombok.Getter;
+
 /**
  * This is the entry point class of the library. To enable the use of the library, you must instantiate
  * a new {@link UiSettings.Builder} object in your {@link android.app.Application} singleton class.
@@ -36,8 +40,56 @@ public class UiSettings
 	 * Default private constructor
 	 */
 	private UiSettings(){}
+
+	/**
+	 * The intent factory instance of the module. This is the instance that will be used to resolve
+	 * every activity/fragment for a storm page/Uri
+	 */
+	@Getter private IntentFactory intentFactory;
+
+	/**
+	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
+	 * with the customised properties specific for your project.
+	 *
+	 * Call {@link #build()} to build the settings object.
+	 */
 	public static class Builder
 	{
+		/**
+		 * The temporary instance of the {@link UiSettings} object.
+		 */
+		private UiSettings construct;
 
+		/**
+		 * Default constructor
+		 */
+		public Builder()
+		{
+			construct = new UiSettings();
+		}
+
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.factory.IntentFactory} for the module
+		 *
+		 * @param intentFactory The new {@link com.cube.storm.ui.lib.factory.IntentFactory}
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder intentFactory(IntentFactory intentFactory)
+		{
+			construct.intentFactory = intentFactory;
+			return this;
+		}
+
+		/**
+		 * Builds the final settings object and sets its instance. Use {@link #getInstance()} to retrieve the settings
+		 * instance.
+		 *
+		 * @return The newly set {@link com.cube.storm.UiSettings} instance
+		 */
+		public UiSettings build()
+		{
+			return (UiSettings.instance = construct);
+		}
 	}
 }
