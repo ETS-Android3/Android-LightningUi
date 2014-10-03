@@ -74,8 +74,8 @@ public class UiSettings
 		{
 			construct = new UiSettings();
 
-			intentFactory(new IntentFactory());
-			viewFactory(new ViewFactory());
+			intentFactory(new IntentFactory(){});
+			viewFactory(new ViewFactory(){});
 		}
 
 		/**
