@@ -32,6 +32,10 @@ public class UiSettings
 		return instance;
 	}
 
+	/**
+	 * Default private constructor
+	 */
+	private UiSettings(){}
 	public static class Builder
 	{
 
