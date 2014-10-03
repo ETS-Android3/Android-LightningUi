@@ -1,6 +1,7 @@
 package com.cube.storm;
 
 import com.cube.storm.ui.lib.factory.IntentFactory;
+import com.cube.storm.ui.lib.factory.ViewFactory;
 
 import lombok.Getter;
 
@@ -48,6 +49,12 @@ public class UiSettings
 	@Getter private IntentFactory intentFactory;
 
 	/**
+	 * The view factory instance of the module. This is the instance that will be used to resolve
+	 * models and holders for a specific view
+	 */
+	@Getter private ViewFactory viewFactory;
+
+	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
 	 * with the customised properties specific for your project.
 	 *
@@ -78,6 +85,19 @@ public class UiSettings
 		public Builder intentFactory(IntentFactory intentFactory)
 		{
 			construct.intentFactory = intentFactory;
+			return this;
+		}
+
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.factory.ViewFactory} for the module
+		 *
+		 * @param viewFactory The new {@link com.cube.storm.ui.lib.factory.ViewFactory}
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder viewFactory(ViewFactory viewFactory)
+		{
+			construct.viewFactory = viewFactory;
 			return this;
 		}
 
