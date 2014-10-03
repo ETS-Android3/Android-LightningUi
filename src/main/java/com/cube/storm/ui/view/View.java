@@ -1,5 +1,7 @@
 package com.cube.storm.ui.view;
 
+import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.view.holder.Holder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
 
 /**
@@ -11,15 +13,12 @@ import com.cube.storm.ui.view.holder.TextListItemHolder;
  */
 public enum View
 {
-	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class),
+	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class);
 
-	// Not used
-	Default(Object.class, Object.class);
+	private Class<? extends Model> model;
+	private Class<? extends Holder> holder;
 
-	private Class model;
-	private Class holder;
-
-	private View(Class model, Class holder)
+	private View(Class<? extends Model> model, Class<? extends Holder> holder)
 	{
 		this.model = model;
 		this.holder = holder;
@@ -28,7 +27,7 @@ public enum View
 	/**
 	 * @return Gets the holder class of the view
 	 */
-	public Class getHolderClass()
+	public Class<? extends Holder> getHolderClass()
 	{
 		return holder;
 	}
@@ -36,7 +35,7 @@ public enum View
 	/**
 	 * @return Gets the model class of the view
 	 */
-	public Class getModelClass()
+	public Class<? extends Model> getModelClass()
 	{
 		return model;
 	}
