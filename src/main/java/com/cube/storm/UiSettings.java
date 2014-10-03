@@ -60,6 +60,10 @@ public class UiSettings
 	 */
 	@Getter private ViewFactory viewFactory;
 
+	/**
+	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewParser}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Class, com.cube.storm.ui.lib.parser.ViewProcessor)} to
+	 * override the processor used to match models with json class names
+	 */
 	@Getter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
 
 	/**
@@ -122,6 +126,15 @@ public class UiSettings
 			return this;
 		}
 
+		/**
+		 * Registers a deserializer type for a class instance. Use this method to override what processor
+		 * gets used for a specific view type.
+		 *
+		 * @param instanceClass The class to register for deserialization
+		 * @param deserializer The processor class
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
 		public Builder registerType(Class instanceClass, ViewProcessor deserializer)
 		{
 			construct.viewProcessors.put(instanceClass, deserializer);
