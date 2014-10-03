@@ -21,6 +21,15 @@ public abstract class ViewFactory
 	 */
 	public Class<? extends Holder> getHolderForView(String viewName)
 	{
-		return View.valueOf(viewName).getHolderClass();
+		try
+		{
+			return View.valueOf(viewName).getHolderClass();
+		}
+		catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }
