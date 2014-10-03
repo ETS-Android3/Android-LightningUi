@@ -1,8 +1,8 @@
-package com.cube.storm.ui;
+package com.cube.storm;
 
 /**
  * This is the entry point class of the library. To enable the use of the library, you must instantiate
- * a new {@link com.cube.storm.ui.UiSettings.Builder} object in your {@link android.app.Application} singleton class.
+ * a new {@link UiSettings.Builder} object in your {@link android.app.Application} singleton class.
  *
  * This class should not be directly instantiated.
  *
