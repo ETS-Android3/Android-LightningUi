@@ -2,6 +2,12 @@ package com.cube.storm;
 
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
+import com.cube.storm.ui.lib.parser.ViewProcessor;
+import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.list.ListItem;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import lombok.Getter;
 
@@ -54,6 +60,8 @@ public class UiSettings
 	 */
 	@Getter private ViewFactory viewFactory;
 
+	@Getter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
+
 	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
 	 * with the customised properties specific for your project.
@@ -76,6 +84,16 @@ public class UiSettings
 
 			intentFactory(new IntentFactory(){});
 			viewFactory(new ViewFactory(){});
+
+			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
+			{
+				@Override public Class<? extends Model> getClassFromName(String name)
+				{
+					return UiSettings.getInstance().getViewFactory().getModelForView(name);
+				}
+			};
+
+			registerType(ListItem.class, baseProcessor);
 		}
 
 		/**
@@ -101,6 +119,12 @@ public class UiSettings
 		public Builder viewFactory(ViewFactory viewFactory)
 		{
 			construct.viewFactory = viewFactory;
+			return this;
+		}
+
+		public Builder registerType(Class instanceClass, ViewProcessor deserializer)
+		{
+			construct.viewProcessors.put(instanceClass, deserializer);
 			return this;
 		}
 
