@@ -1,13 +1,19 @@
 package com.cube.storm.ui.controller.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.list.List;
+import com.cube.storm.ui.model.list.List.ListFooter;
+import com.cube.storm.ui.model.list.List.ListHeader;
 import com.cube.storm.ui.view.holder.Holder;
 
 import java.util.ArrayList;
@@ -56,7 +62,7 @@ public class StormListAdapter extends BaseAdapter
 		this.context = context;
 	}
 
-	public StormListAdapter(Context context, Collection<Model> items)
+	public StormListAdapter(Context context, Collection<? extends Model> items)
 	{
 		this.context = context;
 		setItems(items);
@@ -67,7 +73,7 @@ public class StormListAdapter extends BaseAdapter
 	 *
 	 * @param items The new items to set. Can be null to clear the list.
 	 */
-	public void setItems(@Nullable Collection<Model> items)
+	public void setItems(@Nullable Collection<? extends Model> items)
 	{
 		if (items != null)
 		{
@@ -76,23 +82,67 @@ public class StormListAdapter extends BaseAdapter
 
 			for (Model item : items)
 			{
-				Class<? extends Holder> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
-
-				if (holderClass != null)
-				{
-					this.items.add(item);
-
-					if (!this.itemTypes.contains(holderClass))
-					{
-						this.itemTypes.add(holderClass);
-					}
-				}
+				addItem(item);
 			}
 		}
 		else
 		{
 			this.items = new ArrayList<Model>(0);
 			this.itemTypes = new ArrayList<Class<? extends Holder>>(0);
+		}
+
+		Log.e("DEBUG", items.toString());
+	}
+
+	/**
+	 * Adds an item to the list, only if a holder class is found as returned by {@link com.cube.storm.ui.lib.factory.ViewFactory#getHolderForView(String)}
+	 *
+	 * @param item The model to add to the list
+	 */
+	public void addItem(@NonNull Model item)
+	{
+		if (item instanceof List)
+		{
+			if (((List)item).getHeader() != null && !TextUtils.isEmpty(((List)item).getHeader().getContent()))
+			{
+				ListHeader header = new ListHeader();
+				header.setHeader(((List)item).getHeader());
+
+				addItem(header);
+			}
+
+			if (((List)item).getChildren() != null)
+			{
+				for (Model subItem : ((List)item).getChildren())
+				{
+					if (subItem != null)
+					{
+						addItem(subItem);
+					}
+				}
+			}
+
+			if (((List)item).getFooter() != null && !TextUtils.isEmpty(((List)item).getFooter().getContent()))
+			{
+				ListFooter footer = new ListFooter();
+				footer.setFooter(((List)item).getFooter());
+
+				addItem(footer);
+			}
+		}
+		else
+		{
+			Class<? extends Holder> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
+
+			if (holderClass != null)
+			{
+				this.items.add(item);
+			}
+
+			if (!this.itemTypes.contains(holderClass))
+			{
+				this.itemTypes.add(holderClass);
+			}
 		}
 	}
 
