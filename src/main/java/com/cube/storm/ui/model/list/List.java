@@ -2,12 +2,12 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.property.TextProperty;
 
 import java.util.ArrayList;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A model which hosts an array set of child {@link com.cube.storm.ui.model.list.ListItem} models. Used
@@ -19,7 +19,7 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class List extends Model
+public class List extends ListItem
 {
 	@Getter private TextProperty header;
 	@Getter private TextProperty footer;
@@ -33,9 +33,14 @@ public class List extends Model
 	 * we instantiate 2 'place holder' models to handle it. {@link com.cube.storm.ui.model.list.List} isn't
 	 * actually a visible view, where as it's members is.
 	 */
-	public static class ListHeader extends Model
+	public static class ListHeader extends ListItem
 	{
-		@Getter private TextProperty header;
+		@Getter @Setter private TextProperty header;
+
+		@Override public String getClassName()
+		{
+			return "_ListHeader";
+		}
 
 		@Override public int describeContents()
 		{
@@ -55,9 +60,14 @@ public class List extends Model
 	 * we instantiate 2 'place holder' models to handle it. {@link com.cube.storm.ui.model.list.List} isn't
 	 * actually a visible view, where as it's members is.
 	 */
-	public static class ListFooter extends Model
+	public static class ListFooter extends ListItem
 	{
-		@Getter private TextProperty footer;
+		@Getter @Setter private TextProperty footer;
+
+		@Override public String getClassName()
+		{
+			return "_ListFooter";
+		}
 
 		@Override public int describeContents()
 		{
