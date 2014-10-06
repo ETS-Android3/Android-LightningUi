@@ -26,11 +26,11 @@ public abstract class FileFactory
 	@Nullable
 	public byte[] loadFromUri(@NonNull Context context, @NonNull Uri fileUri)
 	{
-		if ("file://".equals(fileUri.getScheme()))
+		if ("file".equalsIgnoreCase(fileUri.getScheme()))
 		{
 			return new FileResolver().resolveUri(fileUri);
 		}
-		else if ("assets://".equals(fileUri.getScheme()))
+		else if ("assets".equalsIgnoreCase(fileUri.getScheme()))
 		{
 			return new AssetsResolver(context).resolveUri(fileUri);
 		}

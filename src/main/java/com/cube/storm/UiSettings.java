@@ -1,5 +1,6 @@
 package com.cube.storm;
 
+import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
@@ -62,6 +63,11 @@ public class UiSettings
 	@Getter private ViewFactory viewFactory;
 
 	/**
+	 * Factory class responsible for loading a file from disk based on its Uri
+	 */
+	@Getter private FileFactory fileFactory;
+
+	/**
 	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewParser}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Class, com.cube.storm.ui.lib.parser.ViewProcessor)} to
 	 * override the processor used to match models with json class names
 	 */
@@ -85,10 +91,11 @@ public class UiSettings
 		 */
 		public Builder()
 		{
-			construct = new UiSettings();
+			this.construct = new UiSettings();
 
 			intentFactory(new IntentFactory(){});
 			viewFactory(new ViewFactory(){});
+			fileFactory(new FileFactory(){});
 
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
 			{
@@ -125,6 +132,19 @@ public class UiSettings
 		public Builder viewFactory(ViewFactory viewFactory)
 		{
 			construct.viewFactory = viewFactory;
+			return this;
+		}
+
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.factory.FileFactory} for the module
+		 *
+		 * @param fileFactory The new {@link com.cube.storm.ui.lib.factory.FileFactory}
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder fileFactory(FileFactory fileFactory)
+		{
+			construct.fileFactory = fileFactory;
 			return this;
 		}
 
