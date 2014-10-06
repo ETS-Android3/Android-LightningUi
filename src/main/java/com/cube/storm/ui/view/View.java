@@ -25,7 +25,12 @@ public enum View
 	List(com.cube.storm.ui.model.list.List.class, null),
 	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class),
 
-	ListPage(com.cube.storm.ui.model.page.ListPage.class, null);
+	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
+
+	/**
+	 * Properties
+	 */
+	Image(com.cube.storm.ui.model.property.BundleImageProperty.class, null);
 
 	private Class<? extends Model> model;
 	private Class<? extends Holder> holder;
