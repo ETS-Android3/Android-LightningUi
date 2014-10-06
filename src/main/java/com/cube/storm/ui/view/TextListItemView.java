@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -40,10 +41,14 @@ public class TextListItemView extends LinearLayout
 	private void setupView()
 	{
 		LayoutInflater.from(getContext()).inflate(R.layout.text_list_item_view_stub, this, true);
+		title = (TextView)findViewById(R.id.title);
 	}
 
-	public void populate(TextListItem model)
+	public void populate(@NonNull TextListItem model)
 	{
-		title.setText(model.getDescription().getContent());
+		if (model.getDescription() != null)
+		{
+			title.setText(model.getDescription().getContent());
+		}
 	}
 }
