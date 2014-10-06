@@ -2,6 +2,8 @@ package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.holder.Holder;
+import com.cube.storm.ui.view.holder.ListFooterHolder;
+import com.cube.storm.ui.view.holder.ListHeaderHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
 
 /**
@@ -13,7 +15,17 @@ import com.cube.storm.ui.view.holder.TextListItemHolder;
  */
 public enum View
 {
-	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class);
+	/**
+	 * Private views - These are not driven by the CMS, these are internal classes derived from
+	 * the list model.
+ 	 */
+	_ListHeader(com.cube.storm.ui.model.list.List.ListHeader.class, ListHeaderHolder.class),
+	_ListFooter(com.cube.storm.ui.model.list.List.ListFooter.class, ListFooterHolder.class),
+
+	List(com.cube.storm.ui.model.list.List.class, null),
+	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class),
+
+	ListPage(com.cube.storm.ui.model.page.ListPage.class, null);
 
 	private Class<? extends Model> model;
 	private Class<? extends Holder> holder;

@@ -16,5 +16,6 @@ import lombok.Getter;
  */
 public abstract class Model implements Serializable, Parcelable
 {
+	@Getter protected int id;
 	@SerializedName("class") @Getter protected String className;
 }
