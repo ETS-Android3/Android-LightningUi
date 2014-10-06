@@ -1,5 +1,7 @@
 package com.cube.storm;
 
+import android.content.Context;
+
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
@@ -86,12 +88,15 @@ public class UiSettings
 		 */
 		private UiSettings construct;
 
+		private Context context;
+
 		/**
 		 * Default constructor
 		 */
-		public Builder()
+		public Builder(Context context)
 		{
 			this.construct = new UiSettings();
+			this.context = context;
 
 			intentFactory(new IntentFactory(){});
 			viewFactory(new ViewFactory(){});
