@@ -4,6 +4,8 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.list.ListItem;
 
+import java.util.Collection;
+
 import lombok.Getter;
 
 /**
@@ -17,7 +19,7 @@ public class ListPage extends Page
 	/**
 	 * The array list of children {@link com.cube.storm.ui.model.list.ListItem}
 	 */
-	@Getter private ListItem[] children;
+	@Getter private Collection<ListItem> children;
 
 	@Override public int describeContents()
 	{

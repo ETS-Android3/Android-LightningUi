@@ -1,9 +1,9 @@
 package com.cube.storm.ui.model.page;
 
-import android.os.Parcel;
-
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.property.TextProperty;
+
+import java.util.Collection;
 
 import lombok.Getter;
 
@@ -13,23 +13,10 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class Page extends Model
+public abstract class Page extends Model
 {
 	@Getter protected TextProperty title;
 	@Getter protected String name;
 
-	public Model[] getChildren()
-	{
-		return null;
-	}
-
-	@Override public int describeContents()
-	{
-		return 0;
-	}
-
-	@Override public void writeToParcel(Parcel dest, int flags)
-	{
-
-	}
+	public abstract Collection<Model> getChildren();
 }
