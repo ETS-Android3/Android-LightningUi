@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.view.holder.ButtonListItemHolder;
 import com.cube.storm.ui.view.holder.CheckableListItemHolder;
 import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
 import com.cube.storm.ui.view.holder.Holder;
@@ -38,6 +39,7 @@ public enum View
 	OrderedListItem(com.cube.storm.ui.model.list.OrderedListItem.class, OrderedListItemHolder.class),
 	BulletListItem(com.cube.storm.ui.model.list.UnorderedListItem.class, UnorderedListItemHolder.class),
 	CheckableListItem(com.cube.storm.ui.model.list.CheckableListItem.class, CheckableListItemHolder.class),
+	ButtonListItem(com.cube.storm.ui.model.list.ButtonListItem.class, ButtonListItemHolder.class),
 
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
 
