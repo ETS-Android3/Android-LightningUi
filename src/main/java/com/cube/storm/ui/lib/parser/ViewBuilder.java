@@ -1,5 +1,8 @@
 package com.cube.storm.ui.lib.parser;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.page.Page;
 import com.google.gson.Gson;
@@ -57,7 +60,8 @@ public class ViewBuilder
 	 *
 	 * @return The page data, or null
 	 */
-	public Page buildPage(byte[] page)
+	@Nullable
+	public Page buildPage(@NonNull byte[] page)
 	{
 		try
 		{
@@ -78,7 +82,8 @@ public class ViewBuilder
 	 *
 	 * @return The page data, or null
 	 */
-	public Page buildPage(String page)
+	@Nullable
+	public Page buildPage(@NonNull String page)
 	{
 		return build(page, Page.class);
 	}
@@ -90,7 +95,8 @@ public class ViewBuilder
 	 *
 	 * @return The page data, or null
 	 */
-	public Page buildPage(JsonElement page)
+	@Nullable
+	public Page buildPage(@NonNull JsonElement page)
 	{
 		return build(page, Page.class);
 	}
@@ -104,6 +110,7 @@ public class ViewBuilder
 	 *
 	 * @return The built object, or null
 	 */
+	@Nullable
 	public <T> T build(String input, Class<T> outClass)
 	{
 		return outClass.cast(getGson().fromJson(input, outClass));
@@ -118,6 +125,7 @@ public class ViewBuilder
 	 *
 	 * @return The built object, or null
 	 */
+	@Nullable
 	public <T> T build(JsonElement input, Class<T> outClass)
 	{
 		return outClass.cast(getGson().fromJson(input, outClass));
