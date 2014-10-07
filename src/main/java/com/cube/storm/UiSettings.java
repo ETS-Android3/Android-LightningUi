@@ -1,11 +1,16 @@
 package com.cube.storm;
 
+import android.content.Context;
+
+import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.page.Page;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,10 +67,20 @@ public class UiSettings
 	@Getter private ViewFactory viewFactory;
 
 	/**
+	 * Factory class responsible for loading a file from disk based on its Uri
+	 */
+	@Getter private FileFactory fileFactory;
+
+	/**
 	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewParser}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Class, com.cube.storm.ui.lib.parser.ViewProcessor)} to
 	 * override the processor used to match models with json class names
 	 */
 	@Getter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
+
+	/**
+	 * Image loader which is used when displaying images in the list
+	 */
+	@Getter private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
@@ -80,15 +95,20 @@ public class UiSettings
 		 */
 		private UiSettings construct;
 
+		private Context context;
+
 		/**
 		 * Default constructor
 		 */
-		public Builder()
+		public Builder(Context context)
 		{
-			construct = new UiSettings();
+			this.construct = new UiSettings();
+			this.context = context;
 
 			intentFactory(new IntentFactory(){});
 			viewFactory(new ViewFactory(){});
+			fileFactory(new FileFactory(){});
+			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(context).build());
 
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
 			{
@@ -125,6 +145,38 @@ public class UiSettings
 		public Builder viewFactory(ViewFactory viewFactory)
 		{
 			construct.viewFactory = viewFactory;
+			return this;
+		}
+
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.factory.FileFactory} for the module
+		 *
+		 * @param fileFactory The new {@link com.cube.storm.ui.lib.factory.FileFactory}
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder fileFactory(FileFactory fileFactory)
+		{
+			construct.fileFactory = fileFactory;
+			return this;
+		}
+
+		/**
+		 * Sets the default image loader configuration
+		 *
+		 * @param configuration The new configuration for the image loader
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder imageLoaderConfiguration(ImageLoaderConfiguration configuration)
+		{
+			if (construct.imageLoader.isInited())
+			{
+				construct.imageLoader.destroy();
+			}
+
+			construct.imageLoader.init(configuration);
+
 			return this;
 		}
 
