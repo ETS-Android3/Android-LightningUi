@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 public class OrderedListItem extends DescriptionListItem
 {
-	@Getter private String annotation;
+	@Getter protected String annotation;
 
 	@Override public int describeContents()
 	{
