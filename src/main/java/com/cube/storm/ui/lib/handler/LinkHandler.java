@@ -6,13 +6,11 @@ import android.net.Uri;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
-import com.cube.storm.ui.lib.parser.ViewParser;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 
 /**
  * Link handler class used when a link is triggered in a holder
@@ -32,22 +30,15 @@ public class LinkHandler
 	{
 		if (link instanceof InternalLinkProperty)
 		{
-			try
-			{
-				byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(context, Uri.parse(((InternalLinkProperty)link).getDestination()));
-				Page page = ViewParser.getGson().fromJson(new String(pageBytes, "UTF-8"), Page.class);
+			byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(context, Uri.parse(((InternalLinkProperty)link).getDestination()));
+			Page page = UiSettings.getInstance().getViewBuilder().buildPage(pageBytes);
 
-				Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPage(context, page);
+			Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPage(context, page);
 
-				if (toLoad != null)
-				{
-					toLoad.putExtra(StormActivity.EXTRA_PAGE, (Serializable)page);
-					context.startActivity(toLoad);
-				}
-			}
-			catch (UnsupportedEncodingException e)
+			if (toLoad != null)
 			{
-				e.printStackTrace();
+				toLoad.putExtra(StormActivity.EXTRA_PAGE, (Serializable)page);
+				context.startActivity(toLoad);
 			}
 		}
 	}

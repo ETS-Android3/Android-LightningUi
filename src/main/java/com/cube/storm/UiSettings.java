@@ -7,6 +7,7 @@ import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
 import com.cube.storm.ui.lib.handler.LinkHandler;
+import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
@@ -76,7 +77,7 @@ public class UiSettings
 	@Getter private FileFactory fileFactory;
 
 	/**
-	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewParser}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Class, com.cube.storm.ui.lib.parser.ViewProcessor)} to
+	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewBuilder}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Class, com.cube.storm.ui.lib.parser.ViewProcessor)} to
 	 * override the processor used to match models with json class names
 	 */
 	@Getter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
@@ -95,6 +96,11 @@ public class UiSettings
 	 * The handler used when a link is triggered
 	 */
 	@Getter private LinkHandler linkHandler;
+
+	/**
+	 * The gson builder class used to build all of the storm objects from json/string/binary
+	 */
+	@Getter private ViewBuilder viewBuilder;
 
 	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
@@ -139,6 +145,8 @@ public class UiSettings
 			registerType(ListItem.class, baseProcessor);
 			registerType(ImageProperty.class, baseProcessor);
 			registerType(LinkProperty.class, baseProcessor);
+
+			viewBuilder(new ViewBuilder());
 		}
 
 		/**
@@ -221,6 +229,19 @@ public class UiSettings
 		public Builder linkHandler(LinkHandler linkHandler)
 		{
 			construct.linkHandler = linkHandler;
+			return this;
+		}
+
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.parser.ViewBuilder} for the module
+		 *
+		 * @param viewBuilder The new {@link com.cube.storm.ui.lib.parser.ViewBuilder}
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder viewBuilder(ViewBuilder viewBuilder)
+		{
+			construct.viewBuilder = viewBuilder;
 			return this;
 		}
 

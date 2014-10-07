@@ -1,5 +1,6 @@
 package com.cube.storm.ui.lib.parser;
 
+import com.cube.storm.UiSettings;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -58,7 +59,7 @@ public abstract class ViewProcessor<T> implements JsonDeserializer<T>
 
 		if (item != null)
 		{
-			T ret = (T)ViewParser.buildGson(arg0, item);
+			T ret = (T)UiSettings.getInstance().getViewBuilder().build(arg0, item);
 			ret = postInflate(ret);
 
 			return ret;

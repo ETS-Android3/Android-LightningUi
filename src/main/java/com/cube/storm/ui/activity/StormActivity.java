@@ -10,10 +10,7 @@ import android.widget.Toast;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.data.FragmentIntent;
-import com.cube.storm.ui.lib.parser.ViewParser;
 import com.cube.storm.ui.model.page.Page;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * Base storm activity that hosts a single fragment to host any {@link com.cube.storm.ui.model.page.Page} subclass.
@@ -43,7 +40,11 @@ public class StormActivity extends Activity
 		if (getIntent().getExtras().containsKey(EXTRA_PAGE))
 		{
 			Page pageData = (Page)getIntent().getExtras().get(EXTRA_PAGE);
-			loadPage(pageData);
+
+			if (pageData != null)
+			{
+				loadPage(pageData);
+			}
 		}
 		else if (getIntent().getExtras().containsKey(EXTRA_URI))
 		{
@@ -52,14 +53,11 @@ public class StormActivity extends Activity
 
 			if (pageBytes != null)
 			{
-				try
+				Page pageData = UiSettings.getInstance().getViewBuilder().buildPage(pageBytes);
+
+				if (pageData != null)
 				{
-					Page pageData = ViewParser.buildGson(new String(pageBytes, "UTF-8"), Page.class);
 					loadPage(pageData);
-				}
-				catch (UnsupportedEncodingException e)
-				{
-					e.printStackTrace();
 				}
 			}
 		}
