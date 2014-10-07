@@ -3,12 +3,12 @@ package com.cube.storm.ui.model.property;
 import android.os.Parcel;
 
 /**
- * A link property which deals with opening an external Uri, internally
+ * A link property which deals with opening an external Uri, externally via an intent
  *
  * @author Callum Taylor
  * @project StormUI
  */
-public class ExternalLinkProperty extends LinkProperty
+public class UriLinkProperty extends LinkProperty
 {
 	@Override public int describeContents()
 	{
