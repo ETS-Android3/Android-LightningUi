@@ -2,20 +2,14 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.property.ImageProperty;
-
-import lombok.Getter;
-
 /**
- * // TODO: Add class description
+ * A view model
  *
  * @author Alan Le Fournis
  * @project Storm
  */
-public class BulletListItem extends DescriptionListItem
+public class UnorderedListItem extends DescriptionListItem
 {
-	@Getter private ImageProperty bullet;
-
 	@Override public int describeContents()
 	{
 		return 0;

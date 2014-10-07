@@ -7,7 +7,7 @@ import com.cube.storm.ui.model.property.TextProperty;
 import lombok.Getter;
 
 /**
- * A view model with a description property
+ * A view model with a title property
  *
  * @author Alan Le Fournis
  * @project StormUI

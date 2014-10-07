@@ -14,7 +14,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
- * View holder for {@link com.cube.storm.ui.model.list.DescriptionListItem} in the adapter
+ * View holder for {@link com.cube.storm.ui.model.list.StandardListItem} in the adapter
  *
  * @author Alan Le Fournis
  * @project Storm

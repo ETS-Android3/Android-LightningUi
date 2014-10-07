@@ -16,7 +16,7 @@ import com.cube.storm.ui.model.list.TitleListItem;
  */
 public class TitleListItemHolder extends Holder<TitleListItem>
 {
-	private TextView title;
+	protected TextView title;
 
 	@Override public View createView(ViewGroup parent)
 	{

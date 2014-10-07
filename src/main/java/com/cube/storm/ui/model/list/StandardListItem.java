@@ -7,7 +7,7 @@ import com.cube.storm.ui.model.property.ImageProperty;
 import lombok.Getter;
 
 /**
- * // TODO: Add class description
+ * A view model with an image property
  *
  * @author Alan Le Fournis
  * @project Storm
