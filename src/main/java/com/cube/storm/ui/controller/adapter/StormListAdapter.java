@@ -184,6 +184,7 @@ public class StormListAdapter extends BaseAdapter
 			{
 				holder = itemTypes.get(getItemViewType(position)).newInstance();
 				convertView = holder.createView(parent);
+				convertView.setTag(holder);
 			}
 			catch (Exception e)
 			{
