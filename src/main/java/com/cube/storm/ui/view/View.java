@@ -1,8 +1,7 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
-import com.cube.storm.ui.model.list.UnorderedListItem;
-import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
+import com.cube.storm.ui.view.holder.CheckableListItemHolder;
 import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
 import com.cube.storm.ui.view.holder.Holder;
 import com.cube.storm.ui.view.holder.ImageListItemHolder;
@@ -12,6 +11,7 @@ import com.cube.storm.ui.view.holder.OrderedListItemHolder;
 import com.cube.storm.ui.view.holder.StandardListItemHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
 import com.cube.storm.ui.view.holder.TitleListItemHolder;
+import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
 
 /**
  * This is the enum class with the list of all supported view types, their model classes and their
@@ -36,7 +36,8 @@ public enum View
 	DescriptionListItem(com.cube.storm.ui.model.list.DescriptionListItem.class, DescriptionListItemHolder.class),
 	StandardListItem(com.cube.storm.ui.model.list.StandardListItem.class, StandardListItemHolder.class),
 	OrderedListItem(com.cube.storm.ui.model.list.OrderedListItem.class, OrderedListItemHolder.class),
-	BulletListItem(UnorderedListItem.class, UnorderedListItemHolder.class),
+	BulletListItem(com.cube.storm.ui.model.list.UnorderedListItem.class, UnorderedListItemHolder.class),
+	CheckableListItem(com.cube.storm.ui.model.list.CheckableListItem.class, CheckableListItemHolder.class),
 
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
 
