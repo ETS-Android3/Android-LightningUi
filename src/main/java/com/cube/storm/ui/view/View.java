@@ -6,6 +6,7 @@ import com.cube.storm.ui.view.holder.Holder;
 import com.cube.storm.ui.view.holder.ImageListItemHolder;
 import com.cube.storm.ui.view.holder.ListFooterHolder;
 import com.cube.storm.ui.view.holder.ListHeaderHolder;
+import com.cube.storm.ui.view.holder.OrderedListItemHolder;
 import com.cube.storm.ui.view.holder.StandardListItemHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
 import com.cube.storm.ui.view.holder.TitleListItemHolder;
@@ -32,6 +33,7 @@ public enum View
 	TitleListItem(com.cube.storm.ui.model.list.TitleListItem.class, TitleListItemHolder.class),
 	DescriptionListItem(com.cube.storm.ui.model.list.DescriptionListItem.class, DescriptionListItemHolder.class),
 	StandardListItem(com.cube.storm.ui.model.list.StandardListItem.class, StandardListItemHolder.class),
+	OrderedListItem(com.cube.storm.ui.model.list.OrderedListItem.class, OrderedListItemHolder.class),
 
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
 
