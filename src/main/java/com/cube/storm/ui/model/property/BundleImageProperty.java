@@ -8,7 +8,7 @@ import com.cube.storm.ui.data.ContentDensity;
 
 public class BundleImageProperty extends ImageProperty
 {
-	private ImageDescriptorProperty src;
+	protected ImageDescriptorProperty src;
 
 	@Override public String getSrc()
 	{

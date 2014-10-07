@@ -14,7 +14,7 @@ import lombok.Getter;
  */
 public class TitleListItem extends ListItem
 {
-	@Getter private TextProperty title;
+	@Getter protected TextProperty title;
 
 	@Override public int describeContents()
 	{

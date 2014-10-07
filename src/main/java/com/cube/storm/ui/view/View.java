@@ -43,7 +43,11 @@ public enum View
 	/**
 	 * Properties
 	 */
-	Image(com.cube.storm.ui.model.property.BundleImageProperty.class, null);
+	Image(com.cube.storm.ui.model.property.BundleImageProperty.class, null),
+	DestinationLink(com.cube.storm.ui.model.property.DestinationLinkProperty.class, null),
+	InternalLink(com.cube.storm.ui.model.property.InternalLinkProperty.class, null),
+	ExternalLink(com.cube.storm.ui.model.property.ExternalLinkProperty.class, null),
+	UriLink(com.cube.storm.ui.model.property.UriLinkProperty.class, null);
 
 	private Class<? extends Model> model;
 	private Class<? extends Holder> holder;

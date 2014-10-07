@@ -3,6 +3,7 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.ImageProperty;
+import com.cube.storm.ui.model.property.LinkProperty;
 
 import lombok.Getter;
 
@@ -14,7 +15,8 @@ import lombok.Getter;
  */
 public class StandardListItem extends DescriptionListItem
 {
-	@Getter private ImageProperty image;
+	@Getter protected ImageProperty image;
+	@Getter protected LinkProperty link;
 
 	@Override public int describeContents()
 	{

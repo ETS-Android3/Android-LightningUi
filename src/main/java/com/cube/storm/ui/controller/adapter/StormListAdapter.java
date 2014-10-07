@@ -14,6 +14,7 @@ import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.List.ListFooter;
 import com.cube.storm.ui.model.list.List.ListHeader;
+import com.cube.storm.ui.view.ViewClickable;
 import com.cube.storm.ui.view.holder.Holder;
 
 import java.util.ArrayList;
@@ -161,6 +162,11 @@ public class StormListAdapter extends BaseAdapter
 		return ((Object)getItem(position)).hashCode();
 	}
 
+	@Override public boolean isEnabled(int position)
+	{
+		return ViewClickable.class.isAssignableFrom(itemTypes.get(getItemViewType(position)));
+	}
+
 	@Override public int getViewTypeCount()
 	{
 		return itemTypes.size();
@@ -187,6 +193,7 @@ public class StormListAdapter extends BaseAdapter
 			{
 				holder = itemTypes.get(getItemViewType(position)).newInstance();
 				convertView = holder.createView(parent);
+				convertView.setTag(holder);
 			}
 			catch (Exception e)
 			{

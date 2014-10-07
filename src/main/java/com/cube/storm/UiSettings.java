@@ -11,6 +11,7 @@ import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.ImageProperty;
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -130,6 +131,7 @@ public class UiSettings
 			registerType(Page.class, baseProcessor);
 			registerType(ListItem.class, baseProcessor);
 			registerType(ImageProperty.class, baseProcessor);
+			registerType(LinkProperty.class, baseProcessor);
 		}
 
 		/**

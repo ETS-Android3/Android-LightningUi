@@ -12,7 +12,9 @@ import android.widget.ListView;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
+import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.page.Page;
+import com.cube.storm.ui.view.ViewClickable;
 
 import lombok.Getter;
 
@@ -47,10 +49,16 @@ public class StormListFragment extends Fragment implements OnItemClickListener
 		}
 
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
 	}
 
 	@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
+		Model item = (Model)listView.getItemAtPosition(position);
 
+		if (view.getTag() != null && view.getTag() instanceof ViewClickable)
+		{
+			((ViewClickable)view.getTag()).onClick(item, view);
+		}
 	}
 }
