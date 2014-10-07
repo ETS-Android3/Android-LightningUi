@@ -14,7 +14,7 @@ import lombok.Getter;
  */
 public class CheckableListItem extends TitleListItem
 {
-	@SerializedName("volatile") @Getter private boolean isVolatile;
+	@SerializedName("volatile") @Getter protected boolean isVolatile;
 
 	@Override public int describeContents()
 	{
