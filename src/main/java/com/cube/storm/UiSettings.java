@@ -9,6 +9,8 @@ import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.page.Page;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -76,6 +78,11 @@ public class UiSettings
 	@Getter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
 
 	/**
+	 * Image loader which is used when displaying images in the list
+	 */
+	@Getter private ImageLoader imageLoader = ImageLoader.getInstance();
+
+	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
 	 * with the customised properties specific for your project.
 	 *
@@ -101,6 +108,7 @@ public class UiSettings
 			intentFactory(new IntentFactory(){});
 			viewFactory(new ViewFactory(){});
 			fileFactory(new FileFactory(){});
+			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(context).build());
 
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
 			{
@@ -150,6 +158,25 @@ public class UiSettings
 		public Builder fileFactory(FileFactory fileFactory)
 		{
 			construct.fileFactory = fileFactory;
+			return this;
+		}
+
+		/**
+		 * Sets the default image loader configuration
+		 *
+		 * @param configuration The new configuration for the image loader
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder imageLoaderConfiguration(ImageLoaderConfiguration configuration)
+		{
+			if (construct.imageLoader.isInited())
+			{
+				construct.imageLoader.destroy();
+			}
+
+			construct.imageLoader.init(configuration);
+
 			return this;
 		}
 
