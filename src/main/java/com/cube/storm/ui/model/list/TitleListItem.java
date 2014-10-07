@@ -7,14 +7,14 @@ import com.cube.storm.ui.model.property.TextProperty;
 import lombok.Getter;
 
 /**
- * A view model with a description property
+ * A view model with a title property
  *
- * @author Callum Taylor
+ * @author Alan Le Fournis
  * @project StormUI
  */
-public class TextListItem extends ListItem
+public class TitleListItem extends ListItem
 {
-	@Getter protected TextProperty description;
+	@Getter protected TextProperty title;
 
 	@Override public int describeContents()
 	{

@@ -16,7 +16,7 @@ import com.cube.storm.ui.view.TextListItemView;
  */
 public class TextListItemHolder extends Holder<TextListItem>
 {
-	private TextListItemView textListItemView;
+	protected TextListItemView textListItemView;
 
 	@Override public View createView(ViewGroup parent)
 	{

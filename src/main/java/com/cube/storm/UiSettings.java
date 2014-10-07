@@ -2,6 +2,7 @@ package com.cube.storm;
 
 import android.content.Context;
 
+import com.cube.storm.ui.data.ContentDensity;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
@@ -9,6 +10,8 @@ import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.page.Page;
+import com.cube.storm.ui.model.property.ImageProperty;
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -83,6 +86,11 @@ public class UiSettings
 	@Getter private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	/**
+	 * The density to use when loading images
+	 */
+	@Getter private ContentDensity contentDensity;
+
+	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
 	 * with the customised properties specific for your project.
 	 *
@@ -110,6 +118,8 @@ public class UiSettings
 			fileFactory(new FileFactory(){});
 			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(context).build());
 
+			contentDensity(ContentDensity.x1_00);
+
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
 			{
 				@Override public Class<? extends Model> getClassFromName(String name)
@@ -120,6 +130,8 @@ public class UiSettings
 
 			registerType(Page.class, baseProcessor);
 			registerType(ListItem.class, baseProcessor);
+			registerType(ImageProperty.class, baseProcessor);
+			registerType(LinkProperty.class, baseProcessor);
 		}
 
 		/**
@@ -176,7 +188,19 @@ public class UiSettings
 			}
 
 			construct.imageLoader.init(configuration);
+			return this;
+		}
 
+		/**
+		 * Sets the default {@link com.cube.storm.ui.data.ContentDensity} for the module
+		 *
+		 * @param contentDensity The new {@link com.cube.storm.ui.data.ContentDensity}
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder contentDensity(ContentDensity contentDensity)
+		{
+			construct.contentDensity = contentDensity;
 			return this;
 		}
 

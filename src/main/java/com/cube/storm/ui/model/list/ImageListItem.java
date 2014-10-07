@@ -2,19 +2,19 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.model.property.ImageProperty;
 
 import lombok.Getter;
 
 /**
- * A view model with a description property
+ * A view model with an image property
  *
- * @author Callum Taylor
+ * @author Alan Le Fournis
  * @project StormUI
  */
-public class TextListItem extends ListItem
+public class ImageListItem extends ListItem
 {
-	@Getter protected TextProperty description;
+	@Getter protected ImageProperty image;
 
 	@Override public int describeContents()
 	{

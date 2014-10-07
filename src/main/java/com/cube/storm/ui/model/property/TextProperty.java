@@ -2,8 +2,6 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.Model;
-
 import lombok.Getter;
 
 /**
@@ -14,9 +12,9 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class TextProperty extends Model
+public class TextProperty extends Property
 {
-	@Getter private String content;
+	@Getter protected String content;
 
 	@Override public int describeContents()
 	{

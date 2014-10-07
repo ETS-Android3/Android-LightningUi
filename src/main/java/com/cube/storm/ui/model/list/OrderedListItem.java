@@ -2,19 +2,17 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.property.TextProperty;
-
 import lombok.Getter;
 
 /**
- * A view model with a description property
+ * A view model
  *
- * @author Callum Taylor
- * @project StormUI
+ * @author Alan Le Fournis
+ * @project Storm
  */
-public class TextListItem extends ListItem
+public class OrderedListItem extends DescriptionListItem
 {
-	@Getter protected TextProperty description;
+	@Getter private String annotation;
 
 	@Override public int describeContents()
 	{

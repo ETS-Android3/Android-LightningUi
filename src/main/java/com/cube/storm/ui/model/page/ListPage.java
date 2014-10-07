@@ -19,7 +19,7 @@ public class ListPage extends Page
 	/**
 	 * The array list of children {@link com.cube.storm.ui.model.list.ListItem}
 	 */
-	@Getter private Collection<ListItem> children;
+	@Getter protected Collection<ListItem> children;
 
 	@Override public int describeContents()
 	{

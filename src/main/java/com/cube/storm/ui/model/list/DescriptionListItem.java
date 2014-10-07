@@ -12,7 +12,7 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class TextListItem extends ListItem
+public class DescriptionListItem extends TitleListItem
 {
 	@Getter protected TextProperty description;
 
