@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.cube.storm.ui.lib.manager.CacheManager;
+import com.cube.storm.ui.lib.manager.FileManager;
 
 import java.io.IOException;
 
@@ -39,7 +39,7 @@ public class AssetsResolver extends Resolver
 
 		try
 		{
-			return CacheManager.getInstance().readFile(context.getAssets().open(filePath));
+			return FileManager.getInstance().readFile(context.getAssets().open(filePath));
 		}
 		catch (IOException e)
 		{
