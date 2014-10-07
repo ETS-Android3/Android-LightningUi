@@ -1,5 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.StandardListItem;
+import com.cube.storm.ui.view.ViewClickable;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -19,7 +21,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class StandardListItemHolder extends Holder<StandardListItem>
+public class StandardListItemHolder extends Holder<StandardListItem> implements ViewClickable<StandardListItem>
 {
 	protected ImageView image;
 	protected TextView title;
@@ -62,5 +64,9 @@ public class StandardListItemHolder extends Holder<StandardListItem>
 		{
 			description.setVisibility(View.GONE);
 		}
+	}
+
+	@Override public void onClick(@NonNull StandardListItem model, @NonNull View view)
+	{
 	}
 }
