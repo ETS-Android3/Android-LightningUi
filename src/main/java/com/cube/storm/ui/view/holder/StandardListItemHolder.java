@@ -68,5 +68,9 @@ public class StandardListItemHolder extends Holder<StandardListItem> implements 
 
 	@Override public void onClick(@NonNull StandardListItem model, @NonNull View view)
 	{
+		if (model.getLink() != null)
+		{
+			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getLink());
+		}
 	}
 }
