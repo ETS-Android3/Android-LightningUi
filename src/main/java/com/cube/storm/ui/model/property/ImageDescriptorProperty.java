@@ -8,10 +8,10 @@ import lombok.Getter;
 
 public class ImageDescriptorProperty extends Property
 {
-	@SerializedName("x0.75") @Getter private String x075;
-	@SerializedName("x1") @Getter private String x1;
-	@SerializedName("x1.5") @Getter private String x15;
-	@SerializedName("x2") @Getter private String x2;
+	@SerializedName("x0.75") @Getter protected String x075;
+	@SerializedName("x1") @Getter protected String x1;
+	@SerializedName("x1.5") @Getter protected String x15;
+	@SerializedName("x2") @Getter protected String x2;
 
 	@Override public int describeContents()
 	{

@@ -21,9 +21,9 @@ import lombok.Setter;
  */
 public class List extends ListItem
 {
-	@Getter private TextProperty header;
-	@Getter private TextProperty footer;
-	@Getter private ArrayList<ListItem> children;
+	@Getter protected TextProperty header;
+	@Getter protected TextProperty footer;
+	@Getter protected ArrayList<ListItem> children;
 
 	/**
 	 * This is the model used when displaying the list in the adapter. The list model is processed
@@ -35,7 +35,7 @@ public class List extends ListItem
 	 */
 	public static class ListHeader extends ListItem
 	{
-		@Getter @Setter private TextProperty header;
+		@Getter @Setter protected TextProperty header;
 
 		@Override public String getClassName()
 		{
@@ -62,7 +62,7 @@ public class List extends ListItem
 	 */
 	public static class ListFooter extends ListItem
 	{
-		@Getter @Setter private TextProperty footer;
+		@Getter @Setter protected TextProperty footer;
 
 		@Override public String getClassName()
 		{

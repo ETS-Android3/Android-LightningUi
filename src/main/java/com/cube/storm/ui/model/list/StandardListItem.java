@@ -14,7 +14,7 @@ import lombok.Getter;
  */
 public class StandardListItem extends DescriptionListItem
 {
-	@Getter private ImageProperty image;
+	@Getter protected ImageProperty image;
 
 	@Override public int describeContents()
 	{

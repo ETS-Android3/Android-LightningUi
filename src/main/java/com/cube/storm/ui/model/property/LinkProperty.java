@@ -10,5 +10,5 @@ import lombok.Getter;
  */
 public abstract class LinkProperty extends Property
 {
-	@Getter private TextProperty title;
+	@Getter protected TextProperty title;
 }
