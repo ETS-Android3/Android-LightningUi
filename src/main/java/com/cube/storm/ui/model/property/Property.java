@@ -3,7 +3,7 @@ package com.cube.storm.ui.model.property;
 import com.cube.storm.ui.model.Model;
 
 /**
- * // TODO: Add class description
+ * Property Model
  *
  * @author Alan Le Fournis
  * @project Storm

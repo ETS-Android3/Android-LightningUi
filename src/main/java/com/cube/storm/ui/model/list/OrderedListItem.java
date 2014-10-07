@@ -5,7 +5,7 @@ import android.os.Parcel;
 import lombok.Getter;
 
 /**
- * // TODO: Add class description
+ * A view model
  *
  * @author Alan Le Fournis
  * @project Storm
