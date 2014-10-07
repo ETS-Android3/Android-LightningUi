@@ -6,6 +6,7 @@ import com.cube.storm.ui.data.ContentDensity;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
+import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
@@ -91,6 +92,11 @@ public class UiSettings
 	@Getter private ContentDensity contentDensity;
 
 	/**
+	 * The handler used when a link is triggered
+	 */
+	@Getter private LinkHandler linkHandler;
+
+	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
 	 * with the customised properties specific for your project.
 	 *
@@ -117,6 +123,7 @@ public class UiSettings
 			viewFactory(new ViewFactory(){});
 			fileFactory(new FileFactory(){});
 			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(context).build());
+			linkHandler(new LinkHandler());
 
 			contentDensity(ContentDensity.x1_00);
 
@@ -201,6 +208,19 @@ public class UiSettings
 		public Builder contentDensity(ContentDensity contentDensity)
 		{
 			construct.contentDensity = contentDensity;
+			return this;
+		}
+
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.handler.LinkHandler} for the module
+		 *
+		 * @param linkHandler The new {@link com.cube.storm.ui.lib.handler.LinkHandler}
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder linkHandler(LinkHandler linkHandler)
+		{
+			construct.linkHandler = linkHandler;
 			return this;
 		}
 
