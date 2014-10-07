@@ -2,6 +2,7 @@ package com.cube.storm.ui.activity;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -9,7 +10,10 @@ import android.widget.Toast;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.data.FragmentIntent;
+import com.cube.storm.ui.lib.parser.ViewParser;
 import com.cube.storm.ui.model.page.Page;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Base storm activity that hosts a single fragment to host any {@link com.cube.storm.ui.model.page.Page} subclass.
@@ -20,6 +24,7 @@ import com.cube.storm.ui.model.page.Page;
 public class StormActivity extends Activity
 {
 	public static final String EXTRA_PAGE = "stormui.page";
+	public static final String EXTRA_URI = "stormui.uri";
 
 	@Override protected void onCreate(Bundle savedInstanceState)
 	{
@@ -40,6 +45,24 @@ public class StormActivity extends Activity
 			Page pageData = (Page)getIntent().getExtras().get(EXTRA_PAGE);
 			loadPage(pageData);
 		}
+		else if (getIntent().getExtras().containsKey(EXTRA_URI))
+		{
+			String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
+			byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(this, Uri.parse(pageUri));
+
+			if (pageBytes != null)
+			{
+				try
+				{
+					Page pageData = ViewParser.buildGson(new String(pageBytes, "UTF-8"), Page.class);
+					loadPage(pageData);
+				}
+				catch (UnsupportedEncodingException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	protected void loadPage(Page pageData)
@@ -54,6 +77,7 @@ public class StormActivity extends Activity
 			}
 
 			fragmentIntent.getArguments().putAll(getIntent().getExtras());
+			fragmentIntent.getArguments().putSerializable(EXTRA_PAGE, pageData);
 
 			Fragment fragment = Fragment.instantiate(this, fragmentIntent.getFragment().getName(), fragmentIntent.getArguments());
 			getFragmentManager().beginTransaction().replace(R.id.fragment_holder, fragment).commit();
