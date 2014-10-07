@@ -1,6 +1,6 @@
 package com.cube.storm.ui.model;
 
-import android.os.Parcelable;
+import android.os.Parcel;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -14,8 +14,11 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project StormUI
  */
-public abstract class Model implements Serializable, Parcelable
+public abstract class Model implements Serializable/*, Parcelable*/
 {
 	@Getter protected int id;
 	@SerializedName("class") @Getter protected String className;
+
+	public abstract int describeContents();
+	public abstract void writeToParcel(Parcel dest, int flags);
 }
