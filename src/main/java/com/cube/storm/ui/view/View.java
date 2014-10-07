@@ -2,6 +2,7 @@ package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.holder.Holder;
+import com.cube.storm.ui.view.holder.ImageListItemHolder;
 import com.cube.storm.ui.view.holder.ListFooterHolder;
 import com.cube.storm.ui.view.holder.ListHeaderHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
@@ -24,8 +25,14 @@ public enum View
 
 	List(com.cube.storm.ui.model.list.List.class, null),
 	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class),
+	ImageListItem(com.cube.storm.ui.model.list.ImageListItem.class, ImageListItemHolder.class),
 
-	ListPage(com.cube.storm.ui.model.page.ListPage.class, null);
+	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
+
+	/**
+	 * Properties
+	 */
+	Image(com.cube.storm.ui.model.property.BundleImageProperty.class, null);
 
 	private Class<? extends Model> model;
 	private Class<? extends Holder> holder;
