@@ -166,7 +166,7 @@ public class StormListAdapter extends BaseAdapter
 
 	@Override public int getViewTypeCount()
 	{
-		return itemTypes.size();
+		return Math.max(1, itemTypes.size());
 	}
 
 	@Override public int getItemViewType(int position)

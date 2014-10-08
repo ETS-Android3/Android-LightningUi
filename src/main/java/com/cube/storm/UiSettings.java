@@ -2,6 +2,7 @@ package com.cube.storm;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cube.storm.ui.data.ContentDensity;
@@ -13,6 +14,7 @@ import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.resolver.AssetsResolver;
 import com.cube.storm.ui.lib.resolver.FileResolver;
+import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.page.Page;
@@ -68,6 +70,11 @@ public class UiSettings
 	private UiSettings(){}
 
 	/**
+	 * App data for the content
+	 */
+	@Getter private App app;
+
+	/**
 	 * The intent factory instance of the module. This is the instance that will be used to resolve
 	 * every activity/fragment for a storm page/Uri
 	 */
@@ -111,9 +118,21 @@ public class UiSettings
 	@Getter private ViewBuilder viewBuilder;
 
 	/**
-	 * Uri resolver used to load a file based on it's protocol
+	 * Uri resolver used to load a file based on it's protocol. You should not need to use this instance
+	 * directly to load a file, instead use {@link com.cube.storm.ui.lib.factory.FileFactory} which uses this
+	 * to resolve a file and load it. Only use this if you want to load a specific scheme
 	 */
 	@Getter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
+
+	/**
+	 * Sets the app model of the content
+	 *
+	 * @param app The new app model
+	 */
+	public void setApp(@NonNull App app)
+	{
+		this.app = app;
+	}
 
 	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance

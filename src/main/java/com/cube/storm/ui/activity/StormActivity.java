@@ -49,24 +49,22 @@ public class StormActivity extends Activity
 		else if (getIntent().getExtras().containsKey(EXTRA_URI))
 		{
 			String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
-			byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(this, Uri.parse(pageUri));
+			FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageUri(Uri.parse(pageUri));
 
-			if (pageBytes != null)
+			if (fragmentIntent != null)
 			{
-				Page pageData = UiSettings.getInstance().getViewBuilder().buildPage(pageBytes);
-
-				if (pageData != null)
-				{
-					loadPage(pageData);
-				}
+				loadPage(fragmentIntent);
 			}
 		}
 	}
 
-	protected void loadPage(Page pageData)
+	protected void loadPage(Page page)
 	{
-		FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPage(pageData);
+		loadPage(UiSettings.getInstance().getIntentFactory().getFragmentIntentForPage(page));
+	}
 
+	protected void loadPage(FragmentIntent fragmentIntent)
+	{
 		if (fragmentIntent != null)
 		{
 			if (fragmentIntent.getArguments() == null)
@@ -75,7 +73,6 @@ public class StormActivity extends Activity
 			}
 
 			fragmentIntent.getArguments().putAll(getIntent().getExtras());
-			fragmentIntent.getArguments().putSerializable(EXTRA_PAGE, pageData);
 
 			Fragment fragment = Fragment.instantiate(this, fragmentIntent.getFragment().getName(), fragmentIntent.getArguments());
 			getFragmentManager().beginTransaction().replace(R.id.fragment_holder, fragment).commit();

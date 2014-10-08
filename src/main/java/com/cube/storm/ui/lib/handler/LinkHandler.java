@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.cube.storm.UiSettings;
-import com.cube.storm.ui.activity.StormActivity;
-import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
-
-import java.io.Serializable;
 
 /**
  * Link handler class used when a link is triggered in a holder
@@ -30,14 +26,10 @@ public class LinkHandler
 	{
 		if (link instanceof InternalLinkProperty)
 		{
-			byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(Uri.parse(((InternalLinkProperty)link).getDestination()));
-			Page page = UiSettings.getInstance().getViewBuilder().buildPage(pageBytes);
-
-			Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPage(context, page);
+			Intent toLoad = UiSettings.getInstance().getIntentFactory().geIntentForPageUri(context, Uri.parse(((InternalLinkProperty)link).getDestination()));
 
 			if (toLoad != null)
 			{
-				toLoad.putExtra(StormActivity.EXTRA_PAGE, (Serializable)page);
 				context.startActivity(toLoad);
 			}
 		}

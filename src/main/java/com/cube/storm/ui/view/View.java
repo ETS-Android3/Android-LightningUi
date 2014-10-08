@@ -29,6 +29,9 @@ public enum View
 	_ListHeader(com.cube.storm.ui.model.list.List.ListHeader.class, ListHeaderHolder.class),
 	_ListFooter(com.cube.storm.ui.model.list.List.ListFooter.class, ListFooterHolder.class),
 
+	/**
+	 * List items
+	 */
 	List(com.cube.storm.ui.model.list.List.class, null),
 	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class),
 	ImageListItem(com.cube.storm.ui.model.list.ImageListItem.class, ImageListItemHolder.class),
@@ -38,6 +41,9 @@ public enum View
 	OrderedListItem(com.cube.storm.ui.model.list.OrderedListItem.class, OrderedListItemHolder.class),
 	BulletListItem(UnorderedListItem.class, UnorderedListItemHolder.class),
 
+	/**
+	 * Pages
+	 */
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
 
 	/**
