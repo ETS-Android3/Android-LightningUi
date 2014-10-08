@@ -98,6 +98,26 @@ public class ViewBuilder
 	}
 
 	/**
+	 * Builds a Page object from a file Uri
+	 *
+	 * @param fileUri The file Uri to load from
+	 *
+	 * @return The page data or null
+	 */
+	@Nullable
+	public Page buildPage(@NonNull Uri fileUri)
+	{
+		byte[] pageData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
+
+		if (pageData != null)
+		{
+			return buildPage(pageData);
+		}
+
+		return null;
+	}
+
+	/**
 	 * Builds a page object from a byte array json string
 	 *
 	 * @param page The byte array json string page data

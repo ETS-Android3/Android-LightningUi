@@ -2,6 +2,7 @@ package com.cube.storm.ui.lib.factory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -9,6 +10,7 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormListFragment;
+import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
 import com.cube.storm.ui.model.page.ListPage;
@@ -64,6 +66,42 @@ public abstract class IntentFactory
 		{
 			intent = new Intent(context, StormActivity.class);
 			return intent;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Loads a fragment intent from a Uri by finding the {@link com.cube.storm.ui.model.descriptor.PageDescriptor} in the {@link com.cube.storm.ui.model.App} model defined
+	 * in {@link com.cube.storm.UiSettings#getApp()}. It will load the page from disk if {@link com.cube.storm.UiSettings#getApp()} is null.
+	 *
+	 * @param pageUri The page uri
+	 *
+	 * @return The intent, or null if one was not suitable enough
+	 */
+	@Nullable
+	public FragmentIntent getFragmentIntentForPageUri(@NonNull Uri pageUri)
+	{
+		App app = UiSettings.getInstance().getApp();
+
+		if (app != null)
+		{
+			for (PageDescriptor pageDescriptor : app.getMap())
+			{
+				if (pageUri.toString().equalsIgnoreCase(pageDescriptor.getSrc()))
+				{
+					return getFragmentIntentForPageDescriptor(pageDescriptor);
+				}
+			}
+		}
+		else
+		{
+			Page page = UiSettings.getInstance().getViewBuilder().buildPage(pageUri);
+
+			if (page != null)
+			{
+				return getFragmentIntentForPage(page);
+			}
 		}
 
 		return null;
