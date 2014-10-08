@@ -4,51 +4,35 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical"
-	android:descendantFocusability="blocksDescendants"
+	android:orientation="horizontal"
+	android:padding="10dp"
 >
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="horizontal"
-		android:padding="10dp"
-	>
-		<CheckBox
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/checkbox"
-			android:clickable="false"
-		/>
+	<CheckBox
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/checkbox"
+		android:clickable="false"
+	/>
 
-		<RelativeLayout
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+	>
+		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
-		>
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/title"
-				android:gravity="center_vertical"
-			/>
+			android:id="@+id/title"
+			android:gravity="center_vertical"
+		/>
 
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/description"
-				android:layout_below="@id/title"
-				android:visibility="gone"
-			/>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/embedded_links"
-				android:orientation="vertical"
-				android:layout_below="@id/description"
-				android:layout_marginTop="10dp"
-				android:visibility="gone"
-			/>
-		</RelativeLayout>
-	</LinearLayout>
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/description"
+			android:layout_below="@id/title"
+			android:visibility="gone"
+		/>
+	</RelativeLayout>
 </LinearLayout>
+
