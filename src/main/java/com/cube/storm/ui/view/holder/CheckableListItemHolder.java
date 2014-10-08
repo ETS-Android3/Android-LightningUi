@@ -1,5 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.CheckableListItem;
+import com.cube.storm.ui.view.ViewClickable;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.CheckableListItem} in the adapter
@@ -15,7 +17,7 @@ import com.cube.storm.ui.model.list.CheckableListItem;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class CheckableListItemHolder extends Holder<CheckableListItem> implements View.OnClickListener
+public class CheckableListItemHolder extends Holder<CheckableListItem> implements ViewClickable<CheckableListItem>
 {
 	protected TextView title;
 	protected CheckBox checkBox;
@@ -25,8 +27,6 @@ public class CheckableListItemHolder extends Holder<CheckableListItem> implement
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.checkable_list_item_view, parent, false);
 		title = (TextView)view.findViewById(R.id.title);
 		checkBox = (CheckBox)view.findViewById(R.id.checkbox);
-
-		checkBox.setOnClickListener(this);
 
 		return view;
 	}
@@ -41,8 +41,8 @@ public class CheckableListItemHolder extends Holder<CheckableListItem> implement
 		checkBox.setChecked(model.isVolatile());
 	}
 
-	@Override public void onClick(View view)
+	@Override public void onClick(@NonNull CheckableListItem model, @NonNull View view)
 	{
-		checkBox.setChecked(checkBox.isChecked() ? true : false);
+		checkBox.setChecked(!checkBox.isChecked());
 	}
 }
