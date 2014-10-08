@@ -3,6 +3,7 @@ package com.cube.storm.ui.lib.factory;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -38,10 +39,12 @@ public abstract class IntentFactory
 	public FragmentIntent getFragmentIntentForPage(@NonNull Page pageData)
 	{
 		FragmentIntent intent;
+		Bundle arguments = new Bundle();
+		arguments.putSerializable(StormActivity.EXTRA_PAGE, pageData);
 
 		if (pageData instanceof ListPage)
 		{
-			intent = new FragmentIntent(StormListFragment.class, pageData.getTitle() != null ? pageData.getTitle().getContent() : "", null);
+			intent = new FragmentIntent(StormListFragment.class, pageData.getTitle() != null ? pageData.getTitle().getContent() : "", arguments);
 			return intent;
 		}
 
@@ -61,10 +64,14 @@ public abstract class IntentFactory
 	public Intent getIntentForPage(@NonNull Context context, @NonNull Page pageData)
 	{
 		Intent intent;
+		Bundle arguments = new Bundle();
+		arguments.putSerializable(StormActivity.EXTRA_PAGE, pageData);
 
 		if (pageData instanceof ListPage)
 		{
 			intent = new Intent(context, StormActivity.class);
+			intent.putExtras(arguments);
+
 			return intent;
 		}
 
@@ -159,9 +166,12 @@ public abstract class IntentFactory
 		FragmentIntent intent;
 		Class<? extends Model> pageType = UiSettings.getInstance().getViewFactory().getModelForView(pageDescriptor.getType());
 
+		Bundle arguments = new Bundle();
+		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
+
 		if (ListPage.class.isAssignableFrom(pageType))
 		{
-			intent = new FragmentIntent(StormListFragment.class, null);
+			intent = new FragmentIntent(StormListFragment.class, null, arguments);
 			return intent;
 		}
 
@@ -183,11 +193,16 @@ public abstract class IntentFactory
 	public Intent getIntentForPageDescriptor(@NonNull Context context, @NonNull PageDescriptor pageDescriptor)
 	{
 		Intent intent;
+		Bundle arguments = new Bundle();
 		Class<? extends Model> pageType = UiSettings.getInstance().getViewFactory().getModelForView(pageDescriptor.getType());
+
+		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
 		if (ListPage.class.isAssignableFrom(pageType))
 		{
 			intent = new Intent(context, StormActivity.class);
+			intent.putExtras(arguments);
+
 			return intent;
 		}
 
