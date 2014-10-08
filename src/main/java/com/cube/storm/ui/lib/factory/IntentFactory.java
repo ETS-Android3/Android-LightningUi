@@ -147,6 +147,8 @@ public abstract class IntentFactory
 	 * Loads a fragment intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()} in the
 	 * {@link com.cube.storm.ui.view.View} enum.
 	 *
+	 * You should override this method to handle custom uris and cases
+	 *
 	 * @param pageDescriptor The page descriptor to load from
 	 *
 	 * @return The intent, or null if one was not suitable enough
@@ -169,6 +171,8 @@ public abstract class IntentFactory
 	/**
 	 * Loads an intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()} in the
 	 * {@link com.cube.storm.ui.view.View} enum.
+	 *
+	 * You should override this method to handle custom uris and cases
 	 *
 	 * @param context The context used to create the intent
 	 * @param pageDescriptor The page descriptor to load from
