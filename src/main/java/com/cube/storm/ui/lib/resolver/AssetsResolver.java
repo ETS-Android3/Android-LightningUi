@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.cube.storm.ui.lib.manager.FileManager;
+import com.cube.storm.util.lib.resolver.Resolver;
 
 import java.io.IOException;
 
@@ -23,7 +24,17 @@ public class AssetsResolver extends Resolver
 		this.context = context;
 	}
 
-	@Override public byte[] resolveUri(Uri uri)
+	@Override public Uri resolveUri(Uri uri)
+	{
+		if ("assets".equalsIgnoreCase(uri.getScheme()))
+		{
+			return uri;
+		}
+
+		return null;
+	}
+
+	@Override public byte[] resolveFile(Uri uri)
 	{
 		String filePath = "";
 

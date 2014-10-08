@@ -1,6 +1,8 @@
 package com.cube.storm;
 
 import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 
 import com.cube.storm.ui.data.ContentDensity;
 import com.cube.storm.ui.lib.factory.FileFactory;
@@ -9,14 +11,20 @@ import com.cube.storm.ui.lib.factory.ViewFactory;
 import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
+import com.cube.storm.ui.lib.resolver.AssetsResolver;
+import com.cube.storm.ui.lib.resolver.FileResolver;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.util.lib.resolver.Resolver;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -103,6 +111,11 @@ public class UiSettings
 	@Getter private ViewBuilder viewBuilder;
 
 	/**
+	 * Uri resolver used to load a file based on it's protocol
+	 */
+	@Getter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
+
+	/**
 	 * The builder class for {@link com.cube.storm.UiSettings}. Use this to create a new {@link com.cube.storm.UiSettings} instance
 	 * with the customised properties specific for your project.
 	 *
@@ -128,7 +141,7 @@ public class UiSettings
 			intentFactory(new IntentFactory(){});
 			viewFactory(new ViewFactory(){});
 			fileFactory(new FileFactory(){});
-			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(context).build());
+			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(context));
 			linkHandler(new LinkHandler());
 
 			contentDensity(ContentDensity.x1_00);
@@ -145,6 +158,9 @@ public class UiSettings
 			registerType(ListItem.class, baseProcessor);
 			registerType(ImageProperty.class, baseProcessor);
 			registerType(LinkProperty.class, baseProcessor);
+
+			registerUriResolver("file", new FileResolver());
+			registerUriResolver("assets", new AssetsResolver(context));
 
 			viewBuilder(new ViewBuilder());
 		}
@@ -189,20 +205,48 @@ public class UiSettings
 		}
 
 		/**
-		 * Sets the default image loader configuration
+		 * Sets the default image loader configuration.
+		 *
+		 * Note: The ImageDownloader set in the builder is overriden by this method to allow the use
+		 * of {@link #getUriResolvers()} to resolve the uris for loading images. Use {@link #registerUriResolver(String, com.cube.storm.util.lib.resolver.Resolver)}
+		 * to register any additional custom uris you wish to override.
+		 *
+		 * TODO: Find a better way to allow users to use their own imagedownloader, we should not be blocking this config
 		 *
 		 * @param configuration The new configuration for the image loader
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder imageLoaderConfiguration(ImageLoaderConfiguration configuration)
+		public Builder imageLoaderConfiguration(ImageLoaderConfiguration.Builder configuration)
 		{
 			if (construct.imageLoader.isInited())
 			{
 				construct.imageLoader.destroy();
 			}
 
-			construct.imageLoader.init(configuration);
+			configuration.imageDownloader(new BaseImageDownloader(context)
+			{
+				@Override public InputStream getStream(String imageUri, Object extra) throws IOException
+				{
+					// Loop through the resolvers to resolve the file
+					Uri fileUri = Uri.parse(imageUri);
+
+					if (!TextUtils.isEmpty(fileUri.getScheme()))
+					{
+						for (String protocol : UiSettings.getInstance().getUriResolvers().keySet())
+						{
+							if (protocol.equalsIgnoreCase(fileUri.getScheme()))
+							{
+								imageUri = UiSettings.getInstance().getUriResolvers().get(protocol).resolveUri(fileUri).toString();
+							}
+						}
+					}
+
+					return super.getStream(imageUri, extra);
+				}
+			});
+
+			construct.imageLoader.init(configuration.build());
 			return this;
 		}
 
@@ -257,6 +301,20 @@ public class UiSettings
 		public Builder registerType(Class instanceClass, ViewProcessor deserializer)
 		{
 			construct.viewProcessors.put(instanceClass, deserializer);
+			return this;
+		}
+
+		/**
+		 * Registers a uri resolver to use in the {@link com.cube.storm.ui.lib.factory.FileFactory}
+		 *
+		 * @param protocol The string protocol to register
+		 * @param resolver The resolver to use for the registered protocol
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerUriResolver(String protocol, Resolver resolver)
+		{
+			construct.uriResolvers.put(protocol, resolver);
 			return this;
 		}
 
