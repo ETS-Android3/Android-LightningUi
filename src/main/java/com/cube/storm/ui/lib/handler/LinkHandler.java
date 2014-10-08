@@ -30,7 +30,7 @@ public class LinkHandler
 	{
 		if (link instanceof InternalLinkProperty)
 		{
-			byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(context, Uri.parse(((InternalLinkProperty)link).getDestination()));
+			byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(Uri.parse(((InternalLinkProperty)link).getDestination()));
 			Page page = UiSettings.getInstance().getViewBuilder().buildPage(pageBytes);
 
 			Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPage(context, page);

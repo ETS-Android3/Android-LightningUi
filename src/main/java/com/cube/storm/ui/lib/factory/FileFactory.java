@@ -1,12 +1,10 @@
 package com.cube.storm.ui.lib.factory;
 
-import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.cube.storm.ui.lib.resolver.AssetsResolver;
-import com.cube.storm.ui.lib.resolver.FileResolver;
+import com.cube.storm.UiSettings;
 
 /**
  * Factory class used to resolve a file based on it's Uri
@@ -24,15 +22,15 @@ public abstract class FileFactory
 	 * @return The file byte array, nor null
 	 */
 	@Nullable
-	public byte[] loadFromUri(@NonNull Context context, @NonNull Uri fileUri)
+	public byte[] loadFromUri(@NonNull Uri fileUri)
 	{
-		if ("file".equalsIgnoreCase(fileUri.getScheme()))
+		// Loop through the resolvers to resolve the file
+		for (String protocol : UiSettings.getInstance().getUriResolvers().keySet())
 		{
-			return new FileResolver().resolveUri(fileUri);
-		}
-		else if ("assets".equalsIgnoreCase(fileUri.getScheme()))
-		{
-			return new AssetsResolver(context).resolveUri(fileUri);
+			if (protocol.equalsIgnoreCase(fileUri.getScheme()))
+			{
+				return UiSettings.getInstance().getUriResolvers().get(protocol).resolveFile(fileUri);
+			}
 		}
 
 		return null;
