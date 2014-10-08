@@ -8,7 +8,7 @@ import android.os.Parcel;
  * @author Callum Taylor
  * @project StormUI
  */
-public class UriLinkProperty extends LinkProperty
+public class UriLinkProperty extends DestinationLinkProperty
 {
 	@Override public int describeContents()
 	{
