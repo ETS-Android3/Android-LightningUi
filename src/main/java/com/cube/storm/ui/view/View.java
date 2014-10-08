@@ -12,6 +12,7 @@ import com.cube.storm.ui.view.holder.OrderedListItemHolder;
 import com.cube.storm.ui.view.holder.StandardListItemHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
 import com.cube.storm.ui.view.holder.TitleListItemHolder;
+import com.cube.storm.ui.view.holder.ToggleableListItemHolder;
 import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
 
 /**
@@ -40,6 +41,7 @@ public enum View
 	BulletListItem(com.cube.storm.ui.model.list.UnorderedListItem.class, UnorderedListItemHolder.class),
 	CheckableListItem(com.cube.storm.ui.model.list.CheckableListItem.class, CheckableListItemHolder.class),
 	ButtonListItem(com.cube.storm.ui.model.list.ButtonListItem.class, ButtonListItemHolder.class),
+	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemHolder.class),
 
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
 
