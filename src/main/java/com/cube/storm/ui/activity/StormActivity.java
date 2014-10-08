@@ -49,7 +49,7 @@ public class StormActivity extends Activity
 		else if (getIntent().getExtras().containsKey(EXTRA_URI))
 		{
 			String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
-			byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(this, Uri.parse(pageUri));
+			byte[] pageBytes = UiSettings.getInstance().getFileFactory().loadFromUri(Uri.parse(pageUri));
 
 			if (pageBytes != null)
 			{
