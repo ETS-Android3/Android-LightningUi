@@ -108,6 +108,42 @@ public abstract class IntentFactory
 	}
 
 	/**
+	 * Loads an intent from a Uri by finding the {@link com.cube.storm.ui.model.descriptor.PageDescriptor} in the {@link com.cube.storm.ui.model.App} model defined
+	 * in {@link com.cube.storm.UiSettings#getApp()}. It will load the page from disk if {@link com.cube.storm.UiSettings#getApp()} is null.
+	 *
+	 * @param pageUri The page uri
+	 *
+	 * @return The intent, or null if one was not suitable enough
+	 */
+	@Nullable
+	public Intent geIntentForPageUri(@NonNull Context context, @NonNull Uri pageUri)
+	{
+		App app = UiSettings.getInstance().getApp();
+
+		if (app != null)
+		{
+			for (PageDescriptor pageDescriptor : app.getMap())
+			{
+				if (pageUri.toString().equalsIgnoreCase(pageDescriptor.getSrc()))
+				{
+					return getIntentForPageDescriptor(context, pageDescriptor);
+				}
+			}
+		}
+		else
+		{
+			Page page = UiSettings.getInstance().getViewBuilder().buildPage(pageUri);
+
+			if (page != null)
+			{
+				return getIntentForPage(context, page);
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Loads a fragment intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()} in the
 	 * {@link com.cube.storm.ui.view.View} enum.
 	 *
