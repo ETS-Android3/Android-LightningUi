@@ -8,6 +8,7 @@ import com.cube.storm.ui.view.holder.Holder;
 import com.cube.storm.ui.view.holder.ImageListItemHolder;
 import com.cube.storm.ui.view.holder.ListFooterHolder;
 import com.cube.storm.ui.view.holder.ListHeaderHolder;
+import com.cube.storm.ui.view.holder.LogoListItemHolder;
 import com.cube.storm.ui.view.holder.OrderedListItemHolder;
 import com.cube.storm.ui.view.holder.StandardListItemHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
@@ -42,6 +43,7 @@ public enum View
 	CheckableListItem(com.cube.storm.ui.model.list.CheckableListItem.class, CheckableListItemHolder.class),
 	ButtonListItem(com.cube.storm.ui.model.list.ButtonListItem.class, ButtonListItemHolder.class),
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemHolder.class),
+	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemHolder.class),
 
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
 
