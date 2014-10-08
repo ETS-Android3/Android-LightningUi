@@ -7,6 +7,7 @@ import android.net.Uri;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.model.property.UriLinkProperty;
 
 /**
  * Link handler class used when a link is triggered in a holder
@@ -32,6 +33,19 @@ public class LinkHandler
 			{
 				context.startActivity(toLoad);
 			}
+		}
+		else if (link instanceof UriLinkProperty)
+		{
+			String destination = ((UriLinkProperty)link).getDestination();
+
+			if (destination.startsWith("tel://"))
+			{
+				destination = destination.replace("//", "");
+			}
+
+			Intent uriIntent = new Intent(Intent.ACTION_VIEW);
+			uriIntent.setData(Uri.parse(destination));
+			context.startActivity(uriIntent);
 		}
 	}
 }
