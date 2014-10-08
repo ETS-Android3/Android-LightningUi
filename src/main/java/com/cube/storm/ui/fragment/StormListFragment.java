@@ -1,6 +1,7 @@
 package com.cube.storm.ui.fragment;
 
 import android.app.Fragment;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
@@ -41,11 +43,16 @@ public class StormListFragment extends Fragment implements OnItemClickListener
 		if (getArguments().containsKey(StormActivity.EXTRA_PAGE))
 		{
 			page = (Page)getArguments().get(StormActivity.EXTRA_PAGE);
+		}
+		else if (getArguments().containsKey(StormActivity.EXTRA_URI))
+		{
+			String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
+			page = UiSettings.getInstance().getViewBuilder().buildPage(Uri.parse(pageUri));
+		}
 
-			if (page != null)
-			{
-				adapter.setItems(page.getChildren());
-			}
+		if (page != null)
+		{
+			adapter.setItems(page.getChildren());
 		}
 
 		listView.setAdapter(adapter);
