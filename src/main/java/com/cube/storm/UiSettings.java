@@ -111,7 +111,9 @@ public class UiSettings
 	@Getter private ViewBuilder viewBuilder;
 
 	/**
-	 * Uri resolver used to load a file based on it's protocol
+	 * Uri resolver used to load a file based on it's protocol. You should not need to use this instance
+	 * directly to load a file, instead use {@link com.cube.storm.ui.lib.factory.FileFactory} which uses this
+	 * to resolve a file and load it. Only use this if you want to load a specific scheme
 	 */
 	@Getter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
 
