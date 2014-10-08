@@ -1,9 +1,11 @@
 package com.cube.storm.ui.lib.parser;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.page.Page;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -51,6 +53,48 @@ public class ViewBuilder
 		}
 
 		return viewBuilder;
+	}
+
+	/**
+	 * Builds an App object from a file Uri
+	 *
+	 * @param fileUri The file Uri to load from
+	 *
+	 * @return The app data or null
+	 */
+	@Nullable
+	public App buildApp(@NonNull Uri fileUri)
+	{
+		byte[] appData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
+
+		if (appData != null)
+		{
+			return buildApp(appData);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Builds an App object from a json element
+	 *
+	 * @param app The json element page data
+	 *
+	 * @return The app data, or null
+	 */
+	@Nullable
+	public App buildApp(@NonNull byte[] app)
+	{
+		try
+		{
+			return build(new String(app, "UTF-8"), App.class);
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/**
