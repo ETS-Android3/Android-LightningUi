@@ -7,7 +7,7 @@ android {
 	defaultConfig {
 		applicationId "com.cube.storm.ui"
 		minSdkVersion 15
-		targetSdkVersion 19
+		targetSdkVersion 20
 		versionCode 1
 		versionName "1.0"
 	}
@@ -15,7 +15,8 @@ android {
 
 dependencies {
 	compile 'com.android.support:support-annotations:20.0.0'
-	compile 'com.nostra13.universalimageloader:universal-image-loader:1.8.+'
+	compile 'com.android.support:support-v13:20.0.0'
+	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 	compile 'org.projectlombok:lombok:1.14.8'
 	compile 'com.google.code.gson:gson:2.3'
 
