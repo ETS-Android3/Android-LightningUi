@@ -2,17 +2,19 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.Getter;
 
 /**
- * A view model
+ * A view model with a boolean property
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project StormUI
  */
-public class OrderedListItem extends DescriptionListItem
+public class CheckableListItem extends TitleListItem
 {
-	@Getter protected String annotation;
+	@SerializedName("volatile") @Getter protected boolean isVolatile;
 
 	@Override public int describeContents()
 	{

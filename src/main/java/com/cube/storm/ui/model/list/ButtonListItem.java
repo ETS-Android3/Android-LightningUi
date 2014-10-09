@@ -2,17 +2,19 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.model.property.ButtonProperty;
+
 import lombok.Getter;
 
 /**
- * A view model
+ * A view model with a button property
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project StormUI
  */
-public class OrderedListItem extends DescriptionListItem
+public class ButtonListItem extends TitleListItem
 {
-	@Getter protected String annotation;
+	@Getter protected ButtonProperty button;
 
 	@Override public int describeContents()
 	{
