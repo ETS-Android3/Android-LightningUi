@@ -14,6 +14,7 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.data.FragmentIntent;
+import com.cube.storm.ui.data.FragmentPackage;
 import com.cube.storm.ui.lib.adapter.StormPageAdapter;
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
@@ -57,7 +58,7 @@ public class StormTabbedFragment extends Fragment
 	protected void loadPages(@NonNull TabbedPageCollection collection)
 	{
 		pageAdapter = new StormPageAdapter(getActivity(), getFragmentManager());
-		ArrayList<FragmentIntent> fragmentPages = new ArrayList<FragmentIntent>();
+		ArrayList<FragmentPackage> fragmentPages = new ArrayList<FragmentPackage>();
 
 		if (collection.getPages() != null)
 		{
@@ -67,7 +68,8 @@ public class StormTabbedFragment extends Fragment
 
 				if (fragmentIntent != null)
 				{
-					fragmentPages.add(fragmentIntent);
+					FragmentPackage fragmentPackage = new FragmentPackage(fragmentIntent, tabbedPageDescriptor);
+					fragmentPages.add(fragmentPackage);
 				}
 			}
 		}

@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import com.cube.storm.ui.data.FragmentIntent;
+import com.cube.storm.ui.data.FragmentPackage;
+import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +28,7 @@ public class StormPageAdapter extends FragmentPagerAdapter
 	protected final Context context;
 	protected final FragmentManager manager;
 	@Setter @Getter protected int index = 0;
-	@Getter private List<FragmentIntent> pages = new ArrayList<FragmentIntent>(0);
+	@Getter private List<FragmentPackage> pages = new ArrayList<FragmentPackage>(0);
 
 	public StormPageAdapter(Context context, FragmentManager manager)
 	{
@@ -36,22 +38,32 @@ public class StormPageAdapter extends FragmentPagerAdapter
 		this.manager = manager;
 	}
 
-	public void setPages(@NonNull Collection<FragmentIntent> pages)
+	public void setPages(@NonNull Collection<FragmentPackage> pages)
 	{
-		this.pages = new ArrayList<FragmentIntent>(pages.size());
+		this.pages = new ArrayList<FragmentPackage>(pages.size());
 		this.pages.addAll(pages);
 	}
 
 	@Override public Fragment getItem(int index)
 	{
-		FragmentIntent intent = pages.get(index);
+		FragmentIntent intent = pages.get(index).getFragmentIntent();
 
 		return Fragment.instantiate(context, intent.getFragment().getName(), intent.getArguments());
 	}
 
 	@Override public CharSequence getPageTitle(int position)
 	{
-		return "";
+		FragmentPackage fragmentPackage = pages.get(position % pages.size());
+
+		if (fragmentPackage.getPageDescriptor() instanceof TabbedPageDescriptor)
+		{
+			if (((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle() != null)
+			{
+				return ((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle().getContent();
+			}
+		}
+
+		return fragmentPackage.getPageDescriptor().getName();
 	}
 
 	@Override public int getCount()
