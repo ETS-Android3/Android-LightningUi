@@ -2,7 +2,6 @@ package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.UnorderedListItem;
-import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
 import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
 import com.cube.storm.ui.view.holder.Holder;
 import com.cube.storm.ui.view.holder.ImageListItemHolder;
@@ -12,6 +11,7 @@ import com.cube.storm.ui.view.holder.OrderedListItemHolder;
 import com.cube.storm.ui.view.holder.StandardListItemHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
 import com.cube.storm.ui.view.holder.TitleListItemHolder;
+import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
 
 /**
  * This is the enum class with the list of all supported view types, their model classes and their
@@ -45,6 +45,13 @@ public enum View
 	 * Pages
 	 */
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
+	TabbedPageCollection(com.cube.storm.ui.model.page.TabbedPageCollection.class, null),
+
+	/**
+	 * Descriptors
+	 */
+	PageDescriptor(com.cube.storm.ui.model.descriptor.PageDescriptor.class, null),
+	TabbedPageDescriptor(com.cube.storm.ui.model.descriptor.TabbedPageDescriptor.class, null),
 
 	/**
 	 * Properties
