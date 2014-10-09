@@ -2,7 +2,7 @@ package com.cube.storm.ui.model.descriptor;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.TabBarItem;
 
 import lombok.Getter;
 
@@ -12,12 +12,9 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class PageDescriptor extends Model
+public class TabbedPageDescriptor extends PageDescriptor
 {
-	@Getter protected String name;
-	@Getter protected String type;
-	@Getter protected String src;
-	@Getter protected boolean startPage;
+	@Getter protected TabBarItem tabBarItem;
 
 	@Override public int describeContents()
 	{

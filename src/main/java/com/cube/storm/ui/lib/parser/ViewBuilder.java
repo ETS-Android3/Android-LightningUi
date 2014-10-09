@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.page.Page;
+import com.cube.storm.ui.model.page.TabbedPageCollection;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -163,6 +164,74 @@ public class ViewBuilder
 	public Page buildPage(@NonNull JsonElement page)
 	{
 		return build(page, Page.class);
+	}
+
+	/**
+	 * Builds a Page object from a file Uri
+	 *
+	 * @param fileUri The file Uri to load from
+	 *
+	 * @return The page data or null
+	 */
+	@Nullable
+	public TabbedPageCollection buildTabbedPage(@NonNull Uri fileUri)
+	{
+		byte[] pageData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
+
+		if (pageData != null)
+		{
+			return buildTabbedPage(pageData);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Builds a page object from a byte array json string
+	 *
+	 * @param page The byte array json string page data
+	 *
+	 * @return The page data, or null
+	 */
+	@Nullable
+	public TabbedPageCollection buildTabbedPage(@NonNull byte[] page)
+	{
+		try
+		{
+			return build(new String(page, "UTF-8"), TabbedPageCollection.class);
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Builds a page object from a json string
+	 *
+	 * @param page The json string page data
+	 *
+	 * @return The page data, or null
+	 */
+	@Nullable
+	public TabbedPageCollection buildTabbedPage(@NonNull String page)
+	{
+		return build(page, TabbedPageCollection.class);
+	}
+
+	/**
+	 * Builds a page object from a json element
+	 *
+	 * @param page The json element page data
+	 *
+	 * @return The page data, or null
+	 */
+	@Nullable
+	public TabbedPageCollection buildTabbedPage(@NonNull JsonElement page)
+	{
+		return build(page, TabbedPageCollection.class);
 	}
 
 	/**

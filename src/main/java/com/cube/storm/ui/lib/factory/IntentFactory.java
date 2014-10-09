@@ -11,11 +11,14 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormListFragment;
+import com.cube.storm.ui.fragment.StormTabbedFragment;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
+import com.cube.storm.ui.model.page.PageCollection;
+import com.cube.storm.ui.model.page.TabbedPageCollection;
 
 /**
  * This is the factory class which is used by Storm to decide which activity/fragments to instantiate
@@ -174,6 +177,11 @@ public abstract class IntentFactory
 			intent = new FragmentIntent(StormListFragment.class, null, arguments);
 			return intent;
 		}
+		else if (TabbedPageCollection.class.isAssignableFrom(pageType))
+		{
+			intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
+			return intent;
+		}
 
 		return null;
 	}
@@ -198,7 +206,8 @@ public abstract class IntentFactory
 
 		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
-		if (ListPage.class.isAssignableFrom(pageType))
+		if (Page.class.isAssignableFrom(pageType)
+		|| PageCollection.class.isAssignableFrom(pageType))
 		{
 			intent = new Intent(context, StormActivity.class);
 			intent.putExtras(arguments);

@@ -1,8 +1,10 @@
-package com.cube.storm.ui.model.descriptor;
+package com.cube.storm.ui.model.page;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
+
+import java.util.Collection;
 
 import lombok.Getter;
 
@@ -12,12 +14,9 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class PageDescriptor extends Model
+public class TabbedPageCollection extends PageCollection
 {
-	@Getter protected String name;
-	@Getter protected String type;
-	@Getter protected String src;
-	@Getter protected boolean startPage;
+	@Getter protected Collection<TabbedPageDescriptor> pages;
 
 	@Override public int describeContents()
 	{
