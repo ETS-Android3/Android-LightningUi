@@ -5,7 +5,6 @@ import android.os.Parcel;
 import com.cube.storm.ui.model.Model;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * // TODO: Add class description
@@ -15,9 +14,10 @@ import lombok.Setter;
  */
 public class PageDescriptor extends Model
 {
-	@Getter @Setter private String name;
-	@Getter @Setter private String type;
-	@Getter @Setter private String src;
+	@Getter protected String name;
+	@Getter protected String type;
+	@Getter protected String src;
+	@Getter protected boolean startPage;
 
 	@Override public int describeContents()
 	{
