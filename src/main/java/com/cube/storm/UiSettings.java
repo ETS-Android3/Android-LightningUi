@@ -161,12 +161,12 @@ public class UiSettings
 		public Builder(Context context)
 		{
 			this.construct = new UiSettings();
-			this.context = context;
+			this.context = context.getApplicationContext();
 
 			intentFactory(new IntentFactory(){});
 			viewFactory(new ViewFactory(){});
 			fileFactory(new FileFactory(){});
-			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(context));
+			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(this.context));
 			linkHandler(new LinkHandler());
 			textProcessor(new TextProcessor());
 
@@ -186,7 +186,7 @@ public class UiSettings
 			registerType(LinkProperty.class, baseProcessor);
 
 			registerUriResolver("file", new FileResolver());
-			registerUriResolver("assets", new AssetsResolver(context));
+			registerUriResolver("assets", new AssetsResolver(this.context));
 
 			viewBuilder(new ViewBuilder());
 		}
