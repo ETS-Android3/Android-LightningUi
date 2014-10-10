@@ -31,6 +31,6 @@ public class ListHeaderHolder extends Holder<ListHeader>
 
 	@Override public void populateView(ListHeader model)
 	{
-		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getHeader()));
+		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getHeader().getContent()));
 	}
 }

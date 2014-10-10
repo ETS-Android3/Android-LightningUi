@@ -31,7 +31,7 @@ public class TitleListItemHolder extends Holder<TitleListItem>
 	{
 		if (model.getTitle() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
 		}
 	}
 }

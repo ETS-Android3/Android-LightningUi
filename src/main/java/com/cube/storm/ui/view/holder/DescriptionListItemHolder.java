@@ -34,12 +34,12 @@ public class DescriptionListItemHolder extends Holder<DescriptionListItem>
 	{
 		if (model.getTitle() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
 		}
 
 		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
 		{
-			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription()));
+			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
 			description.setVisibility(View.VISIBLE);
 		}
 		else

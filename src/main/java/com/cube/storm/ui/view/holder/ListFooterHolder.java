@@ -31,6 +31,6 @@ public class ListFooterHolder extends Holder<ListFooter>
 
 	@Override public void populateView(ListFooter model)
 	{
-		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getFooter()));
+		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getFooter().getContent()));
 	}
 }

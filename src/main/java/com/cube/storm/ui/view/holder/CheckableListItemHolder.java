@@ -36,7 +36,7 @@ public class CheckableListItemHolder extends Holder<CheckableListItem> implement
 	{
 		if (model.getTitle() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
 		}
 
 		checkBox.setChecked(model.isVolatile());

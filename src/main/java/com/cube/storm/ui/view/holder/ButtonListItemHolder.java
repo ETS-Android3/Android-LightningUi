@@ -34,7 +34,7 @@ public class ButtonListItemHolder extends Holder<ButtonListItem>
 	{
 		if (model.getTitle() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
 			title.setVisibility(View.VISIBLE);
 		}
 		else
@@ -44,7 +44,7 @@ public class ButtonListItemHolder extends Holder<ButtonListItem>
 
 		if (model.getButton() != null)
 		{
-			button.setText(UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle()));
+			button.setText(UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent()));
 		}
 	}
 }

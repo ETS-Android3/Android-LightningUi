@@ -2,7 +2,6 @@ package com.cube.storm.ui.lib.processor;
 
 import android.support.annotation.Nullable;
 
-import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.util.lib.processor.Processor;
 
 /**
@@ -14,16 +13,16 @@ import com.cube.storm.util.lib.processor.Processor;
  * @author Callum Taylor
  * @project StormUI
  */
-public class TextProcessor extends Processor<TextProperty, String>
+public class TextProcessor extends Processor<String, String>
 {
 	@Nullable
-	@Override public String process(@Nullable TextProperty textProperty)
+	@Override public String process(@Nullable String textProperty)
 	{
 		if (textProperty == null)
 		{
 			return "";
 		}
 
-		return String.valueOf(textProperty.getContent());
+		return String.valueOf(textProperty);
 	}
 }
