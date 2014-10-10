@@ -6,6 +6,16 @@ This module's purpose is to take a structured collection of JSON files, parse th
 
 #Usage
 
+##Gradle
+
+Simply include the following for your gradle dependencies `com.cube:stormui:0.1.0`.
+
+**Note** The versioning of the library will always be as follows:
+
+`Major version.Minor version.Bug fix`
+
+It is safe to use `+` in part of of the `Bug fix` version, but do not trust it 100%. Always use a *specific* version to prevent regression errors.
+
 #Documentation
 
 See the Javadoc for full in-depth developer documentation
