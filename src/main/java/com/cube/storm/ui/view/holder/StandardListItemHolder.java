@@ -52,12 +52,12 @@ public class StandardListItemHolder extends Holder<StandardListItem> implements 
 
 		if (model.getTitle() != null)
 		{
-			title.setText(model.getTitle().getContent());
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
 		}
 
 		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
 		{
-			description.setText(model.getDescription().getContent());
+			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription()));
 			description.setVisibility(View.VISIBLE);
 		}
 		else

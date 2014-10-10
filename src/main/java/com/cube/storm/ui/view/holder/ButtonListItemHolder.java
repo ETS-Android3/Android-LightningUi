@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.ButtonListItem;
 
@@ -33,7 +34,7 @@ public class ButtonListItemHolder extends Holder<ButtonListItem>
 	{
 		if (model.getTitle() != null)
 		{
-			title.setText(model.getTitle().getContent());
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
 			title.setVisibility(View.VISIBLE);
 		}
 		else
@@ -43,7 +44,7 @@ public class ButtonListItemHolder extends Holder<ButtonListItem>
 
 		if (model.getButton() != null)
 		{
-			button.setText(model.getButton().getTitle().getContent());
+			button.setText(UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle()));
 		}
 	}
 }

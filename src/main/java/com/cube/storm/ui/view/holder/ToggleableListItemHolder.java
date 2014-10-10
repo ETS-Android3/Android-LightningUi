@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.ToggleableListItem;
 import com.cube.storm.ui.view.ViewClickable;
@@ -40,12 +41,12 @@ public class ToggleableListItemHolder extends Holder<ToggleableListItem> impleme
 	{
 		if (model.getTitle() != null)
 		{
-			title.setText(model.getTitle().getContent());
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
 		}
 
 		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
 		{
-			description.setText(model.getDescription().getContent());
+			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription()));
 		}
 
 		toggleContainer.setVisibility(View.GONE);

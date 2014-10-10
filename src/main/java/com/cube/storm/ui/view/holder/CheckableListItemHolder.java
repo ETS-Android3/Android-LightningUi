@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.CheckableListItem;
 import com.cube.storm.ui.view.ViewClickable;
@@ -35,7 +36,7 @@ public class CheckableListItemHolder extends Holder<CheckableListItem> implement
 	{
 		if (model.getTitle() != null)
 		{
-			title.setText(model.getTitle().getContent());
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
 		}
 
 		checkBox.setChecked(model.isVolatile());

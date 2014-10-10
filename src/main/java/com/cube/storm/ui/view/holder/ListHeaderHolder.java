@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.List.ListHeader;
 
@@ -30,6 +31,6 @@ public class ListHeaderHolder extends Holder<ListHeader>
 
 	@Override public void populateView(ListHeader model)
 	{
-		title.setText(model.getHeader().getContent());
+		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getHeader()));
 	}
 }

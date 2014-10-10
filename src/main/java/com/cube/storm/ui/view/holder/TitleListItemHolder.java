@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.TitleListItem;
 
@@ -30,7 +31,7 @@ public class TitleListItemHolder extends Holder<TitleListItem>
 	{
 		if (model.getTitle() != null)
 		{
-			title.setText(model.getTitle().getContent());
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
 		}
 	}
 }

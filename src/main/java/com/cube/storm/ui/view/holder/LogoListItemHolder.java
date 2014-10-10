@@ -48,7 +48,7 @@ public class LogoListItemHolder extends Holder<LogoListItem>
 
 		if (model.getTitle() != null && !TextUtils.isEmpty(model.getTitle().getContent()))
 		{
-			linkTitle.setText(model.getTitle().getContent());
+			linkTitle.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle()));
 			linkTitle.setVisibility(View.VISIBLE);
 		}
 		else
