@@ -1,8 +1,8 @@
 package com.cube.storm.ui.lib.parser;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.util.lib.processor.GsonProcessor;
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
@@ -14,32 +14,8 @@ import java.lang.reflect.Type;
  * @author Callum Taylor
  * @project StormUI
  */
-public abstract class ViewProcessor<T> implements JsonDeserializer<T>
+public abstract class ViewProcessor<T> extends GsonProcessor<T>
 {
-	/**
-	 * Called before the model is inflated from the json. Use this method to manipulate the json object.
-	 *
-	 * @param json The input json element
-	 *
-	 * @return The output json element. Defaults to return {@param json}
-	 */
-	public JsonElement preInflate(JsonElement json)
-	{
-		return json;
-	}
-
-	/**
-	 * Called after the model is inflated from the json. Use this method to manipulate the created instance.
-	 *
-	 * @param instance The inflated instance
-	 *
-	 * @return The output instance. Defaults to return {@param instance}
-	 */
-	public T postInflate(T instance)
-	{
-		return instance;
-	}
-
 	/**
 	 * Method called when resolving what class to inflate for the json element. Use this method to override
 	 * what class is used when inflating.

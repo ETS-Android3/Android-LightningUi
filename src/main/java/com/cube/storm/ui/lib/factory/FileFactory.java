@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.util.lib.resolver.Resolver;
 
 /**
  * Factory class used to resolve a file based on it's Uri
@@ -29,7 +30,12 @@ public abstract class FileFactory
 		{
 			if (protocol.equalsIgnoreCase(fileUri.getScheme()))
 			{
-				return UiSettings.getInstance().getUriResolvers().get(protocol).resolveFile(fileUri);
+				Resolver resolver = UiSettings.getInstance().getUriResolvers().get(protocol);
+
+				if (resolver != null)
+				{
+					return resolver.resolveFile(fileUri);
+				}
 			}
 		}
 

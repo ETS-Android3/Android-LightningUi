@@ -18,7 +18,6 @@ import com.cube.storm.ui.data.FragmentPackage;
 import com.cube.storm.ui.lib.adapter.StormPageAdapter;
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
-import com.cube.storm.util.lib.debug.Debug;
 
 import java.util.ArrayList;
 
@@ -73,8 +72,6 @@ public class StormTabbedFragment extends Fragment
 				}
 			}
 		}
-
-		Debug.out(indicator);
 
 		pageAdapter.setPages(fragmentPages);
 		viewPager.setAdapter(pageAdapter);

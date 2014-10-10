@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.List.ListFooter;
 
@@ -30,6 +31,6 @@ public class ListFooterHolder extends Holder<ListFooter>
 
 	@Override public void populateView(ListFooter model)
 	{
-		title.setText(model.getFooter().getContent());
+		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getFooter().getContent()));
 	}
 }

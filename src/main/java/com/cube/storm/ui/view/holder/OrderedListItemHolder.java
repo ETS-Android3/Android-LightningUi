@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.OrderedListItem;
 
@@ -40,12 +41,12 @@ public class OrderedListItemHolder extends Holder<OrderedListItem>
 
 		if (model.getTitle() != null)
 		{
-			title.setText(model.getTitle().getContent());
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
 		}
 
 		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
 		{
-			description.setText(model.getDescription().getContent());
+			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
 			description.setVisibility(View.VISIBLE);
 		}
 		else

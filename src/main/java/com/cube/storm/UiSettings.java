@@ -12,8 +12,9 @@ import com.cube.storm.ui.lib.factory.ViewFactory;
 import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
-import com.cube.storm.ui.lib.resolver.AssetsResolver;
-import com.cube.storm.ui.lib.resolver.FileResolver;
+import com.cube.storm.ui.lib.processor.TextProcessor;
+import com.cube.storm.util.lib.resolver.AssetsResolver;
+import com.cube.storm.util.lib.resolver.FileResolver;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
@@ -118,6 +119,11 @@ public class UiSettings
 	@Getter private ViewBuilder viewBuilder;
 
 	/**
+	 * Processor class used to process strings as part of {@link com.cube.storm.ui.model.property.TextProperty}
+	 */
+	@Getter private TextProcessor textProcessor;
+
+	/**
 	 * Uri resolver used to load a file based on it's protocol. You should not need to use this instance
 	 * directly to load a file, instead use {@link com.cube.storm.ui.lib.factory.FileFactory} which uses this
 	 * to resolve a file and load it. Only use this if you want to load a specific scheme
@@ -155,13 +161,14 @@ public class UiSettings
 		public Builder(Context context)
 		{
 			this.construct = new UiSettings();
-			this.context = context;
+			this.context = context.getApplicationContext();
 
 			intentFactory(new IntentFactory(){});
 			viewFactory(new ViewFactory(){});
 			fileFactory(new FileFactory(){});
-			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(context));
+			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(this.context));
 			linkHandler(new LinkHandler());
+			textProcessor(new TextProcessor());
 
 			contentDensity(ContentDensity.x1_00);
 
@@ -179,7 +186,7 @@ public class UiSettings
 			registerType(LinkProperty.class, baseProcessor);
 
 			registerUriResolver("file", new FileResolver());
-			registerUriResolver("assets", new AssetsResolver(context));
+			registerUriResolver("assets", new AssetsResolver(this.context));
 
 			viewBuilder(new ViewBuilder());
 		}
@@ -305,6 +312,19 @@ public class UiSettings
 		public Builder viewBuilder(ViewBuilder viewBuilder)
 		{
 			construct.viewBuilder = viewBuilder;
+			return this;
+		}
+
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.processor.TextProcessor} for the module
+		 *
+		 * @param textProcessor The new {@link com.cube.storm.ui.lib.processor.TextProcessor}
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder textProcessor(TextProcessor textProcessor)
+		{
+			construct.textProcessor = textProcessor;
 			return this;
 		}
 
