@@ -22,5 +22,5 @@ dependencies {
 	compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 
 	//This will change to a maven dependency
-	compile project(':Libraries:StormUtil')
+	compile project(':Libraries:LightningUtil')
 }
