@@ -13,6 +13,7 @@ import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
+import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
 import com.cube.storm.util.lib.resolver.FileResolver;
 import com.cube.storm.ui.model.App;
@@ -121,7 +122,7 @@ public class UiSettings
 	/**
 	 * Processor class used to process strings as part of {@link com.cube.storm.ui.model.property.TextProperty}
 	 */
-	@Getter private TextProcessor textProcessor;
+	@Getter private Processor<String, String> textProcessor;
 
 	/**
 	 * Uri resolver used to load a file based on it's protocol. You should not need to use this instance
@@ -316,13 +317,13 @@ public class UiSettings
 		}
 
 		/**
-		 * Sets the default {@link com.cube.storm.ui.lib.processor.TextProcessor} for the module
+		 * Sets the default {@link com.cube.storm.util.lib.processor.Processor} for the module
 		 *
-		 * @param textProcessor The new {@link com.cube.storm.ui.lib.processor.TextProcessor}
+		 * @param textProcessor The new {@link com.cube.storm.util.lib.processor.Processor}
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder textProcessor(TextProcessor textProcessor)
+		public Builder textProcessor(Processor<String, String> textProcessor)
 		{
 			construct.textProcessor = textProcessor;
 			return this;
