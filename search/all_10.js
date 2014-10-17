@@ -6,6 +6,8 @@ var searchData=
   ['textlistitem',['TextListItem',['../classcom_1_1cube_1_1storm_1_1ui_1_1model_1_1list_1_1_text_list_item.html',1,'com::cube::storm::ui::model::list']]],
   ['textlistitemholder',['TextListItemHolder',['../classcom_1_1cube_1_1storm_1_1ui_1_1view_1_1holder_1_1_text_list_item_holder.html',1,'com::cube::storm::ui::view::holder']]],
   ['textlistitemview',['TextListItemView',['../classcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_text_list_item_view.html',1,'com::cube::storm::ui::view']]],
+  ['textprocessor',['textProcessor',['../classcom_1_1cube_1_1storm_1_1_ui_settings.html#a0c53e5c6d3d4ca56e14f7de940f2ad8b',1,'com.cube.storm.UiSettings.textProcessor()'],['../classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a57970209176ac9f7acaf77c4ca69eecc',1,'com.cube.storm.UiSettings.Builder.textProcessor()']]],
+  ['textprocessor',['TextProcessor',['../classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1processor_1_1_text_processor.html',1,'com::cube::storm::ui::lib::processor']]],
   ['textproperty',['TextProperty',['../classcom_1_1cube_1_1storm_1_1ui_1_1model_1_1property_1_1_text_property.html',1,'com::cube::storm::ui::model::property']]],
   ['titlelistitem',['TitleListItem',['../classcom_1_1cube_1_1storm_1_1ui_1_1model_1_1list_1_1_title_list_item.html',1,'com::cube::storm::ui::model::list']]],
   ['titlelistitemholder',['TitleListItemHolder',['../classcom_1_1cube_1_1storm_1_1ui_1_1view_1_1holder_1_1_title_list_item_holder.html',1,'com::cube::storm::ui::view::holder']]],

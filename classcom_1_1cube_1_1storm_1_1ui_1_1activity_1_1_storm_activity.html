@@ -4,16 +4,24 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>StormUI: com.cube.storm.ui.activity.StormActivity Class Reference</title>
+<title>Lightning Ui: StormActivity Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -22,7 +30,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">StormUI
+   <div id="projectname">Lightning Ui
+   &#160;<span id="projectnumber">com.cube.storm.ui</span>
    </div>
   </td>
  </tr>
@@ -65,6 +74,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classcom_1_1cube_1_1storm_1_1ui_1_1activity_1_1_storm_activity.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -79,62 +103,61 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><b>com</b></li><li class="navelem"><b>cube</b></li><li class="navelem"><b>storm</b></li><li class="navelem"><b>ui</b></li><li class="navelem"><b>activity</b></li><li class="navelem"><a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1activity_1_1_storm_activity.html">StormActivity</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classcom_1_1cube_1_1storm_1_1ui_1_1activity_1_1_storm_activity-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">com.cube.storm.ui.activity.StormActivity Class Reference</div>  </div>
+<div class="title">StormActivity Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for com.cube.storm.ui.activity.StormActivity:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="classcom_1_1cube_1_1storm_1_1ui_1_1activity_1_1_storm_activity.png" usemap="#com.cube.storm.ui.activity.StormActivity_map" alt=""/>
-  <map id="com.cube.storm.ui.activity.StormActivity_map" name="com.cube.storm.ui.activity.StormActivity_map">
-</map>
- </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a3b341537e30a7e048d6d99f4a2ed10b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b341537e30a7e048d6d99f4a2ed10b5"></a>
+<tr class="memitem:a5c55387026022ef9c4298fa3ab37d93d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c55387026022ef9c4298fa3ab37d93d"></a>
 static final String&#160;</td><td class="memItemRight" valign="bottom"><b>EXTRA_PAGE</b> = &quot;stormui.page&quot;</td></tr>
-<tr class="separator:a3b341537e30a7e048d6d99f4a2ed10b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28ec452a27a0b6e87ad3f8698acd470f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28ec452a27a0b6e87ad3f8698acd470f"></a>
+<tr class="separator:a5c55387026022ef9c4298fa3ab37d93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a164005ffda506b0401c94cdf527432bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a164005ffda506b0401c94cdf527432bd"></a>
 static final String&#160;</td><td class="memItemRight" valign="bottom"><b>EXTRA_URI</b> = &quot;stormui.uri&quot;</td></tr>
-<tr class="separator:a28ec452a27a0b6e87ad3f8698acd470f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a164005ffda506b0401c94cdf527432bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a12e231960efa237c37bb6d20863e0c06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12e231960efa237c37bb6d20863e0c06"></a>
+<tr class="memitem:a85e87cb5ced88dff7c8173ecc4f636d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85e87cb5ced88dff7c8173ecc4f636d1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>onCreate</b> (Bundle savedInstanceState)</td></tr>
-<tr class="separator:a12e231960efa237c37bb6d20863e0c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c2f46356adf07508e636724a2037c82"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c2f46356adf07508e636724a2037c82"></a>
+<tr class="separator:a85e87cb5ced88dff7c8173ecc4f636d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a498aa3831ae82e84740f7e05062977cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a498aa3831ae82e84740f7e05062977cd"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>loadPage</b> (<a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1model_1_1page_1_1_page.html">Page</a> page)</td></tr>
-<tr class="separator:a5c2f46356adf07508e636724a2037c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa46aba214f7875edcbe4f66d5816743e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa46aba214f7875edcbe4f66d5816743e"></a>
+<tr class="separator:a498aa3831ae82e84740f7e05062977cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7d77843877cae50ebd44c2e1172c569"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7d77843877cae50ebd44c2e1172c569"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>loadPage</b> (<a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1data_1_1_fragment_intent.html">FragmentIntent</a> fragmentIntent)</td></tr>
-<tr class="separator:aa46aba214f7875edcbe4f66d5816743e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ac7d77843877cae50ebd44c2e1172c569"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base storm activity that hosts a single fragment to host any <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1model_1_1page_1_1_page.html">com.cube.storm.ui.model.page.Page</a> subclass.</p>
 <dl class="section author"><dt>Author</dt><dd>Callum Taylor  StormUI </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>com/cube/storm/ui/activity/StormActivity.java</li>
+</div><div class="dynheader">
+Inheritance diagram for StormActivity:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classcom_1_1cube_1_1storm_1_1ui_1_1activity_1_1_storm_activity.png" usemap="#StormActivity_map" alt=""/>
+  <map id="StormActivity_map" name="StormActivity_map">
+</map>
+ </div></div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>/Users/callumtaylor/Documents/Projects/Storm/Libraries/LightningUi/src/main/java/com/cube/storm/ui/activity/StormActivity.java</li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 9 2014 17:26:57 for StormUI by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.8
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>com</b></li><li class="navelem"><b>cube</b></li><li class="navelem"><b>storm</b></li><li class="navelem"><b>ui</b></li><li class="navelem"><b>activity</b></li><li class="navelem"><a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1activity_1_1_storm_activity.html">StormActivity</a></li>
+    <li class="footer">Generated on Fri Oct 17 2014 16:43:16 for Lightning Ui by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
+  </ul>
+</div>
 </body>
 </html>

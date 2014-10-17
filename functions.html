@@ -4,16 +4,24 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>StormUI: Class Members</title>
+<title>Lightning Ui: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -22,7 +30,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">StormUI
+   <div id="projectname">Lightning Ui
+   &#160;<span id="projectnumber">com.cube.storm.ui</span>
    </div>
   </td>
  </tr>
@@ -86,10 +95,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
-      <li class="current"><a href="#index_s"><span>s</span></a></li>
+      <li><a href="#index_s"><span>s</span></a></li>
+      <li><a href="#index_t"><span>t</span></a></li>
+      <li><a href="#index_u"><span>u</span></a></li>
+      <li class="current"><a href="#index_v"><span>v</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('functions.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -109,180 +135,245 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index__"></a>- _ -</h3><ul>
 <li>_ListHeader
-: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#a7893704492816c2f583e4c4be0946a4b">com.cube.storm.ui.view.View</a>
+: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#ae6d0565175b1343931e9a73f6f75b107">View</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
 <li>addItem()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1controller_1_1adapter_1_1_storm_list_adapter.html#af6a32a750a72e04c8b960ef4d38e5d16">com.cube.storm.ui.controller.adapter.StormListAdapter</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1controller_1_1adapter_1_1_storm_list_adapter.html#ab8c3bebfdfbd56be3be3dac1c3109174">StormListAdapter</a>
+</li>
+<li>app
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a05b5a24325d46227633053ca49de6234">UiSettings</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
+<li>build()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#a46eae60a80163c7a5896adc5b336d94f">ViewBuilder</a>
+, <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a7bb301e94af263fdbaf20da036b07589">UiSettings.Builder</a>
+</li>
 <li>buildApp()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#a204ed6c48c6ca8f8eb5e0d03154bd188">com.cube.storm.ui.lib.parser.ViewBuilder</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#ae44c78726d0eb39070ff5ecf781518f9">ViewBuilder</a>
+</li>
+<li>Builder()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a9e454e22bb81b1fa3ab730e4ae3e97df">UiSettings.Builder</a>
 </li>
 <li>buildPage()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#a1b0a5fafb6a27130addace7f534c90a1">com.cube.storm.ui.lib.parser.ViewBuilder</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#ad4bee51ba256e5784a1cff1a20b060c8">ViewBuilder</a>
 </li>
 <li>buildTabbedPage()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#ae2cca3da81306f23e6c5ba2ce85a79d0">com.cube.storm.ui.lib.parser.ViewBuilder</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#af64688bd33d83e590fdb2ef294ae468a">ViewBuilder</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>children
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1model_1_1page_1_1_list_page.html#ac51350bcc1ecce494a9343e99b76525b">com.cube.storm.ui.model.page.ListPage</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1model_1_1page_1_1_list_page.html#a1ad8f714abdea1bda23b85f8538d500d">ListPage</a>
+</li>
+<li>construct
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a7c95480fb1a01609d31625b6aa14fbe3">UiSettings.Builder</a>
+</li>
+<li>contentDensity()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#ab178b7e2455dcef4502a17921b81d5e9">UiSettings.Builder</a>
+, <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a1057234c7d4b820877ee94580bbaf071">UiSettings</a>
 </li>
 <li>createView()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1view_1_1holder_1_1_holder_3_01_t_01_4.html#aed31c288b0fbd53e2c8f44c9b6865925">com.cube.storm.ui.view.holder.Holder&lt; T &gt;</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1view_1_1holder_1_1_holder_3_01_t_01_4.html#a857a0584ede9ee7aa4a9ba94ecee611d">Holder&lt; T &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
-<li>fileExists()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1manager_1_1_file_manager.html#a7d82a303d582f4a43d3c896a9e5158cd">com.cube.storm.ui.lib.manager.FileManager</a>
+<li>fileFactory()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#aa670613e7f49fdace47f0905f800b8db">UiSettings.Builder</a>
+, <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a0d2af340e6eefc92745076abb773a6ec">UiSettings</a>
 </li>
 <li>fragmentIntent
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1data_1_1_fragment_package.html#ab850052cde386f2b9d242851eceb6fe6">com.cube.storm.ui.data.FragmentPackage</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1data_1_1_fragment_package.html#ad25c5497c9f92dd4a5751e5a8b4daf50">FragmentPackage</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
 <li>geIntentForPageUri()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#a52c10679520bf49507c98327ffd521d3">com.cube.storm.ui.lib.factory.IntentFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#ad61a61c4da8b9e79a465b75c77850f1c">IntentFactory</a>
 </li>
 <li>getClassFromName()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_processor_3_01_t_01_4.html#a6416d1bc98d9a95d1b1e9215a11835cc">com.cube.storm.ui.lib.parser.ViewProcessor&lt; T &gt;</a>
-</li>
-<li>getFileAge()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1manager_1_1_file_manager.html#a2dc5195c06e9855511bd1e2b4fd780a1">com.cube.storm.ui.lib.manager.FileManager</a>
-</li>
-<li>getFileHash()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1manager_1_1_file_manager.html#ac2a785d6f5c8a5f8893c528c78d4d4b3">com.cube.storm.ui.lib.manager.FileManager</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_processor_3_01_t_01_4.html#a0f75fa704e2cad95c5b5f2803f035636">ViewProcessor&lt; T &gt;</a>
 </li>
 <li>getFragmentIntentForPage()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#adeb716ed377b3a9850e375391b1ca4a9">com.cube.storm.ui.lib.factory.IntentFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#a7165bba27eaa7be875f0d913977b7cd4">IntentFactory</a>
 </li>
 <li>getFragmentIntentForPageDescriptor()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#a43e138fd2de38579848dda09aa0d466e">com.cube.storm.ui.lib.factory.IntentFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#af7e2521bc06463f9e50054b30aafb7bc">IntentFactory</a>
 </li>
 <li>getFragmentIntentForPageUri()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#adacefd53bbcf1916651ebbf9ccb2f34a">com.cube.storm.ui.lib.factory.IntentFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#a17dc4f23b912ff54fa29600e66687a47">IntentFactory</a>
+</li>
+<li>getGson()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#a1fac0935ce256f8f5e426d962274442a">ViewBuilder</a>
 </li>
 <li>getHolderClass()
-: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#af8e55a21bb66bcea93304aa20a55790d">com.cube.storm.ui.view.View</a>
+: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#ace2f04f0d34bab4a02f6f2f4348e547a">View</a>
 </li>
 <li>getHolderForView()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_view_factory.html#a429746eba67f5a06f2b34b084534ab72">com.cube.storm.ui.lib.factory.ViewFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_view_factory.html#ad416b233552835ed5c36328e946453f9">ViewFactory</a>
 </li>
 <li>getInstance()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a0285eac3182e67853dea2c6e8800ac11">com.cube.storm.UiSettings</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#aa6832d9ba818a52a4b6b882aac88556b">UiSettings</a>
 </li>
 <li>getIntentForPage()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#ad2a4a8a13ec26aa7ebf23402b413ff02">com.cube.storm.ui.lib.factory.IntentFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#ae61e3e6cf582337ceb966fe78f9b0890">IntentFactory</a>
 </li>
 <li>getIntentForPageDescriptor()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#aa222c3daea8d353db7cc3d74cb923f3b">com.cube.storm.ui.lib.factory.IntentFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_intent_factory.html#a7519696c753795f507b32175b5caba04">IntentFactory</a>
 </li>
 <li>getModelClass()
-: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#a283c4310470b2d6e1d71ddc7d788979d">com.cube.storm.ui.view.View</a>
+: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#a41049270dc855e385177155efb94a3c3">View</a>
 </li>
 <li>getModelForView()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_view_factory.html#afedbeee1b28569ed98cda92d66daa4db">com.cube.storm.ui.lib.factory.ViewFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_view_factory.html#ac9c779b8f7ab50720ba96cc27ed15912">ViewFactory</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
 <li>handleLink()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1handler_1_1_link_handler.html#a9de08042b5278bb0d3b9433a13293ae5">com.cube.storm.ui.lib.handler.LinkHandler</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1handler_1_1_link_handler.html#aad43188b622d84a81cfc294a4fbfb657">LinkHandler</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
 <li>Image
-: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#a060be3b1bf11c49e912556e6d8ddd47c">com.cube.storm.ui.view.View</a>
+: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#abbe0c74b95d97226a5e1f28a814631b8">View</a>
+</li>
+<li>imageLoader
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a4f119a87db8e954470824e8ed6539f1f">UiSettings</a>
+</li>
+<li>imageLoaderConfiguration()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#ab71c42a3ef4aed11d74125f95d4bad43">UiSettings.Builder</a>
+</li>
+<li>instance
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a87c17289f4c81b02e334480e85fa7bbd">UiSettings</a>
+</li>
+<li>intentFactory()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a038ec5e8e26a6996d3b5849e1bc8f221">UiSettings.Builder</a>
+, <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a555ee10f732d629aea167ae0b7db3f3d">UiSettings</a>
+</li>
+<li>items
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1controller_1_1adapter_1_1_storm_list_adapter.html#a3c888eca7250f24b2480bdd2e509928e">StormListAdapter</a>
+</li>
+<li>itemTypes
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1controller_1_1adapter_1_1_storm_list_adapter.html#a04480e359dafe113c54529a683db654f">StormListAdapter</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
+<li>linkHandler()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#acbf097ad8a552b7cee26b961e14dd979">UiSettings.Builder</a>
+, <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a6a8e58c7c59fd4c5d2cb34cc02cef3c2">UiSettings</a>
+</li>
 <li>List
-: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#adcdc3a496b36c9c81d2bc387ca3acae3">com.cube.storm.ui.view.View</a>
+: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#a17b4022430bcb8cf112cada5d768cdd4">View</a>
 </li>
 <li>ListPage
-: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#a7cf201cdc2e5dd23e5785c09456c1560">com.cube.storm.ui.view.View</a>
+: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#aeefd8eb7e48e32ef90d83b46d114985b">View</a>
 </li>
 <li>loadFromUri()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_file_factory.html#a175ccb1aa9c3cb33a72ef22f87ee3e99">com.cube.storm.ui.lib.factory.FileFactory</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1factory_1_1_file_factory.html#a67ff5badd6223061bbafe02f4182ebf4">FileFactory</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
 <li>onClick()
-: <a class="el" href="interfacecom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view_clickable_3_01_t_01extends_01_model_01_4.html#afe8a91e578960ddbf1c44c71e07a201c">com.cube.storm.ui.view.ViewClickable&lt; T extends Model &gt;</a>
+: <a class="el" href="interfacecom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view_clickable_3_01_t_01extends_01_model_01_4.html#a448e3a3a3a2745235f5a04b943c28f2d">ViewClickable&lt; T extends Model &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
 <li>pageDescriptor
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1data_1_1_fragment_package.html#ad19f4d6677fd8fcac93cfd4fcac19dcf">com.cube.storm.ui.data.FragmentPackage</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1data_1_1_fragment_package.html#a018df10e1a473c29806e8eb8bb5744a7">FragmentPackage</a>
 </li>
 <li>PageDescriptor
-: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#a7ce60640441d9d7fa78130f981bb10d0">com.cube.storm.ui.view.View</a>
+: <a class="el" href="enumcom_1_1cube_1_1storm_1_1ui_1_1view_1_1_view.html#ae2de72448b4c98982973817e115d5f6a">View</a>
 </li>
 <li>populateView()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1view_1_1holder_1_1_holder_3_01_t_01_4.html#a9128001a87cdc32974114bf0abc0e5b6">com.cube.storm.ui.view.holder.Holder&lt; T &gt;</a>
-</li>
-<li>postInflate()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_processor_3_01_t_01_4.html#a2d51d4c0dffd01052a4eaeed277b6b32">com.cube.storm.ui.lib.parser.ViewProcessor&lt; T &gt;</a>
-</li>
-<li>preInflate()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_processor_3_01_t_01_4.html#a03cc7fc0d6aa3818a88c89aa488ad94a">com.cube.storm.ui.lib.parser.ViewProcessor&lt; T &gt;</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1view_1_1holder_1_1_holder_3_01_t_01_4.html#a769d65ff87fcd92396c788146936ffeb">Holder&lt; T &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
-<li>readFile()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1manager_1_1_file_manager.html#abd0dfb7c9ca457a7e11fb7e90b5843ce">com.cube.storm.ui.lib.manager.FileManager</a>
-</li>
-<li>readFileAsJson()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1manager_1_1_file_manager.html#a7dcc7a019fd8d4009e078753f69bc5c1">com.cube.storm.ui.lib.manager.FileManager</a>
-</li>
-<li>readFileAsString()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1manager_1_1_file_manager.html#a7a858b855f6ee054f8a99394a941c08e">com.cube.storm.ui.lib.manager.FileManager</a>
-</li>
 <li>rebuild()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#a29b24a233ce7c3de2b5a039b0234037b">com.cube.storm.ui.lib.parser.ViewBuilder</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1lib_1_1parser_1_1_view_builder.html#a518e874f19ef2f2a390f96f3f63e2706">ViewBuilder</a>
+</li>
+<li>registerType()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a53f6e74d4713c0a268eb53d2334047f4">UiSettings.Builder</a>
+</li>
+<li>registerUriResolver()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#afdd5154101c2bb451b05e1a6171bcfcd">UiSettings.Builder</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
 <li>setApp()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a92e9e6ff2a1c1c4c885da6fc3638fa05">com.cube.storm.UiSettings</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#ac2d945c77137ff3d17f639af5cd2d3fe">UiSettings</a>
 </li>
 <li>setItems()
-: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1controller_1_1adapter_1_1_storm_list_adapter.html#ac2b0faf8abdf5de64862cfb47915147f">com.cube.storm.ui.controller.adapter.StormListAdapter</a>
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1ui_1_1controller_1_1adapter_1_1_storm_list_adapter.html#aee5116c88348b3ecb2ec87bb87f4c227">StormListAdapter</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>textProcessor()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a57970209176ac9f7acaf77c4ca69eecc">UiSettings.Builder</a>
+, <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a0c53e5c6d3d4ca56e14f7de940f2ad8b">UiSettings</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
+<li>UiSettings()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a50fc4dcc56385515eadbae5b452de050">UiSettings</a>
+</li>
+<li>uriResolvers
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#ace6f95b2f4e0e39446ec89a96bde0e1f">UiSettings</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
+<li>viewBuilder()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a7c97c81389d6581a60e0c240a035a39f">UiSettings.Builder</a>
+, <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#a4ce5c6d0cc4ab825cd647d43df21eb0f">UiSettings</a>
+</li>
+<li>viewFactory()
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings_1_1_builder.html#a3d6c83fb41e333f6341e1ed9443a5d79">UiSettings.Builder</a>
+, <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#aed3d916a1b3ffb351f5f945524793133">UiSettings</a>
+</li>
+<li>viewProcessors
+: <a class="el" href="classcom_1_1cube_1_1storm_1_1_ui_settings.html#ada2de6eceb11946ed0d75cc28b368a53">UiSettings</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 9 2014 17:26:57 for StormUI by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.8
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Fri Oct 17 2014 16:43:17 for Lightning Ui by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
+  </ul>
+</div>
 </body>
 </html>
