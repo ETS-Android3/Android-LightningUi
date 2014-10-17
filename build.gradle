@@ -7,9 +7,9 @@ android {
 	defaultConfig {
 		applicationId "com.cube.storm.ui"
 		minSdkVersion 15
-		targetSdkVersion 20
+		targetSdkVersion 19
 		versionCode 1
-		versionName "1.0"
+		versionName "0.1"
 	}
 }
 
