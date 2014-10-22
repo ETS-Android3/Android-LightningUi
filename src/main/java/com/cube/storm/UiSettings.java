@@ -189,7 +189,7 @@ public class UiSettings
 			registerUriResolver("file", new FileResolver());
 			registerUriResolver("assets", new AssetsResolver(this.context));
 
-			viewBuilder(new ViewBuilder());
+			viewBuilder(new ViewBuilder(){});
 		}
 
 		/**

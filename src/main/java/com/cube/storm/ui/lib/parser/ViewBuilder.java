@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
  * @author Callum Taylor
  * @project StormUI
  */
-public class ViewBuilder
+public abstract class ViewBuilder
 {
 	private static Gson viewBuilder;
 
