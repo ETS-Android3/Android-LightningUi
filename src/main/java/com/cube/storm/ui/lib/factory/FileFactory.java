@@ -25,18 +25,11 @@ public abstract class FileFactory
 	@Nullable
 	public byte[] loadFromUri(@NonNull Uri fileUri)
 	{
-		// Loop through the resolvers to resolve the file
-		for (String protocol : UiSettings.getInstance().getUriResolvers().keySet())
-		{
-			if (protocol.equalsIgnoreCase(fileUri.getScheme()))
-			{
-				Resolver resolver = UiSettings.getInstance().getUriResolvers().get(protocol);
+		Resolver resolver = UiSettings.getInstance().getUriResolvers().get(fileUri.getScheme());
 
-				if (resolver != null)
-				{
-					return resolver.resolveFile(fileUri);
-				}
-			}
+		if (resolver != null)
+		{
+			return resolver.resolveFile(fileUri);
 		}
 
 		return null;
