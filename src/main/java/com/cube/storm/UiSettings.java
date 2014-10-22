@@ -189,7 +189,7 @@ public class UiSettings
 			registerUriResolver("file", new FileResolver());
 			registerUriResolver("assets", new AssetsResolver(this.context));
 
-			viewBuilder(new ViewBuilder());
+			viewBuilder(new ViewBuilder(){});
 		}
 
 		/**
@@ -355,6 +355,19 @@ public class UiSettings
 		public Builder registerUriResolver(String protocol, Resolver resolver)
 		{
 			construct.uriResolvers.put(protocol, resolver);
+			return this;
+		}
+
+		/**
+		 * Registers a uri resolvers
+		 *
+		 * @param resolvers The map of resolvers to register
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerUriResolver(Map<String, Resolver> resolvers)
+		{
+			construct.uriResolvers.putAll(resolvers);
 			return this;
 		}
 
