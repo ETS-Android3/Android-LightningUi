@@ -8,7 +8,7 @@ This module's purpose is to take a structured collection of JSON files, parse th
 
 ##Gradle
 
-Simply include the following for your gradle dependencies `com.cube:storm.ui:0.1a`.
+Simply include the following for your gradle dependencies `com.3sidedcube.storm:ui:0.1a`.
 
 **Note** The versioning of the library will always be as follows:
 
