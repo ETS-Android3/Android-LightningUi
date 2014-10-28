@@ -1,12 +1,11 @@
 package com.cube.storm.ui.view.holder;
 
-import android.view.LayoutInflater;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
-import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.List.ListFooter;
 
 /**
@@ -21,16 +20,19 @@ public class ListFooterHolder extends Holder<ListFooter>
 {
 	protected TextView title;
 
-	@Override public View createView(ViewGroup parent)
+	public ListFooterHolder(View view)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_text_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
+		super(view);
 
-		return view;
 	}
 
 	@Override public void populateView(ListFooter model)
 	{
 		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getFooter().getContent()));
+	}
+
+	public static ViewHolder createView(ViewGroup parent)
+	{
+		return new ListFooterHolder(null);
 	}
 }
