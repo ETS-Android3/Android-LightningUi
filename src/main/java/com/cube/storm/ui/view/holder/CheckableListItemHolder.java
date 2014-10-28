@@ -9,6 +9,9 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.CheckableListItem;
+import com.cube.storm.ui.view.ViewClickable;
+
+import lombok.NonNull;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.CheckableListItem} in the adapter
@@ -24,7 +27,7 @@ public class CheckableListItemHolder extends ViewHolderController
 		mViewHolder = new CheckableListItemViewHolder(view);
 	}
 
-	private class CheckableListItemViewHolder extends ViewHolder<CheckableListItem>
+	private class CheckableListItemViewHolder extends ViewHolder<CheckableListItem> implements ViewClickable<CheckableListItem>
 	{
 		protected TextView title;
 		protected CheckBox checkBox;
@@ -43,6 +46,11 @@ public class CheckableListItemHolder extends ViewHolderController
 			{
 				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
 			}
+		}
+
+		@Override public void onClick(@NonNull CheckableListItem model, @NonNull View view)
+		{
+			checkBox.setChecked(!checkBox.isChecked());
 		}
 	}
 }
