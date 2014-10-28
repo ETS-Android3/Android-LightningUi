@@ -21,10 +21,11 @@ import lombok.NonNull;
  */
 public class CheckableListItemHolder extends ViewHolderController
 {
-	@Override public void createViewHolder(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.checkable_list_item_view, parent, false);
 		mViewHolder = new CheckableListItemViewHolder(view);
+		return mViewHolder;
 	}
 
 	private class CheckableListItemViewHolder extends ViewHolder<CheckableListItem> implements ViewClickable<CheckableListItem>
