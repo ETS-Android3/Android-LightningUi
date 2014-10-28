@@ -2,12 +2,9 @@ package com.cube.storm.ui.view.holder;
 
 import android.view.ViewGroup;
 
-import lombok.Getter;
-
 /**
- * Holder class which is used for populating the list. This class should be treated like any other
- * view holder, and should keep references of the views it needs to popuate within the class, and
- * referenced in {@link #populateView(Object)}
+ * Controller for the ViewHolder that will populate the view. This will instantiate the ViewHolder
+ * with the necessary view which is then retrievable with {@link ViewHolderController#getViewHolder()}
  *
  * @author Callum Taylor
  * @project Storm Test
