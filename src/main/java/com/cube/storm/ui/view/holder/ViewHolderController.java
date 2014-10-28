@@ -13,7 +13,7 @@ public abstract class ViewHolderController
 {
 	protected ViewHolder mViewHolder;
 
-	public abstract void createViewHolder(ViewGroup parent);
+	public abstract ViewHolder createViewHolder(ViewGroup parent);
 
 	/**
 	 * Retrieve the ViewHolder which is a member of the controller
