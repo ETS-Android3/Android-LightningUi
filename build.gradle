@@ -44,6 +44,10 @@ dependencies {
 	compile 'com.3sidedcube.storm:util:0.2'
 
 	compile project(':Libraries:LightningUi:Libraries:ExoPlayer:library')
+	compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+	compile 'com.android.support:recyclerview-v7:21.0.+'
+
+	compile 'com.3sidedcube.storm:util:0.2'
 }
 
 apply from: 'gradle/sonatype.gradle'
