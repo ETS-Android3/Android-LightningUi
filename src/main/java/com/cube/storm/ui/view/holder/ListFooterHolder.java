@@ -1,11 +1,12 @@
 package com.cube.storm.ui.view.holder;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.List.ListFooter;
 
 /**
@@ -16,23 +17,30 @@ import com.cube.storm.ui.model.list.List.ListFooter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class ListFooterHolder extends Holder<ListFooter>
+public class ListFooterHolder extends ViewHolderController
 {
-	protected TextView title;
-
-	public ListFooterHolder(View view)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
-		super(view);
-
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_text_list_item_view, parent, false);
+		mViewHolder = new ListFooterViewHolder(view);
+		return mViewHolder;
 	}
 
-	@Override public void populateView(ListFooter model)
+	private class ListFooterViewHolder extends ViewHolder<ListFooter>
 	{
-		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getFooter().getContent()));
-	}
+		protected TextView title;
 
-	public static ViewHolder createView(ViewGroup parent)
-	{
-		return new ListFooterHolder(null);
+		public ListFooterViewHolder(View itemView)
+		{
+			super(itemView);
+		}
+
+		@Override public void populateView(ListFooter model)
+		{
+			if (model != null)
+			{
+				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getFooter().getContent()));
+			}
+		}
 	}
 }
