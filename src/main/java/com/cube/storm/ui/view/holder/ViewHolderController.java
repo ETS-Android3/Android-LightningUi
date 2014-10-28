@@ -1,6 +1,5 @@
 package com.cube.storm.ui.view.holder;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
 
 import lombok.Getter;
