@@ -17,7 +17,7 @@ import com.cube.storm.ui.model.list.ButtonListItem;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class ButtonListItemHolder extends Holder<ButtonListItem>
+public class ButtonListItemHolder extends ViewHolderController<ButtonListItem>
 {
 	protected TextView title;
 	protected Button button;
