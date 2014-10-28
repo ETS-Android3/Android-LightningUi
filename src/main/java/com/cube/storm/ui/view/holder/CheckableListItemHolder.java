@@ -1,21 +1,20 @@
 package com.cube.storm.ui.view.holder;
 
-import com.cube.storm.UiSettings;
-
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.CheckableListItem;
+import com.cube.storm.ui.view.ViewClickable;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.CheckableListItem} in the adapter
@@ -103,6 +102,11 @@ public class CheckableListItemHolder extends ViewHolderController
 				SharedPreferences checkboxPrefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
 				checkboxPrefs.edit().putBoolean("checkbox_" + model.getId(), checkBox.isChecked()).apply();
 			}
+		}
+
+		@Override public void onClick(@NonNull CheckableListItem model, @NonNull View view)
+		{
+			checkBox.setChecked(!checkBox.isChecked());
 		}
 	}
 	}
