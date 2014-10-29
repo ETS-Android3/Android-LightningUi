@@ -1,35 +1,28 @@
 package com.cube.storm.ui.activity;
 
 import android.app.Activity;
-import android.media.MediaCodec.CryptoException;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.controller.RendererBuilder;
-import com.cube.storm.ui.controller.RendererBuilderCallback;
+import com.cube.storm.ui.controller.DemoPlayer;
+import com.cube.storm.ui.controller.DemoPlayer.RendererBuilder;
 import com.cube.storm.ui.lib.helper.YouTubeHelper;
 import com.cube.storm.ui.lib.parser.DefaultRendererBuilder;
+import com.cube.storm.ui.model.property.VideoProperty;
 import com.cube.storm.ui.view.VideoControllerView;
-import com.cube.storm.ui.view.VideoControllerView.OnControllerVisibilityChangeListener;
-import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
-import com.google.android.exoplayer.ExoPlayerLibraryInfo;
-import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
-import com.google.android.exoplayer.MediaCodecTrackRenderer.DecoderInitializationException;
-import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
 import com.google.android.exoplayer.VideoSurfaceView;
-import com.google.android.exoplayer.util.PlayerControl;
 
 /**
  * // TODO: Add class description
@@ -37,20 +30,17 @@ import com.google.android.exoplayer.util.PlayerControl;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, ExoPlayer.Listener, MediaCodecVideoTrackRenderer.EventListener, OnControllerVisibilityChangeListener
+public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, DemoPlayer.Listener
 {
-	public static final String CURRENT_POSITION = "current_position";
-	public static final String EXTRA_VIDEOS = "videos";
+	public static final String EXTRA_VIDEOS = "extra_videos";
+	public static final String EXTRA_FILE_NAME = "extra_file_name";
 
-	private ExoPlayer player;
-	private RendererBuilder builder;
-	private MediaCodecVideoTrackRenderer videoRenderer;
-	private RendererBuilderCallback callback;
+	private DemoPlayer player;
 
 	private VideoControllerView videoControllerView;
-	private Handler mainHandler;
 	private View shutterView;
 	private VideoSurfaceView surfaceView;
+	private Spinner videoChooser;
 
 	private Uri contentUri;
 
@@ -58,11 +48,16 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	private int playerPosition;
 	private boolean playerNeedsPrepare;
 
+	protected VideoProperty[] otherVideos;
+	private int playCount = 0;
+	private String fileName;
+
 	@Override protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video_player);
 
+		videoChooser = (Spinner)findViewById(R.id.videos);
 		View root = findViewById(R.id.root);
 		shutterView = findViewById(R.id.shutter);
 		surfaceView = (VideoSurfaceView) findViewById(R.id.surface_view);
@@ -70,7 +65,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		root.setOnTouchListener(new OnTouchListener()
 		{
 			@Override
-			public boolean onTouch(View arg0, MotionEvent arg1)
+			public boolean onTouch(View view, MotionEvent arg1)
 			{
 				if (arg1.getAction() == MotionEvent.ACTION_DOWN)
 				{
@@ -82,12 +77,65 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 		contentUri = getIntent().getData();
 
-		mainHandler = new Handler(getMainLooper());
 		videoControllerView = new VideoControllerView(this);
-		videoControllerView.setOnControllerVisibilityChangeListener(this);
 		videoControllerView.setAnchorView((FrameLayout)findViewById(R.id.root));
 
 		surfaceView.getHolder().addCallback(this);
+		Bundle bundle = getIntent().getExtras();
+		fileName = bundle.getString(EXTRA_FILE_NAME);
+
+		if (getIntent().hasExtra(EXTRA_VIDEOS) && bundle.getSerializable(EXTRA_VIDEOS) != null)
+		{
+			Object[] array = (Object[])bundle.getSerializable(EXTRA_VIDEOS);
+			otherVideos = new VideoProperty[array.length];
+
+			for (int index = 0; index < otherVideos.length; index++)
+			{
+				otherVideos[index] = (VideoProperty)array[index];
+			}
+
+			if (otherVideos != null && otherVideos.length > 1)
+			{
+				String[] locales = new String[otherVideos.length];
+				int selectedIndex = 0;
+
+				for (int index = 0; index < locales.length; index++)
+				{
+
+					locales[index] = "";
+
+					if (otherVideos[index].getDestination().getDestination().equals(fileName))
+					{
+						selectedIndex = index;
+					}
+				}
+
+				ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, locales);
+
+				videoChooser.setVisibility(View.VISIBLE);
+				videoChooser.setAdapter(adapter);
+				videoChooser.setSelection(selectedIndex);
+				videoChooser.setOnItemSelectedListener(new OnItemSelectedListener()
+				{
+					@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+					{
+						if (playCount++ > 0)
+						{
+							System.out.println(otherVideos[position].getDestination().getDestination());
+							contentUri = Uri.parse(otherVideos[position].getDestination().getDestination());
+							autoPlay = true;
+							player.release();
+							player = null;
+							preparePlayer();
+						}
+					}
+
+					@Override public void onNothingSelected(AdapterView<?> parent)
+					{
+					}
+				});
+			}
+		}
 	}
 
 	@Override
@@ -111,17 +159,24 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 	private void preparePlayer()
 	{
-		Log.e("preparePlayer", "prepare player");
 		if (player == null)
 		{
-			player = ExoPlayer.Factory.newInstance(2, 1000, 5000);
-			player.addListener(this);
-			player.seekTo(playerPosition);
-			playerNeedsPrepare = true;
-			videoControllerView.setMediaPlayer(new PlayerControl(player));
-			videoControllerView.setEnabled(true);
+			RendererBuilder builder = getRendererBuilder();
 
-			//getRendererBuilder();
+			if (builder == null)
+			{
+				return;
+			}
+			else
+			{
+				player = new DemoPlayer(builder);
+				player.addListener(this);
+				player.seekTo(playerPosition);
+
+				playerNeedsPrepare = true;
+				videoControllerView.setMediaPlayer(player.getPlayerControl());
+				videoControllerView.setEnabled(true);
+			}
 		}
 
 		if (playerNeedsPrepare)
@@ -129,16 +184,48 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 			player.prepare();
 			playerNeedsPrepare = false;
 		}
+
+		player.setSurface(surfaceView.getHolder().getSurface());
 		maybeStartPlayback();
 	}
 
-	private void getRendererBuilder()
+	private void prepareYoutubePlayer(RendererBuilder rendererBuilder)
 	{
-		Log.e("getRenderer", "getrendrer");
+		if (player == null)
+		{
+			player = new DemoPlayer(rendererBuilder);
+			player.addListener(this);
+			player.seekTo(playerPosition);
 
+			playerNeedsPrepare = true;
+			videoControllerView.setMediaPlayer(player.getPlayerControl());
+			videoControllerView.setEnabled(true);
+		}
+
+		if (playerNeedsPrepare)
+		{
+			player.prepare();
+			playerNeedsPrepare = false;
+		}
+
+		player.setSurface(surfaceView.getHolder().getSurface());
+		maybeStartPlayback();
+	}
+
+	private void maybeStartPlayback()
+	{
+		if (autoPlay && (player.getSurface().isValid() || player.getSelectedTrackIndex(DemoPlayer.TYPE_VIDEO) == DemoPlayer.DISABLED_TRACK))
+		{
+			player.setPlayWhenReady(true);
+			autoPlay = false;
+		}
+	}
+
+	private RendererBuilder getRendererBuilder()
+	{
 		if (contentUri.getScheme().equals("assets"))
 		{
-			loadPlayer(new DefaultRendererBuilder(this, contentUri));
+			return new DefaultRendererBuilder(this, contentUri);
 		}
 		else if (isYoutubeVideo(contentUri))
 		{
@@ -147,7 +234,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 				@Override public void onStreamingUrlFetched(String streamingUrl)
 				{
 					contentUri = Uri.parse(streamingUrl);
-					loadPlayer(new DefaultRendererBuilder(VideoPlayerActivity.this, Uri.parse(streamingUrl)));
+					prepareYoutubePlayer(new DefaultRendererBuilder(VideoPlayerActivity.this, Uri.parse(streamingUrl)));
 				}
 
 				@Override public void onFailed(String failMessage)
@@ -155,36 +242,12 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 					videoFailed();
 				}
 			});
+			return null;
 		}
-	}
-
-	private void loadPlayer(RendererBuilder rendererBuilder)
-	{
-		Log.e("loadPlayer", "LoadPlayer");
-
-		try
+		else
 		{
-			builder = rendererBuilder;
-
-			callback = new RendererBuilderCallback(this);
-			builder.buildRenderers(callback);
+			return null;
 		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			videoFailed();
-		}
-	}
-
-	public void onRenderers(RendererBuilderCallback callback, MediaCodecVideoTrackRenderer videoRenderer, MediaCodecAudioTrackRenderer audioRenderer)
-	{
-		Log.e("onRenderes", "onRenderer");
-
-
-		this.callback = null;
-		this.videoRenderer = videoRenderer;
-		player.prepare(videoRenderer, audioRenderer);
-		maybeStartPlayback();
 	}
 
 	public void videoFailed()
@@ -193,22 +256,18 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		finish();
 	}
 
-	private void maybeStartPlayback()
+	@Override
+	public void onStateChanged(boolean playWhenReady, int playbackState)
 	{
-		Log.e("maybeStartPlayback", "maybeStartPlayback");
-		Log.e("maybeStartPlayback", "maybeStartPlayback " + autoPlay);
-
-		Surface surface = surfaceView.getHolder().getSurface();
-
-		player.sendMessage(videoRenderer, MediaCodecVideoTrackRenderer.MSG_SET_SURFACE, surface);
-		player.setPlayWhenReady(true);
-		if (autoPlay)
+		if (playbackState == ExoPlayer.STATE_ENDED)
 		{
-			player.setPlayWhenReady(true);
-			autoPlay = false;
-			getRendererBuilder();
-
+			showControls();
 		}
+	}
+
+	private void showControls()
+	{
+		videoControllerView.show(0);
 	}
 
 	private void toggleControlsVisibility()
@@ -233,17 +292,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		}
 	}
 
-	public static String getUserAgent()
-	{
-		String versionName = "?";
-
-		return "ExoPlayerDemo/" + versionName + " (Linux;Android " + Build.VERSION.RELEASE + ") " + "ExoPlayerLib/" + ExoPlayerLibraryInfo.VERSION;
-	}
-
-	public Handler getMainHandler() {
-		return mainHandler;
-	}
-
 	public boolean isYoutubeVideo(Uri uri)
 	{
 		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
@@ -251,65 +299,33 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 	@Override public void surfaceCreated(SurfaceHolder holder)
 	{
-		maybeStartPlayback();
+		if (player != null)
+		{
+			player.setSurface(holder.getSurface());
+			maybeStartPlayback();
+		}
 	}
 
 	@Override public void surfaceDestroyed(SurfaceHolder holder)
+	{
+		if (player != null)
+		{
+			player.blockingClearSurface();
+		}
+	}
+
+	@Override public void onError(Exception e)
 	{
 
 	}
 
 	@Override public void onVideoSizeChanged(int width, int height)
 	{
+		shutterView.setVisibility(View.GONE);
 		surfaceView.setVideoWidthHeightRatio(height == 0 ? 1 : (float) width / height);
 	}
 
-	@Override public void onDrawnToSurface(Surface surface)
-	{
-		shutterView.setVisibility(View.GONE);
-	}
-
 	@Override public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
-	{
-
-	}
-
-	@Override public void onDecoderInitializationError(DecoderInitializationException e)
-	{
-
-	}
-
-	@Override public void onCryptoError(CryptoException e)
-	{
-
-	}
-
-	@Override public void onPlayerStateChanged(boolean playWhenReady, int playbackState)
-	{
-
-	}
-
-	@Override public void onPlayWhenReadyCommitted()
-	{
-
-	}
-
-	@Override public void onPlayerError(ExoPlaybackException error)
-	{
-
-	}
-
-	@Override public void onDroppedFrames(int count, long elapsed)
-	{
-
-	}
-
-	@Override public void onHide()
-	{
-
-	}
-
-	@Override public void onShow()
 	{
 
 	}

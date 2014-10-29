@@ -21,7 +21,7 @@ public final class RendererBuilderCallback
 
 	public void onRenderers(MediaCodecVideoTrackRenderer videoRenderer, MediaCodecAudioTrackRenderer audioRenderer)
 	{
-		videoPlayerActivity.onRenderers(this, videoRenderer, audioRenderer);
+		//videoPlayerActivity.onRenderers(this, videoRenderer, audioRenderer);
 	}
 
 	public void onRenderersError(Exception e)

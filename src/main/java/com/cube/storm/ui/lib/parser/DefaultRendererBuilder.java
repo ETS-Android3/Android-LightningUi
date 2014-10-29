@@ -19,11 +19,13 @@ import android.media.MediaCodec;
 import android.net.Uri;
 
 import com.cube.storm.ui.activity.VideoPlayerActivity;
-import com.cube.storm.ui.controller.RendererBuilder;
-import com.cube.storm.ui.controller.RendererBuilderCallback;
+import com.cube.storm.ui.controller.DemoPlayer;
+import com.cube.storm.ui.controller.DemoPlayer.RendererBuilder;
+import com.cube.storm.ui.controller.DemoPlayer.RendererBuilderCallback;
 import com.google.android.exoplayer.FrameworkSampleSource;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
+import com.google.android.exoplayer.TrackRenderer;
 
 public class DefaultRendererBuilder implements RendererBuilder
 {
@@ -38,15 +40,21 @@ public class DefaultRendererBuilder implements RendererBuilder
 	}
 
 	@Override
-	public void buildRenderers(RendererBuilderCallback callback)
+	public void buildRenderers(DemoPlayer player, RendererBuilderCallback callback)
 	{
 		// Build the video and audio renderers.
 		FrameworkSampleSource sampleSource = new FrameworkSampleSource(playerActivity, uri, null, 2);
+		MediaCodecVideoTrackRenderer videoRenderer = new MediaCodecVideoTrackRenderer(sampleSource, null, true, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT, 5000, player.getMainHandler(), player, 50);
+		MediaCodecAudioTrackRenderer audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource, null, true, player.getMainHandler(), player);
 
-		MediaCodecVideoTrackRenderer videoRenderer = new MediaCodecVideoTrackRenderer(sampleSource, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT, 0, playerActivity.getMainHandler(), playerActivity, 50);
-		MediaCodecAudioTrackRenderer audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource);
+		// Build the debug renderer.
+		TrackRenderer debugRenderer = null;
 
 		// Invoke the callback.
-		callback.onRenderers(videoRenderer, audioRenderer);
+		TrackRenderer[] renderers = new TrackRenderer[DemoPlayer.RENDERER_COUNT];
+		renderers[DemoPlayer.TYPE_VIDEO] = videoRenderer;
+		renderers[DemoPlayer.TYPE_AUDIO] = audioRenderer;
+		renderers[DemoPlayer.TYPE_DEBUG] = debugRenderer;
+		callback.onRenderers(null, null, renderers);
 	}
 }

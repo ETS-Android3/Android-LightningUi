@@ -43,6 +43,8 @@ dependencies {
 
 	//This will change to a maven dependency
 	compile project(':Libraries:LightningUtil')
+	compile project(':Libraries:ExoPlayer:library')
+	compile project(':Libraries:AsyncHttpClient')
 }
 
 apply from: 'gradle/sonatype.gradle'
