@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.data.FragmentPackage;
@@ -63,7 +64,14 @@ public class StormPageAdapter extends FragmentPagerAdapter
 			}
 		}
 
-		return fragmentPackage.getPageDescriptor().getName();
+		String tabName = "";
+
+		if (!TextUtils.isEmpty(fragmentPackage.getPageDescriptor().getName()))
+		{
+			tabName = fragmentPackage.getPageDescriptor().getName();
+		}
+
+		return tabName;
 	}
 
 	@Override public int getCount()
