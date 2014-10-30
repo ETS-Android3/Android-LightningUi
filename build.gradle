@@ -40,9 +40,8 @@ dependencies {
 	compile 'org.projectlombok:lombok:1.14.8'
 	compile 'com.google.code.gson:gson:2.3'
 	compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-
-	//This will change to a maven dependency
-	compile project(':Libraries:LightningUtil')
+	
+	compile 'com.3sidedcube.storm:util:0.2'
 }
 
 apply from: 'gradle/sonatype.gradle'
