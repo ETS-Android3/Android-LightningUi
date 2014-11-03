@@ -1,8 +1,10 @@
 package com.cube.storm.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -24,6 +26,9 @@ import com.cube.storm.ui.view.VideoControllerView;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.VideoSurfaceView;
 
+import java.io.File;
+import java.util.ArrayList;
+
 /**
  * // TODO: Add class description
  *
@@ -34,6 +39,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 {
 	public static final String EXTRA_VIDEOS = "extra_videos";
 	public static final String EXTRA_FILE_NAME = "extra_file_name";
+	public static final String URI_NATIVE = "app://";
+	public static final String SELECTED_ITEM = "selected_item";
 
 	private DemoPlayer player;
 
@@ -75,8 +82,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 			}
 		});
 
-		contentUri = getIntent().getData();
-
 		videoControllerView = new VideoControllerView(this);
 		videoControllerView.setAnchorView((FrameLayout)findViewById(R.id.root));
 
@@ -86,25 +91,37 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 		if (getIntent().hasExtra(EXTRA_VIDEOS) && bundle.getSerializable(EXTRA_VIDEOS) != null)
 		{
-			Object[] array = (Object[])bundle.getSerializable(EXTRA_VIDEOS);
-			otherVideos = new VideoProperty[array.length];
+			ArrayList< VideoProperty> array = (ArrayList<VideoProperty>)bundle.getSerializable(EXTRA_VIDEOS);
+			otherVideos = new VideoProperty[array.size()];
 
 			for (int index = 0; index < otherVideos.length; index++)
 			{
-				otherVideos[index] = (VideoProperty)array[index];
+				otherVideos[index] = array.get(index);
 			}
 
 			if (otherVideos != null && otherVideos.length > 1)
 			{
 				String[] locales = new String[otherVideos.length];
-				int selectedIndex = 0;
+				int selectedIndex;
+
+				if (savedInstanceState != null)
+				{
+					selectedIndex = savedInstanceState.getInt(SELECTED_ITEM);
+					contentUri = Uri.parse(otherVideos[selectedIndex].getSrc().getDestination());
+				}
+				else
+				{
+					selectedIndex = 0;
+					contentUri = Uri.parse(otherVideos[0].getSrc().getDestination());
+
+				}
 
 				for (int index = 0; index < locales.length; index++)
 				{
 
-					locales[index] = "";
+					locales[index] = otherVideos[index].getLocale();
 
-					if (otherVideos[index].getDestination().getDestination().equals(fileName))
+					if (otherVideos[index].getSrc().getDestination().equals(fileName))
 					{
 						selectedIndex = index;
 					}
@@ -121,11 +138,13 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 					{
 						if (playCount++ > 0)
 						{
-							System.out.println(otherVideos[position].getDestination().getDestination());
-							contentUri = Uri.parse(otherVideos[position].getDestination().getDestination());
+							contentUri = Uri.parse(otherVideos[position].getSrc().getDestination());
 							autoPlay = true;
-							player.release();
-							player = null;
+							if (player != null)
+							{
+								player.release();
+								player = null;
+							}
 							preparePlayer();
 						}
 					}
@@ -155,6 +174,13 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	{
 		super.onDestroy();
 		releasePlayer();
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState)
+	{
+		savedInstanceState.putInt(SELECTED_ITEM, videoChooser.getSelectedItemPosition());
+		super.onSaveInstanceState(savedInstanceState);
 	}
 
 	private void preparePlayer()
@@ -193,13 +219,20 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	{
 		if (player == null)
 		{
-			player = new DemoPlayer(rendererBuilder);
-			player.addListener(this);
-			player.seekTo(playerPosition);
+			if (rendererBuilder == null)
+			{
+				return;
+			}
+			else
+			{
+				player = new DemoPlayer(rendererBuilder);
+				player.addListener(this);
+				player.seekTo(playerPosition);
 
-			playerNeedsPrepare = true;
-			videoControllerView.setMediaPlayer(player.getPlayerControl());
-			videoControllerView.setEnabled(true);
+				playerNeedsPrepare = true;
+				videoControllerView.setMediaPlayer(player.getPlayerControl());
+				videoControllerView.setEnabled(true);
+			}
 		}
 
 		if (playerNeedsPrepare)
@@ -217,14 +250,32 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		if (autoPlay && (player.getSurface().isValid() || player.getSelectedTrackIndex(DemoPlayer.TYPE_VIDEO) == DemoPlayer.DISABLED_TRACK))
 		{
 			player.setPlayWhenReady(true);
-			autoPlay = false;
+			//autoPlay = false;
 		}
 	}
 
 	private RendererBuilder getRendererBuilder()
 	{
+		if (contentUri.getScheme().equals("cache"))
+		{
+			contentUri = getUriForAutoFile(this, contentUri);
+		}
+
 		if (contentUri.getScheme().equals("assets"))
 		{
+			return new DefaultRendererBuilder(this, contentUri);
+		}
+		else if (contentUri.getScheme().equals("file"))
+		{
+			File f = new File(contentUri.getPath());
+			System.out.println(contentUri.toString());
+			System.out.println(f.getAbsolutePath());
+			if (!f.exists())
+			{
+				videoFailed();
+				return null;
+			}
+
 			return new DefaultRendererBuilder(this, contentUri);
 		}
 		else if (isYoutubeVideo(contentUri))
@@ -233,7 +284,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 			{
 				@Override public void onStreamingUrlFetched(String streamingUrl)
 				{
-					contentUri = Uri.parse(streamingUrl);
 					prepareYoutubePlayer(new DefaultRendererBuilder(VideoPlayerActivity.this, Uri.parse(streamingUrl)));
 				}
 
@@ -246,6 +296,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		}
 		else
 		{
+			videoFailed();
 			return null;
 		}
 	}
@@ -286,7 +337,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	{
 		if (player != null)
 		{
-			playerPosition = player.getCurrentPosition();
+			//playerPosition = player.getCurrentPosition();
 			player.release();
 			player = null;
 		}
@@ -296,6 +347,56 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	{
 		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
 	}
+
+	/**
+	 * cache://content/image -> file:///cache/path/for/image or
+	 * assets://content/image
+	 *
+	 * @param c
+	 * @param fileUri
+	 * @return
+	 */
+	public Uri getUriForAutoFile(Context c, Uri fileUri)
+	{
+		if (fileUri.getScheme().equals(URI_NATIVE.replace("://", "")))
+		{
+			return fileUri;
+		}
+		else
+		{
+			File f = new File(this.getCacheDir().getPath() + "/" + fileUri.getHost() + "/" + fileUri.getPath());
+
+			if (f.exists())
+			{
+				return Uri.fromFile(f);
+			}
+			else
+			{
+				try
+				{
+					String path = "";
+
+					if (!TextUtils.isEmpty(fileUri.getHost()))
+					{
+						path += fileUri.getHost();
+					}
+
+					if (!TextUtils.isEmpty(fileUri.getPath()))
+					{
+						path += fileUri.getPath();
+					}
+
+					return Uri.parse("assets://" + path);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+	}
+
 
 	@Override public void surfaceCreated(SurfaceHolder holder)
 	{
