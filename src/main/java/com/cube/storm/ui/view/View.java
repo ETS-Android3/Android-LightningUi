@@ -15,6 +15,7 @@ import com.cube.storm.ui.view.holder.TextListItemHolder;
 import com.cube.storm.ui.view.holder.TitleListItemHolder;
 import com.cube.storm.ui.view.holder.ToggleableListItemHolder;
 import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
+import com.cube.storm.ui.view.holder.VideoListItemHolder;
 
 /**
  * This is the enum class with the list of all supported view types, their model classes and their
@@ -47,6 +48,7 @@ public enum View
 	ButtonListItem(com.cube.storm.ui.model.list.ButtonListItem.class, ButtonListItemHolder.class),
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemHolder.class),
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemHolder.class),
+	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemHolder.class),
 
 	/**
 	 * Pages
