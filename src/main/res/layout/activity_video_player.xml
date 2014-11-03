@@ -6,13 +6,6 @@
 	android:layout_height="match_parent"
 	android:keepScreenOn="true"
 >
-
-	<Spinner
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/videos"
-	/>
-
 	<com.google.android.exoplayer.VideoSurfaceView android:id="@+id/surface_view"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -23,6 +16,12 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:background="@android:color/black"
+	/>
+
+	<Spinner
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/videos"
 	/>
 
 </FrameLayout>
