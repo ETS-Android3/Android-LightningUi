@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.property;
 import android.os.Parcel;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * // TODO: Add class description
@@ -13,8 +12,8 @@ import lombok.Setter;
  */
 public class VideoProperty extends Property
 {
-	@Setter @Getter protected String locale;
-	@Setter @Getter protected DestinationLinkProperty destination;
+	@Getter protected String locale;
+	@Getter protected ExternalLinkProperty src;
 
 	@Override public int describeContents()
 	{

@@ -3,6 +3,7 @@ package com.cube.storm.ui.model.property;
 import android.os.Parcel;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A link property with a destination Uri variable. Destination can be any Uri. This class is not
@@ -14,7 +15,7 @@ import lombok.Getter;
  */
 public class DestinationLinkProperty extends LinkProperty
 {
-	@Getter protected String destination;
+	@Setter @Getter protected String destination;
 
 	@Override public int describeContents()
 	{
