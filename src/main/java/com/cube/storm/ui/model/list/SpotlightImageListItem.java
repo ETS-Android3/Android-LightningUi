@@ -15,7 +15,7 @@ import java.util.Collection;
  */
 public class SpotlightImageListItem extends ListItem
 {
-	private Collection<SpotlightImageProperty> images;
+	private Collection<SpotlightImageProperty> spotlightImages;
 
 	@Override public int describeContents()
 	{
