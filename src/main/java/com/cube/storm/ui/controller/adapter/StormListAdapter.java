@@ -3,7 +3,7 @@ package com.cube.storm.ui.controller.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView.Adapter;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 
@@ -13,6 +13,7 @@ import com.cube.storm.ui.model.list.Divider;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.List.ListFooter;
 import com.cube.storm.ui.model.list.List.ListHeader;
+import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ import java.util.Collection;
  * @author Callum Taylor
  * @project StormUI
  */
-public class StormListAdapter extends Adapter<com.cube.storm.ui.view.holder.ViewHolder<?> >
+public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?> >
 {
 	/**
 	 * The list of models of the views we are rendering in the list. This is a 1 dimensional representation

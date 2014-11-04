@@ -3,13 +3,13 @@ package com.cube.storm.ui.fragment;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnItemTouchListener;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
@@ -21,16 +21,16 @@ import com.cube.storm.ui.view.ViewClickable;
 
 import lombok.Getter;
 
-public class StormListFragment extends Fragment implements OnItemClickListener
+public class StormListFragment extends Fragment implements OnItemTouchListener
 {
-	@Getter private ListView listView;
+	@Getter private RecyclerView listView;
 	@Getter private StormListAdapter adapter;
 	@Getter private Page page;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View v = inflater.inflate(R.layout.list_page_fragment_view, container, false);
-		listView = (ListView)v.findViewById(android.R.id.list);
+		listView = (RecyclerView)v.findViewById(android.R.id.list);
 
 		return v;
 	}
@@ -56,13 +56,13 @@ public class StormListFragment extends Fragment implements OnItemClickListener
 			adapter.setItems(page.getChildren());
 		}
 
-		listView.setAdapter((ListAdapter)adapter);
-		listView.setOnItemClickListener(this);
+		listView.setAdapter(adapter);
+		listView.addOnItemTouchListener(this);
 	}
 
-	@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+	@Override public void onItemTouch(AdapterView<?> parent, View view, int position, long id)
 	{
-		Model item = (Model)listView.getItemAtPosition(position);
+		ViewHolder item = (ViewHolder)listView.findViewHolderForPosition(position);
 
 		if (view.getTag() != null && view.getTag() instanceof ViewClickable)
 		{
