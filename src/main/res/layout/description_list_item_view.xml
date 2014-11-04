@@ -4,7 +4,6 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:minHeight="72dp"
 	android:orientation="vertical"
 	android:paddingLeft="16dp"
 	android:paddingRight="16dp"
@@ -19,15 +18,16 @@
 		android:textColor="#dd000000"
 		android:textSize="16sp"
 		android:fontFamily="sans-serif-regular"
+		android:layout_gravity="center_vertical"
 	/>
 
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/description"
-		android:visibility="gone"
 		android:textColor="#89000000"
 		android:textSize="14sp"
 		android:fontFamily="sans-serif-regular"
+		android:visibility="gone"
 	/>
 </LinearLayout>

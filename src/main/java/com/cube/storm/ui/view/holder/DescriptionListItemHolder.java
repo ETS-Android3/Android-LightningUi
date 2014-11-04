@@ -32,19 +32,29 @@ public class DescriptionListItemHolder extends Holder<DescriptionListItem>
 
 	@Override public void populateView(DescriptionListItem model)
 	{
+		description.setVisibility(View.GONE);
+		title.setVisibility(View.GONE);
+
 		if (model.getTitle() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				title.setText(content);
+				title.setVisibility(View.VISIBLE);
+			}
 		}
 
-		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
+		if (model.getDescription() != null)
 		{
-			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
-			description.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			description.setVisibility(View.GONE);
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				description.setText(content);
+				description.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 }
