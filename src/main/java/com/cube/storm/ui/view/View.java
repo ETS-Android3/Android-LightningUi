@@ -13,6 +13,7 @@ import com.cube.storm.ui.view.holder.LogoListItemHolder;
 import com.cube.storm.ui.view.holder.OrderedListItemHolder;
 import com.cube.storm.ui.view.holder.StandardListItemHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
+import com.cube.storm.ui.view.holder.TitleListItemHolder;
 import com.cube.storm.ui.view.holder.ToggleableListItemHolder;
 import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
 import com.cube.storm.ui.view.holder.VideoListItemHolder;
@@ -40,6 +41,7 @@ public enum View
 	List(com.cube.storm.ui.model.list.List.class, null),
 	TextListItem(com.cube.storm.ui.model.list.TextListItem.class, TextListItemHolder.class),
 	ImageListItem(com.cube.storm.ui.model.list.ImageListItem.class, ImageListItemHolder.class),
+	TitleListItem(com.cube.storm.ui.model.list.TitleListItem.class, TitleListItemHolder.class),
 	DescriptionListItem(com.cube.storm.ui.model.list.DescriptionListItem.class, DescriptionListItemHolder.class),
 	StandardListItem(com.cube.storm.ui.model.list.StandardListItem.class, StandardListItemHolder.class),
 	OrderedListItem(com.cube.storm.ui.model.list.OrderedListItem.class, OrderedListItemHolder.class),
