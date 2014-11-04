@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
+import com.cube.storm.ui.model.descriptor.WebPageDescriptor;
 import com.cube.storm.ui.model.property.ExternalLinkProperty;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
@@ -72,6 +73,19 @@ public class LinkHandler
 			if (isYoutubeVideo(Uri.parse(((ExternalLinkProperty)link).getDestination())) || isVideo(Uri.parse(((ExternalLinkProperty)link).getDestination())))
 			{
 				VideoPageDescriptor page = new VideoPageDescriptor();
+				page.setSrc(((ExternalLinkProperty)link).getDestination());
+				page.setType("content");
+
+				Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(context, page);
+
+				if (toLoad != null)
+				{
+					context.startActivity(toLoad);
+				}
+			}
+			else
+			{
+				WebPageDescriptor page = new WebPageDescriptor();
 				page.setSrc(((ExternalLinkProperty)link).getDestination());
 				page.setType("content");
 
