@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.data.FragmentPackage;
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
@@ -60,7 +61,7 @@ public class StormPageAdapter extends FragmentPagerAdapter
 		{
 			if (((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle() != null)
 			{
-				return ((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle().getContent();
+				return UiSettings.getInstance().getTextProcessor().process(((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle().getContent());
 			}
 		}
 
@@ -71,7 +72,7 @@ public class StormPageAdapter extends FragmentPagerAdapter
 			tabName = fragmentPackage.getPageDescriptor().getName();
 		}
 
-		return tabName;
+		return UiSettings.getInstance().getTextProcessor().process(tabName);
 	}
 
 	@Override public int getCount()
