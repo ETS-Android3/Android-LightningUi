@@ -2,7 +2,7 @@ package com.cube.storm.ui.lib.factory;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.View;
-import com.cube.storm.ui.view.holder.Holder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 
 /**
  * This is the factory class which is used by Storm to help with getting the correct view holder/controller
@@ -20,7 +20,7 @@ public abstract class ViewFactory
 	 *
 	 * @return The view holder class or null if one was not found.
 	 */
-	public Class<? extends Holder> getHolderForView(String viewName)
+	public Class<? extends ViewHolderController> getHolderForView(String viewName)
 	{
 		try
 		{

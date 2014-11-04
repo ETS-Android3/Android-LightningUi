@@ -17,44 +17,52 @@ import com.cube.storm.ui.model.list.ButtonListItem;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class ButtonListItemHolder extends ViewHolderController<ButtonListItem>
+public class ButtonListItemHolder extends ViewHolderController
 {
-	protected TextView title;
-	protected Button button;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.button_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
-		button = (Button)view.findViewById(R.id.button);
-
-		return view;
+		return new ButtonListItemViewHolder(view);
 	}
 
-	@Override public void populateView(ButtonListItem model)
+	private class ButtonListItemViewHolder extends ViewHolder<ButtonListItem>
 	{
-		title.setVisibility(View.GONE);
-		button.setVisibility(View.GONE);
+		protected TextView title;
+		protected Button button;
 
-		if (model.getTitle() != null)
+		public ButtonListItemViewHolder(View view)
 		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+			super(view);
 
-			if (!TextUtils.isEmpty(content))
-			{
-				title.setText(content);
-				title.setVisibility(View.VISIBLE);
-			}
+			title = (TextView)view.findViewById(R.id.title);
+			button = (Button)view.findViewById(R.id.button);
 		}
 
-		if (model.getButton() != null)
+		@Override public void populateView(ButtonListItem model)
 		{
+			title.setVisibility(View.GONE);
+			button.setVisibility(View.GONE);
+
 			String content = UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent());
 
 			if (!TextUtils.isEmpty(content))
 			{
 				button.setText(content);
 				button.setVisibility(View.VISIBLE);
+			if (model.getTitle() != null)
+			{
+				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+				title.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				title.setVisibility(View.GONE);
+			}
+
+			if (model.getButton() != null)
+			{
+				button.setText(UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent()));
 			}
 		}
 	}

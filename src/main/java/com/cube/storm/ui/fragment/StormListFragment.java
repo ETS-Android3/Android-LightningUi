@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.cube.storm.UiSettings;
@@ -55,7 +56,7 @@ public class StormListFragment extends Fragment implements OnItemClickListener
 			adapter.setItems(page.getChildren());
 		}
 
-		listView.setAdapter(adapter);
+		listView.setAdapter((ListAdapter)adapter);
 		listView.setOnItemClickListener(this);
 	}
 

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.StandardListItem;
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.ViewClickable;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -22,79 +24,90 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * @author Alan Le Fournis
  * @project Storm
  */
-public class StandardListItemHolder extends Holder<StandardListItem> implements ViewClickable<StandardListItem>
+public class StandardListItemHolder extends ViewHolderController
 {
-	protected ImageView image;
-	protected TextView title;
-	protected TextView description;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.standard_list_item_view, parent, false);
-		image = (ImageView)view.findViewById(R.id.image);
-		title = (TextView)view.findViewById(R.id.title);
-		description = (TextView)view.findViewById(R.id.description);
 
-		return view;
+		return new StandardListItemViewHolder(view);
 	}
 
-	@Override public void populateView(final StandardListItem model)
+	private class StandardListItemViewHolder extends ViewHolder<StandardListItem> implements OnClickListener
 	{
-		image.setVisibility(View.GONE);
+		protected ImageView image;
+		protected TextView title;
+		protected TextView description;
+		protected LinkProperty link;
 
-		if (model.getImage() != null)
+		public StandardListItemViewHolder(View view)
 		{
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
+			super(view);
+
+			image = (ImageView)view.findViewById(R.id.image);
+			title = (TextView)view.findViewById(R.id.title);
+			description = (TextView)view.findViewById(R.id.description);
+		}
+
+		@Override public void populateView(final StandardListItem model)
+		{
+			link = model.getLink();
+			image.setVisibility(View.GONE);
+
+			if (model.getImage() != null)
 			{
-				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 				{
-					if (loadedImage != null)
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
 					{
-						image.setVisibility(View.VISIBLE);
+						if (loadedImage != null)
+						{
+							image.setVisibility(View.VISIBLE);
+						}
 					}
-				}
 
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+						{
+							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						}
+					}
+				});
+			}
+
+			description.setVisibility(View.GONE);
+			title.setVisibility(View.GONE);
+
+			if (model.getTitle() != null)
+			{
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+				if (!TextUtils.isEmpty(content))
 				{
-					if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
-					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
-					}
+					title.setText(content);
+					title.setVisibility(View.VISIBLE);
 				}
-			});
-		}
-
-		description.setVisibility(View.GONE);
-		title.setVisibility(View.GONE);
-
-		if (model.getTitle() != null)
-		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
-
-			if (!TextUtils.isEmpty(content))
-			{
-				title.setText(content);
-				title.setVisibility(View.VISIBLE);
 			}
-		}
 
-		if (model.getDescription() != null)
-		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
-
-			if (!TextUtils.isEmpty(content))
+			if (model.getDescription() != null)
 			{
-				description.setText(content);
-				description.setVisibility(View.VISIBLE);
-			}
-		}
-	}
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
 
-	@Override public void onClick(@NonNull StandardListItem model, @NonNull View view)
-	{
-		if (model.getLink() != null)
+				if (!TextUtils.isEmpty(content))
+				{
+					description.setText(content);
+					description.setVisibility(View.VISIBLE);
+				}
+		}
+
+		@Override public void onClick(@NonNull StandardListItem model, @NonNull View view)
 		{
-			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getLink());
+			if (model.getLink() != null)
+			{
+				UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getLink());
+			}
 		}
 	}
 }

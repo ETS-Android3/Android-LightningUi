@@ -16,44 +16,58 @@ import com.cube.storm.ui.model.list.DescriptionListItem;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class DescriptionListItemHolder extends Holder<DescriptionListItem>
+public class DescriptionListItemHolder extends ViewHolderController
 {
-	protected TextView title;
-	protected TextView description;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.description_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
-		description = (TextView)view.findViewById(R.id.description);
 
-		return view;
+		return new DescriptionListItemViewHolder(view);
 	}
 
-	@Override public void populateView(DescriptionListItem model)
+	private class DescriptionListItemViewHolder extends ViewHolder<DescriptionListItem>
 	{
-		description.setVisibility(View.GONE);
-		title.setVisibility(View.GONE);
+		protected TextView title;
+		protected TextView description;
 
-		if (model.getTitle() != null)
+		public DescriptionListItemViewHolder(View view)
 		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+			super(view);
 
-			if (!TextUtils.isEmpty(content))
-			{
-				title.setText(content);
-				title.setVisibility(View.VISIBLE);
-			}
+			title = (TextView)view.findViewById(R.id.title);
+			description = (TextView)view.findViewById(R.id.description);
 		}
 
-		if (model.getDescription() != null)
+		@Override public void populateView(DescriptionListItem model)
 		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
+			description.setVisibility(View.GONE);
+			title.setVisibility(View.GONE);
 
-			if (!TextUtils.isEmpty(content))
+			if (model.getTitle() != null)
 			{
-				description.setText(content);
-				description.setVisibility(View.VISIBLE);
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+				if (!TextUtils.isEmpty(content))
+				{
+					title.setText(content);
+					title.setVisibility(View.VISIBLE);
+				}
+			}
+
+			if (model.getDescription() != null)
+			{
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
+
+				if (!TextUtils.isEmpty(content))
+				{
+					description.setText(content);
+					description.setVisibility(View.VISIBLE);
+				}
+			}
+			else
+			{
+				description.setVisibility(View.GONE);
 			}
 		}
 	}

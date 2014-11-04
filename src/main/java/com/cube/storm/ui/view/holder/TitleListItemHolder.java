@@ -16,30 +16,41 @@ import com.cube.storm.ui.model.list.TitleListItem;
  * @author Alan Le Fournis
  * @project StormUI
  */
-public class TitleListItemHolder extends Holder<TitleListItem>
+public class TitleListItemHolder extends ViewHolderController
 {
-	protected TextView title;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.title_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
 
-		return view;
+		mViewHolder = new TitleListItemViewHolder(view);
+
+		return mViewHolder;
 	}
 
-	@Override public void populateView(TitleListItem model)
+	private class TitleListItemViewHolder extends ViewHolder<TitleListItem>
 	{
-		title.setVisibility(View.GONE);
+		protected TextView title;
 
-		if (model.getTitle() != null)
+		public TitleListItemViewHolder(View view)
 		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+			super(view);
+			title = (TextView)view.findViewById(R.id.title);
+		}
 
-			if (!TextUtils.isEmpty(content))
+		@Override public void populateView(TitleListItem model)
+		{
+			title.setVisibility(View.GONE);
+
+			if (model.getTitle() != null)
 			{
-				title.setText(content);
-				title.setVisibility(View.VISIBLE);
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+				if (!TextUtils.isEmpty(content))
+				{
+					title.setText(content);
+					title.setVisibility(View.VISIBLE);
+				}
 			}
 		}
 	}

@@ -19,23 +19,31 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * @author Alan Le Fournis
  * @project StormUI
  */
-public class ImageListItemHolder extends Holder<ImageListItem>
+public class ImageListItemHolder extends ViewHolderController
 {
-	protected ImageView image;
-	protected ProgressBar progress;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_list_item_view, parent, false);
-		image = (ImageView)view.findViewById(R.id.image);
-		progress = (ProgressBar)view.findViewById(R.id.progress);
 
-		return view;
+		mViewHolder = new DescriptionListItemViewHolder(view);
+
+		return mViewHolder;
 	}
 
-	@Override public void populateView(final ImageListItem model)
+	private class DescriptionListItemViewHolder extends ViewHolder<ImageListItem>
 	{
-		if (model.getImage() != null)
+		protected ImageView image;
+		protected ProgressBar progress;
+
+		public DescriptionListItemViewHolder(View view)
+		{
+			super(view);
+			image = (ImageView)view.findViewById(R.id.image);
+			progress = (ProgressBar)view.findViewById(R.id.progress);
+		}
+
+		@Override public void populateView(final ImageListItem model)
 		{
 			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 			{
@@ -60,6 +68,13 @@ public class ImageListItemHolder extends Holder<ImageListItem>
 				{
 					image.setVisibility(View.VISIBLE);
 					progress.setVisibility(View.GONE);
+				}
+			});
+			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
+			{
+				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+				{
+					UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
 				}
 			});
 		}
