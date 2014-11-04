@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.TextListItem;
 
@@ -48,7 +49,7 @@ public class TextListItemView extends LinearLayout
 	{
 		if (model.getDescription() != null)
 		{
-			title.setText(model.getDescription().getContent());
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
 		}
 	}
 }
