@@ -44,7 +44,7 @@ dependencies {
 
 	//This will change to a maven dependency
 	compile project(':Libraries:LightningUtil')
-	compile project(':Libraries:ExoPlayer:library')
+	compile project(':Libraries:LightningUi:Libraries:ExoPlayer:library')
 }
 
 apply from: 'gradle/sonatype.gradle'
