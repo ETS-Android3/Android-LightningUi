@@ -2,7 +2,9 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.google.gson.annotations.SerializedName;
+import com.cube.storm.ui.model.property.AnimationImageProperty;
+
+import java.util.Collection;
 
 import lombok.Getter;
 
@@ -14,7 +16,7 @@ import lombok.Getter;
  */
 public class AnimatedImageListItem extends ListItem
 {
-	@SerializedName("delay") @Getter protected long delay;
+	@Getter private Collection<AnimationImageProperty> images;
 
 	@Override public int describeContents()
 	{
