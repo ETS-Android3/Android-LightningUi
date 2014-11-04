@@ -2,14 +2,17 @@ package com.cube.storm.ui.view.holder;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.SpotlightImageListItem;
+import com.cube.storm.ui.view.ViewClickable;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Timer;
@@ -29,7 +32,7 @@ import java.util.TimerTask;
  * @author Matt Allen
  * @project Storm
  */
-public class SpotlightImageListItemHolder extends Holder<SpotlightImageListItem>
+public class SpotlightImageListItemHolder extends Holder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
 {
 	private static final int MSG_UPDATE = 100;
 	private ImageView image;
@@ -82,7 +85,7 @@ public class SpotlightImageListItemHolder extends Holder<SpotlightImageListItem>
 			ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
 
 			text.setText(model.getImages().get(currentIndex).getText().getContent());
-			
+
 			currentIndex++;
 			if (currentIndex >= model.getImages().size())
 			{
@@ -112,5 +115,14 @@ public class SpotlightImageListItemHolder extends Holder<SpotlightImageListItem>
 			}
 		}
 		return timer;
+	}
+
+	@Override public void onClick(@NonNull SpotlightImageListItem model, @NonNull View view)
+	{
+		if (model.getImages() != null &&
+			model.getImages().get(currentIndex).getLink() != null)
+		{
+			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getImages().get(currentIndex).getLink());
+		}
 	}
 }
