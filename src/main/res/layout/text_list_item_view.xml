@@ -12,7 +12,7 @@
 		android:id="@+id/text"
 		android:textSize="16sp"
 		android:fontFamily="sans-serif-regular"
-		android:textColor="#57000000"
+		android:textColor="#aa000000"
 		android:gravity="center_horizontal"
 	/>
 </FrameLayout>
