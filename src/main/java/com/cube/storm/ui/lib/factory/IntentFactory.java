@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
+import com.cube.storm.ui.activity.WebViewActivity;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormListFragment;
 import com.cube.storm.ui.fragment.StormTabbedFragment;
@@ -17,6 +18,7 @@ import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
 import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
+import com.cube.storm.ui.model.descriptor.WebPageDescriptor;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.page.PageCollection;
@@ -222,6 +224,13 @@ public abstract class IntentFactory
 		{
 			intent = new Intent(context, VideoPlayerActivity.class);
 			intent.putExtras(arguments);
+
+			return intent;
+		}
+		else if (pageDescriptor instanceof WebPageDescriptor)
+		{
+			intent = new Intent(context, WebViewActivity.class);
+			intent.putExtra(WebViewActivity.EXTRA_FILE_NAME, pageDescriptor.getSrc());
 
 			return intent;
 		}
