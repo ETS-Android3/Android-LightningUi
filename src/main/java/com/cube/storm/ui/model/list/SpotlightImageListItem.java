@@ -4,7 +4,7 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
 
-import java.util.Collection;
+import lombok.Getter;
 
 /**
  * // TODO: Add class description
@@ -15,7 +15,7 @@ import java.util.Collection;
  */
 public class SpotlightImageListItem extends ListItem
 {
-	private Collection<SpotlightImageProperty> spotlightImages;
+	@Getter protected java.util.List<SpotlightImageProperty> images;
 
 	@Override public int describeContents()
 	{

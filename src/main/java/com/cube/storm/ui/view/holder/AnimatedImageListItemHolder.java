@@ -13,10 +13,9 @@ import com.cube.storm.ui.model.list.AnimatedImageListItem;
  */
 public class AnimatedImageListItemHolder extends Holder<AnimatedImageListItem>
 {
-
 	@Override public View createView(ViewGroup parent)
 	{
-		return null;
+		return new View(parent.getContext());
 	}
 
 	@Override public void populateView(AnimatedImageListItem model)
