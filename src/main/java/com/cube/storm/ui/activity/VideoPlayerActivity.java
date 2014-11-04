@@ -30,10 +30,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * // TODO: Add class description
+ * Video player used to play videos from assets/file/http URI streams.
+ * <p/>
+ * Can take either a single URI extra using the key {@link StormActivity#EXTRA_URI} or an array list of
+ * {@link com.cube.storm.ui.model.property.VideoProperty} using the key {@link #EXTRA_VIDEOS}. The default
+ * video that gets played is the one that matches the current locale of the device, based on the {@link com.cube.storm.ui.model.property.VideoProperty#getLocale()} property
+ * of the model.
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project StormUi
  */
 public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, ExoMediaPlayer.Listener
 {
@@ -51,7 +56,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	private Uri contentUri;
 
 	private boolean autoPlay = true;
-	private int playerPosition;
 	private boolean playerNeedsPrepare;
 
 	protected VideoProperty[] otherVideos;
@@ -101,19 +105,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 			if (otherVideos != null && otherVideos.length > 0)
 			{
 				String[] locales = new String[otherVideos.length];
-				int selectedIndex;
-
-				if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_ITEM))
-				{
-					selectedIndex = savedInstanceState.getInt(SELECTED_ITEM);
-					contentUri = Uri.parse(otherVideos[selectedIndex].getSrc().getDestination());
-				}
-				else
-				{
-					selectedIndex = 0;
-					contentUri = Uri.parse(otherVideos[0].getSrc().getDestination());
-
-				}
+				int selectedIndex = -1;
 
 				for (int index = 0; index < locales.length; index++)
 				{
@@ -132,12 +124,23 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 						languageSuffix = languageSuffix.replace("yi", "ji");
 					}
 
-					if (otherVideos[index].getSrc().getDestination().equals(fileName))
+					if (otherVideos[index].getLocale().equals(fileName))
 					{
 						selectedIndex = index;
 					}
 
 					locales[index] = languageSuffix;
+				}
+
+				if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_ITEM))
+				{
+					selectedIndex = savedInstanceState.getInt(SELECTED_ITEM);
+					contentUri = Uri.parse(otherVideos[selectedIndex].getSrc().getDestination());
+				}
+				else if (selectedIndex == -1)
+				{
+					selectedIndex = 0;
+					contentUri = Uri.parse(otherVideos[0].getSrc().getDestination());
 				}
 
 				ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, locales);
@@ -153,11 +156,13 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 						{
 							contentUri = Uri.parse(otherVideos[position].getSrc().getDestination());
 							autoPlay = true;
+
 							if (player != null)
 							{
 								player.release();
 								player = null;
 							}
+
 							preparePlayer();
 						}
 					}
@@ -201,6 +206,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		super.onSaveInstanceState(savedInstanceState);
 	}
 
+	/**
+	 * Prepares the player by creating a renderer. If the renderer is null, then prevent the player from
+	 * being created (possibly being streamed from an AsyncTask)
+	 */
 	private void preparePlayer()
 	{
 		if (player == null)
@@ -215,7 +224,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 			{
 				player = new ExoMediaPlayer(builder);
 				player.addListener(this);
-				player.seekTo(playerPosition);
 
 				playerNeedsPrepare = true;
 				videoControllerView.setMediaPlayer(player.getPlayerControl());
@@ -245,7 +253,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 			{
 				player = new ExoMediaPlayer(rendererBuilder);
 				player.addListener(this);
-				player.seekTo(playerPosition);
 
 				playerNeedsPrepare = true;
 				videoControllerView.setMediaPlayer(player.getPlayerControl());
@@ -263,15 +270,22 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		maybeStartPlayback();
 	}
 
+	/**
+	 * Start playback if player is configure and autoplay equals true
+	 */
 	private void maybeStartPlayback()
 	{
 		if (autoPlay && (player.getSurface().isValid() || player.getSelectedTrackIndex(ExoMediaPlayer.TYPE_VIDEO) == ExoMediaPlayer.DISABLED_TRACK))
 		{
 			player.setPlayWhenReady(true);
-			//autoPlay = false;
 		}
 	}
 
+	/**
+	 * Get the renderer builder according to the uri
+	 *
+	 * @return the renderer builder
+	 */
 	private RendererBuilder getRendererBuilder()
 	{
 		if (contentUri.getScheme().equals("assets"))
@@ -339,11 +353,17 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		}
 	}
 
+	/**
+	 * Show video player controls
+	 */
 	private void showControls()
 	{
 		videoControllerView.show(0);
 	}
 
+	/**
+	 * Hide or show video player control
+	 */
 	private void toggleControlsVisibility()
 	{
 		if (videoControllerView.isShowing())
@@ -360,12 +380,17 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	{
 		if (player != null)
 		{
-			//playerPosition = player.getCurrentPosition();
 			player.release();
 			player = null;
 		}
 	}
 
+	/**
+	 * boolean to know if it's a youtube link or not
+	 *
+	 * @param uri
+	 * @return the boolean
+	 */
 	public boolean isYoutubeVideo(Uri uri)
 	{
 		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
