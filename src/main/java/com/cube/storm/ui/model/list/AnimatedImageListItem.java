@@ -2,14 +2,20 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Getter;
+
 /**
- * // TODO: Add class description
+ * Stored properties for an animated list item
  *
- * @author Callum Taylor
+ * @author Luke Reed
  * @project Storm
  */
 public class AnimatedImageListItem extends ListItem
 {
+	@SerializedName("delay") @Getter protected long delay;
+
 	@Override public int describeContents()
 	{
 		return 0;
