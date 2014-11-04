@@ -1,4 +1,4 @@
-package com.cube.storm.ui.controller;
+package com.cube.storm.ui.view.player;
 
 import android.media.MediaCodec.CryptoException;
 import android.os.Handler;
@@ -41,7 +41,7 @@ public class ExoMediaPlayer implements ExoPlayer.Listener, ChunkSampleSource.Eve
 		 * @param player The parent player.
 		 * @param callback The callback to invoke with the constructed components.
 		 */
-		void buildRenderers(ExoMediaPlayer player, RendererBuilderCallback callback);
+		public void buildRenderers(ExoMediaPlayer player, RendererBuilderCallback callback);
 	}
 
 	/**
@@ -61,14 +61,14 @@ public class ExoMediaPlayer implements ExoPlayer.Listener, ChunkSampleSource.Eve
 		 * @param renderers Renderers indexed by {@link ExoMediaPlayer} TYPE_* constants. An individual
 		 * element may be null if there do not exist tracks of the corresponding type.
 		 */
-		void onRenderers(String[][] trackNames, MultiTrackChunkSource[] multiTrackSources, TrackRenderer[] renderers);
+		public void onRenderers(String[][] trackNames, MultiTrackChunkSource[] multiTrackSources, TrackRenderer[] renderers);
 
 		/**
 		 * Invoked if a {@link RendererBuilder} encounters an error.
 		 *
 		 * @param e Describes the error.
 		 */
-		void onRenderersError(Exception e);
+		public void onRenderersError(Exception e);
 	}
 
 	/**
@@ -76,11 +76,11 @@ public class ExoMediaPlayer implements ExoPlayer.Listener, ChunkSampleSource.Eve
 	 */
 	public interface Listener
 	{
-		void onStateChanged(boolean playWhenReady, int playbackState);
+		public void onStateChanged(boolean playWhenReady, int playbackState);
 
-		void onError(Exception e);
+		public void onError(Exception e);
 
-		void onVideoSizeChanged(int width, int height);
+		public void onVideoSizeChanged(int width, int height);
 	}
 
 	/**
@@ -93,19 +93,19 @@ public class ExoMediaPlayer implements ExoPlayer.Listener, ChunkSampleSource.Eve
 	 */
 	public interface InternalErrorListener
 	{
-		void onRendererInitializationError(Exception e);
+		public void onRendererInitializationError(Exception e);
 
-		void onAudioTrackInitializationError(AudioTrackInitializationException e);
+		public void onAudioTrackInitializationError(AudioTrackInitializationException e);
 
-		void onDecoderInitializationError(DecoderInitializationException e);
+		public void onDecoderInitializationError(DecoderInitializationException e);
 
-		void onCryptoError(CryptoException e);
+		public void onCryptoError(CryptoException e);
 
-		void onUpstreamError(int sourceId, IOException e);
+		public void onUpstreamError(int sourceId, IOException e);
 
-		void onConsumptionError(int sourceId, IOException e);
+		public void onConsumptionError(int sourceId, IOException e);
 
-		void onDrmSessionManagerError(Exception e);
+		public void onDrmSessionManagerError(Exception e);
 	}
 
 	/**
@@ -113,17 +113,17 @@ public class ExoMediaPlayer implements ExoPlayer.Listener, ChunkSampleSource.Eve
 	 */
 	public interface InfoListener
 	{
-		void onVideoFormatEnabled(String formatId, int trigger, int mediaTimeMs);
+		public void onVideoFormatEnabled(String formatId, int trigger, int mediaTimeMs);
 
-		void onAudioFormatEnabled(String formatId, int trigger, int mediaTimeMs);
+		public void onAudioFormatEnabled(String formatId, int trigger, int mediaTimeMs);
 
-		void onDroppedFrames(int count, long elapsed);
+		public void onDroppedFrames(int count, long elapsed);
 
-		void onBandwidthSample(int elapsedMs, long bytes, long bitrateEstimate);
+		public void onBandwidthSample(int elapsedMs, long bytes, long bitrateEstimate);
 
-		void onLoadStarted(int sourceId, String formatId, int trigger, boolean isInitialization, int mediaStartTimeMs, int mediaEndTimeMs, long length);
+		public void onLoadStarted(int sourceId, String formatId, int trigger, boolean isInitialization, int mediaStartTimeMs, int mediaEndTimeMs, long length);
 
-		void onLoadCompleted(int sourceId, long bytesLoaded);
+		public void onLoadCompleted(int sourceId, long bytesLoaded);
 	}
 
 	/**

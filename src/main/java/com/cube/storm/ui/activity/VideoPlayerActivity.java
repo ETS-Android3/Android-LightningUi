@@ -16,9 +16,8 @@ import android.widget.Toast;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.controller.ExoMediaPlayer;
-import com.cube.storm.ui.controller.ExoMediaPlayer.RendererBuilder;
-import com.cube.storm.ui.controller.ExoMediaPlayer;
+import com.cube.storm.ui.view.player.ExoMediaPlayer;
+import com.cube.storm.ui.view.player.ExoMediaPlayer.RendererBuilder;
 import com.cube.storm.ui.lib.helper.YouTubeHelper;
 import com.cube.storm.ui.lib.parser.DefaultRendererBuilder;
 import com.cube.storm.ui.model.property.VideoProperty;

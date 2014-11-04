@@ -19,9 +19,9 @@ import android.media.MediaCodec;
 import android.net.Uri;
 
 import com.cube.storm.ui.activity.VideoPlayerActivity;
-import com.cube.storm.ui.controller.ExoMediaPlayer;
-import com.cube.storm.ui.controller.ExoMediaPlayer.RendererBuilder;
-import com.cube.storm.ui.controller.ExoMediaPlayer.RendererBuilderCallback;
+import com.cube.storm.ui.view.player.ExoMediaPlayer;
+import com.cube.storm.ui.view.player.ExoMediaPlayer.RendererBuilder;
+import com.cube.storm.ui.view.player.ExoMediaPlayer.RendererBuilderCallback;
 import com.google.android.exoplayer.FrameworkSampleSource;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
