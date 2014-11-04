@@ -4,10 +4,14 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp"
 >
-	<ImageView
+	<com.cube.storm.ui.view.AspectRatioImageView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/image"
+		android:maxHeight="192dp"
+		android:scaleType="centerCrop"
 	/>
 </FrameLayout>
