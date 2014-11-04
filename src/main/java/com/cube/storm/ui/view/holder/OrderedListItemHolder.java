@@ -16,42 +16,52 @@ import com.cube.storm.ui.model.list.OrderedListItem;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class OrderedListItemHolder extends Holder<OrderedListItem>
+public class OrderedListItemHolder extends ViewHolderController
 {
-	protected TextView annotation;
-	protected TextView title;
-	protected TextView description;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ordered_list_item_view, parent, false);
-		annotation = (TextView)view.findViewById(R.id.annotation);
-		title = (TextView)view.findViewById(R.id.title);
-		description = (TextView)view.findViewById(R.id.description);
 
-		return view;
+		return new OrderedListItemViewHolder(view);
 	}
 
-	@Override public void populateView(OrderedListItem model)
+	private class OrderedListItemViewHolder extends ViewHolder<OrderedListItem>
 	{
-		if (model.getAnnotation() != null)
+		protected TextView annotation;
+		protected TextView title;
+		protected TextView description;
+
+		public OrderedListItemViewHolder(View view)
 		{
-			annotation.setText(model.getAnnotation());
+			super(view);
+
+			annotation = (TextView)view.findViewById(R.id.annotation);
+			title = (TextView)view.findViewById(R.id.title);
+			description = (TextView)view.findViewById(R.id.description);
 		}
 
-		if (model.getTitle() != null)
+		@Override public void populateView(OrderedListItem model)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
-		}
+			if (model.getAnnotation() != null)
+			{
+				annotation.setText(model.getAnnotation());
+			}
 
-		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
-		{
-			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
-			description.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			description.setVisibility(View.GONE);
+			if (model.getTitle() != null)
+			{
+				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			}
+
+			if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
+			{
+				description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
+				description.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				description.setVisibility(View.GONE);
+			}
 		}
 	}
 }

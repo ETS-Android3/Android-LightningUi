@@ -17,29 +17,38 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * @author Alan Le Fournis
  * @project StormUI
  */
-public class ImageListItemHolder extends Holder<ImageListItem>
+public class ImageListItemHolder extends ViewHolderController
 {
-	protected ImageView image;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_list_item_view, parent, false);
-		image = (ImageView)view.findViewById(R.id.image);
 
-		return view;
+		return new DescriptionListItemViewHolder(view);
 	}
 
-	@Override public void populateView(final ImageListItem model)
+	private class DescriptionListItemViewHolder extends ViewHolder<ImageListItem>
 	{
-		if (model.getImage() != null)
+		protected ImageView image;
+
+		public DescriptionListItemViewHolder(View view)
 		{
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
+			super(view);
+			image = (ImageView)view.findViewById(R.id.image);
+		}
+
+		@Override public void populateView(final ImageListItem model)
+		{
+			if (model.getImage() != null)
 			{
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 				{
-					UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
-				}
-			});
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
+					}
+				});
+			}
 		}
 	}
 }

@@ -16,35 +16,45 @@ import com.cube.storm.ui.model.list.DescriptionListItem;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class DescriptionListItemHolder extends Holder<DescriptionListItem>
+public class DescriptionListItemHolder extends ViewHolderController
 {
-	protected TextView title;
-	protected TextView description;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.description_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
-		description = (TextView)view.findViewById(R.id.description);
 
-		return view;
+		return new DescriptionListItemViewHolder(view);
 	}
 
-	@Override public void populateView(DescriptionListItem model)
+	private class DescriptionListItemViewHolder extends ViewHolder<DescriptionListItem>
 	{
-		if (model.getTitle() != null)
+		protected TextView title;
+		protected TextView description;
+
+		public DescriptionListItemViewHolder(View view)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			super(view);
+
+			title = (TextView)view.findViewById(R.id.title);
+			description = (TextView)view.findViewById(R.id.description);
 		}
 
-		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
+		@Override public void populateView(DescriptionListItem model)
 		{
-			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
-			description.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			description.setVisibility(View.GONE);
+			if (model.getTitle() != null)
+			{
+				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			}
+
+			if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
+			{
+				description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
+				description.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				description.setVisibility(View.GONE);
+			}
 		}
 	}
 }

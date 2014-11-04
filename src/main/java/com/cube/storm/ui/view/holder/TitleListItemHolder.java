@@ -15,23 +15,32 @@ import com.cube.storm.ui.model.list.TitleListItem;
  * @author Alan Le Fournis
  * @project StormUI
  */
-public class TitleListItemHolder extends Holder<TitleListItem>
+public class TitleListItemHolder extends ViewHolderController
 {
-	protected TextView title;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.title_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
 
-		return view;
+		return new TitleListItemViewHolder(view);
 	}
 
-	@Override public void populateView(TitleListItem model)
+	private class TitleListItemViewHolder extends ViewHolder<TitleListItem>
 	{
-		if (model.getTitle() != null)
+		protected TextView title;
+
+		public TitleListItemViewHolder(View view)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			super(view);
+			title = (TextView)view.findViewById(R.id.title);
+		}
+
+		@Override public void populateView(TitleListItem model)
+		{
+			if (model.getTitle() != null)
+			{
+				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			}
 		}
 	}
 }

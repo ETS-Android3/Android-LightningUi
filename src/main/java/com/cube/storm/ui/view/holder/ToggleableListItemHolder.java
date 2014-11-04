@@ -19,50 +19,60 @@ import com.cube.storm.ui.view.ViewClickable;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class ToggleableListItemHolder extends Holder<ToggleableListItem> implements ViewClickable<ToggleableListItem>
+public class ToggleableListItemHolder extends ViewHolderController
 {
-	protected ViewGroup toggleContainer;
-	protected ImageView expandIcon;
-	protected TextView title;
-	protected TextView description;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.toggleable_list_item_view, parent, false);
-		toggleContainer = (ViewGroup)view.findViewById(R.id.toggle_container);
-		expandIcon = (ImageView)view.findViewById(R.id.expand_icon);
-		title = (TextView)view.findViewById(R.id.title);
-		description = (TextView)view.findViewById(R.id.description);
 
-		return view;
+		return new ToggleableListItemViewHolder(view);
 	}
 
-	@Override public void populateView(ToggleableListItem model)
+	private class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem> implements ViewClickable<ToggleableListItem>
 	{
-		if (model.getTitle() != null)
+		protected ViewGroup toggleContainer;
+		protected ImageView expandIcon;
+		protected TextView title;
+		protected TextView description;
+
+		public ToggleableListItemViewHolder(View view)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			super(view);
+
+			toggleContainer = (ViewGroup)view.findViewById(R.id.toggle_container);
+			expandIcon = (ImageView)view.findViewById(R.id.expand_icon);
+			title = (TextView)view.findViewById(R.id.title);
+			description = (TextView)view.findViewById(R.id.description);
 		}
 
-		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
+		@Override public void populateView(ToggleableListItem model)
 		{
-			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
-		}
+			if (model.getTitle() != null)
+			{
+				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			}
 
-		toggleContainer.setVisibility(View.GONE);
-	}
+			if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
+			{
+				description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
+			}
 
-	@Override public void onClick(@NonNull ToggleableListItem model, @NonNull View view)
-	{
-		if (toggleContainer.getVisibility() == View.GONE)
-		{
-			toggleContainer.setVisibility(View.VISIBLE);
-			expandIcon.setImageResource(R.drawable.ic_collapse);
-		}
-		else
-		{
 			toggleContainer.setVisibility(View.GONE);
-			expandIcon.setImageResource(R.drawable.ic_expand);
+		}
+
+		@Override public void onClick(@NonNull ToggleableListItem model, @NonNull View view)
+		{
+			if (toggleContainer.getVisibility() == View.GONE)
+			{
+				toggleContainer.setVisibility(View.VISIBLE);
+				expandIcon.setImageResource(R.drawable.ic_collapse);
+			}
+			else
+			{
+				toggleContainer.setVisibility(View.GONE);
+				expandIcon.setImageResource(R.drawable.ic_expand);
+			}
 		}
 	}
 }

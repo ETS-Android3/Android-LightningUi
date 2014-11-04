@@ -4,7 +4,6 @@ import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.holder.ButtonListItemHolder;
 import com.cube.storm.ui.view.holder.CheckableListItemHolder;
 import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
-import com.cube.storm.ui.view.holder.Holder;
 import com.cube.storm.ui.view.holder.ImageListItemHolder;
 import com.cube.storm.ui.view.holder.ListFooterHolder;
 import com.cube.storm.ui.view.holder.ListHeaderHolder;
@@ -15,6 +14,7 @@ import com.cube.storm.ui.view.holder.TextListItemHolder;
 import com.cube.storm.ui.view.holder.TitleListItemHolder;
 import com.cube.storm.ui.view.holder.ToggleableListItemHolder;
 import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 
 /**
  * This is the enum class with the list of all supported view types, their model classes and their
@@ -70,9 +70,9 @@ public enum View
 	UriLink(com.cube.storm.ui.model.property.UriLinkProperty.class, null);
 
 	private Class<? extends Model> model;
-	private Class<? extends Holder> holder;
+	private Class<? extends ViewHolderController> holder;
 
-	private View(Class<? extends Model> model, Class<? extends Holder> holder)
+	private View(Class<? extends Model> model, Class<? extends ViewHolderController> holder)
 	{
 		this.model = model;
 		this.holder = holder;
@@ -81,7 +81,7 @@ public enum View
 	/**
 	 * @return Gets the holder class of the view
 	 */
-	public Class<? extends Holder> getHolderClass()
+	public Class<? extends ViewHolderController> getHolderClass()
 	{
 		return holder;
 	}

@@ -19,41 +19,51 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * @author Alan Le Fournis
  * @project Storm
  */
-public class LogoListItemHolder extends Holder<LogoListItem>
+public class LogoListItemHolder extends ViewHolderController
 {
-	protected ImageView image;
-	protected TextView linkTitle;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.logo_list_item_view, parent, false);
-		image = (ImageView)view.findViewById(R.id.image_view);
-		linkTitle = (TextView)view.findViewById(R.id.link_title);
 
-		return view;
+		return new LogoListItemViewHolder(view);
 	}
 
-	@Override public void populateView(final LogoListItem model)
+	private class LogoListItemViewHolder extends ViewHolder<LogoListItem>
 	{
-		if (model.getImage() != null)
+		protected ImageView image;
+		protected TextView linkTitle;
+
+		public LogoListItemViewHolder(View view)
 		{
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
-			{
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
-				{
-					UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
-				}
-			});
+			super(view);
+
+			image = (ImageView)view.findViewById(R.id.image_view);
+			linkTitle = (TextView)view.findViewById(R.id.link_title);
 		}
 
-		if (model.getTitle() != null && !TextUtils.isEmpty(model.getTitle().getContent()))
+		@Override public void populateView(final LogoListItem model)
 		{
-			linkTitle.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
-			linkTitle.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			linkTitle.setVisibility(View.GONE);
+			if (model.getImage() != null)
+			{
+				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
+				{
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
+					}
+				});
+			}
+
+			if (model.getTitle() != null && !TextUtils.isEmpty(model.getTitle().getContent()))
+			{
+				linkTitle.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+				linkTitle.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				linkTitle.setVisibility(View.GONE);
+			}
 		}
 	}
 }
