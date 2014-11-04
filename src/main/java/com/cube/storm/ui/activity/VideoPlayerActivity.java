@@ -16,8 +16,9 @@ import android.widget.Toast;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.controller.DemoPlayer;
-import com.cube.storm.ui.controller.DemoPlayer.RendererBuilder;
+import com.cube.storm.ui.controller.ExoMediaPlayer;
+import com.cube.storm.ui.controller.ExoMediaPlayer.RendererBuilder;
+import com.cube.storm.ui.controller.ExoMediaPlayer;
 import com.cube.storm.ui.lib.helper.YouTubeHelper;
 import com.cube.storm.ui.lib.parser.DefaultRendererBuilder;
 import com.cube.storm.ui.model.property.VideoProperty;
@@ -35,13 +36,13 @@ import java.util.ArrayList;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, DemoPlayer.Listener
+public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, ExoMediaPlayer.Listener
 {
 	public static final String EXTRA_VIDEOS = "extra_videos";
 	public static final String EXTRA_FILE_NAME = "extra_file_name";
 	public static final String SELECTED_ITEM = "selected_item";
 
-	private DemoPlayer player;
+	private ExoMediaPlayer player;
 
 	private VideoControllerView videoControllerView;
 	private View shutterView;
@@ -213,7 +214,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 			}
 			else
 			{
-				player = new DemoPlayer(builder);
+				player = new ExoMediaPlayer(builder);
 				player.addListener(this);
 				player.seekTo(playerPosition);
 
@@ -243,7 +244,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 			}
 			else
 			{
-				player = new DemoPlayer(rendererBuilder);
+				player = new ExoMediaPlayer(rendererBuilder);
 				player.addListener(this);
 				player.seekTo(playerPosition);
 
@@ -265,7 +266,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 	private void maybeStartPlayback()
 	{
-		if (autoPlay && (player.getSurface().isValid() || player.getSelectedTrackIndex(DemoPlayer.TYPE_VIDEO) == DemoPlayer.DISABLED_TRACK))
+		if (autoPlay && (player.getSurface().isValid() || player.getSelectedTrackIndex(ExoMediaPlayer.TYPE_VIDEO) == ExoMediaPlayer.DISABLED_TRACK))
 		{
 			player.setPlayWhenReady(true);
 			//autoPlay = false;

@@ -19,9 +19,9 @@ import android.media.MediaCodec;
 import android.net.Uri;
 
 import com.cube.storm.ui.activity.VideoPlayerActivity;
-import com.cube.storm.ui.controller.DemoPlayer;
-import com.cube.storm.ui.controller.DemoPlayer.RendererBuilder;
-import com.cube.storm.ui.controller.DemoPlayer.RendererBuilderCallback;
+import com.cube.storm.ui.controller.ExoMediaPlayer;
+import com.cube.storm.ui.controller.ExoMediaPlayer.RendererBuilder;
+import com.cube.storm.ui.controller.ExoMediaPlayer.RendererBuilderCallback;
 import com.google.android.exoplayer.FrameworkSampleSource;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
@@ -40,7 +40,7 @@ public class DefaultRendererBuilder implements RendererBuilder
 	}
 
 	@Override
-	public void buildRenderers(DemoPlayer player, RendererBuilderCallback callback)
+	public void buildRenderers(ExoMediaPlayer player, RendererBuilderCallback callback)
 	{
 		// Build the video and audio renderers.
 		FrameworkSampleSource sampleSource = new FrameworkSampleSource(playerActivity, uri, null, 2);
@@ -51,10 +51,10 @@ public class DefaultRendererBuilder implements RendererBuilder
 		TrackRenderer debugRenderer = null;
 
 		// Invoke the callback.
-		TrackRenderer[] renderers = new TrackRenderer[DemoPlayer.RENDERER_COUNT];
-		renderers[DemoPlayer.TYPE_VIDEO] = videoRenderer;
-		renderers[DemoPlayer.TYPE_AUDIO] = audioRenderer;
-		renderers[DemoPlayer.TYPE_DEBUG] = debugRenderer;
+		TrackRenderer[] renderers = new TrackRenderer[ExoMediaPlayer.RENDERER_COUNT];
+		renderers[ExoMediaPlayer.TYPE_VIDEO] = videoRenderer;
+		renderers[ExoMediaPlayer.TYPE_AUDIO] = audioRenderer;
+		renderers[ExoMediaPlayer.TYPE_DEBUG] = debugRenderer;
 		callback.onRenderers(null, null, renderers);
 	}
 }
