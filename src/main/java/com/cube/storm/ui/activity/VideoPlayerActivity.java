@@ -1,10 +1,8 @@
 package com.cube.storm.ui.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -16,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.controller.DemoPlayer;
 import com.cube.storm.ui.controller.DemoPlayer.RendererBuilder;
@@ -23,6 +22,7 @@ import com.cube.storm.ui.lib.helper.YouTubeHelper;
 import com.cube.storm.ui.lib.parser.DefaultRendererBuilder;
 import com.cube.storm.ui.model.property.VideoProperty;
 import com.cube.storm.ui.view.VideoControllerView;
+import com.cube.storm.util.lib.resolver.Resolver;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.VideoSurfaceView;
 
@@ -39,7 +39,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 {
 	public static final String EXTRA_VIDEOS = "extra_videos";
 	public static final String EXTRA_FILE_NAME = "extra_file_name";
-	public static final String URI_NATIVE = "app://";
 	public static final String SELECTED_ITEM = "selected_item";
 
 	private DemoPlayer player;
@@ -91,7 +90,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 		if (getIntent().hasExtra(EXTRA_VIDEOS) && bundle.getSerializable(EXTRA_VIDEOS) != null)
 		{
-			ArrayList< VideoProperty> array = (ArrayList<VideoProperty>)bundle.getSerializable(EXTRA_VIDEOS);
+			ArrayList<VideoProperty> array = (ArrayList<VideoProperty>)bundle.getSerializable(EXTRA_VIDEOS);
 			otherVideos = new VideoProperty[array.size()];
 
 			for (int index = 0; index < otherVideos.length; index++)
@@ -99,12 +98,12 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 				otherVideos[index] = array.get(index);
 			}
 
-			if (otherVideos != null && otherVideos.length > 1)
+			if (otherVideos != null && otherVideos.length > 0)
 			{
 				String[] locales = new String[otherVideos.length];
 				int selectedIndex;
 
-				if (savedInstanceState != null)
+				if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_ITEM))
 				{
 					selectedIndex = savedInstanceState.getInt(SELECTED_ITEM);
 					contentUri = Uri.parse(otherVideos[selectedIndex].getSrc().getDestination());
@@ -118,16 +117,30 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 				for (int index = 0; index < locales.length; index++)
 				{
+					String languageSuffix = otherVideos[index].getLocale();
 
-					locales[index] = otherVideos[index].getLocale();
+					if (languageSuffix.toLowerCase().contains("he"))
+					{
+						languageSuffix = languageSuffix.replace("he", "iw");
+					}
+					else if (languageSuffix.toLowerCase().contains("id"))
+					{
+						languageSuffix = languageSuffix.replace("id", "in");
+					}
+					else if (languageSuffix.toLowerCase().contains("yi"))
+					{
+						languageSuffix = languageSuffix.replace("yi", "ji");
+					}
 
 					if (otherVideos[index].getSrc().getDestination().equals(fileName))
 					{
 						selectedIndex = index;
 					}
+
+					locales[index] = languageSuffix;
 				}
 
-				ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, locales);
+				ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, locales);
 
 				videoChooser.setVisibility(View.VISIBLE);
 				videoChooser.setAdapter(adapter);
@@ -154,6 +167,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 					}
 				});
 			}
+		}
+		else if (getIntent().hasExtra(StormActivity.EXTRA_URI) && bundle.getString(StormActivity.EXTRA_URI) != null)
+		{
+			videoChooser.setVisibility(View.GONE);
+			contentUri = Uri.parse(bundle.getString(StormActivity.EXTRA_URI));
 		}
 	}
 
@@ -256,11 +274,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 	private RendererBuilder getRendererBuilder()
 	{
-		if (contentUri.getScheme().equals("cache"))
-		{
-			contentUri = getUriForAutoFile(this, contentUri);
-		}
-
 		if (contentUri.getScheme().equals("assets"))
 		{
 			return new DefaultRendererBuilder(this, contentUri);
@@ -268,8 +281,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 		else if (contentUri.getScheme().equals("file"))
 		{
 			File f = new File(contentUri.getPath());
-			System.out.println(contentUri.toString());
-			System.out.println(f.getAbsolutePath());
+
 			if (!f.exists())
 			{
 				videoFailed();
@@ -292,12 +304,23 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 					videoFailed();
 				}
 			});
+
 			return null;
 		}
 		else
 		{
-			videoFailed();
-			return null;
+			Resolver fallbackResolver = UiSettings.getInstance().getUriResolvers().get(contentUri.getScheme());
+
+			if (fallbackResolver != null)
+			{
+				contentUri = fallbackResolver.resolveUri(contentUri);
+				return getRendererBuilder();
+			}
+			else
+			{
+				videoFailed();
+				return null;
+			}
 		}
 	}
 
@@ -347,56 +370,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	{
 		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
 	}
-
-	/**
-	 * cache://content/image -> file:///cache/path/for/image or
-	 * assets://content/image
-	 *
-	 * @param c
-	 * @param fileUri
-	 * @return
-	 */
-	public Uri getUriForAutoFile(Context c, Uri fileUri)
-	{
-		if (fileUri.getScheme().equals(URI_NATIVE.replace("://", "")))
-		{
-			return fileUri;
-		}
-		else
-		{
-			File f = new File(this.getCacheDir().getPath() + "/" + fileUri.getHost() + "/" + fileUri.getPath());
-
-			if (f.exists())
-			{
-				return Uri.fromFile(f);
-			}
-			else
-			{
-				try
-				{
-					String path = "";
-
-					if (!TextUtils.isEmpty(fileUri.getHost()))
-					{
-						path += fileUri.getHost();
-					}
-
-					if (!TextUtils.isEmpty(fileUri.getPath()))
-					{
-						path += fileUri.getPath();
-					}
-
-					return Uri.parse("assets://" + path);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-					return null;
-				}
-			}
-		}
-	}
-
 
 	@Override public void surfaceCreated(SurfaceHolder holder)
 	{

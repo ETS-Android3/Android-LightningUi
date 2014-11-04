@@ -69,7 +69,7 @@ public class LinkHandler
 		}
 		else if (link instanceof ExternalLinkProperty)
 		{
-			if (isYoutubeVideo(Uri.parse(((InternalLinkProperty)link).getDestination())) || isVideo(Uri.parse(((InternalLinkProperty)link).getDestination())))
+			if (isYoutubeVideo(Uri.parse(((ExternalLinkProperty)link).getDestination())) || isVideo(Uri.parse(((ExternalLinkProperty)link).getDestination())))
 			{
 				VideoPageDescriptor page = new VideoPageDescriptor();
 				page.setSrc(((ExternalLinkProperty)link).getDestination());

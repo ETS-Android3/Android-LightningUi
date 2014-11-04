@@ -9,16 +9,20 @@ import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
+import com.cube.storm.ui.activity.VideoPlayerActivity;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormListFragment;
 import com.cube.storm.ui.fragment.StormTabbedFragment;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
+import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.page.PageCollection;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
+
+import java.util.Locale;
 
 /**
  * This is the factory class which is used by Storm to decide which activity/fragments to instantiate
@@ -29,6 +33,11 @@ import com.cube.storm.ui.model.page.TabbedPageCollection;
  */
 public abstract class IntentFactory
 {
+	public boolean isYoutubeVideo(Uri uri)
+	{
+		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
+	}
+
 	/**
 	 * @deprecated You should not load a fragment intent from an already-instantiated page, use {@link #getFragmentIntentForPageDescriptor(com.cube.storm.ui.model.descriptor.PageDescriptor)} instead
 	 *
@@ -206,7 +215,17 @@ public abstract class IntentFactory
 
 		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
-		if (Page.class.isAssignableFrom(pageType)
+		if (pageDescriptor instanceof VideoPageDescriptor
+		|| (pageDescriptor.getSrc().toLowerCase(Locale.US).endsWith(".mp4")
+			|| pageDescriptor.getSrc().toLowerCase(Locale.US).endsWith(".m4v")
+			|| isYoutubeVideo(Uri.parse(pageDescriptor.getSrc()))))
+		{
+			intent = new Intent(context, VideoPlayerActivity.class);
+			intent.putExtras(arguments);
+
+			return intent;
+		}
+		else if (Page.class.isAssignableFrom(pageType)
 		|| PageCollection.class.isAssignableFrom(pageType))
 		{
 			intent = new Intent(context, StormActivity.class);

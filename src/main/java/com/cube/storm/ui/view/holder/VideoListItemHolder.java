@@ -1,18 +1,19 @@
 package com.cube.storm.ui.view.holder;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
+import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
 import com.cube.storm.ui.model.list.VideoListItem;
 import com.cube.storm.ui.model.property.VideoProperty;
+import com.cube.storm.ui.view.ViewClickable;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class VideoListItemHolder extends Holder<VideoListItem>
+public class VideoListItemHolder extends Holder<VideoListItem> implements ViewClickable<VideoListItem>
 {
 	protected ImageView image;
 
@@ -47,22 +48,26 @@ public class VideoListItemHolder extends Holder<VideoListItem>
 					UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
 				}
 			});
+		}
+	}
 
-			image.setOnClickListener(new OnClickListener()
-			{
-				@Override public void onClick(View v)
-				{
-					Intent video = new Intent(image.getContext(), VideoPlayerActivity.class);
-					ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
-					arrayList.addAll(model.getVideos());
+	@Override public void onClick(@NonNull VideoListItem model, @NonNull View view)
+	{
+		ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
+		arrayList.addAll(model.getVideos());
 
-					Bundle bundle = new Bundle();
-					bundle.putString(VideoPlayerActivity.EXTRA_FILE_NAME, "Video Asset");
-					bundle.putSerializable(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
-					video.putExtras(bundle);
-					image.getContext().startActivity(video);
-				}
-			});
+		VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
+		pageDescriptor.setType("content");
+		pageDescriptor.setSrc(arrayList.get(0).getSrc().getDestination());
+
+		Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(view.getContext(), pageDescriptor);
+
+		if (video != null)
+		{
+			video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME, "Video Asset");
+			video.putExtra(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
+
+			view.getContext().startActivity(video);
 		}
 	}
 }
