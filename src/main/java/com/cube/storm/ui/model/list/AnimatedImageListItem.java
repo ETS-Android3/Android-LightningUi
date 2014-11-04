@@ -4,7 +4,7 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.AnimationImageProperty;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ import lombok.Getter;
  */
 public class AnimatedImageListItem extends ListItem
 {
-	@Getter private Collection<AnimationImageProperty> images;
+	@Getter private ArrayList<AnimationImageProperty> images;
 
 	@Override public int describeContents()
 	{
