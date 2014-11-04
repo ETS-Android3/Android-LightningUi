@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
+import com.cube.storm.ui.model.property.ExternalLinkProperty;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.UriLinkProperty;
+
+import java.util.Locale;
 
 /**
  * Link handler class used when a link is triggered in a holder
@@ -27,11 +31,27 @@ public class LinkHandler
 	{
 		if (link instanceof InternalLinkProperty)
 		{
-			Intent toLoad = UiSettings.getInstance().getIntentFactory().geIntentForPageUri(context, Uri.parse(((InternalLinkProperty)link).getDestination()));
-
-			if (toLoad != null)
+			if (isYoutubeVideo(Uri.parse(((InternalLinkProperty)link).getDestination())) || isVideo(Uri.parse(((InternalLinkProperty)link).getDestination())))
 			{
-				context.startActivity(toLoad);
+				VideoPageDescriptor page = new VideoPageDescriptor();
+				page.setSrc(((InternalLinkProperty)link).getDestination());
+				page.setType("content");
+
+				Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(context, page);
+
+				if (toLoad != null)
+				{
+					context.startActivity(toLoad);
+				}
+			}
+			else
+			{
+				Intent toLoad = UiSettings.getInstance().getIntentFactory().geIntentForPageUri(context, Uri.parse(((InternalLinkProperty)link).getDestination()));
+
+				if (toLoad != null)
+				{
+					context.startActivity(toLoad);
+				}
 			}
 		}
 		else if (link instanceof UriLinkProperty)
@@ -47,5 +67,31 @@ public class LinkHandler
 			uriIntent.setData(Uri.parse(destination));
 			context.startActivity(uriIntent);
 		}
+		else if (link instanceof ExternalLinkProperty)
+		{
+			if (isYoutubeVideo(Uri.parse(((ExternalLinkProperty)link).getDestination())) || isVideo(Uri.parse(((ExternalLinkProperty)link).getDestination())))
+			{
+				VideoPageDescriptor page = new VideoPageDescriptor();
+				page.setSrc(((ExternalLinkProperty)link).getDestination());
+				page.setType("content");
+
+				Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(context, page);
+
+				if (toLoad != null)
+				{
+					context.startActivity(toLoad);
+				}
+			}
+		}
+	}
+
+	public boolean isYoutubeVideo(Uri uri)
+	{
+		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
+	}
+
+	public boolean isVideo(Uri uri)
+	{
+		return (uri.getHost().toLowerCase(Locale.US).endsWith("mp4") || (uri.getHost().toLowerCase(Locale.US).endsWith("m4v")));
 	}
 }
