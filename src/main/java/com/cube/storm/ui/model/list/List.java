@@ -12,7 +12,7 @@ import lombok.Setter;
 /**
  * A model which hosts an array set of child {@link com.cube.storm.ui.model.list.ListItem} models. Used
  * for displaying a sub set of lists within the list view.
- *
+ * <p/>
  * This is purely a data based model and is never used when displaying content in the list, instead
  * the model is processed into 2 separate models, {@link com.cube.storm.ui.model.list.List.ListHeader} and {@link com.cube.storm.ui.model.list.List.ListFooter}
  *

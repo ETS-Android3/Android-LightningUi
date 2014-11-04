@@ -4,6 +4,7 @@ import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.holder.ButtonListItemHolder;
 import com.cube.storm.ui.view.holder.CheckableListItemHolder;
 import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
+import com.cube.storm.ui.view.holder.DividerHolder;
 import com.cube.storm.ui.view.holder.Holder;
 import com.cube.storm.ui.view.holder.ImageListItemHolder;
 import com.cube.storm.ui.view.holder.ListFooterHolder;
@@ -31,6 +32,7 @@ public enum View
  	 */
 	_ListHeader(com.cube.storm.ui.model.list.List.ListHeader.class, ListHeaderHolder.class),
 	_ListFooter(com.cube.storm.ui.model.list.List.ListFooter.class, ListFooterHolder.class),
+	_Divider(com.cube.storm.ui.model.list.Divider.class, DividerHolder.class),
 
 	/**
 	 * List items

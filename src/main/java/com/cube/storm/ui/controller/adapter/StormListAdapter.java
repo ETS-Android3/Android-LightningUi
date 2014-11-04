@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.list.Divider;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.List.ListFooter;
 import com.cube.storm.ui.model.list.List.ListHeader;
@@ -100,12 +101,15 @@ public class StormListAdapter extends BaseAdapter
 	{
 		if (item instanceof List)
 		{
+			boolean addDivider = false;
+
 			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader().getContent())))
 			{
 				ListHeader header = new ListHeader();
 				header.setHeader(((List)item).getHeader());
 
 				addItem(header);
+				addDivider = true;
 			}
 
 			if (((List)item).getChildren() != null)
@@ -125,6 +129,12 @@ public class StormListAdapter extends BaseAdapter
 				footer.setFooter(((List)item).getFooter());
 
 				addItem(footer);
+				addDivider = true;
+			}
+
+			if (addDivider)
+			{
+				addItem(new Divider());
 			}
 		}
 		else
