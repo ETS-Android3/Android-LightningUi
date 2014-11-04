@@ -7,11 +7,19 @@
 	android:paddingLeft="16dp"
 	android:paddingRight="16dp"
 >
+	<ProgressBar
+		android:layout_width="32dp"
+		android:layout_height="32dp"
+		android:id="@+id/progress"
+		android:layout_gravity="center"
+	/>
+
 	<com.cube.storm.ui.view.AspectRatioImageView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/image"
 		android:maxHeight="192dp"
 		android:scaleType="centerCrop"
+		android:visibility="invisible"
 	/>
 </FrameLayout>
