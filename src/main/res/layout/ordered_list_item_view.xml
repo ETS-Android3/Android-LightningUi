@@ -3,33 +3,50 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+	android:layout_height="wrap_content"
 	android:orientation="horizontal"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp"
+	android:paddingTop="16dp"
+	android:paddingBottom="20dp"
 >
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/annotation"
 		android:gravity="center_vertical"
+		android:fontFamily="sans-serif-light"
+		android:textSize="44sp"
+		android:alpha="0.65"
+		android:textColor="?colorPrimaryDark"
 	/>
 
-	<RelativeLayout
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_marginLeft="16dp"
 		android:layout_gravity="center_vertical"
 	>
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/title"
+			android:singleLine="false"
+			android:textColor="#dd000000"
+			android:textSize="16sp"
+			android:fontFamily="sans-serif-regular"
+			android:layout_gravity="center_vertical"
 		/>
 
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/description"
-			android:layout_below="@id/title"
+			android:textColor="#89000000"
+			android:textSize="14sp"
+			android:fontFamily="sans-serif-regular"
 			android:visibility="gone"
 		/>
-	</RelativeLayout>
+	</LinearLayout>
 </LinearLayout>
