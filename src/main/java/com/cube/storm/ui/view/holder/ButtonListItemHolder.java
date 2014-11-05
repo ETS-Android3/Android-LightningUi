@@ -1,5 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,19 +33,29 @@ public class ButtonListItemHolder extends Holder<ButtonListItem>
 
 	@Override public void populateView(ButtonListItem model)
 	{
+		title.setVisibility(View.GONE);
+		button.setVisibility(View.GONE);
+
 		if (model.getTitle() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
-			title.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			title.setVisibility(View.GONE);
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				title.setText(content);
+				title.setVisibility(View.VISIBLE);
+			}
 		}
 
 		if (model.getButton() != null)
 		{
-			button.setText(UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent()));
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				button.setText(content);
+				button.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 }
