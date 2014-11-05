@@ -23,7 +23,7 @@ import com.cube.storm.ui.view.holder.VideoListItemHolder;
  * corresponding view holder class. This list should not be modified or overridden
  *
  * @author Callum Taylor
- * @project Storm Test
+ * @project LightningUi
  */
 public enum View
 {
@@ -45,7 +45,7 @@ public enum View
 	DescriptionListItem(com.cube.storm.ui.model.list.DescriptionListItem.class, DescriptionListItemHolder.class),
 	StandardListItem(com.cube.storm.ui.model.list.StandardListItem.class, StandardListItemHolder.class),
 	OrderedListItem(com.cube.storm.ui.model.list.OrderedListItem.class, OrderedListItemHolder.class),
-	BulletListItem(com.cube.storm.ui.model.list.UnorderedListItem.class, UnorderedListItemHolder.class),
+	UnorderedListItem(com.cube.storm.ui.model.list.UnorderedListItem.class, UnorderedListItemHolder.class),
 	CheckableListItem(com.cube.storm.ui.model.list.CheckableListItem.class, CheckableListItemHolder.class),
 	ButtonListItem(com.cube.storm.ui.model.list.ButtonListItem.class, ButtonListItemHolder.class),
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemHolder.class),
