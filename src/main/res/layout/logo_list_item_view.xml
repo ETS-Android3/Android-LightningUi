@@ -4,13 +4,17 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp"
+	android:paddingTop="16dp"
+	android:paddingBottom="20dp"
 >
 	<ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/image_view"
-		android:maxWidth="70dp"
-		android:maxHeight="70dp"
+		android:maxWidth="72dp"
+		android:maxHeight="72dp"
 		android:adjustViewBounds="true"
 		android:layout_centerHorizontal="true"
 	/>
@@ -19,7 +23,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/link_title"
-		android:layout_marginTop="10dp"
+		android:layout_marginTop="4dp"
 		android:layout_centerHorizontal="true"
 		android:layout_below="@id/image_view"
 		android:visibility="gone"
