@@ -5,10 +5,21 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:clickable="false"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp"
+	android:paddingTop="16dp"
+	android:paddingBottom="20dp"
 >
 	<TextView
-		android:layout_width="match_parent"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/title"
+		android:textColor="?colorPrimary"
+		android:textSize="14sp"
+		android:alpha="0.53"
+		android:fontFamily="sans-serif-medium"
+		android:capitalize="words"
+		android:singleLine="true"
+		android:layout_gravity="center_vertical"
 	/>
 </FrameLayout>

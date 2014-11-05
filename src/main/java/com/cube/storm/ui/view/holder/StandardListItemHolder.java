@@ -1,5 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -39,30 +40,53 @@ public class StandardListItemHolder extends Holder<StandardListItem> implements 
 
 	@Override public void populateView(final StandardListItem model)
 	{
+		image.setVisibility(View.GONE);
+
 		if (model.getImage() != null)
 		{
 			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 			{
+				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+				{
+					if (loadedImage != null)
+					{
+						image.setVisibility(View.VISIBLE);
+					}
+				}
+
 				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
 				{
-					UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
+					if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+					{
+						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+					}
 				}
 			});
 		}
 
+		description.setVisibility(View.GONE);
+		title.setVisibility(View.GONE);
+
 		if (model.getTitle() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				title.setText(content);
+				title.setVisibility(View.VISIBLE);
+			}
 		}
 
-		if (model.getDescription() != null && !TextUtils.isEmpty(model.getDescription().getContent()))
+		if (model.getDescription() != null)
 		{
-			description.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
-			description.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			description.setVisibility(View.GONE);
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				description.setText(content);
+				description.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 

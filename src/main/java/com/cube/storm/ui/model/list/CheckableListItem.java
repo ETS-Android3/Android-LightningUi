@@ -10,9 +10,10 @@ import lombok.Getter;
  * A view model with a boolean property
  *
  * @author Alan Le Fournis
+ * @author Callum Taylor
  * @project StormUI
  */
-public class CheckableListItem extends TitleListItem
+public class CheckableListItem extends DescriptionListItem
 {
 	@SerializedName("volatile") @Getter protected boolean isVolatile;
 

@@ -3,6 +3,7 @@ package com.cube.storm.ui.lib.handler;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
@@ -99,13 +100,23 @@ public class LinkHandler
 		}
 	}
 
-	public boolean isYoutubeVideo(Uri uri)
+	public boolean isYoutubeVideo(@Nullable Uri uri)
 	{
+		if (uri == null || uri.getHost() == null)
+		{
+			return false;
+		}
+
 		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
 	}
 
-	public boolean isVideo(Uri uri)
+	public boolean isVideo(@Nullable Uri uri)
 	{
+		if (uri == null || uri.getHost() == null)
+		{
+			return false;
+		}
+
 		return (uri.getHost().toLowerCase(Locale.US).endsWith("mp4") || (uri.getHost().toLowerCase(Locale.US).endsWith("m4v")));
 	}
 }

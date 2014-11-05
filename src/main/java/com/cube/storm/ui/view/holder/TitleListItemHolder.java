@@ -1,5 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,17 @@ public class TitleListItemHolder extends Holder<TitleListItem>
 
 	@Override public void populateView(TitleListItem model)
 	{
+		title.setVisibility(View.GONE);
+
 		if (model.getTitle() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				title.setText(content);
+				title.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 }
