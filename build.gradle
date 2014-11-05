@@ -41,9 +41,8 @@ dependencies {
 	compile 'com.google.code.gson:gson:2.3'
 	compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 	compile 'net.callumtaylor:asynchttpclient:1.5'
+	compile 'com.3sidedcube.storm:util:0.2'
 
-	//This will change to a maven dependency
-	compile project(':Libraries:LightningUtil')
 	compile project(':Libraries:LightningUi:Libraries:ExoPlayer:library')
 }
 
