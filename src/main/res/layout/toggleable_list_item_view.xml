@@ -9,7 +9,6 @@
 	android:paddingRight="16dp"
 	android:paddingTop="16dp"
 	android:paddingBottom="20dp"
-	android:animateLayoutChanges="true"
 >
 	<RelativeLayout
 		android:layout_width="match_parent"
