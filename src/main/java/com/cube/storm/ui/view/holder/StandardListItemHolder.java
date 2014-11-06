@@ -1,7 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.StandardListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
-import com.cube.storm.ui.view.ViewClickable;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -103,11 +101,11 @@ public class StandardListItemHolder extends ViewHolderController
 			}
 		}
 
-		@Override public void onClick(@NonNull StandardListItem model, @NonNull View view)
+		@Override public void onClick(View v)
 		{
-			if (model.getLink() != null)
+			if (link != null)
 			{
-				UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getLink());
+				UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
 			}
 		}
 	}
