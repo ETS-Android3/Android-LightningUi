@@ -40,7 +40,7 @@ import java.util.Collection;
  * @author Callum Taylor
  * @project StormUI
  */
-public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?> >
+public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 {
 	/**
 	 * The list of models of the views we are rendering in the list. This is a 1 dimensional representation
