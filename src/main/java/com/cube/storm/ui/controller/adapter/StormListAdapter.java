@@ -170,12 +170,12 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 		return items.size();
 	}
 
-	@Override public com.cube.storm.ui.view.holder.ViewHolder<?> onCreateViewHolder(ViewGroup viewGroup, int i)
+	@Override public com.cube.storm.ui.view.holder.ViewHolder<?> onCreateViewHolder(ViewGroup viewGroup, int viewType)
 	{
 		ViewHolderController holder = null;
 		try
 		{
-			holder = itemTypes.get(getItemViewType(i)).newInstance();
+			holder = itemTypes.get(viewType).newInstance();
 			holder.createViewHolder(viewGroup);
 		}
 		catch (Exception e)
