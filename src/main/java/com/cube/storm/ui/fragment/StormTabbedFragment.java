@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
@@ -18,6 +17,7 @@ import com.cube.storm.ui.data.FragmentPackage;
 import com.cube.storm.ui.lib.adapter.StormPageAdapter;
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
+import com.cube.storm.ui.view.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 

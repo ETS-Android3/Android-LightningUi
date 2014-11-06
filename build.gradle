@@ -40,7 +40,6 @@ dependencies {
 	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 	compile 'org.projectlombok:lombok:1.14.8'
 	compile 'com.google.code.gson:gson:2.3'
-	compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 	compile 'net.callumtaylor:asynchttpclient:1.5'
 	compile 'com.3sidedcube.storm:util:0.2'
 
