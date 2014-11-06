@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
 import com.cube.storm.ui.model.descriptor.WebPageDescriptor;
+import com.cube.storm.ui.model.property.DestinationLinkProperty;
 import com.cube.storm.ui.model.property.ExternalLinkProperty;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
@@ -31,6 +33,11 @@ public class LinkHandler
 	 */
 	public void handleLink(Context context, LinkProperty link)
 	{
+		if (link instanceof DestinationLinkProperty && TextUtils.isEmpty(((DestinationLinkProperty)link).getDestination()))
+		{
+			return;
+		}
+
 		if (link instanceof InternalLinkProperty)
 		{
 			if (isYoutubeVideo(Uri.parse(((InternalLinkProperty)link).getDestination())) || isVideo(Uri.parse(((InternalLinkProperty)link).getDestination())))
