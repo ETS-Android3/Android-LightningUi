@@ -21,7 +21,7 @@ import java.util.Locale;
  * Link handler class used when a link is triggered in a holder
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class LinkHandler
 {
@@ -107,6 +107,13 @@ public class LinkHandler
 		}
 	}
 
+	/**
+	 * Checks if a uri is a youtube video uri
+	 *
+	 * @param uri The uri to check
+	 *
+	 * @return True if the uri is a youtube video, false if not
+	 */
 	public boolean isYoutubeVideo(@Nullable Uri uri)
 	{
 		if (uri == null || uri.getHost() == null)
@@ -117,6 +124,13 @@ public class LinkHandler
 		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
 	}
 
+	/**
+	 * Checks if a uri is a video uri by comparing the file extension. The current allowed video extensions are {@code mp4} and {@code m4v}
+	 *
+	 * @param uri The uri to check
+	 *
+	 * @return True if the uri is a video, false if not
+	 */
 	public boolean isVideo(@Nullable Uri uri)
 	{
 		if (uri == null || uri.getHost() == null)
