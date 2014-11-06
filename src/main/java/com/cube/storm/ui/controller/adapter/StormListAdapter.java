@@ -100,6 +100,17 @@ public class StormListAdapter extends BaseAdapter
 	 */
 	public void addItem(@NonNull Model item)
 	{
+		addItem(this.items.size(), item);
+	}
+
+	/**
+	 * Adds an item to the list, only if a holder class is found as returned by {@link com.cube.storm.ui.lib.factory.ViewFactory#getHolderForView(String)}
+	 *
+	 * @param index The index to where to add the item
+	 * @param item The model to add to the list
+	 */
+	public void addItem(int index, @NonNull Model item)
+	{
 		if (item instanceof List)
 		{
 			boolean addDivider = false;
@@ -144,7 +155,7 @@ public class StormListAdapter extends BaseAdapter
 
 			if (holderClass != null)
 			{
-				this.items.add(item);
+				this.items.add(index, item);
 			}
 
 			if (!this.itemTypes.contains(holderClass))
