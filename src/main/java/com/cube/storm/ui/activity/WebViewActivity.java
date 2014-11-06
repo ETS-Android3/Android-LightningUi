@@ -1,13 +1,11 @@
 package com.cube.storm.ui.activity;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,17 +21,15 @@ import android.widget.Toast;
 
 import com.cube.storm.ui.R;
 
-import lombok.Getter;
-
 /**
  * Web browser to launch website from URI
  * <p/>
  * Can take either a single URI extra using the key {@link StormActivity#EXTRA_URI}
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
-public class WebViewActivity extends Activity implements OnClickListener
+public class WebViewActivity extends ActionBarActivity implements OnClickListener
 {
 	public static final String EXTRA_FILE_NAME = "extra_file_name";
 	public static final String EXTRA_TITLE = "extra_title";
@@ -45,44 +41,13 @@ public class WebViewActivity extends Activity implements OnClickListener
 	public View mClose;
 	public View mButtonContainer;
 
-	@Getter private Context context;
 	private WebView webView;
 
-	@Override public void onClick(View v)
-	{
-		if (v == mWeb)
-		{
-			Intent i = new Intent(Intent.ACTION_VIEW);
-			i.setData(Uri.parse(webView.getUrl() == null ? getIntent().getExtras().getString(EXTRA_FILE_NAME) : webView.getUrl()));
-			startActivity(i);
-		}
-		else if (v == mBack)
-		{
-			webView.goBack();
-		}
-		else if (v == mForward)
-		{
-			webView.goForward();
-		}
-		else if (v == mClose)
-		{
-			finish();
-		}
-		else if (v == mShare)
-		{
-			Intent shareIntent = new Intent(Intent.ACTION_SEND);
-			shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
-			shareIntent.setType("text/plain");
-			startActivity(shareIntent);
-		}
-	}
-
-	@SuppressLint("NewApi") @Override protected void onCreate(Bundle savedInstanceState)
+	@Override protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		context = this;
+		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_FILE_NAME))
 		{
@@ -151,8 +116,37 @@ public class WebViewActivity extends Activity implements OnClickListener
 		}
 		else
 		{
-			Toast.makeText(getContext(), "No url set", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "No url set", Toast.LENGTH_LONG).show();
 			finish();
+		}
+	}
+
+	@Override public void onClick(View v)
+	{
+		if (v == mWeb)
+		{
+			Intent i = new Intent(Intent.ACTION_VIEW);
+			i.setData(Uri.parse(webView.getUrl() == null ? getIntent().getExtras().getString(EXTRA_FILE_NAME) : webView.getUrl()));
+			startActivity(i);
+		}
+		else if (v == mBack)
+		{
+			webView.goBack();
+		}
+		else if (v == mForward)
+		{
+			webView.goForward();
+		}
+		else if (v == mClose)
+		{
+			finish();
+		}
+		else if (v == mShare)
+		{
+			Intent shareIntent = new Intent(Intent.ACTION_SEND);
+			shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
+			shareIntent.setType("text/plain");
+			startActivity(shareIntent);
 		}
 	}
 
