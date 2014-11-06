@@ -1,8 +1,10 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.view.holder.AppCollectionItemHolder;
 import com.cube.storm.ui.view.holder.ButtonListItemHolder;
 import com.cube.storm.ui.view.holder.CheckableListItemHolder;
+import com.cube.storm.ui.view.holder.CollectionListItemHolder;
 import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
 import com.cube.storm.ui.view.holder.DividerHolder;
 import com.cube.storm.ui.view.holder.Holder;
@@ -51,6 +53,12 @@ public enum View
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemHolder.class),
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemHolder.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemHolder.class),
+
+	/**
+	 * Collection cells
+	 */
+	CollectionListItem(com.cube.storm.ui.model.list.collection.CollectionListItem.class, CollectionListItemHolder.class),
+	AppCollectionItem(com.cube.storm.ui.model.list.collection.AppCollectionItem.class, AppCollectionItemHolder.class),
 
 	/**
 	 * Pages
