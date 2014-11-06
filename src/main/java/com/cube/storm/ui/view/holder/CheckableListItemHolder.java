@@ -104,11 +104,5 @@ public class CheckableListItemHolder extends ViewHolderController
 				checkboxPrefs.edit().putBoolean("checkbox_" + model.getId(), checkBox.isChecked()).apply();
 			}
 		}
-
-		@Override public void onClick(@NonNull CheckableListItem model, @NonNull View view)
-		{
-			checkBox.setChecked(!checkBox.isChecked());
-		}
-	}
 	}
 }
