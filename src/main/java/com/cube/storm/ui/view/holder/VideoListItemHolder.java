@@ -27,69 +27,78 @@ import java.util.ArrayList;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class VideoListItemHolder extends Holder<VideoListItem> implements ViewClickable<VideoListItem>
+public class VideoListItemHolder extends ViewHolderController
 {
-	protected ImageView image;
-	protected ProgressBar progress;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_list_item_view, parent, false);
-		image = (ImageView)view.findViewById(R.id.image);
-		progress = (ProgressBar)view.findViewById(R.id.progress);
+		mViewHolder = new VideoListItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(final VideoListItem model)
+	public class VideoListItemViewHolder extends ViewHolder<VideoListItem> implements ViewClickable<VideoListItem>
 	{
-		if (model.getImage() != null)
-		{
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
-			{
-				@Override public void onLoadingStarted(String imageUri, View view)
-				{
-					image.setVisibility(View.INVISIBLE);
-					progress.setVisibility(View.VISIBLE);
-				}
+		protected ImageView image;
+		protected ProgressBar progress;
 
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+		public VideoListItemViewHolder(View view)
+		{
+			super(view);
+			image = (ImageView)view.findViewById(R.id.image);
+			progress = (ProgressBar)view.findViewById(R.id.progress);
+		}
+
+		@Override public void populateView(final VideoListItem model)
+		{
+			if (model.getImage() != null)
+			{
+				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 				{
-					if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+					@Override public void onLoadingStarted(String imageUri, View view)
 					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						image.setVisibility(View.INVISIBLE);
+						progress.setVisibility(View.VISIBLE);
 					}
 
-					image.setVisibility(View.VISIBLE);
-					progress.setVisibility(View.GONE);
-				}
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+						{
+							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						}
 
-				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-				{
-					image.setVisibility(View.VISIBLE);
-					progress.setVisibility(View.GONE);
-				}
-			});
+						image.setVisibility(View.VISIBLE);
+						progress.setVisibility(View.GONE);
+					}
+
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					{
+						image.setVisibility(View.VISIBLE);
+						progress.setVisibility(View.GONE);
+					}
+				});
+			}
 		}
-	}
 
-	@Override public void onClick(@NonNull VideoListItem model, @NonNull View view)
-	{
-		ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
-		arrayList.addAll(model.getVideos());
-
-		VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
-		pageDescriptor.setType("content");
-		pageDescriptor.setSrc(arrayList.get(0).getSrc().getDestination());
-
-		Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(view.getContext(), pageDescriptor);
-
-		if (video != null)
+		@Override public void onClick(@NonNull VideoListItem model, @NonNull View view)
 		{
-			video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME, "Video Asset");
-			video.putExtra(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
+			ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
+			arrayList.addAll(model.getVideos());
 
-			view.getContext().startActivity(video);
+			VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
+			pageDescriptor.setType("content");
+			pageDescriptor.setSrc(arrayList.get(0).getSrc().getDestination());
+
+			Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(view.getContext(), pageDescriptor);
+
+			if (video != null)
+			{
+				video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME, "Video Asset");
+				video.putExtra(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
+
+				view.getContext().startActivity(video);
+			}
 		}
 	}
 }

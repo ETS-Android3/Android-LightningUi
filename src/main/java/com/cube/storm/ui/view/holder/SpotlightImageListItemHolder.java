@@ -38,11 +38,11 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.spotlight_image_list_item_view, parent, false);
 		mViewHolder = new SpotlightImageListItemViewHolder(view);
-		
+
 		return mViewHolder;
 	}
 
-	public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
+	private class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
 	{
 		private static final int MSG_UPDATE = 100;
 		private ImageView image;
