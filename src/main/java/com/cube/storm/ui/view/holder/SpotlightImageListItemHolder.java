@@ -56,7 +56,6 @@ public class SpotlightImageListItemHolder extends Holder<SpotlightImageListItem>
 	{
 		if (this.model == null)
 		{
-			getTimer().cancel();
 			currentIndex = 0;
 
 			this.model = model;
@@ -117,6 +116,7 @@ public class SpotlightImageListItemHolder extends Holder<SpotlightImageListItem>
 				timer = new Timer("Spotlight timer");
 			}
 		}
+
 		return timer;
 	}
 

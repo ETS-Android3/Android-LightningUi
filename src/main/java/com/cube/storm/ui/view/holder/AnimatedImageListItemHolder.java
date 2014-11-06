@@ -22,13 +22,13 @@ import java.util.TimerTask;
  */
 public class AnimatedImageListItemHolder extends Holder<AnimatedImageListItem>
 {
-	private static ImageView image;
+	private static final int MSG_UPDATE = 1;
+
+	private ImageView image;
 	private AnimatedImageListItem model;//this is bad mmkay, controllers will come with the recycler view
 	private int currentIndex = 0;
 	private Timer timer;
 	private Handler handler;
-	public static final int MSG_UPDATE = 1;
-
 
 	@Override public View createView(ViewGroup parent)
 	{
@@ -53,21 +53,8 @@ public class AnimatedImageListItemHolder extends Holder<AnimatedImageListItem>
 				}
 			};
 			this.model = model;
-		}
-		else
-		{
-			//resetting everything
-			try
-			{
-				getTimer().cancel();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
 			currentIndex = 0;
 
-			this.model = model;
 			updateView();
 		}
 	}
@@ -88,7 +75,7 @@ public class AnimatedImageListItemHolder extends Holder<AnimatedImageListItem>
 			{
 				currentIndex = 0;
 			}
-			timer.schedule(new TimerTask()
+			getTimer().schedule(new TimerTask()
 			{
 				@Override public void run()
 				{
