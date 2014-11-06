@@ -25,45 +25,45 @@ public class UnorderedListItemHolder extends ViewHolderController
 		mViewHolder = new UnorderedListItemViewHolder(view);
 
 		return mViewHolder;
+	}
 
-		private class UnorderedListItemViewHolder extends ViewHolder<UnorderedListItem>
+	private class UnorderedListItemViewHolder extends ViewHolder<UnorderedListItem>
+	{
+		protected TextView title;
+		protected TextView description;
+
+		public UnorderedListItemViewHolder(View view)
 		{
-			protected TextView title;
-			protected TextView description;
+			super(view);
 
-			public UnorderedListItemViewHolder(View view)
+			title = (TextView)view.findViewById(R.id.title);
+			description = (TextView)view.findViewById(R.id.description);
+		}
+
+		@Override public void populateView(final UnorderedListItem model)
+		{
+			description.setVisibility(View.GONE);
+			title.setVisibility(View.GONE);
+
+			if (model.getTitle() != null)
 			{
-				super(view);
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
 
-				title = (TextView)view.findViewById(R.id.title);
-				description = (TextView)view.findViewById(R.id.description);
+				if (!TextUtils.isEmpty(content))
+				{
+					title.setText(content);
+					title.setVisibility(View.VISIBLE);
+				}
 			}
 
-			@Override public void populateView(final UnorderedListItem model)
+			if (model.getDescription() != null)
 			{
-				description.setVisibility(View.GONE);
-				title.setVisibility(View.GONE);
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
 
-				if (model.getTitle() != null)
+				if (!TextUtils.isEmpty(content))
 				{
-					String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
-
-					if (!TextUtils.isEmpty(content))
-					{
-						title.setText(content);
-						title.setVisibility(View.VISIBLE);
-					}
-				}
-
-				if (model.getDescription() != null)
-				{
-					String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
-
-					if (!TextUtils.isEmpty(content))
-					{
-						description.setText(content);
-						description.setVisibility(View.VISIBLE);
-					}
+					description.setText(content);
+					description.setVisibility(View.VISIBLE);
 				}
 			}
 		}
