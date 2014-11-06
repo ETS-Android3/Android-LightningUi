@@ -21,7 +21,6 @@ public class TextListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.text_list_item_view, parent, false);
-
 		mViewHolder = new TextListItemViewHolder(view);
 
 		return mViewHolder;

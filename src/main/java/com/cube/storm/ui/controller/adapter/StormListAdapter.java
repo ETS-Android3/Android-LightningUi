@@ -22,9 +22,8 @@ import java.util.Collection;
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
  * the benefit of view recycling which makes the content smooth to scroll.
- * <p/>
- * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.Holder} counter-class.
- * <p/>
+ *
+ * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.ViewHolder} counter-class.
  *
  * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.ViewHolder} counter-class.
  *

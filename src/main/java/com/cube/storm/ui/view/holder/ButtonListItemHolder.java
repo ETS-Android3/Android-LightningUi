@@ -50,10 +50,6 @@ public class ButtonListItemHolder extends ViewHolderController
 			{
 				button.setText(content);
 				button.setVisibility(View.VISIBLE);
-			if (model.getTitle() != null)
-			{
-				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
-				title.setVisibility(View.VISIBLE);
 			}
 			else
 			{

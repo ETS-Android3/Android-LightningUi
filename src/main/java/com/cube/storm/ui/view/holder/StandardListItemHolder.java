@@ -100,6 +100,7 @@ public class StandardListItemHolder extends ViewHolderController
 					description.setText(content);
 					description.setVisibility(View.VISIBLE);
 				}
+			}
 		}
 
 		@Override public void onClick(@NonNull StandardListItem model, @NonNull View view)

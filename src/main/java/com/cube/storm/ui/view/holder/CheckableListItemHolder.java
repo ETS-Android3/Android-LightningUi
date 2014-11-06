@@ -1,5 +1,7 @@
 package com.cube.storm.ui.view.holder;
 
+import android.view.ViewGroup;
+
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -14,7 +16,6 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.CheckableListItem;
-import com.cube.storm.ui.view.ViewClickable;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.CheckableListItem} in the adapter
@@ -45,7 +46,6 @@ public class CheckableListItemHolder extends ViewHolderController
 
 			title = (TextView)view.findViewById(R.id.title);
 			checkBox = (CheckBox)view.findViewById(R.id.checkbox);
-			description = (TextView)view.findViewById(R.id.description);
 		}
 
 		@Override public void populateView(CheckableListItem model)

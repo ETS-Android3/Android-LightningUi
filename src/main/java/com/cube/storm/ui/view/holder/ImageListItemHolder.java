@@ -26,9 +26,13 @@ public class ImageListItemHolder extends ViewHolderController
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_list_item_view, parent, false);
 
+<<<<<<< HEAD
 		mViewHolder = new DescriptionListItemViewHolder(view);
 
 		return mViewHolder;
+=======
+		return new DescriptionListItemViewHolder(view);
+>>>>>>> 80d149a654fa16d3b903dde438a2d622de102ddc
 	}
 
 	private class DescriptionListItemViewHolder extends ViewHolder<ImageListItem>
@@ -45,7 +49,7 @@ public class ImageListItemHolder extends ViewHolderController
 
 		@Override public void populateView(final ImageListItem model)
 		{
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
+			if (model.getImage() != null)
 			{
 				@Override public void onLoadingStarted(String imageUri, View view)
 				{
@@ -74,9 +78,12 @@ public class ImageListItemHolder extends ViewHolderController
 			{
 				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
 				{
-					UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
-				}
-			});
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
+					}
+				});
+			}
 		}
 	}
 }

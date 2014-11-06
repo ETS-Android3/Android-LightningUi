@@ -22,49 +22,48 @@ public class UnorderedListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.unordered_list_item_view, parent, false);
-
 		mViewHolder = new UnorderedListItemViewHolder(view);
 
 		return mViewHolder;
-	}
 
-	public class UnorderedListItemViewHolder extends ViewHolder<UnorderedListItem>
-	{
-		protected TextView title;
-		protected TextView description;
-
-		public UnorderedListItemViewHolder(View view)
+		private class UnorderedListItemViewHolder extends ViewHolder<UnorderedListItem>
 		{
-			super(view);
+			protected TextView title;
+			protected TextView description;
 
-			title = (TextView)view.findViewById(R.id.title);
-			description = (TextView)view.findViewById(R.id.description);
-		}
-
-		@Override public void populateView(final UnorderedListItem model)
-		{
-			description.setVisibility(View.GONE);
-			title.setVisibility(View.GONE);
-
-			if (model.getTitle() != null)
+			public UnorderedListItemViewHolder(View view)
 			{
-				String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+				super(view);
 
-				if (!TextUtils.isEmpty(content))
-				{
-					title.setText(content);
-					title.setVisibility(View.VISIBLE);
-				}
+				title = (TextView)view.findViewById(R.id.title);
+				description = (TextView)view.findViewById(R.id.description);
 			}
 
-			if (model.getDescription() != null)
+			@Override public void populateView(final UnorderedListItem model)
 			{
-				String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
+				description.setVisibility(View.GONE);
+				title.setVisibility(View.GONE);
 
-				if (!TextUtils.isEmpty(content))
+				if (model.getTitle() != null)
 				{
-					description.setText(content);
-					description.setVisibility(View.VISIBLE);
+					String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+					if (!TextUtils.isEmpty(content))
+					{
+						title.setText(content);
+						title.setVisibility(View.VISIBLE);
+					}
+				}
+
+				if (model.getDescription() != null)
+				{
+					String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
+
+					if (!TextUtils.isEmpty(content))
+					{
+						description.setText(content);
+						description.setVisibility(View.VISIBLE);
+					}
 				}
 			}
 		}

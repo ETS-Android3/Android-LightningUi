@@ -25,7 +25,6 @@ public class ToggleableListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.toggleable_list_item_view, parent, false);
-
 		mViewHolder = new ToggleableListItemViewHolder(view);
 
 		return mViewHolder;
