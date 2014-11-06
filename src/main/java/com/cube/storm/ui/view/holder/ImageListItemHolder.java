@@ -46,36 +46,29 @@ public class ImageListItemHolder extends ViewHolderController
 		{
 			if (model.getImage() != null)
 			{
-				@Override public void onLoadingStarted(String imageUri, View view)
+				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 				{
-					image.setVisibility(View.INVISIBLE);
-					progress.setVisibility(View.VISIBLE);
-				}
-
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
-				{
-					if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+					@Override public void onLoadingStarted(String imageUri, View view)
 					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						image.setVisibility(View.INVISIBLE);
+						progress.setVisibility(View.VISIBLE);
 					}
 
-					image.setVisibility(View.VISIBLE);
-					progress.setVisibility(View.GONE);
-				}
-
-				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-				{
-					image.setVisibility(View.VISIBLE);
-					progress.setVisibility(View.GONE);
-				}
-			});
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
-			{
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
-				{
 					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
 					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
+						if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+						{
+							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						}
+
+						image.setVisibility(View.VISIBLE);
+						progress.setVisibility(View.GONE);
+					}
+
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					{
+						image.setVisibility(View.VISIBLE);
+						progress.setVisibility(View.GONE);
 					}
 				});
 			}
