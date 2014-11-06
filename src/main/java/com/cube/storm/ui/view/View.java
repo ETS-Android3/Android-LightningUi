@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.view.holder.AnimatedImageListItemHolder;
 import com.cube.storm.ui.view.holder.ButtonListItemHolder;
 import com.cube.storm.ui.view.holder.CheckableListItemHolder;
 import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
@@ -11,6 +12,7 @@ import com.cube.storm.ui.view.holder.ListFooterHolder;
 import com.cube.storm.ui.view.holder.ListHeaderHolder;
 import com.cube.storm.ui.view.holder.LogoListItemHolder;
 import com.cube.storm.ui.view.holder.OrderedListItemHolder;
+import com.cube.storm.ui.view.holder.SpotlightImageListItemHolder;
 import com.cube.storm.ui.view.holder.StandardListItemHolder;
 import com.cube.storm.ui.view.holder.TextListItemHolder;
 import com.cube.storm.ui.view.holder.TitleListItemHolder;
@@ -51,6 +53,8 @@ public enum View
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemHolder.class),
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemHolder.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemHolder.class),
+	SpotlightImageListItem(com.cube.storm.ui.model.list.SpotlightImageListItem.class, SpotlightImageListItemHolder.class),
+	AnimatedImageListItem(com.cube.storm.ui.model.list.AnimatedImageListItem.class, AnimatedImageListItemHolder.class),
 
 	/**
 	 * Pages
@@ -69,6 +73,8 @@ public enum View
 	 */
 	Image(com.cube.storm.ui.model.property.BundleImageProperty.class, null),
 	Icon(com.cube.storm.ui.model.property.BundleImageProperty.class, null),
+	AnimationImage(com.cube.storm.ui.model.property.AnimationImageProperty.class, null),
+	SpotlightImage(com.cube.storm.ui.model.property.SpotlightImageProperty.class, null),
 	DestinationLink(com.cube.storm.ui.model.property.DestinationLinkProperty.class, null),
 	InternalLink(com.cube.storm.ui.model.property.InternalLinkProperty.class, null),
 	ExternalLink(com.cube.storm.ui.model.property.ExternalLinkProperty.class, null),
