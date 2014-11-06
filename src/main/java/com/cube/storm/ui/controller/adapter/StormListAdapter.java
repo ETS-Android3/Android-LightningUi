@@ -142,7 +142,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 		}
 		else
 		{
-			/*Class<? extends com.cube.storm.ui.view.holder.ViewHolder> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
+			Class<? extends ViewHolderController> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
 
 			if (holderClass != null)
 			{
@@ -152,7 +152,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 			if (!this.itemTypes.contains(holderClass))
 			{
 				this.itemTypes.add(holderClass);
-			}*/
+			}
 		}
 	}
 
