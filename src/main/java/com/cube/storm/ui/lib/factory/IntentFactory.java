@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
+import com.cube.storm.ui.activity.StormWebActivity;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
-import com.cube.storm.ui.activity.WebViewActivity;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormListFragment;
 import com.cube.storm.ui.fragment.StormTabbedFragment;
@@ -221,8 +221,8 @@ public abstract class IntentFactory
 		}
 		else if (pageDescriptor instanceof WebPageDescriptor)
 		{
-			intent = new Intent(context, WebViewActivity.class);
-			intent.putExtra(WebViewActivity.EXTRA_FILE_NAME, pageDescriptor.getSrc());
+			intent = new Intent(context, StormWebActivity.class);
+			intent.putExtra(StormWebActivity.EXTRA_FILE_NAME, pageDescriptor.getSrc());
 
 			return intent;
 		}
