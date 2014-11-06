@@ -28,8 +28,9 @@ public class StandardListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.standard_list_item_view, parent, false);
+		mViewHolder = new StandardListItemViewHolder(view);
 
-		return new StandardListItemViewHolder(view);
+		return mViewHolder;
 	}
 
 	private class StandardListItemViewHolder extends ViewHolder<StandardListItem> implements OnClickListener

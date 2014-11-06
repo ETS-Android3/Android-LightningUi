@@ -22,7 +22,6 @@ public class OrderedListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ordered_list_item_view, parent, false);
-
 		mViewHolder = new OrderedListItemViewHolder(view);
 
 		return mViewHolder;

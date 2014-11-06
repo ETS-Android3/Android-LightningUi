@@ -23,6 +23,7 @@ public class ListFooterHolder extends ViewHolderController
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_text_list_item_view, parent, false);
 		mViewHolder = new ListFooterViewHolder(view);
+
 		return mViewHolder;
 	}
 

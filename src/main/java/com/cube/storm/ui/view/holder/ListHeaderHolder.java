@@ -22,13 +22,13 @@ public class ListHeaderHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_text_list_item_view, parent, false);
+		mViewHolder = new ListHeaderViewHolder(view);
 
-		return new ListHeaderViewHolder(view);
+		return mViewHolder;
 	}
 
 	private class ListHeaderViewHolder extends ViewHolder<ListHeader>
 	{
-
 		protected TextView title;
 
 		public ListHeaderViewHolder(View view)

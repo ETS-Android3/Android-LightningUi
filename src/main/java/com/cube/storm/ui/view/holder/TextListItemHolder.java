@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.TextListItem;
-import com.cube.storm.ui.view.TextListItemView;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.TextListItem} in the adapter
