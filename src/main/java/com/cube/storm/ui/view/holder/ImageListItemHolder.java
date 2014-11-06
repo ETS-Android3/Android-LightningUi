@@ -25,14 +25,9 @@ public class ImageListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_list_item_view, parent, false);
-
-<<<<<<< HEAD
 		mViewHolder = new DescriptionListItemViewHolder(view);
 
 		return mViewHolder;
-=======
-		return new DescriptionListItemViewHolder(view);
->>>>>>> 80d149a654fa16d3b903dde438a2d622de102ddc
 	}
 
 	private class DescriptionListItemViewHolder extends ViewHolder<ImageListItem>
