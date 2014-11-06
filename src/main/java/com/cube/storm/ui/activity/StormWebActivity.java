@@ -29,7 +29,7 @@ import com.cube.storm.ui.R;
  * @author Alan Le Fournis
  * @project LightningUi
  */
-public class WebViewActivity extends ActionBarActivity implements OnClickListener
+public class StormWebActivity extends ActionBarActivity implements OnClickListener
 {
 	public static final String EXTRA_FILE_NAME = "extra_file_name";
 	public static final String EXTRA_TITLE = "extra_title";
