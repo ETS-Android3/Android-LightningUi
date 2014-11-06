@@ -15,7 +15,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * // TODO: Add class description
+ * Animated image list item shows a series of items in turn. This is done by creating an asynchronous
+ * {@link java.util.Timer} thread and creating a new {@link java.util.TimerTask} for each the next
+ * image after each image is shown on screen.
+ *
+ * We're no longer relying on properties of a {@link android.graphics.drawable.AnimationDrawable}, this
+ * is now asynchronous for performance reasons.
+ *
+ * The purpose of the Handler is to let us back onto the UI thread once the {@link java.util.TimerTask}
+ * has returned.
  *
  * @author Luke Reed
  * @project Storm
@@ -25,7 +33,7 @@ public class AnimatedImageListItemHolder extends Holder<AnimatedImageListItem>
 	private static final int MSG_UPDATE = 1;
 
 	private ImageView image;
-	private AnimatedImageListItem model;//this is bad mmkay, controllers will come with the recycler view
+	private AnimatedImageListItem model; //This is bad mmkay, controllers will come with the recycler view
 	private int currentIndex = 0;
 	private Timer timer;
 	private Handler handler;
