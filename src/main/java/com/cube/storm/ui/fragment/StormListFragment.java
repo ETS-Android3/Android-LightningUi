@@ -3,6 +3,7 @@ package com.cube.storm.ui.fragment;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class StormListFragment extends Fragment
 		View v = inflater.inflate(R.layout.list_page_fragment_view, container, false);
 		listView = (RecyclerView)v.findViewById(R.id.recyclerview);
 		listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		listView.setItemAnimator(new DefaultItemAnimator());
 
 		return v;
 	}
