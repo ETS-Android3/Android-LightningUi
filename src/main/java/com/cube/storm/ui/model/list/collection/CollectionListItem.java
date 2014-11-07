@@ -3,6 +3,7 @@ package com.cube.storm.ui.model.list.collection;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.property.LinkProperty;
 
 import java.util.Collection;
 
@@ -17,6 +18,7 @@ import lombok.Getter;
 public class CollectionListItem extends Model
 {
 	@Getter protected Collection<CollectionItem> cells;
+	@Getter protected Collection<LinkProperty> embeddedLinks;
 
 	@Override public int describeContents()
 	{
