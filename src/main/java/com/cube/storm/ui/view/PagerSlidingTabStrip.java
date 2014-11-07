@@ -36,6 +36,8 @@ import android.view.Gravity;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -258,17 +260,30 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 		ImageButton tab = new ImageButton(getContext());
 		tab.setImageResource(resId);
 		tab.setColorFilter(tabIconTint);
-		
+
 		addTab(position, tab);
 	}
 
 	private void addIconTab(final int position, Bitmap bitmap) {
-
-		ImageButton tab = new ImageButton(getContext());
+		ImageView tab = new ImageView(getContext());
 		tab.setImageBitmap(bitmap);
 		tab.setColorFilter(tabIconTint);
+		tab.setScaleType(ScaleType.FIT_CENTER);
 
-		addTab(position, tab);
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		int padding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, dm);
+
+		tab.setPadding(padding + tabPadding, padding, padding + tabPadding, padding);
+
+		tab.setFocusable(true);
+		tab.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(android.view.View v) {
+				pager.setCurrentItem(position);
+			}
+		});
+
+		tabsContainer.addView(tab, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
 	}
 
 	private void addTab(final int position, android.view.View tab) {
