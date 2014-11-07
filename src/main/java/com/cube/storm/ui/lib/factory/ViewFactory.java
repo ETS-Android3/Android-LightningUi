@@ -12,7 +12,7 @@ import com.cube.storm.ui.view.holder.Holder;
  * for a specific view class name.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class ViewFactory
 {

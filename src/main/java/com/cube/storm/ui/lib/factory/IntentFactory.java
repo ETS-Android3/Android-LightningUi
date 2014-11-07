@@ -29,7 +29,7 @@ import com.cube.storm.ui.model.page.TabbedPageCollection;
  * based on the source file's class type, name, or Uri.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class IntentFactory
 {
@@ -173,18 +173,21 @@ public abstract class IntentFactory
 		FragmentIntent intent;
 		Class<? extends Model> pageType = UiSettings.getInstance().getViewFactory().getModelForView(pageDescriptor.getType());
 
-		Bundle arguments = new Bundle();
-		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
+		if (pageType != null)
+		{
+			Bundle arguments = new Bundle();
+			arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
-		if (ListPage.class.isAssignableFrom(pageType))
-		{
-			intent = new FragmentIntent(StormListFragment.class, null, arguments);
-			return intent;
-		}
-		else if (TabbedPageCollection.class.isAssignableFrom(pageType))
-		{
-			intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
-			return intent;
+			if (ListPage.class.isAssignableFrom(pageType))
+			{
+				intent = new FragmentIntent(StormListFragment.class, null, arguments);
+				return intent;
+			}
+			else if (TabbedPageCollection.class.isAssignableFrom(pageType))
+			{
+				intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
+				return intent;
+			}
 		}
 
 		return null;
@@ -226,8 +229,7 @@ public abstract class IntentFactory
 
 			return intent;
 		}
-		else if (Page.class.isAssignableFrom(pageType)
-		|| PageCollection.class.isAssignableFrom(pageType))
+		else if (pageType != null && (Page.class.isAssignableFrom(pageType) || PageCollection.class.isAssignableFrom(pageType)))
 		{
 			intent = new Intent(context, StormActivity.class);
 			intent.putExtras(arguments);
