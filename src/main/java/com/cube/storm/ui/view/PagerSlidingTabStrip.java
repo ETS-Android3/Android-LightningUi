@@ -19,6 +19,7 @@ package com.cube.storm.ui.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
@@ -46,6 +47,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 {
 	public interface IconTabProvider {
 		public int getPageIconResId(int position);
+		public Bitmap getPageIconBitmap(int position);
 	}
 
 	// @formatter:off
@@ -89,6 +91,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 	private int tabTextSize = 12;
 	private int tabTextColor = 0xFF666666;
 	private int tabDeactivateTextColor = 0xFFCCCCCC;
+
+	private int tabIconTint = 0xFF000000;
 
 	private Typeface tabTypeface = null;
 	private int tabTypefaceStyle = Typeface.BOLD;
@@ -157,6 +161,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 		scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsScrollOffset, scrollOffset);
 		textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextAllCaps, textAllCaps);
 		tabSwitch = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTabSwitch, tabSwitch);
+		tabIconTint = a.getColor(R.styleable.PagerSlidingTabStrip_pstsActivateIconTint, tabIconTint);
 		tabTextColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsActivateTextColor, tabTextColor);
 		tabDeactivateTextColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsDeactivateTextColor, tabDeactivateTextColor);
 
@@ -203,7 +208,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 		for (int i = 0; i < tabCount; i++) {
 
 			if (pager.getAdapter() instanceof IconTabProvider) {
-				addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
+				if (((IconTabProvider)pager.getAdapter()).getPageIconResId(i) > 0)
+				{
+					addIconTab(i, ((IconTabProvider)pager.getAdapter()).getPageIconResId(i));
+				}
+				else if (((IconTabProvider)pager.getAdapter()).getPageIconBitmap(i) != null)
+				{
+					addIconTab(i, ((IconTabProvider)pager.getAdapter()).getPageIconBitmap(i));
+				}
 			} else {
 				addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
 			}
@@ -245,6 +257,16 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 
 		ImageButton tab = new ImageButton(getContext());
 		tab.setImageResource(resId);
+		tab.setColorFilter(tabIconTint);
+		
+		addTab(position, tab);
+	}
+
+	private void addIconTab(final int position, Bitmap bitmap) {
+
+		ImageButton tab = new ImageButton(getContext());
+		tab.setImageBitmap(bitmap);
+		tab.setColorFilter(tabIconTint);
 
 		addTab(position, tab);
 	}
