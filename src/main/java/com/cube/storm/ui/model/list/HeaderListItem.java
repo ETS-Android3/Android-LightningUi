@@ -2,21 +2,20 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.property.VideoProperty;
-
-import java.util.Collection;
+import com.cube.storm.ui.model.property.TextProperty;
 
 import lombok.Getter;
 
 /**
- * A view model with a video collection property
+ * A view model with an image and description property
  *
  * @author Alan Le Fournis
- * @project StormUI
+ * @project Storm
  */
-public class VideoListItem extends ImageListItem
+public class HeaderListItem extends ImageListItem
 {
-	@Getter protected Collection<VideoProperty> videos;
+	@Getter protected TextProperty title;
+	@Getter protected TextProperty description;
 
 	@Override public int describeContents()
 	{
