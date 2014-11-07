@@ -1,6 +1,7 @@
 package com.cube.storm.ui.lib.helper;
 
 import android.net.Uri;
+import android.os.Build.VERSION;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
@@ -77,7 +78,7 @@ public class YouTubeHelper
 							}
 						}
 
-						boolean allowWebm = false;//VERSION.SDK_INT >= 14;
+						boolean allowWebm = VERSION.SDK_INT >= 14;
 						String disallow = "video/x-flv";
 
 						streamMap = streamMap.replace("url_encoded_fmt_stream_map=", "");
@@ -102,12 +103,12 @@ public class YouTubeHelper
 								continue;
 							}
 
-							if (map.get("quality").equals("medium") && TextUtils.isEmpty(url))
+							if (map.get("quality").equals("medium"))
 							{
 								url = Uri.decode(map.get("url")) + "&signature=" + map.get("sig");
 								break;
 							}
-							else if (map.get("quality").equals("small") && TextUtils.isEmpty(url))
+							else if (map.get("quality").equals("small"))
 							{
 								url = Uri.decode(map.get("url")) + "&signature=" + map.get("sig");
 								break;

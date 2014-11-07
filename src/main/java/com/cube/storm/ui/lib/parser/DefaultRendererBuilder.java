@@ -29,7 +29,6 @@ import com.google.android.exoplayer.TrackRenderer;
 
 public class DefaultRendererBuilder implements RendererBuilder
 {
-
 	private final VideoPlayerActivity playerActivity;
 	private final Uri uri;
 
