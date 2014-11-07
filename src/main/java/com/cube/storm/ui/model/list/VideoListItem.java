@@ -9,7 +9,7 @@ import java.util.Collection;
 import lombok.Getter;
 
 /**
- * A view model with an image property
+ * A view model with a video collection property
  *
  * @author Alan Le Fournis
  * @project StormUI
