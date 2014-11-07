@@ -92,6 +92,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 	private int tabTextColor = 0xFF666666;
 	private int tabDeactivateTextColor = 0xFFCCCCCC;
 
+	private int tabIconTint = 0xFF000000;
+
 	private Typeface tabTypeface = null;
 	private int tabTypefaceStyle = Typeface.BOLD;
 
@@ -159,6 +161,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 		scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsScrollOffset, scrollOffset);
 		textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextAllCaps, textAllCaps);
 		tabSwitch = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTabSwitch, tabSwitch);
+		tabIconTint = a.getColor(R.styleable.PagerSlidingTabStrip_pstsActivateIconTint, tabIconTint);
 		tabTextColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsActivateTextColor, tabTextColor);
 		tabDeactivateTextColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsDeactivateTextColor, tabDeactivateTextColor);
 
@@ -254,7 +257,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 
 		ImageButton tab = new ImageButton(getContext());
 		tab.setImageResource(resId);
-
+		tab.setColorFilter(tabIconTint);
+		
 		addTab(position, tab);
 	}
 
@@ -262,6 +266,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 
 		ImageButton tab = new ImageButton(getContext());
 		tab.setImageBitmap(bitmap);
+		tab.setColorFilter(tabIconTint);
 
 		addTab(position, tab);
 	}
