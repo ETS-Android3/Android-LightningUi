@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view.holder;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
- * // TODO: Add class description
+ * View holder for {@link com.cube.storm.ui.model.list.HeaderListItem} in the adapter
  *
  * @author Alan Le Fournis
  * @project Storm
@@ -70,14 +71,24 @@ public class HeaderListItemHolder extends Holder<HeaderListItem>
 
 		if (model.getTitle() != null)
 		{
-			title.setText(model.getTitle().getContent());
-			title.setVisibility(View.VISIBLE);
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				title.setText(content);
+				title.setVisibility(View.VISIBLE);
+			}
 		}
 
 		if (model.getDescription() != null)
 		{
-			description.setText(model.getDescription().getContent());
-			description.setVisibility(View.VISIBLE);
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				description.setText(content);
+				description.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 }

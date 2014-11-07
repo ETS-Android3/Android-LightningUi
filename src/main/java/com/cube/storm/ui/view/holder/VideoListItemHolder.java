@@ -22,7 +22,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.ArrayList;
 
 /**
- * // TODO: Add class description
+ * View holder for {@link com.cube.storm.ui.model.list.VideoListItem} in the adapter
  *
  * @author Alan Le Fournis
  * @project Storm

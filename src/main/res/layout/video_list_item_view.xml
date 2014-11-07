@@ -3,7 +3,7 @@
 <FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
+	android:layout_height="192dp"
 >
 	<ProgressBar
 		android:layout_width="32dp"
@@ -14,16 +14,15 @@
 
 	<com.cube.storm.ui.view.AspectRatioImageView
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:id="@+id/image"
-		android:maxHeight="192dp"
 		android:scaleType="centerCrop"
 		android:visibility="invisible"
 	/>
 
 	<ImageView
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:id="@+id/play_icon"
 		android:src="@drawable/ic_video_play"
 		android:layout_gravity="center"
