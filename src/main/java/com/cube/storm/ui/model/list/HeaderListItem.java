@@ -14,7 +14,6 @@ import lombok.Getter;
  */
 public class HeaderListItem extends ImageListItem
 {
-	@Getter protected TextProperty title;
 	@Getter protected TextProperty description;
 
 	@Override public int describeContents()
