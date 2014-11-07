@@ -55,6 +55,13 @@ public class StormActivity extends ActionBarActivity
 			{
 				loadPage(fragmentIntent);
 			}
+			else
+			{
+				Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
+				finish();
+
+				return;
+			}
 		}
 	}
 
