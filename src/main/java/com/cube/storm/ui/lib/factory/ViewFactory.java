@@ -1,5 +1,8 @@
 package com.cube.storm.ui.lib.factory;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.View;
 import com.cube.storm.ui.view.holder.Holder;
@@ -20,7 +23,8 @@ public abstract class ViewFactory
 	 *
 	 * @return The view holder class or null if one was not found.
 	 */
-	public Class<? extends Holder> getHolderForView(String viewName)
+	@Nullable
+	public Class<? extends Holder> getHolderForView(@NonNull String viewName)
 	{
 		try
 		{
@@ -41,7 +45,8 @@ public abstract class ViewFactory
 	 *
 	 * @return The view model class or null if one was not found.
 	 */
-	public Class<? extends Model> getModelForView(String viewName)
+	@Nullable
+	public Class<? extends Model> getModelForView(@NonNull String viewName)
 	{
 		try
 		{
