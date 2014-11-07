@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
@@ -48,6 +49,12 @@ public class StormListFragment extends Fragment implements OnItemClickListener
 		{
 			String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
 			page = UiSettings.getInstance().getViewBuilder().buildPage(Uri.parse(pageUri));
+		}
+		else
+		{
+			Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
+			getActivity().finish();
+			return;
 		}
 
 		if (page != null)
