@@ -1,44 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
+	android:layout_height="192dp"
+	android:id="@+id/spotlight_container"
 >
-	<FrameLayout
+	<ImageView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:id="@+id/spotlight_container"
-		>
-		<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="192dp"
-			android:scaleType="centerCrop"
-			android:id="@+id/image_view"
-		/>
+		android:id="@+id/image_view"
+		android:scaleType="centerCrop"
+	/>
 
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:padding="10dp"
-			android:id="@+id/text_ticker"
-			android:textSize="24dp"
-			android:textColor="#ffffffff"
-			android:shadowColor="#ff000000"
-			android:shadowDx="1"
-			android:shadowDy="1"
-			android:shadowRadius="2"
-			android:textStyle="bold"
-			android:layout_gravity="center"
-			android:gravity="center"
-		/>
-	</FrameLayout>
-
-	<FrameLayout
+	<TextView
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:paddingLeft="8dp"
-		android:paddingRight="8dp"
-	>
-	</FrameLayout>
-</LinearLayout>
+		android:layout_height="match_parent"
+		android:padding="8dp"
+		android:id="@+id/text_ticker"
+		android:textSize="24sp"
+		android:textColor="#ffffffff"
+		android:shadowColor="#ff000000"
+		android:shadowDx="1"
+		android:shadowDy="1"
+		android:shadowRadius="2"
+		android:textStyle="bold"
+		android:layout_gravity="center"
+		android:gravity="center"
+	/>
+</FrameLayout>
