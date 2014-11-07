@@ -9,6 +9,7 @@ import com.cube.storm.ui.view.holder.CheckableListItemHolder;
 import com.cube.storm.ui.view.holder.CollectionListItemHolder;
 import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
 import com.cube.storm.ui.view.holder.DividerHolder;
+import com.cube.storm.ui.view.holder.HeaderListItemHolder;
 import com.cube.storm.ui.view.holder.Holder;
 import com.cube.storm.ui.view.holder.ImageListItemHolder;
 import com.cube.storm.ui.view.holder.ListFooterHolder;
@@ -58,6 +59,7 @@ public enum View
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemHolder.class),
 	SpotlightImageListItem(com.cube.storm.ui.model.list.SpotlightImageListItem.class, SpotlightImageListItemHolder.class),
 	AnimatedImageListItem(com.cube.storm.ui.model.list.AnimatedImageListItem.class, AnimatedImageListItemHolder.class),
+	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemHolder.class),
 
 	/**
 	 * Collection cells
