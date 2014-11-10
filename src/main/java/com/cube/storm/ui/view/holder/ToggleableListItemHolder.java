@@ -4,13 +4,17 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.ToggleableListItem;
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.ViewClickable;
 
 /**
@@ -25,6 +29,7 @@ public class ToggleableListItemHolder extends Holder<ToggleableListItem> impleme
 	protected ImageView expandIcon;
 	protected TextView title;
 	protected TextView description;
+	protected LinearLayout embeddedLinksContainer;
 
 	@Override public View createView(ViewGroup parent)
 	{
@@ -33,6 +38,7 @@ public class ToggleableListItemHolder extends Holder<ToggleableListItem> impleme
 		expandIcon = (ImageView)view.findViewById(R.id.expand_icon);
 		title = (TextView)view.findViewById(R.id.title);
 		description = (TextView)view.findViewById(R.id.description);
+		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 
 		return view;
 	}
@@ -61,6 +67,34 @@ public class ToggleableListItemHolder extends Holder<ToggleableListItem> impleme
 			{
 				description.setText(content);
 				description.setVisibility(View.VISIBLE);
+			}
+		}
+
+		if (model.getEmbeddedLinks() != null)
+		{
+			embeddedLinksContainer.removeAllViews();
+
+			for (LinkProperty linkProperty : model.getEmbeddedLinks())
+			{
+				final LinkProperty property = linkProperty;
+				View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
+
+				if (embeddedLinkView != null)
+				{
+					Button button = (Button)embeddedLinkView.findViewById(R.id.button);
+					button.setText(property.getTitle().getContent());
+
+					button.setOnClickListener(new OnClickListener()
+					{
+						@Override public void onClick(View v)
+						{
+							UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
+						}
+					});
+
+					embeddedLinksContainer.setVisibility(View.VISIBLE);
+					embeddedLinksContainer.addView(button);
+				}
 			}
 		}
 
