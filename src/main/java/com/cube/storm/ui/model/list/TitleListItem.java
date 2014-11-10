@@ -2,7 +2,10 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
+
+import java.util.Collection;
 
 import lombok.Getter;
 
@@ -15,6 +18,7 @@ import lombok.Getter;
 public class TitleListItem extends ListItem
 {
 	@Getter protected TextProperty title;
+	@Getter protected Collection<LinkProperty> embeddedLinks;
 
 	@Override public int describeContents()
 	{

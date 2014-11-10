@@ -12,7 +12,7 @@ import lombok.Getter;
  * @author Alan Le Fournis
  * @project StormUI
  */
-public class ImageListItem extends ListItem
+public class ImageListItem extends TitleListItem
 {
 	@Getter protected ImageProperty image;
 

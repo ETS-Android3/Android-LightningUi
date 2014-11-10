@@ -6,13 +6,17 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.CheckableListItem;
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.ViewClickable;
 
 /**
@@ -26,6 +30,7 @@ public class CheckableListItemHolder extends Holder<CheckableListItem> implement
 	protected TextView title;
 	protected TextView description;
 	protected CheckBox checkBox;
+	protected LinearLayout embeddedLinksContainer;
 
 	@Override public View createView(ViewGroup parent)
 	{
@@ -33,6 +38,7 @@ public class CheckableListItemHolder extends Holder<CheckableListItem> implement
 		title = (TextView)view.findViewById(R.id.title);
 		description = (TextView)view.findViewById(R.id.description);
 		checkBox = (CheckBox)view.findViewById(R.id.checkbox);
+		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 
 		return view;
 	}
@@ -75,6 +81,34 @@ public class CheckableListItemHolder extends Holder<CheckableListItem> implement
 				SharedPreferences checkboxPrefs = PreferenceManager.getDefaultSharedPreferences(checkBox.getContext());
 				checkBox.setChecked(checkboxPrefs.getBoolean("checkbox_" + model.getId(), false));
 				checkBox.setTag(checkBox.isChecked());
+			}
+		}
+
+		if (model.getEmbeddedLinks() != null)
+		{
+			embeddedLinksContainer.removeAllViews();
+
+			for (LinkProperty linkProperty : model.getEmbeddedLinks())
+			{
+				final LinkProperty property = linkProperty;
+				View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
+
+				if (embeddedLinkView != null)
+				{
+					Button button = (Button)embeddedLinkView.findViewById(R.id.button);
+					button.setText(property.getTitle().getContent());
+
+					button.setOnClickListener(new OnClickListener()
+					{
+						@Override public void onClick(View v)
+						{
+							UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
+						}
+					});
+
+					embeddedLinksContainer.setVisibility(View.VISIBLE);
+					embeddedLinksContainer.addView(button);
+				}
 			}
 		}
 	}

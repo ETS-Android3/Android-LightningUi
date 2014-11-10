@@ -5,8 +5,11 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.cube.storm.UiSettings;
@@ -14,6 +17,7 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
 import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
 import com.cube.storm.ui.model.list.VideoListItem;
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.VideoProperty;
 import com.cube.storm.ui.view.ViewClickable;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -31,12 +35,14 @@ public class VideoListItemHolder extends Holder<VideoListItem> implements ViewCl
 {
 	protected ImageView image;
 	protected ProgressBar progress;
+	protected LinearLayout embeddedLinksContainer;
 
 	@Override public View createView(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_list_item_view, parent, false);
 		image = (ImageView)view.findViewById(R.id.image);
 		progress = (ProgressBar)view.findViewById(R.id.progress);
+		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 
 		return view;
 	}
@@ -70,6 +76,34 @@ public class VideoListItemHolder extends Holder<VideoListItem> implements ViewCl
 					progress.setVisibility(View.GONE);
 				}
 			});
+		}
+
+		if (model.getEmbeddedLinks() != null)
+		{
+			embeddedLinksContainer.removeAllViews();
+
+			for (LinkProperty linkProperty : model.getEmbeddedLinks())
+			{
+				final LinkProperty property = linkProperty;
+				View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
+
+				if (embeddedLinkView != null)
+				{
+					Button button = (Button)embeddedLinkView.findViewById(R.id.button);
+					button.setText(property.getTitle().getContent());
+
+					button.setOnClickListener(new OnClickListener()
+					{
+						@Override public void onClick(View v)
+						{
+							UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
+						}
+					});
+
+					embeddedLinksContainer.setVisibility(View.VISIBLE);
+					embeddedLinksContainer.addView(button);
+				}
+			}
 		}
 	}
 
