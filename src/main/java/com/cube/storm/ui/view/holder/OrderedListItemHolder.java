@@ -1,7 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,11 +69,9 @@ public class OrderedListItemHolder extends Holder<OrderedListItem>
 		{
 			annotation.setText(model.getAnnotation());
 		}
-		Log.e("Test", String.valueOf(model.getEmbeddedLinks()));
+
 		if (model.getEmbeddedLinks() != null)
 		{
-			Log.e("Test", "IN");
-			Log.e("Test", model.getEmbeddedLinks().size() + "");
 			embeddedLinksContainer.removeAllViews();
 
 			for (LinkProperty linkProperty : model.getEmbeddedLinks())
