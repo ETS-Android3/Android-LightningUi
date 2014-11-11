@@ -1,9 +1,9 @@
 package com.cube.storm.ui.view.holder;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.ToggleableListItem;
-import com.cube.storm.ui.view.ViewClickable;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.ToggleableListItem} in the adapter
@@ -30,7 +29,7 @@ public class ToggleableListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem> implements ViewClickable<ToggleableListItem>
+	public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem> implements OnClickListener
 	{
 		protected ViewGroup toggleContainer;
 		protected ImageView expandIcon;
@@ -40,6 +39,8 @@ public class ToggleableListItemHolder extends ViewHolderController
 		public ToggleableListItemViewHolder(View view)
 		{
 			super(view);
+
+			view.setOnClickListener(this);
 
 			toggleContainer = (ViewGroup)view.findViewById(R.id.toggle_container);
 			expandIcon = (ImageView)view.findViewById(R.id.expand_icon);
@@ -77,7 +78,7 @@ public class ToggleableListItemHolder extends ViewHolderController
 			toggleContainer.setVisibility(View.GONE);
 		}
 
-		@Override public void onClick(@NonNull ToggleableListItem model, @NonNull View view)
+		@Override public void onClick(View view)
 		{
 			if (toggleContainer.getVisibility() == View.GONE)
 			{

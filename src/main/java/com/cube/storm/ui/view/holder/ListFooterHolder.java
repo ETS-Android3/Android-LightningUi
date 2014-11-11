@@ -34,6 +34,8 @@ public class ListFooterHolder extends ViewHolderController
 		public ListFooterViewHolder(View itemView)
 		{
 			super(itemView);
+
+			title = (TextView)itemView.findViewById(R.id.title);
 		}
 
 		@Override public void populateView(ListFooter model)
