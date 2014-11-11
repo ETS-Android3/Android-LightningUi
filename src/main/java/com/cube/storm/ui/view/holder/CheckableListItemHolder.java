@@ -45,6 +45,7 @@ public class CheckableListItemHolder extends ViewHolderController
 			view.setOnClickListener(this);
 
 			title = (TextView)view.findViewById(R.id.title);
+			description = (TextView)view.findViewById(R.id.description);
 			checkBox = (CheckBox)view.findViewById(R.id.checkbox);
 		}
 
