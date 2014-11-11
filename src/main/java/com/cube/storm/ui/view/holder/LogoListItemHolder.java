@@ -25,8 +25,9 @@ public class LogoListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.logo_list_item_view, parent, false);
+		mViewHolder =  new LogoListItemViewHolder(view);
 
-		return new LogoListItemViewHolder(view);
+		return mViewHolder;
 	}
 
 	private class LogoListItemViewHolder extends ViewHolder<LogoListItem>
