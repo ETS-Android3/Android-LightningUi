@@ -33,7 +33,7 @@ public class StandardListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class StandardListItemViewHolder extends ViewHolder<StandardListItem> implements OnClickListener
+	public class StandardListItemViewHolder extends ViewHolder<StandardListItem> implements OnClickListener
 	{
 		protected ImageView image;
 		protected TextView title;

@@ -27,7 +27,7 @@ public class TitleListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class TitleListItemViewHolder extends ViewHolder<TitleListItem>
+	public class TitleListItemViewHolder extends ViewHolder<TitleListItem>
 	{
 		protected TextView title;
 

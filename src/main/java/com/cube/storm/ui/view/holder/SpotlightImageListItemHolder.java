@@ -42,7 +42,7 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
+	public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
 	{
 		private static final int MSG_UPDATE = 100;
 		private ImageView image;

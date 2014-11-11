@@ -30,7 +30,7 @@ public class ToggleableListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem> implements ViewClickable<ToggleableListItem>
+	public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem> implements ViewClickable<ToggleableListItem>
 	{
 		protected ViewGroup toggleContainer;
 		protected ImageView expandIcon;

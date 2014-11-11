@@ -27,7 +27,7 @@ public class UnorderedListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class UnorderedListItemViewHolder extends ViewHolder<UnorderedListItem>
+	public class UnorderedListItemViewHolder extends ViewHolder<UnorderedListItem>
 	{
 		protected TextView title;
 		protected TextView description;

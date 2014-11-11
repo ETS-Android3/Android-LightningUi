@@ -27,7 +27,7 @@ public class OrderedListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class OrderedListItemViewHolder extends ViewHolder<OrderedListItem>
+	public class OrderedListItemViewHolder extends ViewHolder<OrderedListItem>
 	{
 		protected TextView annotation;
 		protected TextView title;

@@ -25,7 +25,7 @@ public class TextListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class TextListItemViewHolder extends ViewHolder<TextListItem>
+	public class TextListItemViewHolder extends ViewHolder<TextListItem>
 	{
 		protected TextView text;
 
