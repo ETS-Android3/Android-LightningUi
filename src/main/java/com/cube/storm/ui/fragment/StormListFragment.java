@@ -14,6 +14,7 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
+import com.cube.storm.ui.lib.helper.RecycledViewPoolHelper;
 import com.cube.storm.ui.model.page.Page;
 
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class StormListFragment extends Fragment
 	{
 		View v = inflater.inflate(R.layout.list_page_fragment_view, container, false);
 		listView = (RecyclerView)v.findViewById(R.id.recyclerview);
+		listView.setRecycledViewPool(RecycledViewPoolHelper.getInstance().getRecycledViewPool());
 		listView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		listView.setItemAnimator(new DefaultItemAnimator());
 
