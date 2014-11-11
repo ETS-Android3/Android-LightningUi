@@ -22,8 +22,9 @@ public class DescriptionListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.description_list_item_view, parent, false);
+		mViewHolder =  new DescriptionListItemViewHolder(view);
 
-		return new DescriptionListItemViewHolder(view);
+		return mViewHolder;
 	}
 
 	private class DescriptionListItemViewHolder extends ViewHolder<DescriptionListItem>
