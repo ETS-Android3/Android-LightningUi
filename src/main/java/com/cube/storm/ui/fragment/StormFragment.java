@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import com.cube.storm.ui.model.page.Page;
 
 import lombok.Getter;
 
-public class StormListFragment extends Fragment
+public class StormFragment extends Fragment
 {
 	@Getter private RecyclerView listView;
 	@Getter private StormListAdapter adapter;
@@ -30,7 +31,14 @@ public class StormListFragment extends Fragment
 		View v = inflater.inflate(R.layout.list_page_fragment_view, container, false);
 		listView = (RecyclerView)v.findViewById(R.id.recyclerview);
 		listView.setRecycledViewPool(RecycledViewPoolHelper.getInstance().getRecycledViewPool());
-		listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		if (getArguments().getString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT).equals(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_LIST))
+		{
+			listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		}
+		else if (getArguments().getString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT).equals(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_GRID))
+		{
+			listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+		}
 		listView.setItemAnimator(new DefaultItemAnimator());
 
 		return v;
