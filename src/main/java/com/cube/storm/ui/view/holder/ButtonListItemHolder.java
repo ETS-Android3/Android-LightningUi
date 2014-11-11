@@ -23,7 +23,9 @@ public class ButtonListItemHolder extends ViewHolderController
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.button_list_item_view, parent, false);
-		return new ButtonListItemViewHolder(view);
+		mViewHolder = new ButtonListItemViewHolder(view);
+
+		return mViewHolder;
 	}
 
 	private class ButtonListItemViewHolder extends ViewHolder<ButtonListItem>
