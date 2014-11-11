@@ -49,6 +49,7 @@ public class SpotlightImageListItemHolder extends Holder<SpotlightImageListItem>
 		image = (ImageView)view.findViewById(R.id.image_view);
 		image.setTag(getTimer());
 		text = (TextView)view.findViewById(R.id.text_ticker);
+
 		return view;
 	}
 

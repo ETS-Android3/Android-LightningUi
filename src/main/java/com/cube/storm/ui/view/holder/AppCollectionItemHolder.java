@@ -2,7 +2,6 @@ package com.cube.storm.ui.view.holder;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +67,6 @@ public class AppCollectionItemHolder extends Holder<AppCollectionItem> implement
 	{
 		if (model.getLink() != null)
 		{
-			Log.e("test", String.valueOf(view));
 			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getLink());
 		}
 	}

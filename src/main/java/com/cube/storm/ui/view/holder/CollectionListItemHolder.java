@@ -1,5 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -77,7 +78,14 @@ public class CollectionListItemHolder extends Holder<CollectionListItem>
 				if (embeddedLinkView != null)
 				{
 					Button button = (Button)embeddedLinkView.findViewById(R.id.button);
-					button.setText(property.getTitle().getContent());
+					button.setVisibility(View.GONE);
+					String content = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
+
+					if (!TextUtils.isEmpty(content))
+					{
+						button.setText(content);
+						button.setVisibility(View.VISIBLE);
+					}
 
 					button.setOnClickListener(new OnClickListener()
 					{

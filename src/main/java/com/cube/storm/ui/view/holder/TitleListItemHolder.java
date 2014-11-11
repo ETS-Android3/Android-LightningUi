@@ -61,7 +61,14 @@ public class TitleListItemHolder extends Holder<TitleListItem>
 				if (embeddedLinkView != null)
 				{
 					Button button = (Button)embeddedLinkView.findViewById(R.id.button);
-					button.setText(property.getTitle().getContent());
+					button.setVisibility(View.GONE);
+					String content = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
+
+					if (!TextUtils.isEmpty(content))
+					{
+						button.setText(content);
+						button.setVisibility(View.VISIBLE);
+					}
 
 					button.setOnClickListener(new OnClickListener()
 					{
