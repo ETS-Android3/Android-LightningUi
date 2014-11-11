@@ -44,6 +44,8 @@ public class StandardListItemHolder extends ViewHolderController
 		{
 			super(view);
 
+			view.setOnClickListener(this);
+
 			image = (ImageView)view.findViewById(R.id.image);
 			title = (TextView)view.findViewById(R.id.title);
 			description = (TextView)view.findViewById(R.id.description);

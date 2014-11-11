@@ -26,6 +26,7 @@ public class CheckableListItemHolder extends ViewHolderController
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.checkable_list_item_view, parent, false);
 		mViewHolder = new CheckableListItemViewHolder(view);
+
 		return mViewHolder;
 	}
 
@@ -40,6 +41,8 @@ public class CheckableListItemHolder extends ViewHolderController
 		public CheckableListItemViewHolder(View view)
 		{
 			super(view);
+
+			view.setOnClickListener(this);
 
 			title = (TextView)view.findViewById(R.id.title);
 			checkBox = (CheckBox)view.findViewById(R.id.checkbox);
