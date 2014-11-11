@@ -12,7 +12,7 @@ import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
 import com.cube.storm.ui.activity.WebViewActivity;
 import com.cube.storm.ui.data.FragmentIntent;
-import com.cube.storm.ui.fragment.StormListFragment;
+import com.cube.storm.ui.fragment.StormFragment;
 import com.cube.storm.ui.fragment.StormTabbedFragment;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
@@ -58,7 +58,7 @@ public abstract class IntentFactory
 
 		if (pageData instanceof ListPage)
 		{
-			intent = new FragmentIntent(StormListFragment.class, pageData.getTitle() != null ? pageData.getTitle().getContent() : "", arguments);
+			intent = new FragmentIntent(StormFragment.class, pageData.getTitle() != null ? pageData.getTitle().getContent() : "", arguments);
 			return intent;
 		}
 
@@ -185,9 +185,16 @@ public abstract class IntentFactory
 
 		if (ListPage.class.isAssignableFrom(pageType))
 		{
-			intent = new FragmentIntent(StormListFragment.class, null, arguments);
+			arguments.putString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT, StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_LIST);
+			intent = new FragmentIntent(StormFragment.class, null, arguments);
 			return intent;
 		}
+//		else if (GridPage.class.isAssignableFrom(pageType))
+//		{
+//			arguments.putString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT, StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_GRID);
+//			intent = new FragmentIntent(StormFragment.class, null, arguments);
+//			return intent;
+//		}
 		else if (TabbedPageCollection.class.isAssignableFrom(pageType))
 		{
 			intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
