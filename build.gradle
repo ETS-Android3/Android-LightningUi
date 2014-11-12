@@ -37,8 +37,8 @@ dependencies {
 	compile 'com.android.support:support-annotations:21.0.+'
 	compile 'com.android.support:support-v13:21.0.+'
 	compile "com.android.support:appcompat-v7:21.0.+"
-	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 	compile 'org.projectlombok:lombok:1.14.8'
+	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 	compile 'com.google.code.gson:gson:2.3'
 	compile 'net.callumtaylor:asynchttpclient:1.5'
 	compile 'com.3sidedcube.storm:util:0.2'
@@ -107,6 +107,7 @@ android.libraryVariants.all { variant ->
 		options.links("http://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/", "com.google.gson")
 		options.linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference");
 		options.links("http://docs.oracle.com/javase/7/docs/api/");
+		options.encoding("utf-8")
 
 		// exclude generated files
 		exclude '**/BuildConfig.java'
