@@ -1,38 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+	android:layout_height="wrap_content"
 	android:orientation="horizontal"
 	android:descendantFocusability="blocksDescendants"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp"
+	android:paddingTop="16dp"
+	android:paddingBottom="20dp"
 >
 	<CheckBox
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/checkbox"
 		android:clickable="false"
+		android:layout_alignParentRight="true"
 	/>
 
-	<RelativeLayout
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center_vertical"
+		android:orientation="vertical"
+		android:layout_centerVertical="true"
+		android:layout_toLeftOf="@id/checkbox"
+		android:layout_marginRight="16dp"
 	>
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/title"
-			android:gravity="center_vertical"
+			android:singleLine="false"
+			android:textColor="#dd000000"
+			android:textSize="16sp"
+			android:fontFamily="sans-serif-regular"
 		/>
 
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/description"
-			android:layout_below="@id/title"
+			android:textColor="#89000000"
+			android:textSize="14sp"
+			android:fontFamily="sans-serif-regular"
 			android:visibility="gone"
 		/>
-	</RelativeLayout>
-</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/embedded_links_container"
+			android:orientation="vertical"
+			android:layout_marginTop="4dp"
+			android:visibility="gone"
+		/>
+	</LinearLayout>
+</RelativeLayout>
 

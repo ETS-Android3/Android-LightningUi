@@ -1,9 +1,9 @@
 package com.cube.storm.ui.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -18,7 +18,7 @@ import com.cube.storm.ui.model.page.Page;
  * @author Callum Taylor
  * @project StormUI
  */
-public class StormActivity extends Activity
+public class StormActivity extends ActionBarActivity
 {
 	public static final String EXTRA_PAGE = "stormui.page";
 	public static final String EXTRA_URI = "stormui.uri";
@@ -54,6 +54,13 @@ public class StormActivity extends Activity
 			if (fragmentIntent != null)
 			{
 				loadPage(fragmentIntent);
+			}
+			else
+			{
+				Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
+				finish();
+
+				return;
 			}
 		}
 	}

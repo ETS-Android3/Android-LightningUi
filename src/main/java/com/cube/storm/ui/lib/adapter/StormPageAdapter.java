@@ -3,12 +3,17 @@ package com.cube.storm.ui.lib.adapter;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.data.FragmentPackage;
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
+import com.cube.storm.ui.model.property.ImageProperty;
+import com.cube.storm.ui.view.PagerSlidingTabStrip.IconTabProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +28,7 @@ import lombok.Setter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class StormPageAdapter extends FragmentPagerAdapter
+public class StormPageAdapter extends FragmentPagerAdapter implements IconTabProvider
 {
 	protected final Context context;
 	protected final FragmentManager manager;
@@ -59,11 +64,49 @@ public class StormPageAdapter extends FragmentPagerAdapter
 		{
 			if (((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle() != null)
 			{
-				return ((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle().getContent();
+				return UiSettings.getInstance().getTextProcessor().process(((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle().getContent());
 			}
 		}
 
-		return fragmentPackage.getPageDescriptor().getName();
+		String tabName = "";
+
+		if (!TextUtils.isEmpty(fragmentPackage.getPageDescriptor().getName()))
+		{
+			tabName = fragmentPackage.getPageDescriptor().getName();
+		}
+
+		return UiSettings.getInstance().getTextProcessor().process(tabName);
+	}
+
+	@Override public int getPageIconResId(int position)
+	{
+		return 0;
+	}
+
+	@Override public Bitmap getPageIconBitmap(int position)
+	{
+		FragmentPackage fragmentPackage = pages.get(position % pages.size());
+		Bitmap image = null;
+
+		if (fragmentPackage.getPageDescriptor() instanceof TabbedPageDescriptor)
+		{
+			if (((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getImage() != null)
+			{
+				ImageProperty imageProperty = ((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getImage();
+
+				image = UiSettings.getInstance().getImageLoader().loadImageSync(imageProperty.getSrc());
+
+				if (image == null && !TextUtils.isEmpty(imageProperty.getFallbackSrc()))
+				{
+					image = UiSettings.getInstance().getImageLoader().loadImageSync(imageProperty.getFallbackSrc());
+				}
+
+				return image;
+			}
+		}
+
+
+		return null;
 	}
 
 	@Override public int getCount()

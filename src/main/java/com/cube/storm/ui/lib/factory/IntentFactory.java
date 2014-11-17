@@ -9,12 +9,16 @@ import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
+import com.cube.storm.ui.activity.StormWebActivity;
+import com.cube.storm.ui.activity.VideoPlayerActivity;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormListFragment;
 import com.cube.storm.ui.fragment.StormTabbedFragment;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
+import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
+import com.cube.storm.ui.model.descriptor.WebPageDescriptor;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.page.PageCollection;
@@ -25,7 +29,7 @@ import com.cube.storm.ui.model.page.TabbedPageCollection;
  * based on the source file's class type, name, or Uri.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class IntentFactory
 {
@@ -169,18 +173,21 @@ public abstract class IntentFactory
 		FragmentIntent intent;
 		Class<? extends Model> pageType = UiSettings.getInstance().getViewFactory().getModelForView(pageDescriptor.getType());
 
-		Bundle arguments = new Bundle();
-		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
+		if (pageType != null)
+		{
+			Bundle arguments = new Bundle();
+			arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
-		if (ListPage.class.isAssignableFrom(pageType))
-		{
-			intent = new FragmentIntent(StormListFragment.class, null, arguments);
-			return intent;
-		}
-		else if (TabbedPageCollection.class.isAssignableFrom(pageType))
-		{
-			intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
-			return intent;
+			if (ListPage.class.isAssignableFrom(pageType))
+			{
+				intent = new FragmentIntent(StormListFragment.class, null, arguments);
+				return intent;
+			}
+			else if (TabbedPageCollection.class.isAssignableFrom(pageType))
+			{
+				intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
+				return intent;
+			}
 		}
 
 		return null;
@@ -206,8 +213,23 @@ public abstract class IntentFactory
 
 		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
-		if (Page.class.isAssignableFrom(pageType)
-		|| PageCollection.class.isAssignableFrom(pageType))
+		if (pageDescriptor instanceof VideoPageDescriptor
+		|| UiSettings.getInstance().getLinkHandler().isYoutubeVideo(Uri.parse(pageDescriptor.getSrc()))
+		|| UiSettings.getInstance().getLinkHandler().isVideo(Uri.parse(pageDescriptor.getSrc())))
+		{
+			intent = new Intent(context, VideoPlayerActivity.class);
+			intent.putExtras(arguments);
+
+			return intent;
+		}
+		else if (pageDescriptor instanceof WebPageDescriptor)
+		{
+			intent = new Intent(context, StormWebActivity.class);
+			intent.putExtra(StormWebActivity.EXTRA_FILE_NAME, pageDescriptor.getSrc());
+
+			return intent;
+		}
+		else if (pageType != null && (Page.class.isAssignableFrom(pageType) || PageCollection.class.isAssignableFrom(pageType)))
 		{
 			intent = new Intent(context, StormActivity.class);
 			intent.putExtras(arguments);

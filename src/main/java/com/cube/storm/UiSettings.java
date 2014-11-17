@@ -13,15 +13,16 @@ import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
-import com.cube.storm.util.lib.processor.Processor;
-import com.cube.storm.util.lib.resolver.AssetsResolver;
-import com.cube.storm.util.lib.resolver.FileResolver;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
+import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.util.lib.processor.Processor;
+import com.cube.storm.util.lib.resolver.AssetsResolver;
+import com.cube.storm.util.lib.resolver.FileResolver;
 import com.cube.storm.util.lib.resolver.Resolver;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -183,13 +184,14 @@ public class UiSettings
 
 			registerType(Page.class, baseProcessor);
 			registerType(ListItem.class, baseProcessor);
+			registerType(CollectionItem.class, baseProcessor);
 			registerType(ImageProperty.class, baseProcessor);
 			registerType(LinkProperty.class, baseProcessor);
 
 			registerUriResolver("file", new FileResolver());
 			registerUriResolver("assets", new AssetsResolver(this.context));
 
-			viewBuilder(new ViewBuilder());
+			viewBuilder(new ViewBuilder(){});
 		}
 
 		/**
@@ -355,6 +357,19 @@ public class UiSettings
 		public Builder registerUriResolver(String protocol, Resolver resolver)
 		{
 			construct.uriResolvers.put(protocol, resolver);
+			return this;
+		}
+
+		/**
+		 * Registers a uri resolvers
+		 *
+		 * @param resolvers The map of resolvers to register
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerUriResolver(Map<String, Resolver> resolvers)
+		{
+			construct.uriResolvers.putAll(resolvers);
 			return this;
 		}
 

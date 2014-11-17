@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.list.Divider;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.List.ListFooter;
 import com.cube.storm.ui.model.list.List.ListHeader;
@@ -22,11 +23,11 @@ import java.util.Collection;
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
  * the benefit of view recycling which makes the content smooth to scroll.
- *
+ * <p/>
  * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.Holder} counter-class.
- *
+ * <p/>
  * <b>Usage</b>
- *
+ * <p/>
  * <b>Problems</b>
  * Problems can arise with this method of rendering content, specifically with render efficiency where
  * the views are not being recycled because there is only 1 of its view type in the list. This is the
@@ -99,14 +100,28 @@ public class StormListAdapter extends BaseAdapter
 	 */
 	public void addItem(@NonNull Model item)
 	{
+		addItem(this.items.size(), item);
+	}
+
+	/**
+	 * Adds an item to the list, only if a holder class is found as returned by {@link com.cube.storm.ui.lib.factory.ViewFactory#getHolderForView(String)}
+	 *
+	 * @param index The index to where to add the item
+	 * @param item The model to add to the list
+	 */
+	public void addItem(int index, @NonNull Model item)
+	{
 		if (item instanceof List)
 		{
-			if (((List)item).getHeader() != null && !TextUtils.isEmpty(((List)item).getHeader().getContent()))
+			boolean addDivider = false;
+
+			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader().getContent())))
 			{
 				ListHeader header = new ListHeader();
 				header.setHeader(((List)item).getHeader());
 
 				addItem(header);
+				addDivider = true;
 			}
 
 			if (((List)item).getChildren() != null)
@@ -120,12 +135,18 @@ public class StormListAdapter extends BaseAdapter
 				}
 			}
 
-			if (((List)item).getFooter() != null && !TextUtils.isEmpty(((List)item).getFooter().getContent()))
+			if (((List)item).getFooter() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getFooter().getContent())))
 			{
 				ListFooter footer = new ListFooter();
 				footer.setFooter(((List)item).getFooter());
 
 				addItem(footer);
+				addDivider = true;
+			}
+
+			if (addDivider)
+			{
+				addItem(new Divider());
 			}
 		}
 		else
@@ -134,7 +155,7 @@ public class StormListAdapter extends BaseAdapter
 
 			if (holderClass != null)
 			{
-				this.items.add(item);
+				this.items.add(index, item);
 			}
 
 			if (!this.itemTypes.contains(holderClass))

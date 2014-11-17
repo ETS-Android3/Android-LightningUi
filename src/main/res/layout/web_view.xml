@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+>
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/controls_container"
+		android:background="#80000000"
+		android:layout_alignParentBottom="true"
+	>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/button_container"
+			android:orientation="horizontal"
+			android:weightSum="5"
+		>
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/icon_back"
+				android:src="@drawable/lightbox_icon_back"
+				android:layout_weight="1"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+			/>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/icon_forward"
+				android:src="@drawable/lightbox_icon_forward"
+				android:layout_weight="1"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+			/>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/icon_web"
+				android:src="@drawable/lightbox_icon_web"
+				android:layout_weight="1"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+			/>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/icon_share"
+				android:src="@drawable/lightbox_icon_share"
+				android:layout_weight="1"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+			/>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/icon_close"
+				android:src="@drawable/lightbox_icon_close"
+				android:layout_weight="1"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+			/>
+		</LinearLayout>
+	</RelativeLayout>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@id/controls_container"
+	>
+		<WebView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/web_view"
+		/>
+
+		<ProgressBar
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/progress_bar"
+			android:layout_marginTop="-7dp"
+			android:layout_gravity="top"
+			style="?android:attr/progressBarStyleHorizontal"
+		/>
+	</FrameLayout>
+</RelativeLayout>
