@@ -2,7 +2,6 @@ package com.cube.storm.ui.view.holder;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +18,6 @@ import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
 import com.cube.storm.ui.model.list.VideoListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.VideoProperty;
-import com.cube.storm.ui.view.ViewClickable;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -41,11 +39,12 @@ public class VideoListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	public class VideoListItemViewHolder extends ViewHolder<VideoListItem> implements ViewClickable<VideoListItem>
+	public class VideoListItemViewHolder extends ViewHolder<VideoListItem> implements OnClickListener
 	{
 		protected ImageView image;
 		protected ProgressBar progress;
 		protected LinearLayout embeddedLinksContainer;
+		protected VideoListItem model;
 
 		public VideoListItemViewHolder(View view)
 		{
@@ -57,6 +56,7 @@ public class VideoListItemHolder extends ViewHolderController
 
 		@Override public void populateView(final VideoListItem model)
 		{
+			this.model = model;
 			if (model.getImage() != null)
 			{
 				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
@@ -115,7 +115,7 @@ public class VideoListItemHolder extends ViewHolderController
 			}
 		}
 
-		@Override public void onClick(@NonNull VideoListItem model, @NonNull View view)
+		@Override public void onClick(View view)
 		{
 			ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
 			arrayList.addAll(model.getVideos());
