@@ -1,9 +1,9 @@
 package com.cube.storm.ui.view.holder;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.collection.AppCollectionItem;
-import com.cube.storm.ui.view.ViewClickable;
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -21,53 +21,67 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * @author Alan Le Fournis
  * @project Storm
  */
-public class AppCollectionItemHolder extends Holder<AppCollectionItem> implements ViewClickable<AppCollectionItem>
+public class AppCollectionItemHolder extends ViewHolderController
 {
-	protected ImageView image;
-	protected TextView overlay;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.app_collection_item, parent, false);
-		image = (ImageView)view.findViewById(R.id.icon);
-		overlay = (TextView)view.findViewById(R.id.overlay);
+		mViewHolder = new AppCollectionItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(final AppCollectionItem model)
+	public class AppCollectionItemViewHolder extends ViewHolder<AppCollectionItem> implements OnClickListener
 	{
-		overlay.setText(model.getOverlay().getContent());
+		protected ImageView image;
+		protected TextView overlay;
+		protected LinkProperty link;
 
-		UiSettings.getInstance().getImageLoader().displayImage(model.getIcon().getSrc(), image, new SimpleImageLoadingListener()
+		public AppCollectionItemViewHolder(View view)
 		{
-			@Override public void onLoadingStarted(String imageUri, View view)
-			{
-				image.setVisibility(View.INVISIBLE);
-			}
+			super(view);
 
-			@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+			view.setOnClickListener(this);
+
+			image = (ImageView)view.findViewById(R.id.icon);
+			overlay = (TextView)view.findViewById(R.id.overlay);
+		}
+
+		@Override public void populateView(final AppCollectionItem model)
+		{
+			link = model.getLink();
+			overlay.setText(model.getOverlay().getContent());
+
+			UiSettings.getInstance().getImageLoader().displayImage(model.getIcon().getSrc(), image, new SimpleImageLoadingListener()
 			{
-				if (!imageUri.equalsIgnoreCase(model.getIcon().getFallbackSrc()))
+				@Override public void onLoadingStarted(String imageUri, View view)
 				{
-					UiSettings.getInstance().getImageLoader().displayImage(model.getIcon().getFallbackSrc(), image, this);
+					image.setVisibility(View.INVISIBLE);
 				}
 
-				image.setVisibility(View.VISIBLE);
-			}
+				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+				{
+					if (!imageUri.equalsIgnoreCase(model.getIcon().getFallbackSrc()))
+					{
+						UiSettings.getInstance().getImageLoader().displayImage(model.getIcon().getFallbackSrc(), image, this);
+					}
 
-			@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-			{
-				image.setVisibility(View.VISIBLE);
-			}
-		});
-	}
+					image.setVisibility(View.VISIBLE);
+				}
 
-	@Override public void onClick(@NonNull AppCollectionItem model, @NonNull View view)
-	{
-		if (model.getLink() != null)
+				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+				{
+					image.setVisibility(View.VISIBLE);
+				}
+			});
+		}
+
+		@Override public void onClick(View v)
 		{
-			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getLink());
+			if (link != null)
+			{
+				UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
+			}
 		}
 	}
 }
