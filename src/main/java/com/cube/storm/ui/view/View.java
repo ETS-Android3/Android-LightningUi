@@ -1,7 +1,6 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
-
 import com.cube.storm.ui.view.holder.AnimatedImageListItemHolder;
 import com.cube.storm.ui.view.holder.AppCollectionItemHolder;
 import com.cube.storm.ui.view.holder.ButtonListItemHolder;
@@ -71,6 +70,7 @@ public enum View
 	 * Pages
 	 */
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
+	GridPage(com.cube.storm.ui.model.page.GridPage.class, null),
 	TabbedPageCollection(com.cube.storm.ui.model.page.TabbedPageCollection.class, null),
 
 	/**
