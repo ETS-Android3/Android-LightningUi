@@ -19,6 +19,7 @@ import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
 import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
 import com.cube.storm.ui.model.descriptor.WebPageDescriptor;
+import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.page.PageCollection;
@@ -184,12 +185,12 @@ public abstract class IntentFactory
 				intent = new FragmentIntent(StormFragment.class, null, arguments);
 				return intent;
 			}
-			//		else if (GridPage.class.isAssignableFrom(pageType))
-			//		{
-			//			arguments.putString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT, StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_GRID);
-			//			intent = new FragmentIntent(StormFragment.class, null, arguments);
-			//			return intent;
-			//		}
+			else if (GridPage.class.isAssignableFrom(pageType))
+			{
+				arguments.putString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT, StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_GRID);
+				intent = new FragmentIntent(StormFragment.class, null, arguments);
+				return intent;
+			}
 			else if (TabbedPageCollection.class.isAssignableFrom(pageType))
 			{
 				intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
