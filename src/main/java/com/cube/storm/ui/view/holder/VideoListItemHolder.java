@@ -49,6 +49,9 @@ public class VideoListItemHolder extends ViewHolderController
 		public VideoListItemViewHolder(View view)
 		{
 			super(view);
+
+			view.setOnClickListener(this);
+			
 			image = (ImageView)view.findViewById(R.id.image);
 			progress = (ProgressBar)view.findViewById(R.id.progress);
 			embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
