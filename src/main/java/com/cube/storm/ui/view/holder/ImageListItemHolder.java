@@ -19,49 +19,59 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * @author Alan Le Fournis
  * @project StormUI
  */
-public class ImageListItemHolder extends Holder<ImageListItem>
+public class ImageListItemHolder extends ViewHolderController
 {
-	protected ImageView image;
-	protected ProgressBar progress;
 
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_list_item_view, parent, false);
-		image = (ImageView)view.findViewById(R.id.image);
-		progress = (ProgressBar)view.findViewById(R.id.progress);
+		mViewHolder = new DescriptionListItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(final ImageListItem model)
+	private class DescriptionListItemViewHolder extends ViewHolder<ImageListItem>
 	{
-		if (model.getImage() != null)
-		{
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
-			{
-				@Override public void onLoadingStarted(String imageUri, View view)
-				{
-					image.setVisibility(View.INVISIBLE);
-					progress.setVisibility(View.VISIBLE);
-				}
+		protected ImageView image;
+		protected ProgressBar progress;
 
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+		public DescriptionListItemViewHolder(View view)
+		{
+			super(view);
+			image = (ImageView)view.findViewById(R.id.image);
+			progress = (ProgressBar)view.findViewById(R.id.progress);
+		}
+
+		@Override public void populateView(final ImageListItem model)
+		{
+			if (model.getImage() != null)
+			{
+				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 				{
-					if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+					@Override public void onLoadingStarted(String imageUri, View view)
 					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						image.setVisibility(View.INVISIBLE);
+						progress.setVisibility(View.VISIBLE);
 					}
 
-					image.setVisibility(View.VISIBLE);
-					progress.setVisibility(View.GONE);
-				}
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+						{
+							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						}
 
-				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-				{
-					image.setVisibility(View.VISIBLE);
-					progress.setVisibility(View.GONE);
-				}
-			});
+						image.setVisibility(View.VISIBLE);
+						progress.setVisibility(View.GONE);
+					}
+
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					{
+						image.setVisibility(View.VISIBLE);
+						progress.setVisibility(View.GONE);
+					}
+				});
+			}
 		}
 	}
 }

@@ -17,20 +17,33 @@ import com.cube.storm.ui.model.list.List.ListFooter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class ListFooterHolder extends Holder<ListFooter>
+public class ListFooterHolder extends ViewHolderController
 {
-	protected TextView title;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_text_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
+		mViewHolder = new ListFooterViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(ListFooter model)
+	private class ListFooterViewHolder extends ViewHolder<ListFooter>
 	{
-		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getFooter().getContent()));
+		protected TextView title;
+
+		public ListFooterViewHolder(View itemView)
+		{
+			super(itemView);
+
+			title = (TextView)itemView.findViewById(R.id.title);
+		}
+
+		@Override public void populateView(ListFooter model)
+		{
+			if (model != null)
+			{
+				title.setText(UiSettings.getInstance().getTextProcessor().process(model.getFooter().getContent()));
+			}
+		}
 	}
 }

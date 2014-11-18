@@ -15,23 +15,32 @@ import com.cube.storm.ui.model.list.TextListItem;
  * @author Callum Taylor
  * @project StormUI
  */
-public class TextListItemHolder extends Holder<TextListItem>
+public class TextListItemHolder extends ViewHolderController
 {
-	protected TextView text;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.text_list_item_view, parent, false);
-		text = (TextView)view.findViewById(R.id.text);
+		mViewHolder = new TextListItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(TextListItem model)
+	public class TextListItemViewHolder extends ViewHolder<TextListItem>
 	{
-		if (model.getDescription() != null)
+		protected TextView text;
+
+		public TextListItemViewHolder(View view)
 		{
-			text.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
+			super(view);
+			text = (TextView)view.findViewById(R.id.text);
+		}
+
+		@Override public void populateView(TextListItem model)
+		{
+			if (model.getDescription() != null)
+			{
+				text.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
+			}
 		}
 	}
 }

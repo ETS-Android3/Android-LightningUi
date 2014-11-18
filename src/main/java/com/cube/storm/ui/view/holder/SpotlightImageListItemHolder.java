@@ -32,101 +32,110 @@ import java.util.TimerTask;
  * @author Matt Allen
  * @project Storm
  */
-public class SpotlightImageListItemHolder extends Holder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
+public class SpotlightImageListItemHolder extends ViewHolderController
 {
-	private static final int MSG_UPDATE = 100;
-	private ImageView image;
-	private TextView text;
-
-	private Timer timer;
-	private Handler handler;
-	private SpotlightImageListItem model;
-	private int currentIndex = 0;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.spotlight_image_list_item_view, parent, false);
-		image = (ImageView)view.findViewById(R.id.image_view);
-		image.setTag(getTimer());
-		text = (TextView)view.findViewById(R.id.text_ticker);
+		mViewHolder = new SpotlightImageListItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(SpotlightImageListItem model)
+	public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
 	{
-		if (this.model == null)
+		private static final int MSG_UPDATE = 100;
+		private ImageView image;
+		private TextView text;
+
+		private Timer timer;
+		private Handler handler;
+		private SpotlightImageListItem model;
+		private int currentIndex = 0;
+
+		public SpotlightImageListItemViewHolder(View view)
 		{
-			currentIndex = 0;
+			super(view);
+			image = (ImageView)view.findViewById(R.id.image_view);
+			image.setTag(getTimer());
+			text = (TextView)view.findViewById(R.id.text_ticker);
+		}
 
-			this.model = model;
-
-			handler = new Handler()
+		@Override public void populateView(SpotlightImageListItem model)
+		{
+			if (this.model == null)
 			{
-				@Override public void handleMessage(Message msg)
+				currentIndex = 0;
+
+				this.model = model;
+
+				handler = new Handler()
 				{
-					if (msg.what == MSG_UPDATE)
+					@Override public void handleMessage(Message msg)
 					{
-						updateView();
+						if (msg.what == MSG_UPDATE)
+						{
+							updateView();
+						}
 					}
-				}
-			};
+				};
 
-			updateView();
+				updateView();
+			}
 		}
-	}
 
-	private void updateView()
-	{
-		if (model.getImages() != null)
+		private void updateView()
 		{
-			if (currentIndex >= model.getImages().size())
+			if (model.getImages() != null)
 			{
-				currentIndex = 0;
-			}
-
-			ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
-
-			text.setText(model.getImages().get(currentIndex).getText().getContent());
-
-			currentIndex++;
-			if (currentIndex >= model.getImages().size())
-			{
-				currentIndex = 0;
-			}
-			timer.schedule(new TimerTask()
-			{
-				@Override public void run()
+				if (currentIndex >= model.getImages().size())
 				{
-					handler.sendEmptyMessage(MSG_UPDATE);
+					currentIndex = 0;
 				}
-			}, model.getImages().get(currentIndex).getDelay());
-		}
-	}
 
-	protected Timer getTimer()
-	{
-		if (timer == null)
-		{
-			if (image.getTag() != null && image.getTag() instanceof Timer)
-			{
-				timer = (Timer) image.getTag();
+				ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
+
+				text.setText(model.getImages().get(currentIndex).getText().getContent());
+
+				currentIndex++;
+				if (currentIndex >= model.getImages().size())
+				{
+					currentIndex = 0;
+				}
+				timer.schedule(new TimerTask()
+				{
+					@Override public void run()
+					{
+						handler.sendEmptyMessage(MSG_UPDATE);
+					}
+				}, model.getImages().get(currentIndex).getDelay());
 			}
-			else
-			{
-				timer = new Timer("Spotlight timer");
-			}
 		}
 
-		return timer;
-	}
-
-	@Override public void onClick(@NonNull SpotlightImageListItem model, @NonNull View view)
-	{
-		if (model.getImages() != null &&
-			model.getImages().get(currentIndex).getLink() != null)
+		protected Timer getTimer()
 		{
-			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getImages().get(currentIndex).getLink());
+			if (timer == null)
+			{
+				if (image.getTag() != null && image.getTag() instanceof Timer)
+				{
+					timer = (Timer)image.getTag();
+				}
+				else
+				{
+					timer = new Timer("Spotlight timer");
+				}
+			}
+
+			return timer;
+		}
+
+		@Override public void onClick(@NonNull SpotlightImageListItem model, @NonNull View view)
+		{
+			// TODO Redo this with a standard OnClickListener interface
+			if (model.getImages() != null && model.getImages().get(currentIndex).getLink() != null)
+			{
+				UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getImages().get(currentIndex).getLink());
+			}
 		}
 	}
 }

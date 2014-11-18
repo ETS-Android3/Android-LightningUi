@@ -13,14 +13,24 @@ import com.cube.storm.ui.model.list.Divider;
  * @author Callum Taylor
  * @project StormUI
  */
-public class DividerHolder extends Holder<Divider>
+public class DividerHolder extends ViewHolderController
 {
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
-		return LayoutInflater.from(parent.getContext()).inflate(R.layout.divider, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.divider, parent, false);
+		mViewHolder = new DividerViewHolder(view);
+
+		return mViewHolder;
 	}
 
-	@Override public void populateView(Divider model)
+	private class DividerViewHolder extends ViewHolder<Divider>
 	{
+		public DividerViewHolder(View view)
+		{
+			super(view);
+		}
+
+		// No view to populate
+		@Override public void populateView(Divider model){}
 	}
 }

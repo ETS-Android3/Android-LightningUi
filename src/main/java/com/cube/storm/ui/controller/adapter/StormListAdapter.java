@@ -3,10 +3,9 @@ package com.cube.storm.ui.controller.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.Model;
@@ -14,8 +13,8 @@ import com.cube.storm.ui.model.list.Divider;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.List.ListFooter;
 import com.cube.storm.ui.model.list.List.ListHeader;
-import com.cube.storm.ui.view.ViewClickable;
-import com.cube.storm.ui.view.holder.Holder;
+import com.cube.storm.ui.view.holder.ViewHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,9 +22,11 @@ import java.util.Collection;
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
  * the benefit of view recycling which makes the content smooth to scroll.
- * <p/>
- * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.Holder} counter-class.
- * <p/>
+ *
+ * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.ViewHolder} counter-class.
+ *
+ * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.ViewHolder} counter-class.
+ *
  * <b>Usage</b>
  * <p/>
  * <b>Problems</b>
@@ -38,7 +39,7 @@ import java.util.Collection;
  * @author Callum Taylor
  * @project StormUI
  */
-public class StormListAdapter extends BaseAdapter
+public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 {
 	/**
 	 * The list of models of the views we are rendering in the list. This is a 1 dimensional representation
@@ -54,7 +55,7 @@ public class StormListAdapter extends BaseAdapter
 	 * convenience, the object type in the list is a reference to the view holder class we will use
 	 * to render said view.
 	 */
-	private ArrayList<Class<? extends Holder>> itemTypes = new ArrayList<Class<? extends Holder>>();
+	private ArrayList<Class<? extends com.cube.storm.ui.view.holder.ViewHolderController>> itemTypes = new ArrayList<Class<? extends ViewHolderController>>();
 
 	private Context context;
 
@@ -70,7 +71,7 @@ public class StormListAdapter extends BaseAdapter
 	}
 
 	/**
-	 * Sets the items in the collection. Filters out any model that does not have a defined {@link com.cube.storm.ui.view.holder.Holder}
+	 * Sets the items in the collection. Filters out any model that does not have a defined {@link com.cube.storm.ui.view.holder.ViewHolder}
 	 *
 	 * @param items The new items to set. Can be null to clear the list.
 	 */
@@ -79,7 +80,7 @@ public class StormListAdapter extends BaseAdapter
 		if (items != null)
 		{
 			this.items = new ArrayList<Model>(items.size());
-			this.itemTypes = new ArrayList<Class<? extends Holder>>(items.size() / 2);
+			this.itemTypes = new ArrayList<Class<? extends ViewHolderController>>(items.size() / 2);
 
 			for (Model item : items)
 			{
@@ -89,7 +90,7 @@ public class StormListAdapter extends BaseAdapter
 		else
 		{
 			this.items = new ArrayList<Model>(0);
-			this.itemTypes = new ArrayList<Class<? extends Holder>>(0);
+			this.itemTypes = new ArrayList<Class<? extends ViewHolderController>>(0);
 		}
 	}
 
@@ -151,7 +152,7 @@ public class StormListAdapter extends BaseAdapter
 		}
 		else
 		{
-			Class<? extends Holder> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
+			Class<? extends ViewHolderController> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
 
 			if (holderClass != null)
 			{
@@ -165,12 +166,7 @@ public class StormListAdapter extends BaseAdapter
 		}
 	}
 
-	@Override public int getCount()
-	{
-		return items.size();
-	}
-
-	@Override public Model getItem(int position)
+	public Model getItem(int position)
 	{
 		return items.get(position);
 	}
@@ -180,50 +176,41 @@ public class StormListAdapter extends BaseAdapter
 		return ((Object)getItem(position)).hashCode();
 	}
 
-	@Override public boolean isEnabled(int position)
+	@Override public int getItemCount()
 	{
-		return ViewClickable.class.isAssignableFrom(itemTypes.get(getItemViewType(position)));
+		return items.size();
 	}
 
-	@Override public int getViewTypeCount()
+	@Override public com.cube.storm.ui.view.holder.ViewHolder<?> onCreateViewHolder(ViewGroup viewGroup, int viewType)
 	{
-		return Math.max(1, itemTypes.size());
+		ViewHolderController holder = null;
+		try
+		{
+			holder = itemTypes.get(viewType).newInstance();
+			holder.createViewHolder(viewGroup);
+		}
+		catch (Exception e)
+		{
+			throw new InstantiationError("Could not instantiate a new holder");
+		}
+		return holder.getViewHolder();
+	}
+
+	@Override public void onBindViewHolder(com.cube.storm.ui.view.holder.ViewHolder viewHolder, int position)
+	{
+		try
+		{
+			viewHolder.populateView(getItem(position));
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override public int getItemViewType(int position)
 	{
 		Model view = items.get(position);
 		return itemTypes.indexOf(UiSettings.getInstance().getViewFactory().getHolderForView(view.getClassName()));
-	}
-
-	@Override public View getView(int position, View convertView, ViewGroup parent)
-	{
-		Model model = getItem(position);
-		Holder holder = null;
-
-		if (convertView != null)
-		{
-			holder = (Holder)convertView.getTag();
-		}
-		else
-		{
-			try
-			{
-				holder = itemTypes.get(getItemViewType(position)).newInstance();
-				convertView = holder.createView(parent);
-				convertView.setTag(holder);
-			}
-			catch (Exception e)
-			{
-				throw new InstantiationError("Could not instantiate a new holder for model " + model.getClassName());
-			}
-		}
-
-		if (holder != null)
-		{
-			holder.populateView(model);
-		}
-
-		return convertView;
 	}
 }

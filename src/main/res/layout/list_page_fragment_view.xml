@@ -6,12 +6,9 @@
 	android:layout_height="match_parent"
 	android:background="@null"
 >
-	<ListView
+	<android.support.v7.widget.RecyclerView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:id="@android:id/list"
-		android:divider="@null"
-		android:dividerHeight="0dp"
-		android:cacheColorHint="@null"
+		android:id="@+id/recyclerview"
 	/>
 </FrameLayout>

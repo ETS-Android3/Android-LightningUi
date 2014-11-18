@@ -20,66 +20,75 @@ import com.cube.storm.ui.model.property.LinkProperty;
  * @author Alan Le Fournis
  * @project StormUI
  */
-public class TitleListItemHolder extends Holder<TitleListItem>
+public class TitleListItemHolder extends ViewHolderController
 {
-	protected TextView title;
-	protected LinearLayout embeddedLinksContainer;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.title_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
-		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
+		mViewHolder = new TitleListItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(TitleListItem model)
+	public class TitleListItemViewHolder extends ViewHolder<TitleListItem>
 	{
-		title.setVisibility(View.GONE);
+		protected TextView title;
+		protected LinearLayout embeddedLinksContainer;
 
-		if (model.getTitle() != null)
+		public TitleListItemViewHolder(View view)
 		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
-
-			if (!TextUtils.isEmpty(content))
-			{
-				title.setText(content);
-				title.setVisibility(View.VISIBLE);
-			}
+			super(view);
+			title = (TextView)view.findViewById(R.id.title);
+			embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 		}
 
-		if (model.getEmbeddedLinks() != null)
+		@Override public void populateView(TitleListItem model)
 		{
-			embeddedLinksContainer.removeAllViews();
+			title.setVisibility(View.GONE);
 
-			for (LinkProperty linkProperty : model.getEmbeddedLinks())
+			if (model.getTitle() != null)
 			{
-				final LinkProperty property = linkProperty;
-				View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
 
-				if (embeddedLinkView != null)
+				if (!TextUtils.isEmpty(content))
 				{
-					Button button = (Button)embeddedLinkView.findViewById(R.id.button);
-					button.setVisibility(View.GONE);
-					String content = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
+					title.setText(content);
+					title.setVisibility(View.VISIBLE);
+				}
+			}
 
-					if (!TextUtils.isEmpty(content))
-					{
-						button.setText(content);
-						button.setVisibility(View.VISIBLE);
-					}
+			if (model.getEmbeddedLinks() != null)
+			{
+				embeddedLinksContainer.removeAllViews();
 
-					button.setOnClickListener(new OnClickListener()
+				for (LinkProperty linkProperty : model.getEmbeddedLinks())
+				{
+					final LinkProperty property = linkProperty;
+					View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
+
+					if (embeddedLinkView != null)
 					{
-						@Override public void onClick(View v)
+						Button button = (Button)embeddedLinkView.findViewById(R.id.button);
+						button.setVisibility(View.GONE);
+						String content = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
+
+						if (!TextUtils.isEmpty(content))
 						{
-							UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
+							button.setText(content);
+							button.setVisibility(View.VISIBLE);
 						}
-					});
 
-					embeddedLinksContainer.setVisibility(View.VISIBLE);
-					embeddedLinksContainer.addView(button);
+						button.setOnClickListener(new OnClickListener()
+						{
+							@Override public void onClick(View v)
+							{
+								UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
+							}
+						});
+
+						embeddedLinksContainer.setVisibility(View.VISIBLE);
+						embeddedLinksContainer.addView(button);
+					}
 				}
 			}
 		}

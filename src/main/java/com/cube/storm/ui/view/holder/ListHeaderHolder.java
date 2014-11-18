@@ -17,20 +17,29 @@ import com.cube.storm.ui.model.list.List.ListHeader;
  * @author Callum Taylor
  * @project StormUI
  */
-public class ListHeaderHolder extends Holder<ListHeader>
+public class ListHeaderHolder extends ViewHolderController
 {
-	protected TextView title;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_text_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
+		mViewHolder = new ListHeaderViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(ListHeader model)
+	private class ListHeaderViewHolder extends ViewHolder<ListHeader>
 	{
-		title.setText(UiSettings.getInstance().getTextProcessor().process(model.getHeader().getContent()));
+		protected TextView title;
+
+		public ListHeaderViewHolder(View view)
+		{
+			super(view);
+			title = (TextView)view.findViewById(R.id.title);
+		}
+
+		@Override public void populateView(ListHeader model)
+		{
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getHeader().getContent()));
+		}
 	}
 }

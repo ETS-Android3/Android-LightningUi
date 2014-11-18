@@ -23,6 +23,10 @@ public class StormActivity extends ActionBarActivity
 	public static final String EXTRA_PAGE = "stormui.page";
 	public static final String EXTRA_URI = "stormui.uri";
 
+	public static final String EXTRA_RECYCLERVIEW_LAYOUT = "recycler_view";
+	public static final String EXTRA_RECYCLERVIEW_LAYOUT_GRID = "grid";
+	public static final String EXTRA_RECYCLERVIEW_LAYOUT_LIST = "list";
+
 	@Override protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);

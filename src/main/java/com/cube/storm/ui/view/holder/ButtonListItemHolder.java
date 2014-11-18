@@ -20,40 +20,36 @@ import com.cube.storm.ui.model.property.LinkProperty;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class ButtonListItemHolder extends Holder<ButtonListItem>
+public class ButtonListItemHolder extends ViewHolderController
 {
-	protected TextView title;
-	protected Button button;
-	protected LinearLayout embeddedLinksContainer;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.button_list_item_view, parent, false);
-		title = (TextView)view.findViewById(R.id.title);
-		button = (Button)view.findViewById(R.id.button);
-		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
+		mViewHolder = new ButtonListItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(ButtonListItem model)
+	private class ButtonListItemViewHolder extends ViewHolder<ButtonListItem>
 	{
-		title.setVisibility(View.GONE);
-		button.setVisibility(View.GONE);
+		protected TextView title;
+		protected Button button;
+		protected LinearLayout embeddedLinksContainer;
 
-		if (model.getTitle() != null)
+		public ButtonListItemViewHolder(View view)
 		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+			super(view);
 
-			if (!TextUtils.isEmpty(content))
-			{
-				title.setText(content);
-				title.setVisibility(View.VISIBLE);
-			}
+			title = (TextView)view.findViewById(R.id.title);
+			button = (Button)view.findViewById(R.id.button);
+			embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 		}
 
-		if (model.getButton() != null)
+		@Override public void populateView(ButtonListItem model)
 		{
+			title.setVisibility(View.GONE);
+			button.setVisibility(View.GONE);
+
 			String content = UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent());
 
 			if (!TextUtils.isEmpty(content))
@@ -61,39 +57,48 @@ public class ButtonListItemHolder extends Holder<ButtonListItem>
 				button.setText(content);
 				button.setVisibility(View.VISIBLE);
 			}
-		}
-
-		if (model.getEmbeddedLinks() != null)
-		{
-			embeddedLinksContainer.removeAllViews();
-
-			for (LinkProperty linkProperty : model.getEmbeddedLinks())
+			else
 			{
-				final LinkProperty property = linkProperty;
-				View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
+				title.setVisibility(View.GONE);
+			}
 
-				if (embeddedLinkView != null)
+			if (model.getButton() != null)
+			{
+				button.setText(UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent()));
+			}
+
+			if (model.getEmbeddedLinks() != null)
+			{
+				embeddedLinksContainer.removeAllViews();
+
+				for (LinkProperty linkProperty : model.getEmbeddedLinks())
 				{
-					Button button = (Button)embeddedLinkView.findViewById(R.id.button);
-					button.setVisibility(View.GONE);
-					String content = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
+					final LinkProperty property = linkProperty;
+					View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
 
-					if (!TextUtils.isEmpty(content))
+					if (embeddedLinkView != null)
 					{
-						button.setText(content);
-						button.setVisibility(View.VISIBLE);
-					}
+						Button button = (Button)embeddedLinkView.findViewById(R.id.button);
+						button.setVisibility(View.GONE);
+						String embeddedContent = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
 
-					button.setOnClickListener(new OnClickListener()
-					{
-						@Override public void onClick(View v)
+						if (!TextUtils.isEmpty(content))
 						{
-							UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
+							button.setText(embeddedContent);
+							button.setVisibility(View.VISIBLE);
 						}
-					});
 
-					embeddedLinksContainer.setVisibility(View.VISIBLE);
-					embeddedLinksContainer.addView(button);
+						button.setOnClickListener(new OnClickListener()
+						{
+							@Override public void onClick(View v)
+							{
+								UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
+							}
+						});
+
+						embeddedLinksContainer.setVisibility(View.VISIBLE);
+						embeddedLinksContainer.addView(button);
+					}
 				}
 			}
 		}
