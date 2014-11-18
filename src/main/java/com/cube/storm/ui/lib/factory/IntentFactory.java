@@ -179,15 +179,9 @@ public abstract class IntentFactory
 			Bundle arguments = new Bundle();
 			arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
-			if (ListPage.class.isAssignableFrom(pageType))
+			if (ListPage.class.isAssignableFrom(pageType) ||
+				GridPage.class.isAssignableFrom(pageType))
 			{
-				arguments.putString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT, StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_LIST);
-				intent = new FragmentIntent(StormFragment.class, null, arguments);
-				return intent;
-			}
-			else if (GridPage.class.isAssignableFrom(pageType))
-			{
-				arguments.putString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT, StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_GRID);
 				intent = new FragmentIntent(StormFragment.class, null, arguments);
 				return intent;
 			}

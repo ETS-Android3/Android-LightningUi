@@ -17,6 +17,8 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
 import com.cube.storm.ui.lib.helper.RecycledViewPoolHelper;
+import com.cube.storm.ui.model.page.GridPage;
+import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
 
 import lombok.Getter;
@@ -32,14 +34,7 @@ public class StormFragment extends Fragment
 		View v = inflater.inflate(R.layout.list_page_fragment_view, container, false);
 		listView = (RecyclerView)v.findViewById(R.id.recyclerview);
 		listView.setRecycledViewPool(RecycledViewPoolHelper.getInstance().getRecycledViewPool());
-		if (getArguments().getString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT).equals(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_LIST))
-		{
-			listView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		}
-		else if (getArguments().getString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT).equals(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_GRID))
-		{
-			listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-		}
+
 		listView.setItemAnimator(new DefaultItemAnimator());
 
 		return v;
@@ -70,6 +65,15 @@ public class StormFragment extends Fragment
 		if (page != null)
 		{
 			adapter.setItems(page.getChildren());
+
+			if (page instanceof ListPage)
+			{
+				listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+			}
+			else if (page instanceof GridPage)
+			{
+				listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+			}
 		}
 
 		listView.setAdapter(adapter);
