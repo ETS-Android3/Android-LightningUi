@@ -20,74 +20,85 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * @author Alan Le Fournis
  * @project Storm
  */
-public class HeaderListItemHolder extends Holder<HeaderListItem>
+public class HeaderListItemHolder extends ViewHolderController
 {
-	protected ImageView image;
-	protected TextView title;
-	protected TextView description;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_list_item_view, parent, false);
-		image = (ImageView)view.findViewById(R.id.image_view);
-		title = (TextView)view.findViewById(R.id.title);
-		description = (TextView)view.findViewById(R.id.description);
+		mViewHolder = new HeaderListItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(final HeaderListItem model)
+	public class HeaderListItemViewHolder extends ViewHolder<HeaderListItem>
 	{
-		image.setImageBitmap(null);
-		title.setVisibility(View.GONE);
-		description.setVisibility(View.GONE);
 
-		if (model.getImage() != null)
+		protected ImageView image;
+		protected TextView title;
+		protected TextView description;
+
+		public HeaderListItemViewHolder(View view)
 		{
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
-			{
-				@Override public void onLoadingStarted(String imageUri, View view)
-				{
-					image.setVisibility(View.INVISIBLE);
-				}
+			super(view);
 
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+			image = (ImageView)view.findViewById(R.id.image_view);
+			title = (TextView)view.findViewById(R.id.title);
+			description = (TextView)view.findViewById(R.id.description);
+		}
+
+		@Override public void populateView(final HeaderListItem model)
+		{
+			image.setImageBitmap(null);
+			title.setVisibility(View.GONE);
+			description.setVisibility(View.GONE);
+
+			if (model.getImage() != null)
+			{
+				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 				{
-					if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+					@Override public void onLoadingStarted(String imageUri, View view)
 					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						image.setVisibility(View.INVISIBLE);
 					}
 
-					image.setVisibility(View.VISIBLE);
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+						{
+							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						}
 
-				}
+						image.setVisibility(View.VISIBLE);
 
-				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-				{
-					image.setVisibility(View.VISIBLE);
-				}
-			});
-		}
+					}
 
-		if (model.getTitle() != null)
-		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
-
-			if (!TextUtils.isEmpty(content))
-			{
-				title.setText(content);
-				title.setVisibility(View.VISIBLE);
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					{
+						image.setVisibility(View.VISIBLE);
+					}
+				});
 			}
-		}
 
-		if (model.getDescription() != null)
-		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
-
-			if (!TextUtils.isEmpty(content))
+			if (model.getTitle() != null)
 			{
-				description.setText(content);
-				description.setVisibility(View.VISIBLE);
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
+
+				if (!TextUtils.isEmpty(content))
+				{
+					title.setText(content);
+					title.setVisibility(View.VISIBLE);
+				}
+			}
+
+			if (model.getDescription() != null)
+			{
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
+
+				if (!TextUtils.isEmpty(content))
+				{
+					description.setText(content);
+					description.setVisibility(View.VISIBLE);
+				}
 			}
 		}
 	}

@@ -24,147 +24,143 @@ import java.util.List;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class CollectionListItemHolder extends Holder<CollectionListItem>
+public class CollectionListItemHolder extends ViewHolderController
 {
-	private ViewHolder holder;
-	private View view;
-	private LinearLayout linearLayout;
-	protected LinearLayout embeddedLinksContainer;
-
-	@Override public View createView(ViewGroup parent)
+	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
-		view = LayoutInflater.from(parent.getContext()).inflate(R.layout.collection_list_item_view, null, false);
-		linearLayout = (LinearLayout)view.findViewById(R.id.view_container);
-		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
-		holder = new ViewHolder(view);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.collection_list_item_view, parent, false);
+		mViewHolder = new CollectionListItemViewHolder(view);
 
-		return view;
+		return mViewHolder;
 	}
 
-	@Override public void populateView(CollectionListItem model)
+	public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 	{
-		List<View> views = new ArrayList<View>(model.getCells().size());
-		ArrayList<CollectionItem> arrayList = new ArrayList<CollectionItem>();
-		arrayList.addAll(model.getCells());
+		private LinearLayout linearLayout;
+		protected LinearLayout embeddedLinksContainer;
 
-		for (int index = 0; index < arrayList.size(); index++)
+		public CollectionListItemViewHolder(View view)
 		{
-			View subView = getView(arrayList.get(index), holder.viewContainer.getChildAt(index));
+			super(view);
 
-			if (subView != null)
-			{
-				views.add(subView);
-			}
+			linearLayout = (LinearLayout)view.findViewById(R.id.view_container);
+			embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 		}
 
-		holder.viewContainer.removeAllViews();
-
-		for (View subView : views)
+		@Override public void populateView(CollectionListItem model)
 		{
-			holder.viewContainer.addView(subView);
-		}
+			List<View> views = new ArrayList<View>(model.getCells().size());
+			ArrayList<CollectionItem> arrayList = new ArrayList<CollectionItem>();
+			arrayList.addAll(model.getCells());
 
-		view.refreshDrawableState();
-
-		if (model.getEmbeddedLinks() != null)
-		{
-			embeddedLinksContainer.removeAllViews();
-
-			for (LinkProperty linkProperty : model.getEmbeddedLinks())
+			for (int index = 0; index < arrayList.size(); index++)
 			{
-				final LinkProperty property = linkProperty;
-				View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
+				View subView = getView(arrayList.get(index), linearLayout.getChildAt(index));
 
-				if (embeddedLinkView != null)
+				if (subView != null)
 				{
-					Button button = (Button)embeddedLinkView.findViewById(R.id.button);
-					button.setVisibility(View.GONE);
-					String content = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
+					views.add(subView);
+				}
+			}
 
-					if (!TextUtils.isEmpty(content))
+			linearLayout.removeAllViews();
+
+			for (View subView : views)
+			{
+				linearLayout.addView(subView);
+			}
+
+			linearLayout.refreshDrawableState();
+
+			if (model.getEmbeddedLinks() != null)
+			{
+				embeddedLinksContainer.removeAllViews();
+
+				for (LinkProperty linkProperty : model.getEmbeddedLinks())
+				{
+					final LinkProperty property = linkProperty;
+					View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);
+
+					if (embeddedLinkView != null)
 					{
-						button.setText(content);
-						button.setVisibility(View.VISIBLE);
+						Button button = (Button)embeddedLinkView.findViewById(R.id.button);
+						button.setVisibility(View.GONE);
+						String content = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
+
+						if (!TextUtils.isEmpty(content))
+						{
+							button.setText(content);
+							button.setVisibility(View.VISIBLE);
+						}
+
+						button.setOnClickListener(new OnClickListener()
+						{
+							@Override public void onClick(View v)
+							{
+								UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
+							}
+						});
+
+						embeddedLinksContainer.setVisibility(View.VISIBLE);
+						embeddedLinksContainer.addView(button);
 					}
-
-					button.setOnClickListener(new OnClickListener()
-					{
-						@Override public void onClick(View v)
-						{
-							UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), property);
-						}
-					});
-
-					embeddedLinksContainer.setVisibility(View.VISIBLE);
-					embeddedLinksContainer.addView(button);
 				}
 			}
 		}
-	}
 
-	protected View getView(final CollectionItem model, View view)
-	{
-		if (model != null)
+		protected View getView(final CollectionItem itemModel, View view)
 		{
-			Holder holder = null;
-
-			if (view == null)
+			if (itemModel != null)
 			{
-				try
-				{
-					Class<? extends Holder> cls = UiSettings.getInstance().getViewFactory().getHolderForView(model.getClassName());
-					holder = cls.newInstance();
-					view = holder.createView((ViewGroup)linearLayout.getParent());
-					holder.populateView(model);
+				ViewHolderController holder = null;
 
-					view.setTag(holder);
-				}
-				catch (InstantiationException e)
+				if (view == null)
 				{
-					e.printStackTrace();
-				}
-				catch (IllegalAccessException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			else
-			{
-				if (view.getTag() != null)
-				{
-					holder = (Holder)view.getTag();
-					holder.populateView(model);
-				}
-			}
-
-			if (view != null)
-			{
-				final Holder tmp = holder;
-
-				if (tmp != null && ViewClickable.class.isAssignableFrom(tmp.getClass()))
-				{
-					view.setOnClickListener(new OnClickListener()
+					try
 					{
-						@Override public void onClick(View v)
-						{
-							((ViewClickable)tmp).onClick(model, v);
-						}
-					});
+						Class<? extends ViewHolderController> cls = UiSettings.getInstance().getViewFactory().getHolderForView(itemModel.getClassName());
+						holder = cls.newInstance();
+						view = holder.createViewHolder((ViewGroup)linearLayout.getParent()).itemView;
+						holder.getViewHolder().populateView(itemModel);
+
+						view.setTag(holder);
+					}
+					catch (InstantiationException e)
+					{
+						e.printStackTrace();
+					}
+					catch (IllegalAccessException e)
+					{
+						e.printStackTrace();
+					}
 				}
+				else
+				{
+					if (view.getTag() != null)
+					{
+						holder = (ViewHolderController)view.getTag();
+						holder.getViewHolder().populateView(itemModel);
+					}
+				}
+
+				if (view != null)
+				{
+					final ViewHolderController tmp = holder;
+
+					if (tmp != null && ViewClickable.class.isAssignableFrom(tmp.getClass()))
+					{
+						view.setOnClickListener(new OnClickListener()
+						{
+							@Override public void onClick(View v)
+							{
+								((ViewClickable)tmp).onClick(itemModel, v);
+							}
+						});
+					}
+				}
+				return view;
 			}
-
-			return view;
-		}
-		return null;
-	}
-
-	public static class ViewHolder
-	{
-		public LinearLayout viewContainer;
-
-		public ViewHolder(View root)
-		{
-			viewContainer = (LinearLayout)root.findViewById(R.id.view_container);
+			return null;
 		}
 	}
 }

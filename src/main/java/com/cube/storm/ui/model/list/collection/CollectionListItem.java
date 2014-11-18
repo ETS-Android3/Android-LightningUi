@@ -2,7 +2,7 @@ package com.cube.storm.ui.model.list.collection;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
 
 import java.util.Collection;
@@ -15,7 +15,7 @@ import lombok.Getter;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class CollectionListItem extends Model
+public class CollectionListItem extends ListItem
 {
 	@Getter protected Collection<CollectionItem> cells;
 	@Getter protected Collection<LinkProperty> embeddedLinks;
