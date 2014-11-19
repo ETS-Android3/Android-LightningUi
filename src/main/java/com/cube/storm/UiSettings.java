@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This is the entry point class of the library. To enable the use of the library, you must instantiate
@@ -81,56 +82,56 @@ public class UiSettings
 	 * The intent factory instance of the module. This is the instance that will be used to resolve
 	 * every activity/fragment for a storm page/Uri
 	 */
-	@Getter private IntentFactory intentFactory;
+	@Getter @Setter private IntentFactory intentFactory;
 
 	/**
 	 * The view factory instance of the module. This is the instance that will be used to resolve
 	 * models and holders for a specific view
 	 */
-	@Getter private ViewFactory viewFactory;
+	@Getter @Setter private ViewFactory viewFactory;
 
 	/**
 	 * Factory class responsible for loading a file from disk based on its Uri
 	 */
-	@Getter private FileFactory fileFactory;
+	@Getter @Setter private FileFactory fileFactory;
 
 	/**
 	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewBuilder}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Class, com.cube.storm.ui.lib.parser.ViewProcessor)} to
 	 * override the processor used to match models with json class names
 	 */
-	@Getter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
+	@Getter @Setter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
 
 	/**
 	 * Image loader which is used when displaying images in the list
 	 */
-	@Getter private ImageLoader imageLoader = ImageLoader.getInstance();
+	@Getter @Setter private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	/**
 	 * The density to use when loading images
 	 */
-	@Getter private ContentDensity contentDensity;
+	@Getter @Setter private ContentDensity contentDensity;
 
 	/**
 	 * The handler used when a link is triggered
 	 */
-	@Getter private LinkHandler linkHandler;
+	@Getter @Setter private LinkHandler linkHandler;
 
 	/**
 	 * The gson builder class used to build all of the storm objects from json/string/binary
 	 */
-	@Getter private ViewBuilder viewBuilder;
+	@Getter @Setter private ViewBuilder viewBuilder;
 
 	/**
 	 * Processor class used to process strings as part of {@link com.cube.storm.ui.model.property.TextProperty}
 	 */
-	@Getter private Processor<String, String> textProcessor;
+	@Getter @Setter private Processor<String, String> textProcessor;
 
 	/**
 	 * Uri resolver used to load a file based on it's protocol. You should not need to use this instance
 	 * directly to load a file, instead use {@link com.cube.storm.ui.lib.factory.FileFactory} which uses this
 	 * to resolve a file and load it. Only use this if you want to load a specific scheme
 	 */
-	@Getter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
+	@Getter @Setter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
 
 	/**
 	 * Sets the app model of the content
