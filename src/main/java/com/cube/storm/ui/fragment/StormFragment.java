@@ -32,6 +32,7 @@ public class StormFragment extends Fragment
 		View v = inflater.inflate(R.layout.list_page_fragment_view, container, false);
 		listView = (RecyclerView)v.findViewById(R.id.recyclerview);
 		listView.setRecycledViewPool(RecycledViewPoolHelper.getInstance().getRecycledViewPool());
+
 		if (getArguments().getString(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT).equals(StormActivity.EXTRA_RECYCLERVIEW_LAYOUT_LIST))
 		{
 			listView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -40,6 +41,7 @@ public class StormFragment extends Fragment
 		{
 			listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 		}
+
 		listView.setItemAnimator(new DefaultItemAnimator());
 
 		return v;
