@@ -50,21 +50,34 @@ public class ButtonListItemHolder extends ViewHolderController
 			title.setVisibility(View.GONE);
 			button.setVisibility(View.GONE);
 
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent());
+			if (model.getTitle() != null)
+			{
+				String titleContent = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
 
-			if (!TextUtils.isEmpty(content))
-			{
-				button.setText(content);
-				button.setVisibility(View.VISIBLE);
-			}
-			else
-			{
-				title.setVisibility(View.GONE);
+				if (!TextUtils.isEmpty(titleContent))
+				{
+					title.setText(titleContent);
+					title.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					title.setVisibility(View.GONE);
+				}
 			}
 
-			if (model.getButton() != null)
+			if (model.getButton() != null && model.getButton().getTitle() != null)
 			{
-				button.setText(UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent()));
+				String buttonContent = UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent());
+
+				if (!TextUtils.isEmpty(buttonContent))
+				{
+					button.setText(UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent()));
+					button.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					button.setVisibility(View.GONE);
+				}
 			}
 
 			if (model.getEmbeddedLinks() != null)
@@ -82,7 +95,7 @@ public class ButtonListItemHolder extends ViewHolderController
 						button.setVisibility(View.GONE);
 						String embeddedContent = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
 
-						if (!TextUtils.isEmpty(content))
+						if (!TextUtils.isEmpty(embeddedContent))
 						{
 							button.setText(embeddedContent);
 							button.setVisibility(View.VISIBLE);
