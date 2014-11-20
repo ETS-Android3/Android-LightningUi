@@ -64,15 +64,15 @@ public class StormFragment extends Fragment
 
 		if (page != null)
 		{
-			adapter.setItems(page.getChildren());
-
 			if (page instanceof ListPage)
 			{
 				listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+				adapter.setItems(page.getChildren());
 			}
 			else if (page instanceof GridPage)
 			{
 				listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+				adapter.setItems(((GridPage)page).getGrid().getChildren());
 			}
 		}
 
