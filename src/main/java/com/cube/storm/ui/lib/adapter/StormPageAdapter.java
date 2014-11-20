@@ -60,22 +60,31 @@ public class StormPageAdapter extends FragmentPagerAdapter implements IconTabPro
 	{
 		FragmentPackage fragmentPackage = pages.get(position % pages.size());
 
-		if (fragmentPackage.getPageDescriptor() instanceof TabbedPageDescriptor)
+		if (fragmentPackage.getPageDescriptor() != null)
 		{
-			if (((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle() != null)
+			if (fragmentPackage.getPageDescriptor() instanceof TabbedPageDescriptor)
 			{
-				return UiSettings.getInstance().getTextProcessor().process(((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle().getContent());
+				if (((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle() != null)
+				{
+					return UiSettings.getInstance().getTextProcessor().process(((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle().getContent());
+				}
 			}
+
+			String tabName = "";
+
+			if (!TextUtils.isEmpty(fragmentPackage.getPageDescriptor().getName()))
+			{
+				tabName = fragmentPackage.getPageDescriptor().getName();
+			}
+
+			return UiSettings.getInstance().getTextProcessor().process(tabName);
 		}
-
-		String tabName = "";
-
-		if (!TextUtils.isEmpty(fragmentPackage.getPageDescriptor().getName()))
+		else if (!TextUtils.isEmpty(fragmentPackage.getFragmentIntent().getTitle()))
 		{
-			tabName = fragmentPackage.getPageDescriptor().getName();
+			return fragmentPackage.getFragmentIntent().getTitle();
 		}
 
-		return UiSettings.getInstance().getTextProcessor().process(tabName);
+		return "";
 	}
 
 	@Override public int getPageIconResId(int position)
