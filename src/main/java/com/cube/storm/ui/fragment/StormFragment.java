@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.cube.storm.ui.lib.helper.RecycledViewPoolHelper;
 import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
+import com.cube.storm.ui.view.SectionedGridLayoutManager;
 
 import lombok.Getter;
 
@@ -70,7 +70,7 @@ public class StormFragment extends Fragment
 			}
 			else if (page instanceof GridPage)
 			{
-				listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+				listView.setLayoutManager(new SectionedGridLayoutManager(2, SectionedGridLayoutManager.VERTICAL));
 				adapter.setItems(((GridPage)page).getGrid().getChildren());
 			}
 		}
