@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 
 /**
  * View parser used to process the json files into models to be used with the list/grid adapters
@@ -262,5 +263,35 @@ public abstract class ViewBuilder
 	public <T> T build(JsonElement input, Class<T> outClass)
 	{
 		return outClass.cast(getGson().fromJson(input, outClass));
+	}
+
+	/**
+	 * Builds a class from a json string input
+	 *
+	 * @param input The json string input to build from
+	 * @param outClass The out class type
+	 * @param <T> The type of class returned
+	 *
+	 * @return The built object, or null
+	 */
+	@Nullable
+	public <T> T build(String input, Type outClass)
+	{
+		return getGson().fromJson(input, outClass);
+	}
+
+	/**
+	 * Builds a class from a json element input
+	 *
+	 * @param input The json element input to build from
+	 * @param outClass The out class type
+	 * @param <T> The type of class returned
+	 *
+	 * @return The built object, or null
+	 */
+	@Nullable
+	public <T> T build(JsonElement input, Type outClass)
+	{
+		return getGson().fromJson(input, outClass);
 	}
 }

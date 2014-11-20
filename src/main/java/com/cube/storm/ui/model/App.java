@@ -61,6 +61,7 @@ public class App extends Model
 		{
 			PageDescriptor pageDescriptor = getMap().iterator().next();
 
+			// TODO: Server needs to return IDs for page descriptors in app.json
 			if (pageDescriptor.getId().equals(page.getId()))
 			{
 				return pageDescriptor;

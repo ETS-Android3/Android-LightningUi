@@ -187,6 +187,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	@Override public com.cube.storm.ui.view.holder.ViewHolder<?> onCreateViewHolder(ViewGroup viewGroup, int viewType)
 	{
 		ViewHolderController holder = null;
+
 		try
 		{
 			holder = itemTypes.get(viewType).newInstance();
@@ -196,6 +197,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 		{
 			throw new InstantiationError("Could not instantiate a new holder");
 		}
+
 		return holder.getViewHolder();
 	}
 
