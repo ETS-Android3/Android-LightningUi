@@ -1,6 +1,10 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.view.holder.ViewHolderController;
+import com.cube.storm.ui.view.holder.grid.GridItemHolder;
+import com.cube.storm.ui.view.holder.grid.ImageGridItemHolder;
+import com.cube.storm.ui.view.holder.grid.QuizGridItemHolder;
 import com.cube.storm.ui.view.holder.grid.StandardGridItemHolder;
 import com.cube.storm.ui.view.holder.list.AnimatedImageListItemHolder;
 import com.cube.storm.ui.view.holder.list.AppCollectionItemHolder;
@@ -22,7 +26,6 @@ import com.cube.storm.ui.view.holder.list.TitleListItemHolder;
 import com.cube.storm.ui.view.holder.list.ToggleableListItemHolder;
 import com.cube.storm.ui.view.holder.list.UnorderedListItemHolder;
 import com.cube.storm.ui.view.holder.list.VideoListItemHolder;
-import com.cube.storm.ui.view.holder.ViewHolderController;
 
 /**
  * This is the enum class with the list of all supported view types, their model classes and their
@@ -65,7 +68,10 @@ public enum View
 	 * Grid items
 	 */
 	Grid(com.cube.storm.ui.model.grid.Grid.class, null),
+	GridItem(com.cube.storm.ui.model.grid.GridItem.class, GridItemHolder.class),
 	StandardGridItem(com.cube.storm.ui.model.grid.StandardGridItem.class, StandardGridItemHolder.class),
+	QuizGridItem(com.cube.storm.ui.model.grid.QuizGridItem.class, QuizGridItemHolder.class),
+	ImageGridItem(com.cube.storm.ui.model.grid.ImageGridItem.class, ImageGridItemHolder.class),
 
 	/**
 	 * Collection cells

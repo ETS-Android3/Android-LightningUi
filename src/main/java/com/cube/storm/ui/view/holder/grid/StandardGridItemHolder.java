@@ -28,7 +28,7 @@ public class StandardGridItemHolder extends ViewHolderController
 {
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.standard_list_item_view, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.standard_grid_cell_view, parent, false);
 		mViewHolder = new StandardGridItemViewHolder(view);
 
 		return mViewHolder;
