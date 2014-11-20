@@ -1,4 +1,4 @@
-package com.cube.storm.ui.view.holder;
+package com.cube.storm.ui.view.holder.grid;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;
@@ -6,59 +6,67 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.model.list.HeaderListItem;
+import com.cube.storm.ui.model.grid.StandardGridItem;
+import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.view.holder.ViewHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
- * View holder for {@link com.cube.storm.ui.model.list.HeaderListItem} in the adapter
+ * // TODO: Add class description
  *
- * @author Alan Le Fournis
+ * @author Matt Allen
  * @project Storm
  */
-public class HeaderListItemHolder extends ViewHolderController
+public class StandardGridItemHolder extends ViewHolderController
 {
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_list_item_view, parent, false);
-		mViewHolder = new HeaderListItemViewHolder(view);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.standard_list_item_view, parent, false);
+		mViewHolder = new StandardGridItemViewHolder(view);
 
 		return mViewHolder;
 	}
 
-	public class HeaderListItemViewHolder extends ViewHolder<HeaderListItem>
+	private class StandardGridItemViewHolder extends ViewHolder<StandardGridItem>
 	{
-
 		protected ImageView image;
 		protected TextView title;
 		protected TextView description;
+		protected LinkProperty link;
+		protected LinearLayout embeddedLinksContainer;
 
-		public HeaderListItemViewHolder(View view)
+		public StandardGridItemViewHolder(View view)
 		{
 			super(view);
 
-			image = (ImageView)view.findViewById(R.id.image_view);
+			image = (ImageView)view.findViewById(R.id.image);
 			title = (TextView)view.findViewById(R.id.title);
 			description = (TextView)view.findViewById(R.id.description);
+			embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 		}
 
-		@Override public void populateView(final HeaderListItem model)
+		@Override public void populateView(final StandardGridItem model)
 		{
-			image.setImageBitmap(null);
-			title.setVisibility(View.GONE);
-			description.setVisibility(View.GONE);
+			link = model.getLink();
+			image.setVisibility(View.GONE);
 
 			if (model.getImage() != null)
 			{
 				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 				{
-					@Override public void onLoadingStarted(String imageUri, View view)
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
 					{
-						image.setVisibility(View.INVISIBLE);
+						if (loadedImage != null)
+						{
+							image.setVisibility(View.VISIBLE);
+						}
 					}
 
 					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
@@ -67,17 +75,12 @@ public class HeaderListItemHolder extends ViewHolderController
 						{
 							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
 						}
-
-						image.setVisibility(View.VISIBLE);
-
-					}
-
-					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-					{
-						image.setVisibility(View.VISIBLE);
 					}
 				});
 			}
+
+			description.setVisibility(View.GONE);
+			title.setVisibility(View.GONE);
 
 			if (model.getTitle() != null)
 			{

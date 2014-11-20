@@ -1,7 +1,7 @@
-package com.cube.storm.ui.view.holder;
+package com.cube.storm.ui.view.holder.list;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,66 +9,67 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.model.list.StandardListItem;
+import com.cube.storm.ui.activity.VideoPlayerActivity;
+import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
+import com.cube.storm.ui.model.list.VideoListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.model.property.VideoProperty;
+import com.cube.storm.ui.view.holder.ViewHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.ArrayList;
+
 /**
- * View holder for {@link com.cube.storm.ui.model.list.StandardListItem} in the adapter
+ * View holder for {@link com.cube.storm.ui.model.list.VideoListItem} in the adapter
  *
  * @author Alan Le Fournis
  * @project Storm
  */
-public class StandardListItemHolder extends ViewHolderController
+public class VideoListItemHolder extends ViewHolderController
 {
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.standard_list_item_view, parent, false);
-		mViewHolder = new StandardListItemViewHolder(view);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_list_item_view, parent, false);
+		mViewHolder = new VideoListItemViewHolder(view);
 
 		return mViewHolder;
 	}
 
-	public class StandardListItemViewHolder extends ViewHolder<StandardListItem> implements OnClickListener
+	public class VideoListItemViewHolder extends ViewHolder<VideoListItem> implements OnClickListener
 	{
 		protected ImageView image;
-		protected TextView title;
-		protected TextView description;
-		protected LinkProperty link;
+		protected ProgressBar progress;
 		protected LinearLayout embeddedLinksContainer;
+		protected VideoListItem model;
 
-		public StandardListItemViewHolder(View view)
+		public VideoListItemViewHolder(View view)
 		{
 			super(view);
 
 			view.setOnClickListener(this);
 
 			image = (ImageView)view.findViewById(R.id.image);
-			title = (TextView)view.findViewById(R.id.title);
-			description = (TextView)view.findViewById(R.id.description);
+			progress = (ProgressBar)view.findViewById(R.id.progress);
 			embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 		}
 
-		@Override public void populateView(final StandardListItem model)
+		@Override public void populateView(final VideoListItem model)
 		{
-			link = model.getLink();
-			image.setVisibility(View.GONE);
-
+			this.model = model;
 			if (model.getImage() != null)
 			{
 				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
 				{
-					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					@Override public void onLoadingStarted(String imageUri, View view)
 					{
-						if (loadedImage != null)
-						{
-							image.setVisibility(View.VISIBLE);
-						}
+						image.setVisibility(View.INVISIBLE);
+						progress.setVisibility(View.VISIBLE);
 					}
 
 					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
@@ -77,33 +78,17 @@ public class StandardListItemHolder extends ViewHolderController
 						{
 							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
 						}
+
+						image.setVisibility(View.VISIBLE);
+						progress.setVisibility(View.GONE);
+					}
+
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					{
+						image.setVisibility(View.VISIBLE);
+						progress.setVisibility(View.GONE);
 					}
 				});
-			}
-
-			description.setVisibility(View.GONE);
-			title.setVisibility(View.GONE);
-
-			if (model.getTitle() != null)
-			{
-				String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
-
-				if (!TextUtils.isEmpty(content))
-				{
-					title.setText(content);
-					title.setVisibility(View.VISIBLE);
-				}
-			}
-
-			if (model.getDescription() != null)
-			{
-				String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
-
-				if (!TextUtils.isEmpty(content))
-				{
-					description.setText(content);
-					description.setVisibility(View.VISIBLE);
-				}
 			}
 
 			if (model.getEmbeddedLinks() != null)
@@ -118,14 +103,7 @@ public class StandardListItemHolder extends ViewHolderController
 					if (embeddedLinkView != null)
 					{
 						Button button = (Button)embeddedLinkView.findViewById(R.id.button);
-						button.setVisibility(View.GONE);
-						String content = UiSettings.getInstance().getTextProcessor().process(linkProperty.getTitle().getContent());
-
-						if (!TextUtils.isEmpty(content))
-						{
-							button.setText(content);
-							button.setVisibility(View.VISIBLE);
-						}
+						button.setText(property.getTitle().getContent());
 
 						button.setOnClickListener(new OnClickListener()
 						{
@@ -142,11 +120,23 @@ public class StandardListItemHolder extends ViewHolderController
 			}
 		}
 
-		@Override public void onClick(View v)
+		@Override public void onClick(View view)
 		{
-			if (link != null)
+			ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
+			arrayList.addAll(model.getVideos());
+
+			VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
+			pageDescriptor.setType("content");
+			pageDescriptor.setSrc(arrayList.get(0).getSrc().getDestination());
+
+			Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(view.getContext(), pageDescriptor);
+
+			if (video != null)
 			{
-				UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
+				video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME, "Video Asset");
+				video.putExtra(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
+
+				view.getContext().startActivity(video);
 			}
 		}
 	}
