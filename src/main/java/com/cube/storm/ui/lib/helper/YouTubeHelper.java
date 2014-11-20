@@ -1,7 +1,6 @@
 package com.cube.storm.ui.lib.helper;
 
 import android.net.Uri;
-import android.os.Build.VERSION;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
@@ -78,7 +77,7 @@ public class YouTubeHelper
 							}
 						}
 
-						boolean allowWebm = VERSION.SDK_INT >= 14;
+						boolean allowWebm = false;//VERSION.SDK_INT >= 14;
 						String disallow = "video/x-flv";
 
 						streamMap = streamMap.replace("url_encoded_fmt_stream_map=", "");
