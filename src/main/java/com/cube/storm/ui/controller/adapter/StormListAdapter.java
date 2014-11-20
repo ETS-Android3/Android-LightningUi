@@ -112,56 +112,59 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	 */
 	public void addItem(int index, @NonNull Model item)
 	{
-		if (item instanceof List)
+		if (item != null)
 		{
-			boolean addDivider = false;
-
-			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader().getContent())))
+			if (item instanceof List)
 			{
-				ListHeader header = new ListHeader();
-				header.setHeader(((List)item).getHeader());
+				boolean addDivider = false;
 
-				addItem(header);
-				addDivider = true;
-			}
-
-			if (((List)item).getChildren() != null)
-			{
-				for (Model subItem : ((List)item).getChildren())
+				if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader().getContent())))
 				{
-					if (subItem != null)
+					ListHeader header = new ListHeader();
+					header.setHeader(((List)item).getHeader());
+
+					addItem(header);
+					addDivider = true;
+				}
+
+				if (((List)item).getChildren() != null)
+				{
+					for (Model subItem : ((List)item).getChildren())
 					{
-						addItem(subItem);
+						if (subItem != null)
+						{
+							addItem(subItem);
+						}
 					}
 				}
+
+				if (((List)item).getFooter() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getFooter().getContent())))
+				{
+					ListFooter footer = new ListFooter();
+					footer.setFooter(((List)item).getFooter());
+
+					addItem(footer);
+					addDivider = true;
+				}
+
+				if (addDivider)
+				{
+					addItem(new Divider());
+				}
 			}
-
-			if (((List)item).getFooter() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getFooter().getContent())))
+			else
 			{
-				ListFooter footer = new ListFooter();
-				footer.setFooter(((List)item).getFooter());
+				Class<? extends ViewHolderController> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
 
-				addItem(footer);
-				addDivider = true;
-			}
+				if (holderClass != null)
+				{
+					this.items.add(index, item);
+				}
 
-			if (addDivider)
-			{
-				addItem(new Divider());
-			}
-		}
-		else
-		{
-			Class<? extends ViewHolderController> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
-
-			if (holderClass != null)
-			{
-				this.items.add(index, item);
-			}
-
-			if (!this.itemTypes.contains(holderClass))
-			{
-				this.itemTypes.add(holderClass);
+				if (!this.itemTypes.contains(holderClass))
+				{
+					this.itemTypes.add(holderClass);
+				}
 			}
 		}
 	}
