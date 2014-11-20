@@ -1,66 +1,90 @@
-package com.cube.storm.ui.view.holder;
+package com.cube.storm.ui.view.holder.list;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.model.list.CheckableListItem;
+import com.cube.storm.ui.model.list.StandardListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.view.holder.ViewHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
- * View holder for {@link com.cube.storm.ui.model.list.CheckableListItem} in the adapter
+ * View holder for {@link com.cube.storm.ui.model.list.StandardListItem} in the adapter
  *
  * @author Alan Le Fournis
  * @project Storm
  */
-public class CheckableListItemHolder extends ViewHolderController
+public class StandardListItemHolder extends ViewHolderController
 {
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.checkable_list_item_view, parent, false);
-		mViewHolder = new CheckableListItemViewHolder(view);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.standard_list_item_view, parent, false);
+		mViewHolder = new StandardListItemViewHolder(view);
 
 		return mViewHolder;
 	}
 
-	private class CheckableListItemViewHolder extends ViewHolder<CheckableListItem> implements OnClickListener
+	public class StandardListItemViewHolder extends ViewHolder<StandardListItem> implements OnClickListener
 	{
+		protected ImageView image;
 		protected TextView title;
 		protected TextView description;
-		protected CheckBox checkBox;
+		protected LinkProperty link;
 		protected LinearLayout embeddedLinksContainer;
-		protected boolean isVolatile = false;
-		protected String modelId;
 
-		public CheckableListItemViewHolder(View view)
+		public StandardListItemViewHolder(View view)
 		{
 			super(view);
 
 			view.setOnClickListener(this);
 
+			image = (ImageView)view.findViewById(R.id.image);
 			title = (TextView)view.findViewById(R.id.title);
 			description = (TextView)view.findViewById(R.id.description);
-			checkBox = (CheckBox)view.findViewById(R.id.checkbox);
 			embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 		}
 
-		@Override public void populateView(CheckableListItem model)
+		@Override public void populateView(final StandardListItem model)
 		{
+			link = model.getLink();
+			image.setVisibility(View.GONE);
+
+			if (model.getImage() != null)
+			{
+				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
+				{
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					{
+						if (loadedImage != null)
+						{
+							image.setVisibility(View.VISIBLE);
+						}
+					}
+
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
+						{
+							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
+						}
+					}
+				});
+			}
+
 			description.setVisibility(View.GONE);
 			title.setVisibility(View.GONE);
-
-			modelId = model.getId();
-			isVolatile = model.isVolatile();
 
 			if (model.getTitle() != null)
 			{
@@ -81,20 +105,6 @@ public class CheckableListItemHolder extends ViewHolderController
 				{
 					description.setText(content);
 					description.setVisibility(View.VISIBLE);
-				}
-			}
-
-			if (checkBox.getTag() != null)
-			{
-				checkBox.setChecked((Boolean)checkBox.getTag());
-			}
-			else
-			{
-				if (model.isVolatile())
-				{
-					SharedPreferences checkboxPrefs = PreferenceManager.getDefaultSharedPreferences(checkBox.getContext());
-					checkBox.setChecked(checkboxPrefs.getBoolean("checkbox_" + model.getId(), false));
-					checkBox.setTag(checkBox.isChecked());
 				}
 			}
 
@@ -134,15 +144,11 @@ public class CheckableListItemHolder extends ViewHolderController
 			}
 		}
 
-		@Override public void onClick (View v)
+		@Override public void onClick(View v)
 		{
-			checkBox.setChecked(!checkBox.isChecked());
-			checkBox.setTag(checkBox.isChecked());
-
-			if (isVolatile)
+			if (link != null)
 			{
-				SharedPreferences checkboxPrefs = PreferenceManager.getDefaultSharedPreferences(title.getContext());
-				checkboxPrefs.edit().putBoolean("checkbox_" + modelId, checkBox.isChecked()).apply();
+				UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package com.cube.storm.ui.view.holder;
+package com.cube.storm.ui.view.holder.list;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.LogoListItem;
+import com.cube.storm.ui.view.holder.ViewHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 

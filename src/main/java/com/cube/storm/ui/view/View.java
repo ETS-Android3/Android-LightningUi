@@ -1,26 +1,27 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
-import com.cube.storm.ui.view.holder.AnimatedImageListItemHolder;
-import com.cube.storm.ui.view.holder.AppCollectionItemHolder;
-import com.cube.storm.ui.view.holder.ButtonListItemHolder;
-import com.cube.storm.ui.view.holder.CheckableListItemHolder;
-import com.cube.storm.ui.view.holder.CollectionListItemHolder;
-import com.cube.storm.ui.view.holder.DescriptionListItemHolder;
-import com.cube.storm.ui.view.holder.DividerHolder;
-import com.cube.storm.ui.view.holder.HeaderListItemHolder;
-import com.cube.storm.ui.view.holder.ImageListItemHolder;
-import com.cube.storm.ui.view.holder.ListFooterHolder;
-import com.cube.storm.ui.view.holder.ListHeaderHolder;
-import com.cube.storm.ui.view.holder.LogoListItemHolder;
-import com.cube.storm.ui.view.holder.OrderedListItemHolder;
-import com.cube.storm.ui.view.holder.SpotlightImageListItemHolder;
-import com.cube.storm.ui.view.holder.StandardListItemHolder;
-import com.cube.storm.ui.view.holder.TextListItemHolder;
-import com.cube.storm.ui.view.holder.TitleListItemHolder;
-import com.cube.storm.ui.view.holder.ToggleableListItemHolder;
-import com.cube.storm.ui.view.holder.UnorderedListItemHolder;
-import com.cube.storm.ui.view.holder.VideoListItemHolder;
+import com.cube.storm.ui.view.holder.grid.StandardGridItemHolder;
+import com.cube.storm.ui.view.holder.list.AnimatedImageListItemHolder;
+import com.cube.storm.ui.view.holder.list.AppCollectionItemHolder;
+import com.cube.storm.ui.view.holder.list.ButtonListItemHolder;
+import com.cube.storm.ui.view.holder.list.CheckableListItemHolder;
+import com.cube.storm.ui.view.holder.list.CollectionListItemHolder;
+import com.cube.storm.ui.view.holder.list.DescriptionListItemHolder;
+import com.cube.storm.ui.view.holder.list.DividerHolder;
+import com.cube.storm.ui.view.holder.list.HeaderListItemHolder;
+import com.cube.storm.ui.view.holder.list.ImageListItemHolder;
+import com.cube.storm.ui.view.holder.list.ListFooterHolder;
+import com.cube.storm.ui.view.holder.list.ListHeaderHolder;
+import com.cube.storm.ui.view.holder.list.LogoListItemHolder;
+import com.cube.storm.ui.view.holder.list.OrderedListItemHolder;
+import com.cube.storm.ui.view.holder.list.SpotlightImageListItemHolder;
+import com.cube.storm.ui.view.holder.list.StandardListItemHolder;
+import com.cube.storm.ui.view.holder.list.TextListItemHolder;
+import com.cube.storm.ui.view.holder.list.TitleListItemHolder;
+import com.cube.storm.ui.view.holder.list.ToggleableListItemHolder;
+import com.cube.storm.ui.view.holder.list.UnorderedListItemHolder;
+import com.cube.storm.ui.view.holder.list.VideoListItemHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 
 /**
@@ -59,6 +60,12 @@ public enum View
 	SpotlightImageListItem(com.cube.storm.ui.model.list.SpotlightImageListItem.class, SpotlightImageListItemHolder.class),
 	AnimatedImageListItem(com.cube.storm.ui.model.list.AnimatedImageListItem.class, AnimatedImageListItemHolder.class),
 	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemHolder.class),
+
+	/**
+	 * Grid items
+	 */
+	Grid(com.cube.storm.ui.model.grid.Grid.class, null),
+	StandardGridItem(com.cube.storm.ui.model.grid.StandardGridItem.class, StandardGridItemHolder.class),
 
 	/**
 	 * Collection cells

@@ -1,4 +1,4 @@
-package com.cube.storm.ui.view.holder;
+package com.cube.storm.ui.view.holder.list;
 
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +13,8 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.SpotlightImageListItem;
 import com.cube.storm.ui.view.ViewClickable;
+import com.cube.storm.ui.view.holder.ViewHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Timer;

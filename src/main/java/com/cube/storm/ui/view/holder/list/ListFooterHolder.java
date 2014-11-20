@@ -1,4 +1,4 @@
-package com.cube.storm.ui.view.holder;
+package com.cube.storm.ui.view.holder.list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.List.ListFooter;
+import com.cube.storm.ui.view.holder.ViewHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.List.ListFooter} in the adapter. This is the 'footer' part

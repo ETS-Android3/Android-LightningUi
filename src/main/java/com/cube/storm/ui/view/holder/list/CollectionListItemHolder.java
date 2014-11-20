@@ -1,4 +1,4 @@
-package com.cube.storm.ui.view.holder;
+package com.cube.storm.ui.view.holder.list;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +14,8 @@ import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.list.collection.CollectionListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.ViewClickable;
+import com.cube.storm.ui.view.holder.ViewHolder;
+import com.cube.storm.ui.view.holder.ViewHolderController;
 
 import java.util.ArrayList;
 import java.util.List;
