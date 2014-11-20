@@ -194,7 +194,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 		}
 		catch (Exception e)
 		{
-			throw new InstantiationError("Could not instantiate a new holder");
+			throw new InstantiationError("Could not instantiate a new holder" + e.getMessage());
 		}
 		return holder.getViewHolder();
 	}
