@@ -4,7 +4,6 @@ import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.cube.storm.ui.view.holder.grid.GridItemHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemHolder;
-import com.cube.storm.ui.view.holder.grid.QuizGridItemHolder;
 import com.cube.storm.ui.view.holder.grid.StandardGridItemHolder;
 import com.cube.storm.ui.view.holder.list.AnimatedImageListItemHolder;
 import com.cube.storm.ui.view.holder.list.AppCollectionItemHolder;
@@ -70,7 +69,6 @@ public enum View
 	Grid(com.cube.storm.ui.model.grid.Grid.class, null),
 	GridItem(com.cube.storm.ui.model.grid.GridItem.class, GridItemHolder.class),
 	StandardGridItem(com.cube.storm.ui.model.grid.StandardGridItem.class, StandardGridItemHolder.class),
-	QuizGridItem(com.cube.storm.ui.model.grid.QuizGridItem.class, QuizGridItemHolder.class),
 	ImageGridItem(com.cube.storm.ui.model.grid.ImageGridItem.class, ImageGridItemHolder.class),
 
 	/**
