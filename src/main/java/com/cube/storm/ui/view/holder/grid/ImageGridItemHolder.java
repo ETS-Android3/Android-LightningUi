@@ -42,6 +42,7 @@ public class ImageGridItemHolder extends ViewHolderController
 			super(view);
 
 			image = (ImageView)view.findViewById(R.id.image);
+			progress = (ProgressBar)view.findViewById(R.id.progress);
 		}
 
 		@Override public void populateView(final ImageGridItem model)
