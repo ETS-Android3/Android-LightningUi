@@ -1,8 +1,8 @@
 package com.cube.storm.ui.activity;
 
-import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -82,7 +82,7 @@ public class StormActivity extends ActionBarActivity
 			fragmentIntent.getArguments().putAll(getIntent().getExtras());
 
 			Fragment fragment = Fragment.instantiate(this, fragmentIntent.getFragment().getName(), fragmentIntent.getArguments());
-			getFragmentManager().beginTransaction().replace(R.id.fragment_holder, fragment).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, fragment).commit();
 
 			if (!TextUtils.isEmpty(fragmentIntent.getTitle()))
 			{
