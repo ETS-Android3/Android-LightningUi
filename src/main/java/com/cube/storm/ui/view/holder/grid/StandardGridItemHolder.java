@@ -13,6 +13,7 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.grid.StandardGridItem;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -34,7 +35,7 @@ public class StandardGridItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class StandardGridItemViewHolder extends ViewHolder<StandardGridItem>
+	private class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 	{
 		protected ImageView image;
 		protected TextView title;

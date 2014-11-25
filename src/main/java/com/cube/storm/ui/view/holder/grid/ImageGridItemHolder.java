@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.grid.ImageGridItem;
+import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -32,7 +33,7 @@ public class ImageGridItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class ImageGridItemViewHolder extends ViewHolder<ImageGridItem>
+	private class ImageGridItemViewHolder extends GridViewHolder<ImageGridItem>
 	{
 		protected ImageView image;
 		protected ProgressBar progress;

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.grid.GridItem;
+import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 
@@ -25,7 +26,7 @@ public class GridItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class GridItemViewHolder extends ViewHolder<GridItem>
+	private class GridItemViewHolder extends GridViewHolder<GridItem>
 	{
 
 		public GridItemViewHolder(View view)
