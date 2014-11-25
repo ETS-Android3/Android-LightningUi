@@ -123,7 +123,7 @@ public class CollectionListItemHolder extends ViewHolderController
 						Class<? extends ViewHolderController> cls = UiSettings.getInstance().getViewFactory().getHolderForView(itemModel.getClassName());
 						holder = cls.newInstance();
 						view = holder.createViewHolder((ViewGroup)linearLayout.getParent()).itemView;
-						holder.getViewHolder().populateView(itemModel);
+						((ViewHolder)holder.getViewHolder()).populateView(itemModel);
 
 						view.setTag(holder);
 					}
@@ -141,7 +141,7 @@ public class CollectionListItemHolder extends ViewHolderController
 					if (view.getTag() != null)
 					{
 						holder = (ViewHolderController)view.getTag();
-						holder.getViewHolder().populateView(itemModel);
+						((ViewHolder)holder.getViewHolder()).populateView(itemModel);
 					}
 				}
 

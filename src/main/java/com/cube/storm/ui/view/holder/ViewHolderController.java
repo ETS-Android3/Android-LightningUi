@@ -1,5 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 /**
@@ -11,15 +12,15 @@ import android.view.ViewGroup;
  */
 public abstract class ViewHolderController
 {
-	protected ViewHolder mViewHolder;
+	public ViewHolder<?> mViewHolder;
 
-	public abstract ViewHolder createViewHolder(ViewGroup parent);
+	public abstract RecyclerView.ViewHolder createViewHolder(ViewGroup parent);
 
 	/**
 	 * Retrieve the ViewHolder which is a member of the controller
 	 * @return The ViewHolder to populate the view
 	 */
-	public ViewHolder getViewHolder()
+	public RecyclerView.ViewHolder getViewHolder()
 	{
 		return mViewHolder;
 	}

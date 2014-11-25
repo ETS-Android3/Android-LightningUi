@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.grid.GridItem;
 import com.cube.storm.ui.model.list.Divider;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.List.ListFooter;
 import com.cube.storm.ui.model.list.List.ListHeader;
+import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 
@@ -184,7 +186,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 		return items.size();
 	}
 
-	@Override public com.cube.storm.ui.view.holder.ViewHolder<?> onCreateViewHolder(ViewGroup viewGroup, int viewType)
+	@Override public ViewHolder<?> onCreateViewHolder(ViewGroup viewGroup, int viewType)
 	{
 		ViewHolderController holder = null;
 
@@ -198,14 +200,23 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 			throw new InstantiationError("Could not instantiate a new holder" + e.getMessage());
 		}
 
-		return holder.getViewHolder();
+		return (ViewHolder<?>)holder.getViewHolder();
 	}
 
 	@Override public void onBindViewHolder(com.cube.storm.ui.view.holder.ViewHolder viewHolder, int position)
 	{
 		try
 		{
-			viewHolder.populateView(getItem(position));
+			if(viewHolder instanceof GridViewHolder)
+			{
+				GridItem model = (GridItem)getItem(position);
+				((GridViewHolder)viewHolder).checkSpan(model);
+				viewHolder.populateView(model);
+			}
+			else
+			{
+				viewHolder.populateView(getItem(position));
+			}
 		}
 		catch (Exception e)
 		{
