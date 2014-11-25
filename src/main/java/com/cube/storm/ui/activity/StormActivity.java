@@ -1,9 +1,9 @@
 package com.cube.storm.ui.activity;
 
-import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -18,7 +18,7 @@ import com.cube.storm.ui.model.page.Page;
  * @author Callum Taylor
  * @project StormUI
  */
-public class StormActivity extends ActionBarActivity
+public class StormActivity extends FragmentActivity
 {
 	public static final String EXTRA_PAGE = "stormui.page";
 	public static final String EXTRA_URI = "stormui.uri";
