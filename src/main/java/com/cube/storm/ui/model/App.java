@@ -1,5 +1,6 @@
 package com.cube.storm.ui.model;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -52,6 +53,22 @@ public class App extends Model
 	@Override public void writeToParcel(Parcel dest, int flags)
 	{
 
+	}
+
+	@Nullable
+	public PageDescriptor findPageDescriptor(@NonNull Uri page)
+	{
+		while (getMap().iterator().hasNext())
+		{
+			PageDescriptor pageDescriptor = getMap().iterator().next();
+
+			if (page.toString().equals(pageDescriptor.getSrc()))
+			{
+				return pageDescriptor;
+			}
+		}
+
+		return null;
 	}
 
 	@Nullable
