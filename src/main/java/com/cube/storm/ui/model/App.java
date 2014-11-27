@@ -58,10 +58,8 @@ public class App extends Model
 	@Nullable
 	public PageDescriptor findPageDescriptor(@NonNull Uri page)
 	{
-		while (getMap().iterator().hasNext())
+		for (PageDescriptor pageDescriptor : getMap())
 		{
-			PageDescriptor pageDescriptor = getMap().iterator().next();
-
 			if (page.toString().equals(pageDescriptor.getSrc()))
 			{
 				return pageDescriptor;
@@ -74,10 +72,8 @@ public class App extends Model
 	@Nullable
 	public PageDescriptor findPageDescriptor(@NonNull Page page)
 	{
-		while (getMap().iterator().hasNext())
+		for (PageDescriptor pageDescriptor : getMap())
 		{
-			PageDescriptor pageDescriptor = getMap().iterator().next();
-
 			// TODO: Server needs to return IDs for page descriptors in app.json
 			if (pageDescriptor.getId().equals(page.getId()))
 			{
