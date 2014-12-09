@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;
@@ -28,7 +28,7 @@ import lombok.Setter;
  * @author Callum Taylor
  * @project StormUI
  */
-public class StormPageAdapter extends FragmentPagerAdapter implements IconTabProvider
+public class StormPageAdapter extends FragmentStatePagerAdapter implements IconTabProvider
 {
 	protected final Context context;
 	protected final FragmentManager manager;
