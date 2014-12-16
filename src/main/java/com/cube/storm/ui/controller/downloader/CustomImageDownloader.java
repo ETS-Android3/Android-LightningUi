@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.cube.storm.ui.controller.adapter.downloader;
+package com.cube.storm.ui.controller.downloader;
 
 import android.content.ContentResolver;
 import android.content.Context;
