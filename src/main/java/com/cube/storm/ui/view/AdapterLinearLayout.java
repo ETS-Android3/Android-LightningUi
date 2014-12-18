@@ -3,12 +3,10 @@ package com.cube.storm.ui.view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
-public class AdapterLinearLayout extends LinearLayout implements OnClickListener
+public class AdapterLinearLayout extends LinearLayout
 {
 	private RecyclerView.Adapter mAdapter;
 	private OnItemClickListener mOnClickListener;
@@ -55,20 +53,6 @@ public class AdapterLinearLayout extends LinearLayout implements OnClickListener
 					addView(toAdd.itemView);
 				}
 			}
-		}
-	}
-
-	public void setOnItemClickListener(OnItemClickListener listener)
-	{
-		this.mOnClickListener = listener;
-	}
-
-	@Override public void onClick(View v)
-	{
-		if (mOnClickListener != null && mAdapter != null)
-		{
-			int index = indexOfChild(v);
-			mOnClickListener.onItemClick(null, v, index, mAdapter.getItemId(index));
 		}
 	}
 }
