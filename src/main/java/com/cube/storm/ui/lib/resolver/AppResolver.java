@@ -1,11 +1,16 @@
 package com.cube.storm.ui.lib.resolver;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.cube.storm.util.lib.resolver.Resolver;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * // TODO: Add class description
@@ -50,6 +55,25 @@ public class AppResolver extends Resolver
 
 	@Nullable @Override public byte[] resolveFile(@NonNull Uri uri)
 	{
-		return new byte[0];
+		if ("app".equalsIgnoreCase(uri.getHost()))
+		{
+			uri = resolveUri(uri);
+		}
+
+		if (uri != null)
+		{
+			Drawable drawable = applicationContext.getResources().getDrawable(Integer.parseInt(uri.toString().substring("drawable://".length())));
+
+			if (drawable != null)
+			{
+				Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+				return stream.toByteArray();
+			}
+		}
+
+		return null;
 	}
 }
