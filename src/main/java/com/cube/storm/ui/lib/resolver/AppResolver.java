@@ -16,7 +16,7 @@ import java.io.ByteArrayOutputStream;
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project ARC-Hazards
+ * @project LightningUi
  */
 public class AppResolver extends Resolver
 {
