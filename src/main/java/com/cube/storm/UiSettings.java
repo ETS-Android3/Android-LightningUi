@@ -13,6 +13,7 @@ import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
+import com.cube.storm.ui.lib.resolver.AppResolver;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
@@ -191,6 +192,7 @@ public class UiSettings
 
 			registerUriResolver("file", new FileResolver());
 			registerUriResolver("assets", new AssetsResolver(this.context));
+			registerUriResolver("app", new AppResolver(this.context));
 
 			viewBuilder(new ViewBuilder(){});
 		}
