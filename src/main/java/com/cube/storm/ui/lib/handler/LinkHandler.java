@@ -13,6 +13,7 @@ import com.cube.storm.ui.model.property.DestinationLinkProperty;
 import com.cube.storm.ui.model.property.ExternalLinkProperty;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.model.property.NativeLinkProperty;
 import com.cube.storm.ui.model.property.UriLinkProperty;
 
 import java.util.Locale;
@@ -38,12 +39,12 @@ public class LinkHandler
 			return;
 		}
 
-		if (link instanceof InternalLinkProperty)
+		if (link instanceof InternalLinkProperty || link instanceof NativeLinkProperty)
 		{
-			if (isYoutubeVideo(Uri.parse(((InternalLinkProperty)link).getDestination())) || isVideo(Uri.parse(((InternalLinkProperty)link).getDestination())))
+			if (isYoutubeVideo(Uri.parse(((DestinationLinkProperty)link).getDestination())) || isVideo(Uri.parse(((DestinationLinkProperty)link).getDestination())))
 			{
 				VideoPageDescriptor page = new VideoPageDescriptor();
-				page.setSrc(((InternalLinkProperty)link).getDestination());
+				page.setSrc(((DestinationLinkProperty)link).getDestination());
 				page.setType("content");
 
 				Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(context, page);
@@ -55,7 +56,7 @@ public class LinkHandler
 			}
 			else
 			{
-				Intent toLoad = UiSettings.getInstance().getIntentFactory().geIntentForPageUri(context, Uri.parse(((InternalLinkProperty)link).getDestination()));
+				Intent toLoad = UiSettings.getInstance().getIntentFactory().geIntentForPageUri(context, Uri.parse(((DestinationLinkProperty)link).getDestination()));
 
 				if (toLoad != null)
 				{
