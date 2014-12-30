@@ -3,6 +3,7 @@ package com.cube.storm.ui.view.holder.list;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,13 +98,24 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 
 				ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
 
-				text.setText(model.getImages().get(currentIndex).getText().getContent());
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getImages().get(currentIndex).getText().getContent());
+
+				if (!TextUtils.isEmpty(content))
+				{
+					text.setText(content);
+					text.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					text.setVisibility(View.GONE);
+				}
 
 				currentIndex++;
 				if (currentIndex >= model.getImages().size())
 				{
 					currentIndex = 0;
 				}
+
 				timer.schedule(new TimerTask()
 				{
 					@Override public void run()
