@@ -101,7 +101,8 @@ public enum View
 	DestinationLink(com.cube.storm.ui.model.property.DestinationLinkProperty.class, null),
 	InternalLink(com.cube.storm.ui.model.property.InternalLinkProperty.class, null),
 	ExternalLink(com.cube.storm.ui.model.property.ExternalLinkProperty.class, null),
-	UriLink(com.cube.storm.ui.model.property.UriLinkProperty.class, null);
+	UriLink(com.cube.storm.ui.model.property.UriLinkProperty.class, null),
+	NativeLink(com.cube.storm.ui.model.property.NativeLinkProperty.class, null);
 
 	private Class<? extends Model> model;
 	private Class<? extends ViewHolderController> holder;
