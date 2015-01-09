@@ -56,7 +56,7 @@ public class LinkHandler
 			}
 			else
 			{
-				Intent toLoad = UiSettings.getInstance().getIntentFactory().geIntentForPageUri(context, Uri.parse(((DestinationLinkProperty)link).getDestination()));
+				Intent toLoad = UiSettings.getInstance().getIntentFactory().getIntentForPageUri(context, Uri.parse(((DestinationLinkProperty)link).getDestination()));
 
 				if (toLoad != null)
 				{
