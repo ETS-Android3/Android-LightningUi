@@ -131,7 +131,7 @@ public abstract class IntentFactory
 	 * @return The intent, or null if one was not suitable enough
 	 */
 	@Nullable
-	public Intent geIntentForPageUri(@NonNull Context context, @NonNull Uri pageUri)
+	public Intent getIntentForPageUri(@NonNull Context context, @NonNull Uri pageUri)
 	{
 		App app = UiSettings.getInstance().getApp();
 
