@@ -70,7 +70,9 @@ public class StormFragment extends Fragment
 			}
 			else if (page instanceof GridPage)
 			{
-				listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+				StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+				layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+				listView.setLayoutManager(layoutManager);
 				adapter.setItems(((GridPage)page).getGrid().getChildren());
 			}
 		}
