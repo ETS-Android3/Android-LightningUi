@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view.holder.list;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,8 +52,17 @@ public class AppCollectionItemHolder extends ViewHolderController
 
 		@Override public void populateView(final AppCollectionItem model)
 		{
+			overlay.setVisibility(View.GONE);
+
 			link = model.getLink();
-			overlay.setText(model.getOverlay().getContent());
+
+			String content = UiSettings.getInstance().getTextProcessor().process(model.getOverlay().getContent());
+
+			if (!TextUtils.isEmpty(content))
+			{
+				overlay.setText(content);
+				overlay.setVisibility(View.VISIBLE);
+			}
 
 			UiSettings.getInstance().getImageLoader().displayImage(model.getIcon().getSrc(), image, new SimpleImageLoadingListener()
 			{

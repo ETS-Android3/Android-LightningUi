@@ -3,11 +3,12 @@
 <FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content"
-	android:layout_height="192dp"
+	android:layout_height="wrap_content"
+	android:padding="4dp"
 >
 	<ImageView
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent"
+		android:layout_width="72dp"
+		android:layout_height="72dp"
 		android:id="@+id/icon"
 	/>
 
@@ -16,5 +17,10 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/overlay"
 		android:layout_gravity="center"
+		android:textColor="#000000"
+		android:shadowColor="#ffffff"
+		android:shadowDx="1"
+		android:shadowDy="1"
+		android:shadowRadius="1"
 	/>
 </FrameLayout>
