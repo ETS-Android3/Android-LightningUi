@@ -102,6 +102,7 @@ public enum View
 	InternalLink(com.cube.storm.ui.model.property.InternalLinkProperty.class, null),
 	ExternalLink(com.cube.storm.ui.model.property.ExternalLinkProperty.class, null),
 	UriLink(com.cube.storm.ui.model.property.UriLinkProperty.class, null),
+	ShareLink(com.cube.storm.ui.model.property.ShareLinkProperty.class, null),
 	NativeLink(com.cube.storm.ui.model.property.NativeLinkProperty.class, null);
 
 	private Class<? extends Model> model;

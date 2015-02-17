@@ -14,6 +14,7 @@ import com.cube.storm.ui.model.property.ExternalLinkProperty;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.NativeLinkProperty;
+import com.cube.storm.ui.model.property.ShareLinkProperty;
 import com.cube.storm.ui.model.property.UriLinkProperty;
 
 import java.util.Locale;
@@ -63,6 +64,13 @@ public class LinkHandler
 					context.startActivity(toLoad);
 				}
 			}
+		}
+		else if (link instanceof ShareLinkProperty)
+		{
+			Intent shareIntent = new Intent(Intent.ACTION_SEND);
+			shareIntent.setType("text/plain");
+			shareIntent.putExtra(Intent.EXTRA_TEXT, UiSettings.getInstance().getTextProcessor().process(((ShareLinkProperty)link).getBody().getContent()));
+			context.startActivity(shareIntent);
 		}
 		else if (link instanceof UriLinkProperty)
 		{
