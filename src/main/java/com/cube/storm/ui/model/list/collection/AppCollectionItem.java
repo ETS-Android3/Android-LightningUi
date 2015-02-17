@@ -20,6 +20,7 @@ public class AppCollectionItem extends CollectionItem
 	@Getter protected ImageProperty icon;
 	@Getter protected TextProperty overlay;
 	@Getter protected LinkProperty link;
+	@Getter protected String name;
 
 	@Override public int describeContents()
 	{
