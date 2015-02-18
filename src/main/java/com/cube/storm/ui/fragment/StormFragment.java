@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,5 +79,15 @@ public class StormFragment extends Fragment
 		}
 
 		listView.setAdapter(adapter);
+
+		if (page.getTitle() != null)
+		{
+			String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle().getContent());
+
+			if (!TextUtils.isEmpty(title))
+			{
+				getActivity().setTitle(title);
+			}
+		}
 	}
 }
