@@ -32,11 +32,12 @@ public class ButtonListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	private class ButtonListItemViewHolder extends ViewHolder<ButtonListItem>
+	private class ButtonListItemViewHolder extends ViewHolder<ButtonListItem> implements OnClickListener
 	{
 		protected TextView title;
 		protected Button button;
 		protected LinearLayout embeddedLinksContainer;
+		protected LinkProperty link;
 
 		public ButtonListItemViewHolder(View view)
 		{
@@ -45,6 +46,8 @@ public class ButtonListItemHolder extends ViewHolderController
 			title = (TextView)view.findViewById(R.id.title);
 			button = (Button)view.findViewById(R.id.button);
 			embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
+
+			button.setOnClickListener(this);
 		}
 
 		@Override public void populateView(ButtonListItem model)
@@ -69,6 +72,8 @@ public class ButtonListItemHolder extends ViewHolderController
 
 			if (model.getButton() != null && model.getButton().getTitle() != null)
 			{
+				link = model.getButton().getLink();
+
 				String buttonContent = UiSettings.getInstance().getTextProcessor().process(model.getButton().getTitle().getContent());
 
 				if (!TextUtils.isEmpty(buttonContent))
@@ -115,6 +120,14 @@ public class ButtonListItemHolder extends ViewHolderController
 						embeddedLinksContainer.addView(button);
 					}
 				}
+			}
+		}
+
+		@Override public void onClick(View view)
+		{
+			if (link != null)
+			{
+				UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), link);
 			}
 		}
 	}

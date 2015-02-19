@@ -13,6 +13,7 @@ import lombok.Getter;
 public class ButtonProperty extends Property
 {
 	@Getter private TextProperty title;
+	@Getter private LinkProperty link;
 
 	@Override public int describeContents()
 	{
