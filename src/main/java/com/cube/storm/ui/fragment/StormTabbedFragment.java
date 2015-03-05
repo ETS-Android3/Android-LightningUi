@@ -56,7 +56,7 @@ public class StormTabbedFragment extends Fragment
 
 	protected void loadPages(@NonNull TabbedPageCollection collection)
 	{
-		pageAdapter = new StormPageAdapter(getActivity(), getFragmentManager());
+		pageAdapter = new StormPageAdapter(getActivity(), getChildFragmentManager());
 		ArrayList<FragmentPackage> fragmentPages = new ArrayList<FragmentPackage>();
 
 		if (collection.getPages() != null)
