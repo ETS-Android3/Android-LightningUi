@@ -1,5 +1,6 @@
 package com.cube.storm.ui.view.holder.list;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,18 @@ public class ListHeaderHolder extends ViewHolderController
 
 		@Override public void populateView(ListHeader model)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getHeader().getContent()));
+			itemView.setVisibility(View.GONE);
+
+			if (model.getHeader() != null)
+			{
+				String content = UiSettings.getInstance().getTextProcessor().process(model.getHeader().getContent());
+
+				if (!TextUtils.isEmpty(content))
+				{
+					title.setText(content);
+					itemView.setVisibility(View.VISIBLE);
+				}
+			}
 		}
 	}
 }
