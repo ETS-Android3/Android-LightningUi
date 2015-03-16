@@ -34,7 +34,6 @@ public class HeaderListItemHolder extends ViewHolderController
 
 	public class HeaderListItemViewHolder extends ViewHolder<HeaderListItem>
 	{
-
 		protected ImageView image;
 		protected TextView title;
 		protected TextView description;
