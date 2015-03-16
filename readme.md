@@ -37,7 +37,7 @@ if (app != null)
 Then in your entry activity add the following code
 
 ```java
-Intent start = UiSettings.getInstance().getIntentFactory().geIntentForPageUri(this, Uri.parse(UiSettings.getInstance().getApp().getVector()));
+Intent start = UiSettings.getInstance().getIntentFactory().getIntentForPageUri(this, Uri.parse(UiSettings.getInstance().getApp().getVector()));
 
 if (start != null)
 {
