@@ -1,42 +1,43 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
-import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;
-import com.cube.storm.ui.data.ContentDensity;
+import com.cube.storm.ui.data.ContentSize;
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class BundleImageProperty extends ImageProperty
 {
-	protected ImageDescriptorProperty src;
+	protected ImageDescriptorProperty[] src;
 
 	@Override public String getSrc()
 	{
-		if (UiSettings.getInstance().getContentDensity() == ContentDensity.x0_75 && !TextUtils.isEmpty(src.getX075()))
+		Arrays.sort(src, new ImageDescriptorPropertyComparator());
+		if (UiSettings.getInstance().getContentSize() == ContentSize.SMALL)
 		{
-			return src.getX075();
+			return src[0].getSrc().getDestination();
 		}
-		else if (UiSettings.getInstance().getContentDensity() == ContentDensity.x1_00 && !TextUtils.isEmpty(src.getX1()))
+		else if (UiSettings.getInstance().getContentSize() == ContentSize.MEDIUM)
 		{
-			return src.getX1();
+			return src[(int)src.length/2].getSrc().getDestination();
 		}
-		else if (UiSettings.getInstance().getContentDensity() == ContentDensity.x1_50 && !TextUtils.isEmpty(src.getX15()))
+		else if (UiSettings.getInstance().getContentSize() == ContentSize.LARGE)
 		{
-			return src.getX15();
+			return src[(int)src.length-1].getSrc().getDestination();
 		}
-		else if (UiSettings.getInstance().getContentDensity() == ContentDensity.x2_00 && !TextUtils.isEmpty(src.getX2()))
-		{
-			return src.getX2();
-		}
+
 		else
 		{
-			return src.getX1();
+			return src[(int)src.length/2].getSrc().getDestination();
 		}
 	}
 
 	@Override public String getFallbackSrc()
 	{
-		return src.getX1();
+		Arrays.sort(src, new ImageDescriptorPropertyComparator());
+		return src[(int)src.length/2].getSrc().getDestination();
 	}
 
 	@Override public int describeContents()
@@ -47,5 +48,14 @@ public class BundleImageProperty extends ImageProperty
 	@Override public void writeToParcel(Parcel parcel, int i)
 	{
 
+	}
+
+	private class ImageDescriptorPropertyComparator implements Comparator<ImageDescriptorProperty>
+	{
+		@Override public int compare(ImageDescriptorProperty lhs, ImageDescriptorProperty rhs)
+		{
+			long totalArea = lhs.getDimensions().getHeight() * lhs.getDimensions().getWidth();
+			return Long.valueOf(totalArea).compareTo(Long.valueOf(rhs.getDimensions().getHeight() * rhs.getDimensions().getWidth()));
+		}
 	}
 }

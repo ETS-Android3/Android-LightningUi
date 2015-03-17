@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.cube.storm.ui.data.ContentDensity;
+import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
@@ -110,7 +110,7 @@ public class UiSettings
 	/**
 	 * The density to use when loading images
 	 */
-	@Getter @Setter private ContentDensity contentDensity;
+	@Getter @Setter private ContentSize contentSize;
 
 	/**
 	 * The handler used when a link is triggered
@@ -174,7 +174,7 @@ public class UiSettings
 			linkHandler(new LinkHandler());
 			textProcessor(new TextProcessor());
 
-			contentDensity(ContentDensity.x1_00);
+			contentSize(ContentSize.MEDIUM);
 
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
 			{
@@ -283,15 +283,15 @@ public class UiSettings
 		}
 
 		/**
-		 * Sets the default {@link com.cube.storm.ui.data.ContentDensity} for the module
+		 * Sets the default {@link com.cube.storm.ui.data.ContentSize} for the module
 		 *
-		 * @param contentDensity The new {@link com.cube.storm.ui.data.ContentDensity}
+		 * @param contentSize The new {@link com.cube.storm.ui.data.ContentSize}
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder contentDensity(ContentDensity contentDensity)
+		public Builder contentSize(ContentSize contentSize)
 		{
-			construct.contentDensity = contentDensity;
+			construct.contentSize = contentSize;
 			return this;
 		}
 

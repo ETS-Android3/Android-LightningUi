@@ -7,23 +7,22 @@ import android.view.WindowManager;
 
 import lombok.Getter;
 
-public enum ContentDensity
+public enum ContentSize
 {
-	x0_75(0.75, "x0.75"),
-	x1_00(1, "x1.0"),
-	x1_50(1.5, "x1.5"),
-	x2_00(2, "x2.0");
+	SMALL(0.75, "x0.75"),
+	MEDIUM(1, "x1.0"),
+	LARGE(1.5, "x1.5");
 
 	@Getter double maxPixels;
 	@Getter String density;
 
-	private ContentDensity(double maxPixels, String densityStr)
+	private ContentSize(double maxPixels, String densityStr)
 	{
 		this.maxPixels = maxPixels;
 		this.density = densityStr;
 	}
 
-	public static ContentDensity getDensityForSize(Context context)
+	public static ContentSize getDensityForSize(Context context)
 	{
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		WindowManager window = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
@@ -34,21 +33,21 @@ public enum ContentDensity
 
 		if (densityName >= DisplayMetrics.DENSITY_LOW && densityName < DisplayMetrics.DENSITY_MEDIUM)
 		{
-			return ContentDensity.x0_75;
+			return ContentSize.SMALL;
 		}
 		else if (densityName >= DisplayMetrics.DENSITY_MEDIUM && densityName < DisplayMetrics.DENSITY_TV)
 		{
-			return ContentDensity.x1_00;
+			return ContentSize.MEDIUM;
 		}
 		else if (densityName >= DisplayMetrics.DENSITY_TV && densityName < DisplayMetrics.DENSITY_XHIGH)
 		{
-			return ContentDensity.x1_50;
+			return ContentSize.LARGE;
 		}
 		else if (densityName >= DisplayMetrics.DENSITY_XHIGH)
 		{
-			return ContentDensity.x2_00;
+			return ContentSize.LARGE;
 		}
 
-		return x1_00;
+		return MEDIUM;
 	}
 }

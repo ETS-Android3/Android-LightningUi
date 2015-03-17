@@ -8,10 +8,11 @@ import lombok.Getter;
 
 public class ImageDescriptorProperty extends Property
 {
-	@SerializedName("x0.75") @Getter protected String x075;
-	@SerializedName("x1") @Getter protected String x1;
-	@SerializedName("x1.5") @Getter protected String x15;
-	@SerializedName("x2") @Getter protected String x2;
+	@Getter protected InternalLink src;
+	@Getter protected String locale;
+	@Getter protected Dimensions dimensions;
+	@Getter protected String mime;
+	@SerializedName("size") @Getter protected long fileSize;
 
 	@Override public int describeContents()
 	{
@@ -21,5 +22,16 @@ public class ImageDescriptorProperty extends Property
 	@Override public void writeToParcel(Parcel parcel, int i)
 	{
 
+	}
+
+	public class InternalLink
+	{
+		@Getter String destination;
+	}
+
+	public class Dimensions
+	{
+		@Getter protected int width;
+		@Getter protected int height;
 	}
 }
