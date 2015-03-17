@@ -25,7 +25,7 @@ public class BundleImageProperty extends ImageProperty
 		}
 		else if (UiSettings.getInstance().getContentSize() == ContentSize.LARGE)
 		{
-			return src[(int)src.length-1].getSrc().getDestination();
+			return src[src.length-1].getSrc().getDestination();
 		}
 
 		else
