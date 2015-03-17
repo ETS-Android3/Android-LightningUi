@@ -1,8 +1,10 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,31 @@ public class List extends ListItem
 	@Getter protected TextProperty header;
 	@Getter protected TextProperty footer;
 	@Getter protected ArrayList<ListItem> children;
+
+	public List()
+	{
+	}
+
+	public List(@Nullable String header)
+	{
+		this(header, null);
+	}
+
+	public List(@Nullable String header, @Nullable String footer)
+	{
+		if (header != null)
+		{
+			this.header = new TextProperty(header);
+		}
+
+		if (footer != null)
+		{
+			this.footer = new TextProperty(footer);
+		}
+
+		this.className = View.List.name();
+		this.children = new ArrayList<>();
+	}
 
 	/**
 	 * This is the model used when displaying the list in the adapter. The list model is processed

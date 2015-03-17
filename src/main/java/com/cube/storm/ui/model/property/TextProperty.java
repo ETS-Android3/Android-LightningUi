@@ -16,6 +16,15 @@ public class TextProperty extends Property
 {
 	@Getter public String content;
 
+	public TextProperty()
+	{
+	}
+
+	public TextProperty(String content)
+	{
+		this.content = content;
+	}
+
 	@Override public int describeContents()
 	{
 		return 0;
