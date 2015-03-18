@@ -6,10 +6,9 @@ import lombok.Getter;
  * // TODO: Add class description
  *
  * @author Matt Allen
- * @documentation // TODO Reference flow doc
  * @project Storm
  */
-public class AnimationImageProperty extends BundleImageProperty
+public class AnimationImageProperty extends ImageProperty
 {
 	@Getter protected long delay;
 }
