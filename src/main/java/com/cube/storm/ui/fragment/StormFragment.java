@@ -44,7 +44,7 @@ public class StormFragment extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		adapter = new StormListAdapter(getActivity());
+		adapter = new StormListAdapter();
 
 		if (getArguments().containsKey(StormActivity.EXTRA_PAGE))
 		{
