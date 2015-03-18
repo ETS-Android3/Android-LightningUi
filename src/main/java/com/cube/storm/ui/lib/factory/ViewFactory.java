@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.View;
-import com.cube.storm.ui.view.holder.ViewHolderController;
+import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
 /**
  * This is the factory class which is used by Storm to help with getting the correct view holder/controller
@@ -24,7 +24,7 @@ public abstract class ViewFactory
 	 * @return The view holder class or null if one was not found.
 	 */
 	@Nullable
-	public Class<? extends ViewHolderController> getHolderForView(String viewName)
+	public Class<? extends ViewHolderFactory> getHolderForView(String viewName)
 	{
 		try
 		{
