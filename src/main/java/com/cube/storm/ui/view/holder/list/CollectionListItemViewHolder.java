@@ -78,18 +78,18 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 	{
 		if (itemModel != null)
 		{
-			ViewHolderFactory holder = null;
+			ViewHolderFactory holderFactory = null;
+			ViewHolder<? super CollectionItem> holder = null;
 
 			if (view == null)
 			{
 				try
 				{
 					Class<? extends ViewHolderFactory> cls = UiSettings.getInstance().getViewFactory().getHolderForView(itemModel.getClassName());
-					holder = cls.newInstance();
-					view = holder.createViewHolder((ViewGroup)linearLayout.getParent()).itemView;
-					((ViewHolder)holder.getViewHolder()).populateView(itemModel);
-
-					view.setTag(holder);
+					holderFactory = cls.newInstance();
+					holder = (ViewHolder<? super CollectionItem>)holderFactory.createViewHolder((ViewGroup)linearLayout.getParent());
+					holder.populateView(itemModel);
+					holder.itemView.setTag(holder);
 				}
 				catch (InstantiationException e)
 				{
@@ -104,16 +104,15 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 			{
 				if (view.getTag() != null)
 				{
-					holder = (ViewHolderFactory)view.getTag();
-					((ViewHolder)holder.getViewHolder()).populateView(itemModel);
+					holder = (ViewHolder<? super CollectionItem>)view.getTag();
 				}
 			}
 
 			if (view != null)
 			{
-				final ViewHolderFactory tmp = holder;
+				final ViewHolder<? super CollectionItem> tmp = holder;
 
-				if (tmp != null && ViewClickable.class.isAssignableFrom(tmp.getClass()))
+				if (tmp instanceof ViewClickable)
 				{
 					view.setOnClickListener(new OnClickListener()
 					{
