@@ -1,14 +1,12 @@
 package com.cube.storm.ui.view.holder.list;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.List.ListFooter;
+import com.cube.storm.ui.view.TextView;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 
@@ -42,18 +40,7 @@ public class ListFooterHolder extends ViewHolderController
 
 		@Override public void populateView(ListFooter model)
 		{
-			itemView.setVisibility(View.GONE);
-
-			if (model.getFooter() != null)
-			{
-				String content = UiSettings.getInstance().getTextProcessor().process(model.getFooter().getContent());
-
-				if (!TextUtils.isEmpty(content))
-				{
-					title.setText(content);
-					itemView.setVisibility(View.VISIBLE);
-				}
-			}
+			title.populate(model.getFooter());
 		}
 	}
 }

@@ -3,11 +3,10 @@ package com.cube.storm.ui.view.holder.list;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.TextListItem;
+import com.cube.storm.ui.view.TextView;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 
@@ -27,22 +26,19 @@ public class TextListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	public class TextListItemViewHolder extends ViewHolder<TextListItem>
+	public static class TextListItemViewHolder extends ViewHolder<TextListItem>
 	{
-		protected TextView text;
+		protected TextView textView;
 
 		public TextListItemViewHolder(View view)
 		{
 			super(view);
-			text = (TextView)view.findViewById(R.id.text);
+			textView = (TextView)view.findViewById(R.id.text);
 		}
 
 		@Override public void populateView(TextListItem model)
 		{
-			if (model.getDescription() != null)
-			{
-				text.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
-			}
+			textView.populate(model.getDescription());
 		}
 	}
 }

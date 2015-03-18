@@ -3,16 +3,15 @@ package com.cube.storm.ui.view.holder.list;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.SpotlightImageListItem;
+import com.cube.storm.ui.view.TextView;
 import com.cube.storm.ui.view.ViewClickable;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
@@ -98,17 +97,7 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 
 				ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
 
-				String content = UiSettings.getInstance().getTextProcessor().process(model.getImages().get(currentIndex).getText().getContent());
-
-				if (!TextUtils.isEmpty(content))
-				{
-					text.setText(content);
-					text.setVisibility(View.VISIBLE);
-				}
-				else
-				{
-					text.setVisibility(View.GONE);
-				}
+				text.populate(model.getImages().get(currentIndex).getText());
 
 				currentIndex++;
 				if (currentIndex >= model.getImages().size())

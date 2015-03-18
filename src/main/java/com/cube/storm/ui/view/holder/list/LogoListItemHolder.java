@@ -1,19 +1,15 @@
 package com.cube.storm.ui.view.holder.list;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.LogoListItem;
+import com.cube.storm.ui.view.ImageView;
+import com.cube.storm.ui.view.TextView;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.LogoListItem} in the adapter
@@ -47,26 +43,8 @@ public class LogoListItemHolder extends ViewHolderController
 
 		@Override public void populateView(final LogoListItem model)
 		{
-			if (model.getImage() != null)
-			{
-				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
-				{
-					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
-					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
-					}
-				});
-			}
-
-			if (model.getTitle() != null && !TextUtils.isEmpty(model.getTitle().getContent()))
-			{
-				linkTitle.setText(UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent()));
-				linkTitle.setVisibility(View.VISIBLE);
-			}
-			else
-			{
-				linkTitle.setVisibility(View.GONE);
-			}
+			image.populate(model.getImage());
+			linkTitle.populate(model.getTitle());
 		}
 	}
 }
