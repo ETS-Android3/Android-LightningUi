@@ -11,6 +11,7 @@ import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.Collections;
@@ -27,31 +28,36 @@ public class ImageHelper
 {
 	public static void displayImage(@NonNull final ImageView image, @Nullable List<ImageProperty> images)
 	{
+		displayImage(image, images, new SimpleImageLoadingListener()
+		{
+			@Override public void onLoadingStarted(String imageUri, View view)
+			{
+				super.onLoadingStarted(imageUri, view);
+			}
+
+			@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+			{
+				if (loadedImage != null)
+				{
+					image.setVisibility(View.VISIBLE);
+				}
+			}
+
+			@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+			{
+
+			}
+		});
+	}
+
+	public static void displayImage(@NonNull ImageView image, @Nullable List<ImageProperty> images, ImageLoadingListener listener)
+	{
 		if (images != null)
 		{
 			ImageViewAware aware = new ImageViewAware(image, true);
 
 			String src = ImageHelper.getImageSrc(images, aware.getWidth(), aware.getHeight());
-			UiSettings.getInstance().getImageLoader().displayImage(src, image, new SimpleImageLoadingListener()
-			{
-				@Override public void onLoadingStarted(String imageUri, View view)
-				{
-					super.onLoadingStarted(imageUri, view);
-				}
-
-				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-				{
-					if (loadedImage != null)
-					{
-						image.setVisibility(View.VISIBLE);
-					}
-				}
-
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
-				{
-
-				}
-			});
+			UiSettings.getInstance().getImageLoader().displayImage(src, image, listener);
 		}
 	}
 

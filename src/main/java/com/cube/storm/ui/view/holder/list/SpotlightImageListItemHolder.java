@@ -3,7 +3,6 @@ package com.cube.storm.ui.view.holder.list;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import com.cube.storm.ui.model.list.SpotlightImageListItem;
 import com.cube.storm.ui.view.ViewClickable;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Holder for populating the Spotlight image at the top of a list view.
@@ -91,38 +88,38 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 		{
 			if (model.getImages() != null)
 			{
-				if (currentIndex >= model.getImages().size())
-				{
-					currentIndex = 0;
-				}
-
-				ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
-
-				String content = UiSettings.getInstance().getTextProcessor().process(model.getImages().get(currentIndex).getText().getContent());
-
-				if (!TextUtils.isEmpty(content))
-				{
-					text.setText(content);
-					text.setVisibility(View.VISIBLE);
-				}
-				else
-				{
-					text.setVisibility(View.GONE);
-				}
-
-				currentIndex++;
-				if (currentIndex >= model.getImages().size())
-				{
-					currentIndex = 0;
-				}
-
-				timer.schedule(new TimerTask()
-				{
-					@Override public void run()
-					{
-						handler.sendEmptyMessage(MSG_UPDATE);
-					}
-				}, model.getImages().get(currentIndex).getDelay());
+//				if (currentIndex >= model.getImages().size())
+//				{
+//					currentIndex = 0;
+//				}
+//
+//				ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex), image);
+//
+//				String content = UiSettings.getInstance().getTextProcessor().process(model.getImages().get(currentIndex).getText().getContent());
+//
+//				if (!TextUtils.isEmpty(content))
+//				{
+//					text.setText(content);
+//					text.setVisibility(View.VISIBLE);
+//				}
+//				else
+//				{
+//					text.setVisibility(View.GONE);
+//				}
+//
+//				currentIndex++;
+//				if (currentIndex >= model.getImages().size())
+//				{
+//					currentIndex = 0;
+//				}
+//
+//				timer.schedule(new TimerTask()
+//				{
+//					@Override public void run()
+//					{
+//						handler.sendEmptyMessage(MSG_UPDATE);
+//					}
+//				}, model.getImages().get(currentIndex).getDelay());
 			}
 		}
 

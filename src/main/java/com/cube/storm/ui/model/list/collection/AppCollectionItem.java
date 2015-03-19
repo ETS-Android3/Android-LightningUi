@@ -6,6 +6,8 @@ import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 
 /**
@@ -17,7 +19,7 @@ import lombok.Getter;
 public class AppCollectionItem extends CollectionItem
 {
 	@Getter protected String identifier;
-	@Getter protected ImageProperty icon;
+	@Getter protected ArrayList<ImageProperty> icon;
 	@Getter protected TextProperty overlay;
 	@Getter protected LinkProperty link;
 	@Getter protected String name;

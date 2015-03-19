@@ -5,6 +5,8 @@ import android.os.Parcel;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 
 /**
@@ -15,7 +17,7 @@ import lombok.Getter;
  */
 public class ImageGridItem extends GridItem
 {
-	@Getter protected ImageProperty image;
+	@Getter protected ArrayList<ImageProperty> image;
 	@Getter protected LinkProperty link;
 
 	@Override public int describeContents()

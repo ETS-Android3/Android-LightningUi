@@ -26,7 +26,7 @@ public abstract class GridViewHolder<T> extends ViewHolder<T>
 	 */
 	public void checkSpan(GridItem model)
 	{
-		if(model.getSpanned() != null)
+		if (model.getSpanned() != null)
 		{
 			if(model.getSpanned())
 			{

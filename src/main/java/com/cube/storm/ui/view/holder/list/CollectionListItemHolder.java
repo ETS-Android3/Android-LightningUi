@@ -127,11 +127,7 @@ public class CollectionListItemHolder extends ViewHolderController
 
 						view.setTag(holder);
 					}
-					catch (InstantiationException e)
-					{
-						e.printStackTrace();
-					}
-					catch (IllegalAccessException e)
+					catch (InstantiationException | IllegalAccessException e)
 					{
 						e.printStackTrace();
 					}

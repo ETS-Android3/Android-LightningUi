@@ -9,11 +9,10 @@ import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
+import com.cube.storm.ui.lib.helper.ImageHelper;
 import com.cube.storm.ui.model.list.LogoListItem;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.LogoListItem} in the adapter
@@ -49,13 +48,7 @@ public class LogoListItemHolder extends ViewHolderController
 		{
 			if (model.getImage() != null)
 			{
-				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
-				{
-					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
-					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image);
-					}
-				});
+				ImageHelper.displayImage(image, model.getImage());
 			}
 
 			if (model.getTitle() != null && !TextUtils.isEmpty(model.getTitle().getContent()))

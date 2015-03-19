@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
+import com.cube.storm.ui.lib.helper.ImageHelper;
 import com.cube.storm.ui.model.grid.ImageGridItem;
 import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolder;
@@ -50,7 +50,7 @@ public class ImageGridItemHolder extends ViewHolderController
 		{
 			if (model.getImage() != null)
 			{
-				UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
+				ImageHelper.displayImage(image, model.getImage(), new SimpleImageLoadingListener()
 				{
 					@Override public void onLoadingStarted(String imageUri, View view)
 					{
@@ -60,11 +60,6 @@ public class ImageGridItemHolder extends ViewHolderController
 
 					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
 					{
-						if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
-						{
-							UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
-						}
-
 						image.setVisibility(View.VISIBLE);
 						progress.setVisibility(View.GONE);
 					}

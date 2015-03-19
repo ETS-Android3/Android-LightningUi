@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cube.storm.ui.R;
+import com.cube.storm.ui.lib.helper.ImageHelper;
 import com.cube.storm.ui.model.list.AnimatedImageListItem;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Animated image list item shows a series of items in turn. This is done by creating an asynchronous
@@ -87,20 +87,21 @@ public class AnimatedImageListItemHolder extends ViewHolderController
 					currentIndex = 0;
 				}
 
-				ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
+				ImageLoader.getInstance().displayImage(ImageHelper.getImageSrc(model.getImages().get(currentIndex)), image);
 
 				currentIndex++;
 				if (currentIndex >= model.getImages().size())
 				{
 					currentIndex = 0;
 				}
-				getTimer().schedule(new TimerTask()
-				{
-					@Override public void run()
-					{
-						handler.sendEmptyMessage(MSG_UPDATE);
-					}
-				}, model.getImages().get(currentIndex).getDelay());
+
+//				getTimer().schedule(new TimerTask()
+//				{
+//					@Override public void run()
+//					{
+//						handler.sendEmptyMessage(MSG_UPDATE);
+//					}
+//				}, model.getImages().get(currentIndex).getDelay());
 			}
 		}
 

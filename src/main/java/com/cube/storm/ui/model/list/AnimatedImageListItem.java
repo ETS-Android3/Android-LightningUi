@@ -14,7 +14,7 @@ import lombok.Getter;
  */
 public class AnimatedImageListItem extends ListItem
 {
-	@Getter private java.util.List<AnimationImageProperty> images;
+	@Getter private java.util.List<java.util.List<AnimationImageProperty>> images;
 
 	@Override public int describeContents()
 	{

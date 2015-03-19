@@ -4,6 +4,8 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.ImageProperty;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 
 /**
@@ -14,7 +16,7 @@ import lombok.Getter;
  */
 public class ImageListItem extends TitleListItem
 {
-	@Getter protected ImageProperty image;
+	@Getter protected ArrayList<ImageProperty> image;
 
 	@Override public int describeContents()
 	{
