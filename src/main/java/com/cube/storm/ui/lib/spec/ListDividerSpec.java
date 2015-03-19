@@ -27,11 +27,6 @@ public class ListDividerSpec implements DividerSpec
 				return null;
 			}
 
-			if (items.get(position - 1) instanceof com.cube.storm.ui.model.list.List.ListHeader)
-			{
-				return new Divider();
-			}
-
 			if ((items.get(position + 1) instanceof StandardListItem))
 			{
 				return new Divider();
