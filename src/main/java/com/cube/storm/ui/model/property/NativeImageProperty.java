@@ -1,10 +1,21 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 public class NativeImageProperty extends ImageProperty
 {
 	private String src;
+
+	private NativeImageProperty()
+	{
+
+	}
+
+	public NativeImageProperty(@NonNull String src)
+	{
+		this.src = src;
+	}
 
 	@Override public String getSrc()
 	{

@@ -1,6 +1,7 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import lombok.Getter;
 
@@ -16,11 +17,11 @@ public class TextProperty extends Property
 {
 	@Getter public String content;
 
-	public TextProperty()
+	private TextProperty()
 	{
 	}
 
-	public TextProperty(String content)
+	public TextProperty(@NonNull String content)
 	{
 		this.content = content;
 	}

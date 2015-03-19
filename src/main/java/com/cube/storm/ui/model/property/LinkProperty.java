@@ -1,5 +1,7 @@
 package com.cube.storm.ui.model.property;
 
+import android.support.annotation.Nullable;
+
 import lombok.Getter;
 
 /**
@@ -11,4 +13,17 @@ import lombok.Getter;
 public abstract class LinkProperty extends Property
 {
 	@Getter protected TextProperty title;
+
+	protected LinkProperty()
+	{
+
+	}
+
+	protected LinkProperty(@Nullable String title)
+	{
+		if (title != null)
+		{
+			this.title = new TextProperty(title);
+		}
+	}
 }

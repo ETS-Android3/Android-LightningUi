@@ -1,6 +1,7 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import lombok.Getter;
 
@@ -13,6 +14,25 @@ import lombok.Getter;
 public class ShareLinkProperty extends LinkProperty
 {
 	@Getter protected TextProperty body;
+
+	private ShareLinkProperty()
+	{
+
+	}
+
+	public ShareLinkProperty(@Nullable String title)
+	{
+		this(title, null);
+	}
+
+	public ShareLinkProperty(@Nullable String title, @Nullable String body)
+	{
+		super(title);
+		if (body != null)
+		{
+			this.body = new TextProperty(body);
+		}
+	}
 
 	@Override public int describeContents()
 	{

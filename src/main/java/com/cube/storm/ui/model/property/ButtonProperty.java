@@ -1,6 +1,7 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import lombok.Getter;
 
@@ -14,6 +15,17 @@ public class ButtonProperty extends Property
 {
 	@Getter private TextProperty title;
 	@Getter private LinkProperty link;
+
+	private ButtonProperty()
+	{
+
+	}
+
+	public ButtonProperty(@NonNull String title, @NonNull String link)
+	{
+		this.title = new TextProperty(title);
+		this.link = new DestinationLinkProperty(title, link);
+	}
 
 	@Override public int describeContents()
 	{

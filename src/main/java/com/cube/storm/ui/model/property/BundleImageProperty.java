@@ -1,6 +1,7 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;
@@ -9,6 +10,20 @@ import com.cube.storm.ui.data.ContentDensity;
 public class BundleImageProperty extends ImageProperty
 {
 	protected ImageDescriptorProperty src;
+
+	protected BundleImageProperty()
+	{
+	}
+
+	public BundleImageProperty(@NonNull String src)
+	{
+		this(new ImageDescriptorProperty(src));
+	}
+
+	public BundleImageProperty(@NonNull ImageDescriptorProperty src)
+	{
+		this.src = src;
+	}
 
 	@Override public String getSrc()
 	{

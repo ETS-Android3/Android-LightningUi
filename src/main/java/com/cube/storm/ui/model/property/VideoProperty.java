@@ -15,6 +15,17 @@ public class VideoProperty extends Property
 	@Getter protected String locale;
 	@Getter protected ExternalLinkProperty src;
 
+	private VideoProperty()
+	{
+
+	}
+
+	public VideoProperty(String locale, String destinationSrc)
+	{
+		this.locale = locale;
+		this.src = new ExternalLinkProperty(destinationSrc);
+	}
+
 	@Override public int describeContents()
 	{
 		return 0;
