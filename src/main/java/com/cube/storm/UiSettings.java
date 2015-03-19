@@ -14,6 +14,7 @@ import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
 import com.cube.storm.ui.lib.resolver.AppResolver;
+import com.cube.storm.ui.lib.spec.DividerSpec;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
@@ -135,6 +136,11 @@ public class UiSettings
 	@Getter @Setter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
 
 	/**
+	 * Default divider spec to use in {@link com.cube.storm.ui.controller.adapter.StormListAdapter}
+	 */
+	@Getter @Setter private DividerSpec dividerSpec;
+
+	/**
 	 * Sets the app model of the content
 	 *
 	 * @param app The new app model
@@ -195,6 +201,12 @@ public class UiSettings
 			registerUriResolver("app", new AppResolver(this.context));
 
 			viewBuilder(new ViewBuilder(){});
+		}
+
+		public Builder dividerSpec(DividerSpec spec)
+		{
+			construct.dividerSpec = spec;
+			return this;
 		}
 
 		/**
