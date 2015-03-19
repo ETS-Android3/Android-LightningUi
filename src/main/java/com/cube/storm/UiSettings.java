@@ -19,7 +19,6 @@ import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
-import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
@@ -187,7 +186,6 @@ public class UiSettings
 			registerType(Page.class, baseProcessor);
 			registerType(ListItem.class, baseProcessor);
 			registerType(CollectionItem.class, baseProcessor);
-			registerType(ImageProperty.class, baseProcessor);
 			registerType(LinkProperty.class, baseProcessor);
 
 			registerUriResolver("file", new FileResolver());
