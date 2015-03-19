@@ -6,7 +6,7 @@ import com.cube.storm.ui.model.Model;
 
 import lombok.Getter;
 
-public abstract class ImageProperty extends Property
+public class ImageProperty extends Property
 {
 	@Getter protected DestinationLinkProperty src;
 	@Getter protected Dimensions dimensions;
