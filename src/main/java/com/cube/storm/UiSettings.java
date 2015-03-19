@@ -15,6 +15,7 @@ import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
 import com.cube.storm.ui.lib.resolver.AppResolver;
 import com.cube.storm.ui.lib.spec.DividerSpec;
+import com.cube.storm.ui.lib.spec.ListDividerSpec;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
@@ -201,6 +202,7 @@ public class UiSettings
 			registerUriResolver("app", new AppResolver(this.context));
 
 			viewBuilder(new ViewBuilder(){});
+			dividerSpec(new ListDividerSpec());
 		}
 
 		public Builder dividerSpec(DividerSpec spec)
