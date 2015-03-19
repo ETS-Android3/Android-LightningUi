@@ -6,13 +6,13 @@
 	android:layout_height="wrap_content"
 	android:padding="4dp"
 >
-	<ImageView
+	<com.cube.storm.ui.view.ImageView
 		android:layout_width="72dp"
 		android:layout_height="72dp"
 		android:id="@+id/icon"
 	/>
 
-	<TextView
+	<com.cube.storm.ui.view.TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/overlay"

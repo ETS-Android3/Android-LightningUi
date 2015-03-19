@@ -1,20 +1,14 @@
 package com.cube.storm.ui.view.holder.list;
 
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.AnimatedImageListItem;
+import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Animated image list item shows a series of items in turn. This is done by creating an asynchronous
@@ -34,7 +28,6 @@ public class AnimatedImageListItemViewHolder extends ViewHolder<AnimatedImageLis
 {
 	public static class Factory extends ViewHolderFactory
 	{
-
 		@Override public AnimatedImageListItemViewHolder createViewHolder(ViewGroup parent)
 		{
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.animated_image_list_item_view, parent, false);
@@ -42,13 +35,8 @@ public class AnimatedImageListItemViewHolder extends ViewHolder<AnimatedImageLis
 		}
 	}
 
-	private static final int MSG_UPDATE = 1;
-
 	private ImageView image;
-	private AnimatedImageListItem model; //This is bad mmkay, controllers will come with the recycler view
-	private int currentIndex = 0;
-	private Timer timer;
-	private Handler handler;
+	private AnimatedImageListItem model;
 
 	public AnimatedImageListItemViewHolder(View view)
 	{
@@ -58,64 +46,12 @@ public class AnimatedImageListItemViewHolder extends ViewHolder<AnimatedImageLis
 
 	@Override public void populateView(AnimatedImageListItem model)
 	{
-		if (this.model == null)
+		// Only restart the animation if it is from a different model
+		if (this.model != model)
 		{
-			handler = new Handler()
-			{
-				@Override public void handleMessage(Message msg)
-				{
-					if (msg.what == MSG_UPDATE)
-					{
-						updateView();
-					}
-				}
-			};
 			this.model = model;
-			currentIndex = 0;
-
-			updateView();
+			image.populate(model.getImages());
 		}
 	}
 
-	private void updateView()
-	{
-		if (model.getImages() != null)
-		{
-			if (currentIndex >= model.getImages().size())
-			{
-				currentIndex = 0;
-			}
-
-			ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
-
-			currentIndex++;
-			if (currentIndex >= model.getImages().size())
-			{
-				currentIndex = 0;
-			}
-			getTimer().schedule(new TimerTask()
-			{
-				@Override public void run()
-				{
-					handler.sendEmptyMessage(MSG_UPDATE);
-				}
-			}, model.getImages().get(currentIndex).getDelay());
-		}
-	}
-
-	protected Timer getTimer()
-	{
-		if (timer == null)
-		{
-			if (image.getTag() != null && image.getTag() instanceof Timer)
-			{
-				timer = (Timer)image.getTag();
-			}
-			else
-			{
-				timer = new Timer("Animated Image List Item timer");
-			}
-		}
-		return timer;
-	}
 }

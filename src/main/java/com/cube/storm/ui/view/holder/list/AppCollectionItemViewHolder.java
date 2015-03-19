@@ -2,7 +2,6 @@ package com.cube.storm.ui.view.holder.list;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.cube.storm.UiSettings;
@@ -20,7 +19,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Alan Le Fournis
  * @project Storm
  */
-public class AppCollectionItemViewHolder extends ViewHolder<AppCollectionItem> implements OnClickListener
+public class AppCollectionItemViewHolder extends ViewHolder<AppCollectionItem> implements View.OnClickListener
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -51,11 +50,12 @@ public class AppCollectionItemViewHolder extends ViewHolder<AppCollectionItem> i
 		link = model.getLink();
 	}
 
-	@Override public void onClick(View v)
+	@Override public void onClick(View view)
 	{
 		if (link != null)
 		{
-			UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
+			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), link);
 		}
 	}
+
 }

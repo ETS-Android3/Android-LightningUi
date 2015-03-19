@@ -1,24 +1,15 @@
 package com.cube.storm.ui.view.holder.list;
 
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.SpotlightImageListItem;
+import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.TextView;
-import com.cube.storm.ui.view.ViewClickable;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Holder for populating the Spotlight image at the top of a list view.
@@ -34,7 +25,7 @@ import java.util.TimerTask;
  * @author Matt Allen
  * @project Storm
  */
-public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
+public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -45,98 +36,24 @@ public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageL
 		}
 	}
 
-	private static final int MSG_UPDATE = 100;
 	private ImageView image;
 	private TextView text;
-
-	private Timer timer;
-	private Handler handler;
 	private SpotlightImageListItem model;
-	private int currentIndex = 0;
 
 	public SpotlightImageListItemViewHolder(View view)
 	{
 		super(view);
 		image = (ImageView)view.findViewById(R.id.image_view);
-		image.setTag(getTimer());
 		text = (TextView)view.findViewById(R.id.text_ticker);
 	}
 
 	@Override public void populateView(SpotlightImageListItem model)
 	{
-		if (this.model == null)
+		// Only restart the animation if it is from a different model
+		if (this.model != model)
 		{
-			currentIndex = 0;
-
 			this.model = model;
-
-			handler = new Handler()
-			{
-				@Override public void handleMessage(Message msg)
-				{
-					if (msg.what == MSG_UPDATE)
-					{
-						updateView();
-					}
-				}
-			};
-
-			updateView();
-		}
-	}
-
-	private void updateView()
-	{
-		if (model.getImages() != null)
-		{
-			if (currentIndex >= model.getImages().size())
-			{
-				currentIndex = 0;
-			}
-
-			ImageLoader.getInstance().displayImage(model.getImages().get(currentIndex).getSrc(), image);
-
-			text.populate(model.getImages().get(currentIndex).getText());
-
-			currentIndex++;
-			if (currentIndex >= model.getImages().size())
-			{
-				currentIndex = 0;
-			}
-
-			timer.schedule(new TimerTask()
-			{
-				@Override public void run()
-				{
-					handler.sendEmptyMessage(MSG_UPDATE);
-				}
-			}, model.getImages().get(currentIndex).getDelay());
-		}
-	}
-
-	protected Timer getTimer()
-	{
-		if (timer == null)
-		{
-			if (image.getTag() != null && image.getTag() instanceof Timer)
-			{
-				timer = (Timer)image.getTag();
-			}
-			else
-			{
-				timer = new Timer("Spotlight timer");
-			}
-		}
-
-		return timer;
-	}
-
-	@Override public void onClick(@NonNull SpotlightImageListItem model, @NonNull View view)
-	{
-		// TODO Redo this with a standard OnClickListener interface
-		if (model.getImages() != null && model.getImages().get(currentIndex).getLink() != null)
-		{
-			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), model.getImages().get(currentIndex).getLink());
+			image.populate(model.getImages(), text);
 		}
 	}
 }
