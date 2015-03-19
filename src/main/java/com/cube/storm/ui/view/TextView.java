@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,10 +16,8 @@ import com.cube.storm.ui.model.property.TextProperty;
  * @author Callum Taylor
  * @project Storm
  */
-public class TextView extends android.widget.TextView implements View.OnClickListener
+public class TextView extends android.widget.TextView
 {
-	private LinkProperty linkProperty = null;
-
 	public TextView(Context context)
 	{
 		super(context);
@@ -44,7 +43,7 @@ public class TextView extends android.widget.TextView implements View.OnClickLis
 		populate(text, null);
 	}
 
-	public void populate(TextProperty text, LinkProperty link)
+	public void populate(@Nullable TextProperty text, @Nullable final LinkProperty link)
 	{
 		this.setVisibility(View.GONE);
 
@@ -53,18 +52,21 @@ public class TextView extends android.widget.TextView implements View.OnClickLis
 			String content = UiSettings.getInstance().getTextProcessor().process(text.getContent());
 			if (!TextUtils.isEmpty(content))
 			{
-				linkProperty = link;
+				// TODO: Don't overwrite user's custom clickListener
+				this.setOnClickListener(new OnClickListener()
+				{
+					@Override public void onClick(View v)
+					{
+						if (link != null)
+						{
+							UiSettings.getInstance().getLinkHandler().handleLink(getContext(), link);
+						}
+					}
+				});
+
 				this.setText(content);
 				this.setVisibility(View.VISIBLE);
 			}
-		}
-	}
-
-	@Override public void onClick(View view)
-	{
-		if (linkProperty != null)
-		{
-			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), linkProperty);
 		}
 	}
 }
