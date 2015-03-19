@@ -108,7 +108,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 
 					if (divider != null)
 					{
-						addItem(index + (offset++), divider);
+						addItem(index + (++offset), divider);
 					}
 				}
 			}
