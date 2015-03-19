@@ -18,7 +18,7 @@
 		android:orientation="vertical"
 		android:layout_gravity="center"
 	>
-		<TextView
+		<com.cube.storm.ui.view.TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/title"
@@ -28,7 +28,7 @@
 			android:gravity="center"
 		/>
 
-		<TextView
+		<com.cube.storm.ui.view.TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/description"
