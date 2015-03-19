@@ -6,7 +6,7 @@ import android.os.Parcel;
  * A link property which deals with opening an internal Uri
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class InternalLinkProperty extends DestinationLinkProperty
 {

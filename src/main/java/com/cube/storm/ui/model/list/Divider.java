@@ -6,7 +6,7 @@ import android.os.Parcel;
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project Storm
+ * @project LightningUi
  */
 public class Divider extends ListItem
 {

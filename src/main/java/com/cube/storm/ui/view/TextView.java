@@ -12,7 +12,7 @@ import com.cube.storm.ui.model.property.TextProperty;
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project Storm
+ * @Project LightningUi
  */
 public class TextView extends android.widget.TextView
 {

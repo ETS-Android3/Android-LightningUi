@@ -28,7 +28,7 @@ import java.util.TimerTask;
  * has returned.
  *
  * @author Luke Reed
- * @project Storm
+ * @project LightningUi
  */
 public class AnimatedImageListItemViewHolder extends ViewHolder<AnimatedImageListItem>
 {

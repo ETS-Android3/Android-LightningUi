@@ -6,7 +6,7 @@ import lombok.Getter;
  * Base abstract link property class. This class is never instantiated directly
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class LinkProperty extends Property
 {

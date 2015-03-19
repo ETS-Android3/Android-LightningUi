@@ -20,7 +20,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * View holder for {@link com.cube.storm.ui.model.list.CheckableListItem} in the adapter
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class CheckableListItemViewHolder extends ViewHolder<CheckableListItem> implements OnClickListener
 {

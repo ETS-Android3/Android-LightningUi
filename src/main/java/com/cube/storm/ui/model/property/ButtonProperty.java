@@ -8,7 +8,7 @@ import lombok.Getter;
  * button property class.
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class ButtonProperty extends Property
 {

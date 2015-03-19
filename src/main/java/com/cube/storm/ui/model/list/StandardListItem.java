@@ -11,7 +11,7 @@ import lombok.Getter;
  * A view model with an image property
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class StandardListItem extends DescriptionListItem
 {

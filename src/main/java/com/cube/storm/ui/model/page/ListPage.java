@@ -12,7 +12,7 @@ import lombok.Getter;
  * Basic list page model which has an array of {@link com.cube.storm.ui.model.list.ListItem} models
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class ListPage extends Page
 {

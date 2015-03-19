@@ -10,8 +10,7 @@ import lombok.Getter;
  * // TODO: Add class description
  *
  * @author Matt Allen
- * @documentation // TODO Reference flow doc
- * @project Storm
+ * @project LightningUi
  */
 public class SpotlightImageListItem extends ListItem
 {

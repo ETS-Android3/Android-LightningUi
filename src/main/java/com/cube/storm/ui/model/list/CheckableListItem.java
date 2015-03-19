@@ -11,7 +11,7 @@ import lombok.Getter;
  *
  * @author Alan Le Fournis
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class CheckableListItem extends DescriptionListItem
 {

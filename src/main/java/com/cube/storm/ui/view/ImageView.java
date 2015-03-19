@@ -15,7 +15,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project Storm
+ * @Project LightningUi
  */
 public class ImageView extends android.widget.ImageView
 {

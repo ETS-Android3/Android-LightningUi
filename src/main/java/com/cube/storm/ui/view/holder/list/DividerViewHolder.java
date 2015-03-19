@@ -13,7 +13,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * Simple view holder for divider
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class DividerViewHolder extends ViewHolder<Divider>
 {

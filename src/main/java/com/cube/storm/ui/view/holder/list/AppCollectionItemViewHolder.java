@@ -18,7 +18,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * // TODO: Add class description
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class AppCollectionItemViewHolder extends ViewHolder<AppCollectionItem> implements OnClickListener
 {

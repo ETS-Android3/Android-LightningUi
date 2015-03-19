@@ -6,7 +6,7 @@ import com.cube.storm.ui.model.Model;
  * // TODO: Add class description
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public abstract class CollectionItem extends Model
 {

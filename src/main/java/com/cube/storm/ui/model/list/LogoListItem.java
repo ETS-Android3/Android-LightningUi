@@ -6,7 +6,7 @@ import android.os.Parcel;
  * A view model with a link and a text property
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class LogoListItem extends ImageListItem
 {

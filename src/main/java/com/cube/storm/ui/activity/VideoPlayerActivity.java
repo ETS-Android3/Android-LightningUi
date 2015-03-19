@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * of the model.
  *
  * @author Alan Le Fournis
- * @project StormUi
+ * @project LightningUi
  */
 public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, ExoMediaPlayer.Listener
 {

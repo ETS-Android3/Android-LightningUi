@@ -8,7 +8,7 @@ import lombok.Getter;
  * A view model
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class OrderedListItem extends DescriptionListItem
 {

@@ -32,7 +32,7 @@ import java.util.TimerTask;
  * managed asynchronously.
  *
  * @author Matt Allen
- * @project Storm
+ * @Project LightningUi
  */
 public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
 {

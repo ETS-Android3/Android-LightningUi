@@ -15,7 +15,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * View holder for {@link com.cube.storm.ui.model.list.ImageListItem} in the adapter
  *
  * @author Alan Le Fournis
- * @project StormUI
+ * @project LightningUi
  */
 public class ImageListItemViewHolder extends ViewHolder<ImageListItem>
 {

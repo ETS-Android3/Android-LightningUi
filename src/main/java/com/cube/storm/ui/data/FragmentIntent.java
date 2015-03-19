@@ -13,7 +13,7 @@ import lombok.Data;
  * The class is used by Storm activities when determining what fragment to use for a Page.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 @Data
 public class FragmentIntent implements Parcelable

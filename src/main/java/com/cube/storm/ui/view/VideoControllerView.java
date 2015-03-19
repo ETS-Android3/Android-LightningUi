@@ -29,7 +29,7 @@ import java.util.Locale;
  * // TODO: Add class description
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @Project LightningUi
  */
 public class VideoControllerView extends FrameLayout
 {

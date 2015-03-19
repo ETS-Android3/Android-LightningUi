@@ -11,7 +11,7 @@ import lombok.Getter;
  * Abstract page class
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class Page extends Model
 {
