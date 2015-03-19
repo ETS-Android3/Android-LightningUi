@@ -93,9 +93,6 @@ public enum View
 	/**
 	 * Properties
 	 */
-	Image(com.cube.storm.ui.model.property.BundleImageProperty.class, null),
-	NativeImage(com.cube.storm.ui.model.property.NativeImageProperty.class, null),
-	Icon(com.cube.storm.ui.model.property.BundleImageProperty.class, null),
 	AnimationImage(com.cube.storm.ui.model.property.AnimationImageProperty.class, null),
 	SpotlightImage(com.cube.storm.ui.model.property.SpotlightImageProperty.class, null),
 	DestinationLink(com.cube.storm.ui.model.property.DestinationLinkProperty.class, null),
