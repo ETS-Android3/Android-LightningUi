@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
 
 /**
@@ -14,8 +15,10 @@ import com.cube.storm.ui.model.property.TextProperty;
  * @author Callum Taylor
  * @project Storm
  */
-public class TextView extends android.widget.TextView
+public class TextView extends android.widget.TextView implements View.OnClickListener
 {
+	private LinkProperty linkProperty = null;
+
 	public TextView(Context context)
 	{
 		super(context);
@@ -38,6 +41,11 @@ public class TextView extends android.widget.TextView
 
 	public void populate(TextProperty text)
 	{
+		populate(text, null);
+	}
+
+	public void populate(TextProperty text, LinkProperty link)
+	{
 		this.setVisibility(View.GONE);
 
 		if (text != null)
@@ -45,9 +53,18 @@ public class TextView extends android.widget.TextView
 			String content = UiSettings.getInstance().getTextProcessor().process(text.getContent());
 			if (!TextUtils.isEmpty(content))
 			{
+				linkProperty = link;
 				this.setText(content);
 				this.setVisibility(View.VISIBLE);
 			}
+		}
+	}
+
+	@Override public void onClick(View view)
+	{
+		if (linkProperty != null)
+		{
+			UiSettings.getInstance().getLinkHandler().handleLink(view.getContext(), linkProperty);
 		}
 	}
 }
