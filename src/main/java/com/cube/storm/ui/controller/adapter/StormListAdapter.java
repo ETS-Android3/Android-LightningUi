@@ -7,12 +7,13 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.lib.spec.DividerSpec;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.grid.GridItem;
-import com.cube.storm.ui.model.list.Divider;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.List.ListFooter;
 import com.cube.storm.ui.model.list.List.ListHeader;
+import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
@@ -23,11 +24,9 @@ import java.util.Collection;
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
  * the benefit of view recycling which makes the content smooth to scroll.
- *
+ * <p />
  * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link ViewHolder} counter-class.
- *
- * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link ViewHolder} counter-class.
- *
+ * <p />
  * <b>Usage</b>
  * <p/>
  * <b>Problems</b>
@@ -58,13 +57,25 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	 */
 	private ArrayList<Class<? extends ViewHolderFactory>> itemTypes = new ArrayList<>();
 
+	/**
+	 * Divider spec to use when laying out the children
+	 */
+	private DividerSpec dividerSpec;
+
 	public StormListAdapter()
 	{
+		dividerSpec = UiSettings.getInstance().getDividerSpec();
 	}
 
 	public StormListAdapter(Collection<? extends Model> items)
 	{
+		dividerSpec = UiSettings.getInstance().getDividerSpec();
 		setItems(items);
+	}
+
+	public void setDividerSpec(DividerSpec spec)
+	{
+		this.dividerSpec = dividerSpec;
 	}
 
 	/**
@@ -82,6 +93,24 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 			for (Model item : items)
 			{
 				addItem(item);
+			}
+
+			// Add dividers
+			if (dividerSpec != null)
+			{
+				ArrayList<Model> tmp = new ArrayList<>(this.items);
+
+				int count = tmp.size();
+				int offset = 0;
+				for (int index = 0; index < count; index++)
+				{
+					ListItem divider = dividerSpec.shouldAddDivider(index, tmp);
+
+					if (divider != null)
+					{
+						addItem(index + (offset++), divider);
+					}
+				}
 			}
 		}
 		else
@@ -111,15 +140,12 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (item instanceof List)
 		{
-			boolean addDivider = false;
-
 			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader().getContent())))
 			{
 				ListHeader header = new ListHeader();
 				header.setHeader(((List)item).getHeader());
 
 				addItem(header);
-				addDivider = true;
 			}
 
 			if (((List)item).getChildren() != null)
@@ -139,12 +165,6 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 				footer.setFooter(((List)item).getFooter());
 
 				addItem(footer);
-				addDivider = true;
-			}
-
-			if (addDivider)
-			{
-				addItem(new Divider());
 			}
 		}
 		else
