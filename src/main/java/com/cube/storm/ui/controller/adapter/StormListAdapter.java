@@ -73,7 +73,12 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 		setItems(items);
 	}
 
-	public void setDividerSpec(DividerSpec spec)
+	/**
+	 * Sets the divider spec for the current adapter. Defaults to {@link com.cube.storm.UiSettings#getDividerSpec()}
+	 *
+	 * @param spec The new divider spec to use
+	 */
+	public void setDividerSpec(@Nullable DividerSpec spec)
 	{
 		this.dividerSpec = dividerSpec;
 	}

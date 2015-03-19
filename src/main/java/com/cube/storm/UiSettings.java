@@ -205,6 +205,13 @@ public class UiSettings
 			dividerSpec(new ListDividerSpec());
 		}
 
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.spec.DividerSpec} for the list adapter to use when layout out its children
+		 *
+		 * @param spec The new divider spec to use by default
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
 		public Builder dividerSpec(DividerSpec spec)
 		{
 			construct.dividerSpec = spec;

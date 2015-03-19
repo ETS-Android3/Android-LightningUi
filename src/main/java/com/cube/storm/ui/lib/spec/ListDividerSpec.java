@@ -1,5 +1,7 @@
 package com.cube.storm.ui.lib.spec;
 
+import android.support.annotation.Nullable;
+
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.Divider;
 import com.cube.storm.ui.model.list.ListItem;
@@ -15,6 +17,7 @@ import java.util.List;
  */
 public class ListDividerSpec implements DividerSpec
 {
+	@Nullable
 	@Override public ListItem shouldAddDivider(int position, List<Model> items)
 	{
 		if (position > 0 && position < items.size() - 1)
