@@ -3,7 +3,6 @@ package com.cube.storm.ui.view;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import java.lang.reflect.Field;
 
