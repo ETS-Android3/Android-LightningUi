@@ -70,6 +70,18 @@ public class ImageHelper
 	@Nullable
 	public static String getImageSrc(@NonNull List<? extends ImageProperty> images, int width, int height)
 	{
+		return getImageProperty(images, width, height).getSrc().getDestination();
+	}
+
+	@Nullable
+	public static ImageProperty getImageProperty(@NonNull List<? extends ImageProperty> images)
+	{
+		return getImageProperty(images, 0, 0);
+	}
+
+	@Nullable
+	public static ImageProperty getImageProperty(@NonNull List<? extends ImageProperty> images, int width, int height)
+	{
 		Collections.sort(images, new ImagePropertyComparator());
 
 		if (images.size() == 0)
@@ -81,14 +93,14 @@ public class ImageHelper
 		{
 			if (UiSettings.getInstance().getContentSize() == ContentSize.SMALL)
 			{
-				return images.get(0).getSrc().getDestination();
+				return images.get(0);
 			}
 			else if (UiSettings.getInstance().getContentSize() == ContentSize.LARGE)
 			{
-				return images.get(images.size() - 1).getSrc().getDestination();
+				return images.get(images.size() - 1);
 			}
 
-			return images.get((int)Math.max(Math.ceil((double)images.size() / 2d), images.size() - 1)).getSrc().getDestination();
+			return images.get((int)Math.max(Math.ceil((double)images.size() / 2d), images.size() - 1));
 		}
 		else
 		{
@@ -109,7 +121,7 @@ public class ImageHelper
 				}
 			}
 
-			return images.get(closest).getSrc().getDestination();
+			return images.get(closest);
 		}
 	}
 
