@@ -1,6 +1,7 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.ui.view.View;
@@ -17,11 +18,11 @@ public class TextListItem extends ListItem
 {
 	@Getter protected TextProperty description;
 
-	public TextListItem()
+	protected TextListItem()
 	{
 	}
 
-	public TextListItem(String description)
+	public TextListItem(@NonNull String description)
 	{
 		this.description = new TextProperty(description);
 		this.className = View.TextListItem.name();

@@ -1,8 +1,12 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
+
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.Getter;
 
@@ -14,7 +18,21 @@ import lombok.Getter;
  */
 public class SpotlightImageListItem extends ListItem
 {
-	@Getter protected java.util.List<SpotlightImageProperty> images;
+	@Getter protected List<SpotlightImageProperty> images;
+
+	protected SpotlightImageListItem()
+	{
+	}
+
+	public SpotlightImageListItem(@NonNull SpotlightImageProperty... images)
+	{
+		this(Arrays.asList(images));
+	}
+
+	public SpotlightImageListItem(@NonNull List<SpotlightImageProperty> images)
+	{
+		this.images = images;
+	}
 
 	@Override public int describeContents()
 	{

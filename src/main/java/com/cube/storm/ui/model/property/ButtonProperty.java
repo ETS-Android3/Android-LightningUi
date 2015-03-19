@@ -21,10 +21,10 @@ public class ButtonProperty extends Property
 
 	}
 
-	public ButtonProperty(@NonNull String title, @NonNull String link)
+	public ButtonProperty(@NonNull String title, @NonNull LinkProperty link)
 	{
 		this.title = new TextProperty(title);
-		this.link = new DestinationLinkProperty(title, link);
+		this.link = link;
 	}
 
 	@Override public int describeContents()

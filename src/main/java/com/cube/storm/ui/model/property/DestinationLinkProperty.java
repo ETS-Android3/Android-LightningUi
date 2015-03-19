@@ -23,12 +23,12 @@ public class DestinationLinkProperty extends LinkProperty
 
 	}
 
-	public DestinationLinkProperty(@NonNull String destination)
+	protected DestinationLinkProperty(@NonNull String destination)
 	{
 		this(null, destination);
 	}
 
-	public DestinationLinkProperty(@Nullable String title, @NonNull String destination)
+	protected DestinationLinkProperty(@Nullable String title, @NonNull String destination)
 	{
 		super(title);
 		this.destination = destination;

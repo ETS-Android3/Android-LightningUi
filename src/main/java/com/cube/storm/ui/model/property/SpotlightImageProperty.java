@@ -22,22 +22,12 @@ public class SpotlightImageProperty extends AnimationImageProperty
 
 	public SpotlightImageProperty(@NonNull String src, long delay, @NonNull String text)
 	{
-		this(src, delay, text, (LinkProperty)null);
-	}
-
-	public SpotlightImageProperty(@NonNull String src, long delay, @NonNull String text, @Nullable String linkDestination)
-	{
-		this(new ImageDescriptorProperty(src), delay, text, linkDestination);
+		this(src, delay, text, null);
 	}
 
 	public SpotlightImageProperty(@NonNull String src, long delay, @NonNull String text, @Nullable LinkProperty link)
 	{
 		this(new ImageDescriptorProperty(src), delay, text, link);
-	}
-
-	public SpotlightImageProperty(@NonNull ImageDescriptorProperty src, long delay, @NonNull String text, @Nullable String linkDestination)
-	{
-		this(src, delay, text, linkDestination != null ? new DestinationLinkProperty(linkDestination) : null);
 	}
 
 	public SpotlightImageProperty(@NonNull ImageDescriptorProperty src, long delay, @NonNull String text, @Nullable LinkProperty link)

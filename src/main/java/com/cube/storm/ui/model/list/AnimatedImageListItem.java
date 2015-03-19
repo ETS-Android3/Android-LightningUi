@@ -1,8 +1,13 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import com.cube.storm.ui.model.property.AnimationImageProperty;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.Getter;
 
@@ -14,7 +19,31 @@ import lombok.Getter;
  */
 public class AnimatedImageListItem extends ListItem
 {
-	@Getter private java.util.List<AnimationImageProperty> images;
+	@Getter private List<AnimationImageProperty> images;
+
+	protected AnimatedImageListItem()
+	{
+
+	}
+
+	public AnimatedImageListItem(long delay, @NonNull String... images)
+	{
+		this.images = new ArrayList<>(images.length);
+		for (String imageSrc: images)
+		{
+			this.images.add(new AnimationImageProperty(imageSrc, delay));
+		}
+	}
+
+	public AnimatedImageListItem(@NonNull AnimationImageProperty... images)
+	{
+		this(Arrays.asList(images));
+	}
+
+	public AnimatedImageListItem(@NonNull List<AnimationImageProperty> images)
+	{
+		this.images = images;
+	}
 
 	@Override public int describeContents()
 	{
