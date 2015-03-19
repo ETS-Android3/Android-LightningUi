@@ -6,14 +6,14 @@
 	android:layout_height="192dp"
 	android:id="@+id/spotlight_container"
 >
-	<ImageView
+	<com.cube.storm.ui.view.ImageView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:id="@+id/image_view"
 		android:scaleType="centerCrop"
 	/>
 
-	<TextView
+	<com.cube.storm.ui.view.TextView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:padding="8dp"
