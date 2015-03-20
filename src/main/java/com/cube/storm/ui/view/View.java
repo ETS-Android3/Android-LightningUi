@@ -60,7 +60,7 @@ public enum View
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemHolder.class),
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemHolder.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemHolder.class),
-	SpotlightImageListItem(SpotlightListItem.class, SpotlightImageListItemHolder.class),
+	SpotlightListItem(SpotlightListItem.class, SpotlightImageListItemHolder.class),
 	AnimationListItem(com.cube.storm.ui.model.list.AnimationListItem.class, AnimationListItemHolder.class),
 	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemHolder.class),
 
