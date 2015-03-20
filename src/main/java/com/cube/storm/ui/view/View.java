@@ -5,7 +5,7 @@ import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.cube.storm.ui.view.holder.grid.GridItemHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemHolder;
 import com.cube.storm.ui.view.holder.grid.StandardGridItemHolder;
-import com.cube.storm.ui.view.holder.list.AnimatedImageListItemHolder;
+import com.cube.storm.ui.view.holder.list.AnimationListItemHolder;
 import com.cube.storm.ui.view.holder.list.AppCollectionItemHolder;
 import com.cube.storm.ui.view.holder.list.ButtonListItemHolder;
 import com.cube.storm.ui.view.holder.list.CheckableListItemHolder;
@@ -60,7 +60,7 @@ public enum View
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemHolder.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemHolder.class),
 	SpotlightImageListItem(com.cube.storm.ui.model.list.SpotlightImageListItem.class, SpotlightImageListItemHolder.class),
-	AnimatedImageListItem(com.cube.storm.ui.model.list.AnimatedImageListItem.class, AnimatedImageListItemHolder.class),
+	AnimationListItem(com.cube.storm.ui.model.list.AnimationListItem.class, AnimationListItemHolder.class),
 	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemHolder.class),
 
 	/**
@@ -93,8 +93,6 @@ public enum View
 	/**
 	 * Properties
 	 */
-	AnimationImage(com.cube.storm.ui.model.property.AnimationImageProperty.class, null),
-	SpotlightImage(com.cube.storm.ui.model.property.SpotlightImageProperty.class, null),
 	DestinationLink(com.cube.storm.ui.model.property.DestinationLinkProperty.class, null),
 	InternalLink(com.cube.storm.ui.model.property.InternalLinkProperty.class, null),
 	ExternalLink(com.cube.storm.ui.model.property.ExternalLinkProperty.class, null),

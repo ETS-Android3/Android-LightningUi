@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.helper.ImageHelper;
-import com.cube.storm.ui.model.list.AnimatedImageListItem;
+import com.cube.storm.ui.model.list.AnimationListItem;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,33 +31,33 @@ import java.util.TimerTask;
  * @author Luke Reed
  * @project LightningUi
  */
-public class AnimatedImageListItemHolder extends ViewHolderController
+public class AnimationListItemHolder extends ViewHolderController
 {
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.animated_image_list_item_view, parent, false);
-		mViewHolder = new AnimatedImageListItemViewHolder(view);
+		mViewHolder = new AnimationListItemViewHolder(view);
 
 		return mViewHolder;
 	}
 
-	private class AnimatedImageListItemViewHolder extends ViewHolder<AnimatedImageListItem>
+	private class AnimationListItemViewHolder extends ViewHolder<AnimationListItem>
 	{
 		private static final int MSG_UPDATE = 1;
 
 		private ImageView image;
-		private AnimatedImageListItem model; //This is bad mmkay, controllers will come with the recycler view
+		private AnimationListItem model; //This is bad mmkay, controllers will come with the recycler view
 		private int currentIndex = 0;
 		private Timer timer;
 		private Handler handler;
 
-		public AnimatedImageListItemViewHolder(View view)
+		public AnimationListItemViewHolder(View view)
 		{
 			super(view);
 			image = (ImageView)view.findViewById(R.id.image_view);
 		}
 
-		@Override public void populateView(AnimatedImageListItem model)
+		@Override public void populateView(AnimationListItem model)
 		{
 			if (this.model == null)
 			{

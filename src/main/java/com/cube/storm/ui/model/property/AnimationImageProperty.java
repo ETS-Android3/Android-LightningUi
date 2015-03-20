@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import lombok.Getter;
 
 /**
- * Animation frame wrapper used in {@link com.cube.storm.ui.model.list.AnimatedImageListItem}
+ * Animation frame wrapper used in {@link com.cube.storm.ui.model.list.AnimationListItem}
  *
  * @author Callum Taylor
  * @project LightningUi

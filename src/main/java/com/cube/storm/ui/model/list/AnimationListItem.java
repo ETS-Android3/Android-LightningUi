@@ -12,7 +12,7 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
-public class AnimatedImageListItem extends ListItem
+public class AnimationListItem extends ListItem
 {
 	@Getter protected AnimationImageProperty animation;
 
