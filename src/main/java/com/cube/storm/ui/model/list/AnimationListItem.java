@@ -9,12 +9,12 @@ import lombok.Getter;
 /**
  * Stored properties for an animated list item
  *
- * @author Luke Reed
- * @project Storm
+ * @author Callum Taylor
+ * @project LightningUi
  */
-public class AnimatedImageListItem extends ListItem
+public class AnimationListItem extends ListItem
 {
-	@Getter private java.util.List<java.util.List<AnimationImageProperty>> images;
+	@Getter protected AnimationImageProperty animation;
 
 	@Override public int describeContents()
 	{
