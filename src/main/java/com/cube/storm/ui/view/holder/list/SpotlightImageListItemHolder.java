@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.model.list.SpotlightImageListItem;
+import com.cube.storm.ui.model.list.SpotlightListItem;
 import com.cube.storm.ui.view.ViewClickable;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderController;
@@ -42,7 +42,7 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 		return mViewHolder;
 	}
 
-	public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
+	public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightListItem> implements ViewClickable<SpotlightListItem>
 	{
 		private static final int MSG_UPDATE = 100;
 		private ImageView image;
@@ -50,7 +50,7 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 
 		private Timer timer;
 		private Handler handler;
-		private SpotlightImageListItem model;
+		private SpotlightListItem model;
 		private int currentIndex = 0;
 
 		public SpotlightImageListItemViewHolder(View view)
@@ -61,7 +61,7 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 			text = (TextView)view.findViewById(R.id.text_ticker);
 		}
 
-		@Override public void populateView(SpotlightImageListItem model)
+		@Override public void populateView(SpotlightListItem model)
 		{
 			if (this.model == null)
 			{
@@ -140,7 +140,7 @@ public class SpotlightImageListItemHolder extends ViewHolderController
 			return timer;
 		}
 
-		@Override public void onClick(@NonNull SpotlightImageListItem model, @NonNull View view)
+		@Override public void onClick(@NonNull SpotlightListItem model, @NonNull View view)
 		{
 			// TODO Redo this with a standard OnClickListener interface
 			if (model.getImages() != null && model.getImages().get(currentIndex).getLink() != null)

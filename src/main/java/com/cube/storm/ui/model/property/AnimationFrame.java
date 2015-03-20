@@ -17,8 +17,8 @@ import lombok.Getter;
  */
 public class AnimationFrame extends Model
 {
-	@Getter protected ArrayList<ImageProperty> image;
-	@Getter protected long delay;
+	@Getter private ArrayList<ImageProperty> image;
+	@Getter private long delay;
 
 	@Override public int describeContents()
 	{

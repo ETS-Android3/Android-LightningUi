@@ -4,18 +4,19 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 
 /**
- * // TODO: Add class description
+ * List item class that displays a series of rotating images with text overlaid on top.
  *
- * @author Matt Allen
- * @documentation // TODO Reference flow doc
- * @project Storm
+ * @author Callum Taylor
+ * @project LightningUi
  */
-public class SpotlightImageListItem extends ListItem
+public class SpotlightListItem extends ListItem
 {
-	@Getter protected java.util.List<SpotlightImageProperty> images;
+	@Getter protected ArrayList<SpotlightImageProperty> spotlights;
 
 	@Override public int describeContents()
 	{

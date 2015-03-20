@@ -14,8 +14,8 @@ import lombok.Getter;
  */
 public class AnimationImageProperty extends Property
 {
-	@Getter protected boolean looped;
-	@Getter protected ArrayList<AnimationFrame> frames;
+	@Getter private boolean looped;
+	@Getter private ArrayList<AnimationFrame> frames;
 
 	@Override public int describeContents()
 	{

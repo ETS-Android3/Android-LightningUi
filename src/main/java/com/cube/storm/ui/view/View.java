@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.list.SpotlightListItem;
 import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.cube.storm.ui.view.holder.grid.GridItemHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemHolder;
@@ -59,7 +60,7 @@ public enum View
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemHolder.class),
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemHolder.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemHolder.class),
-	SpotlightImageListItem(com.cube.storm.ui.model.list.SpotlightImageListItem.class, SpotlightImageListItemHolder.class),
+	SpotlightImageListItem(SpotlightListItem.class, SpotlightImageListItemHolder.class),
 	AnimationListItem(com.cube.storm.ui.model.list.AnimationListItem.class, AnimationListItemHolder.class),
 	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemHolder.class),
 
