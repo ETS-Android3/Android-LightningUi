@@ -10,7 +10,7 @@ import lombok.Getter;
  * A view model with a description property
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class DescriptionListItem extends TitleListItem
 {

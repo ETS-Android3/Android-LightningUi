@@ -10,7 +10,7 @@ import lombok.Getter;
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class TabbedPageDescriptor extends PageDescriptor
 {

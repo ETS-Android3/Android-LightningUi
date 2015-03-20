@@ -11,7 +11,7 @@ import net.callumtaylor.asynchttp.response.StringResponseHandler;
  * // TODO: Add class description
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @Project LightningUi
  */
 public class YouTubeHelper
 {

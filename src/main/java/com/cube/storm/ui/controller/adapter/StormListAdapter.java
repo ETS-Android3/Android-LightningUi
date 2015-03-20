@@ -1,6 +1,5 @@
 package com.cube.storm.ui.controller.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -8,15 +7,16 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.lib.spec.DividerSpec;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.grid.GridItem;
-import com.cube.storm.ui.model.list.Divider;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.List.ListFooter;
 import com.cube.storm.ui.model.list.List.ListHeader;
+import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolder;
-import com.cube.storm.ui.view.holder.ViewHolderController;
+import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,11 +24,9 @@ import java.util.Collection;
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
  * the benefit of view recycling which makes the content smooth to scroll.
- *
- * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.ViewHolder} counter-class.
- *
- * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link com.cube.storm.ui.view.holder.ViewHolder} counter-class.
- *
+ * <p />
+ * This adapter only supports {@link com.cube.storm.ui.model.Model} classes which have a defined {@link ViewHolder} counter-class.
+ * <p />
  * <b>Usage</b>
  * <p/>
  * <b>Problems</b>
@@ -39,7 +37,7 @@ import java.util.Collection;
  * that the list is rendering.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 {
@@ -49,7 +47,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	 * in this list, the models have to be traversed in order to build the 1 dimensional list for the
 	 * adapter to work correctly.
 	 */
-	private ArrayList<Model> items = new ArrayList<Model>();
+	private ArrayList<Model> items = new ArrayList<>();
 
 	/**
 	 * The different unique item types. This is used to tell the adapter how many unique views we're
@@ -57,23 +55,36 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	 * convenience, the object type in the list is a reference to the view holder class we will use
 	 * to render said view.
 	 */
-	private ArrayList<Class<? extends com.cube.storm.ui.view.holder.ViewHolderController>> itemTypes = new ArrayList<Class<? extends ViewHolderController>>();
+	private ArrayList<Class<? extends ViewHolderFactory>> itemTypes = new ArrayList<>();
 
-	private Context context;
+	/**
+	 * Divider spec to use when laying out the children
+	 */
+	private DividerSpec dividerSpec;
 
-	public StormListAdapter(Context context)
+	public StormListAdapter()
 	{
-		this.context = context;
+		dividerSpec = UiSettings.getInstance().getDividerSpec();
 	}
 
-	public StormListAdapter(Context context, Collection<? extends Model> items)
+	public StormListAdapter(Collection<? extends Model> items)
 	{
-		this.context = context;
+		dividerSpec = UiSettings.getInstance().getDividerSpec();
 		setItems(items);
 	}
 
 	/**
-	 * Sets the items in the collection. Filters out any model that does not have a defined {@link com.cube.storm.ui.view.holder.ViewHolder}
+	 * Sets the divider spec for the current adapter. Defaults to {@link com.cube.storm.UiSettings#getDividerSpec()}
+	 *
+	 * @param spec The new divider spec to use
+	 */
+	public void setDividerSpec(@Nullable DividerSpec spec)
+	{
+		this.dividerSpec = dividerSpec;
+	}
+
+	/**
+	 * Sets the items in the collection. Filters out any model that does not have a defined {@link ViewHolder}
 	 *
 	 * @param items The new items to set. Can be null to clear the list.
 	 */
@@ -81,18 +92,36 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (items != null)
 		{
-			this.items = new ArrayList<Model>(items.size());
-			this.itemTypes = new ArrayList<Class<? extends ViewHolderController>>(items.size() / 2);
+			this.items = new ArrayList<>(items.size());
+			this.itemTypes = new ArrayList<>(items.size() / 2);
 
 			for (Model item : items)
 			{
 				addItem(item);
 			}
+
+			// Add dividers
+			if (dividerSpec != null)
+			{
+				ArrayList<Model> tmp = new ArrayList<>(this.items);
+
+				int count = tmp.size();
+				int offset = 0;
+				for (int index = 0; index < count; index++)
+				{
+					ListItem divider = dividerSpec.shouldAddDivider(index, tmp);
+
+					if (divider != null)
+					{
+						addItem(index + (++offset), divider);
+					}
+				}
+			}
 		}
 		else
 		{
-			this.items = new ArrayList<Model>(0);
-			this.itemTypes = new ArrayList<Class<? extends ViewHolderController>>(0);
+			this.items = new ArrayList<>(0);
+			this.itemTypes = new ArrayList<>(0);
 		}
 	}
 
@@ -116,15 +145,12 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (item instanceof List)
 		{
-			boolean addDivider = false;
-
 			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader().getContent())))
 			{
 				ListHeader header = new ListHeader();
 				header.setHeader(((List)item).getHeader());
 
 				addItem(header);
-				addDivider = true;
 			}
 
 			if (((List)item).getChildren() != null)
@@ -144,17 +170,11 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 				footer.setFooter(((List)item).getFooter());
 
 				addItem(footer);
-				addDivider = true;
-			}
-
-			if (addDivider)
-			{
-				addItem(new Divider());
 			}
 		}
 		else
 		{
-			Class<? extends ViewHolderController> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
+			Class<? extends ViewHolderFactory> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
 
 			if (holderClass != null)
 			{
@@ -175,7 +195,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 
 	@Override public long getItemId(int position)
 	{
-		return ((Object)getItem(position)).hashCode();
+		return getItem(position).hashCode();
 	}
 
 	@Override public int getItemCount()
@@ -185,22 +205,22 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 
 	@Override public ViewHolder<?> onCreateViewHolder(ViewGroup viewGroup, int viewType)
 	{
-		ViewHolderController holder = null;
+		ViewHolder<?> holder;
 
 		try
 		{
-			holder = itemTypes.get(viewType).newInstance();
-			holder.createViewHolder(viewGroup);
+			ViewHolderFactory holderFactory = itemTypes.get(viewType).getConstructor().newInstance();
+			holder = holderFactory.createViewHolder(viewGroup);
 		}
 		catch (Exception e)
 		{
-			throw new InstantiationError("Could not instantiate a new holder" + e.getMessage());
+			throw new IllegalStateException("Could not instantiate a new holder" + e.getMessage(), e);
 		}
 
-		return (ViewHolder<?>)holder.getViewHolder();
+		return holder;
 	}
 
-	@Override public void onBindViewHolder(com.cube.storm.ui.view.holder.ViewHolder viewHolder, int position)
+	@Override public void onBindViewHolder(ViewHolder viewHolder, int position)
 	{
 		try
 		{

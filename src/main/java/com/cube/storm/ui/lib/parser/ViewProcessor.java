@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
  * View processor class used to process a json object into a model
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class ViewProcessor<T> extends GsonProcessor<T>
 {

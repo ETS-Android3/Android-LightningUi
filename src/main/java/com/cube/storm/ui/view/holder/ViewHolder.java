@@ -7,7 +7,7 @@ import android.view.View;
  * // TODO: Add class description
  *
  * @author Matt Allen
- * @project Storm
+ * @Project LightningUi
  */
 public abstract class ViewHolder<T> extends RecyclerView.ViewHolder
 {

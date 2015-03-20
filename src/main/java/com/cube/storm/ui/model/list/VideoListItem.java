@@ -12,7 +12,7 @@ import lombok.Getter;
  * A view model with a video collection property
  *
  * @author Alan Le Fournis
- * @project StormUI
+ * @project LightningUi
  */
 public class VideoListItem extends ImageListItem
 {

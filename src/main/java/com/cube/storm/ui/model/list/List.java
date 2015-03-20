@@ -17,7 +17,7 @@ import lombok.Setter;
  * the model is processed into 2 separate models, {@link com.cube.storm.ui.model.list.List.ListHeader} and {@link com.cube.storm.ui.model.list.List.ListFooter}
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class List extends ListItem
 {

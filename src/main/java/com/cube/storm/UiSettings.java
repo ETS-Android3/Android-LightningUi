@@ -14,6 +14,8 @@ import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
 import com.cube.storm.ui.lib.resolver.AppResolver;
+import com.cube.storm.ui.lib.spec.DividerSpec;
+import com.cube.storm.ui.lib.spec.ListDividerSpec;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
@@ -43,7 +45,7 @@ import lombok.Setter;
  * This class should not be directly instantiated.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class UiSettings
 {
@@ -134,6 +136,11 @@ public class UiSettings
 	@Getter @Setter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
 
 	/**
+	 * Default divider spec to use in {@link com.cube.storm.ui.controller.adapter.StormListAdapter}
+	 */
+	@Getter @Setter private DividerSpec dividerSpec;
+
+	/**
 	 * Sets the app model of the content
 	 *
 	 * @param app The new app model
@@ -193,6 +200,20 @@ public class UiSettings
 			registerUriResolver("app", new AppResolver(this.context));
 
 			viewBuilder(new ViewBuilder(){});
+			dividerSpec(new ListDividerSpec());
+		}
+
+		/**
+		 * Sets the default {@link com.cube.storm.ui.lib.spec.DividerSpec} for the list adapter to use when layout out its children
+		 *
+		 * @param spec The new divider spec to use by default
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder dividerSpec(DividerSpec spec)
+		{
+			construct.dividerSpec = spec;
+			return this;
 		}
 
 		/**

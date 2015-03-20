@@ -12,7 +12,7 @@ import lombok.Getter;
  * A view model with an image property
  *
  * @author Alan Le Fournis
- * @project StormUI
+ * @project LightningUi
  */
 public class ImageListItem extends TitleListItem
 {

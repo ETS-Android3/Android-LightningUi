@@ -13,7 +13,7 @@ import lombok.Getter;
  * Descriptor model used for populating tab details in {@link com.cube.storm.ui.model.descriptor.TabbedPageDescriptor}
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class TabBarItem extends Model
 {

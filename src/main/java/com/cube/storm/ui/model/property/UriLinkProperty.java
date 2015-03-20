@@ -6,7 +6,7 @@ import android.os.Parcel;
  * A link property which deals with opening an external Uri, externally via an intent
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class UriLinkProperty extends DestinationLinkProperty
 {

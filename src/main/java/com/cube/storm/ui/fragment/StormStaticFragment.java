@@ -46,7 +46,7 @@ public class StormStaticFragment extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		adapter = new StormListAdapter(getActivity());
+		adapter = new StormListAdapter();
 
 		if (getArguments().containsKey(StormActivity.EXTRA_PAGE))
 		{
@@ -72,7 +72,6 @@ public class StormStaticFragment extends Fragment
 			}
 			else if (page instanceof GridPage)
 			{
-				// TODO: Implement grid functionality for grid page
 				adapter.setItems(((GridPage)page).getGrid().getChildren());
 			}
 		}

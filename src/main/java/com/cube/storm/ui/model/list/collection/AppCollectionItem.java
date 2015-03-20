@@ -14,7 +14,7 @@ import lombok.Getter;
  * // TODO: Add class description
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class AppCollectionItem extends CollectionItem
 {

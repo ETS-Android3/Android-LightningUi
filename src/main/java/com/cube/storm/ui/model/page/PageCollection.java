@@ -9,7 +9,7 @@ import java.util.Collection;
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class PageCollection extends Model
 {

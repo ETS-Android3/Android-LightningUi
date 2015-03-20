@@ -16,7 +16,7 @@ import com.cube.storm.ui.model.page.Page;
  * Base storm activity that hosts a single fragment to host any {@link com.cube.storm.ui.model.page.Page} subclass.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightingUi
  */
 public class StormActivity extends ActionBarActivity
 {
@@ -59,8 +59,6 @@ public class StormActivity extends ActionBarActivity
 			{
 				Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
 				finish();
-
-				return;
 			}
 		}
 	}

@@ -12,7 +12,7 @@ import lombok.Getter;
  * // TODO: Add class description
  *
  * @author Matt Allen
- * @project Storm
+ * @project LightningUi
  */
 public class Grid extends GridItem
 {

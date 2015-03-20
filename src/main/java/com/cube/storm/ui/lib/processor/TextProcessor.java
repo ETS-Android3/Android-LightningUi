@@ -11,7 +11,7 @@ import com.cube.storm.util.lib.processor.Processor;
  * This class defaults to outputting the input
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project Lightning
  */
 public class TextProcessor extends Processor<String, String>
 {

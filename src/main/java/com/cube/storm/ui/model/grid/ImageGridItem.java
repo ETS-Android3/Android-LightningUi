@@ -13,7 +13,7 @@ import lombok.Getter;
  * A grid view model with an image property
  *
  * @author Luke Reed
- * @project StormUI
+ * @project LightningUi
  */
 public class ImageGridItem extends GridItem
 {

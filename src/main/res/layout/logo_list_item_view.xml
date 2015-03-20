@@ -9,7 +9,7 @@
 	android:paddingTop="16dp"
 	android:paddingBottom="20dp"
 >
-	<ImageView
+	<com.cube.storm.ui.view.ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/image_view"
@@ -19,7 +19,7 @@
 		android:layout_centerHorizontal="true"
 	/>
 
-	<TextView
+	<com.cube.storm.ui.view.TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/link_title"

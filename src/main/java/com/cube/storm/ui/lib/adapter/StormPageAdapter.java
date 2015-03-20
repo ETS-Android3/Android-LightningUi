@@ -27,7 +27,7 @@ import lombok.Setter;
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class StormPageAdapter extends FragmentStatePagerAdapter implements IconTabProvider
 {

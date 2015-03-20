@@ -7,7 +7,7 @@ import com.cube.storm.ui.model.Model;
  * for a more restrictive variable class type in certain view models
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public abstract class Property extends Model
 {

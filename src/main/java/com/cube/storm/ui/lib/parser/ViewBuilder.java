@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
  * View parser used to process the json files into models to be used with the list/grid adapters
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class ViewBuilder
 {

@@ -10,7 +10,7 @@ import lombok.Getter;
  * A view model with an image and description property
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class HeaderListItem extends ImageListItem
 {

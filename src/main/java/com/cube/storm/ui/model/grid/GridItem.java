@@ -10,7 +10,7 @@ import lombok.Getter;
  * // TODO: Add class description
  *
  * @author Matt Allen
- * @project Storm
+ * @Project LightningUi
  */
 public abstract class GridItem extends Model
 {
