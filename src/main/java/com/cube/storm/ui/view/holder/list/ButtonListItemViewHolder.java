@@ -17,7 +17,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * View holder for {@link com.cube.storm.ui.model.list.ButtonListItem} in the adapter
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class ButtonListItemViewHolder extends ViewHolder<ButtonListItem>
 {

@@ -23,7 +23,7 @@ import java.util.List;
  * <p/>
  *
  * @author Tim Matthews
- * @project Storm
+ * @Project LightningUi
  */
 public class ImageView extends android.widget.ImageView
 {

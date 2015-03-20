@@ -10,7 +10,7 @@ import lombok.Getter;
  * Stored properties for an animated list item
  *
  * @author Luke Reed
- * @project Storm
+ * @project LightningUi
  */
 public class AnimatedImageListItem extends ListItem
 {

@@ -13,7 +13,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * // TODO: Add class description
  *
  * @author Luke Reed
- * @project Storm
+ * @project LightningUi
  */
 public class GridItemViewHolder extends GridViewHolder<GridItem>
 {

@@ -37,7 +37,7 @@ import java.util.Collection;
  * that the list is rendering.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 {

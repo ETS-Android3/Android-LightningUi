@@ -14,7 +14,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * View holder for {@link com.cube.storm.ui.model.list.TextListItem} in the adapter
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class TextListItemViewHolder extends ViewHolder<TextListItem>
 {

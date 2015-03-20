@@ -16,7 +16,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * counter-part for the 'footer' part of the model.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class ListHeaderViewHolder extends ViewHolder<ListHeader>
 {

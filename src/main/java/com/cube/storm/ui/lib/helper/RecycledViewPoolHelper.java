@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView.RecycledViewPool;
  * Creates a singleton for the view holder pool in the recycler view for memory saving and sharing of views within different lists
  *
  * @author Luke Reed
- * @project Storm
+ * @project LightningUi
  */
 public class RecycledViewPoolHelper
 {
@@ -21,10 +21,11 @@ public class RecycledViewPoolHelper
 
 	public static RecycledViewPoolHelper getInstance()
 	{
-		if(instance == null)
+		if (instance == null)
 		{
 			instance = new RecycledViewPoolHelper();
 		}
+
 		return instance;
 	}
 

@@ -13,7 +13,7 @@ import com.cube.storm.ui.model.property.LinkProperty;
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project Storm
+ * @Project LightningUi
  */
 public class Button extends android.widget.Button
 {

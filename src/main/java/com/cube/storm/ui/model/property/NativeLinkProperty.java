@@ -7,7 +7,7 @@ import android.os.Parcel;
  * the link.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class NativeLinkProperty extends DestinationLinkProperty
 {

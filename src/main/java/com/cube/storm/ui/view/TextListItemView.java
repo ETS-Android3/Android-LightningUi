@@ -15,7 +15,7 @@ import com.cube.storm.ui.model.list.TextListItem;
  * Custom view class for the {@link com.cube.storm.ui.model.list.TextListItem} model
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class TextListItemView extends LinearLayout
 {

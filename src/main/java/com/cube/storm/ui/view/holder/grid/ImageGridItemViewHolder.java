@@ -9,14 +9,13 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.grid.ImageGridItem;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.holder.GridViewHolder;
-import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.grid.ImageGridItem} in the adapter
  *
  * @author Luke Reed
- * @project Storm
+ * @project LightningUi
  */
 public class ImageGridItemViewHolder extends GridViewHolder<ImageGridItem>
 {

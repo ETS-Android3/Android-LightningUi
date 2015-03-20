@@ -11,7 +11,7 @@ import lombok.Setter;
  * or {@link AppLinkProperty}.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class DestinationLinkProperty extends LinkProperty
 {

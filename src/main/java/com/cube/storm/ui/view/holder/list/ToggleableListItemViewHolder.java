@@ -18,7 +18,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * View holder for {@link com.cube.storm.ui.model.list.ToggleableListItem} in the adapter
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @Project LightningUi
  */
 public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem> implements OnClickListener
 {

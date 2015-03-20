@@ -46,7 +46,7 @@ import lombok.Setter;
  * This class should not be directly instantiated.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class UiSettings
 {

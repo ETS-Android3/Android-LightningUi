@@ -16,7 +16,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * View holder for {@link com.cube.storm.ui.model.list.OrderedListItem} in the adapter
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @Project LightningUi
  */
 public class OrderedListItemViewHolder extends ViewHolder<OrderedListItem>
 {

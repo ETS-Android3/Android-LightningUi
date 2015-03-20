@@ -8,7 +8,7 @@ import com.cube.storm.ui.model.Model;
  * Interface to use on holders which are clickable in the list with a method to handle said click
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public interface ViewClickable<T extends Model>
 {

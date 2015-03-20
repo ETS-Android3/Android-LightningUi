@@ -12,7 +12,7 @@ import lombok.Getter;
  * Base model class for all Storm objects
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class Model implements Serializable/*, Parcelable*/
 {

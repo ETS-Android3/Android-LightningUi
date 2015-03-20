@@ -38,7 +38,7 @@ import lombok.Getter;
  * </pre>
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class App extends Model
 {

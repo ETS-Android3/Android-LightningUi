@@ -3,6 +3,7 @@ package com.cube.storm.ui.lib.factory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.cube.storm.ui.BuildConfig;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.View;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
@@ -32,7 +33,10 @@ public abstract class ViewFactory
 		}
 		catch (IllegalArgumentException e)
 		{
-			e.printStackTrace();
+			if (BuildConfig.DEBUG)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		return null;
@@ -54,7 +58,10 @@ public abstract class ViewFactory
 		}
 		catch (IllegalArgumentException e)
 		{
-			e.printStackTrace();
+			if (BuildConfig.DEBUG)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		return null;

@@ -14,7 +14,6 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.grid.StandardGridItem;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.holder.GridViewHolder;
-import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -23,7 +22,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * // TODO: Add class description
  *
  * @author Matt Allen
- * @project Storm
+ * @project LightningUi
  */
 public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 {

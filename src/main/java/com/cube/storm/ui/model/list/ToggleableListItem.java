@@ -6,7 +6,7 @@ import android.os.Parcel;
  * A view model
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @project LightningUi
  */
 public class ToggleableListItem extends DescriptionListItem
 {

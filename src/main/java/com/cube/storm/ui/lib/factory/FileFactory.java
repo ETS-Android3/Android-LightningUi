@@ -11,7 +11,7 @@ import com.cube.storm.util.lib.resolver.Resolver;
  * Factory class used to resolve a file based on it's Uri
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public abstract class FileFactory
 {

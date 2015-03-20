@@ -11,7 +11,7 @@ import lombok.Setter;
  * // TODO: Add class description
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class PageDescriptor extends Model
 {

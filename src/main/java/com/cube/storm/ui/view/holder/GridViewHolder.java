@@ -9,7 +9,7 @@ import com.cube.storm.ui.model.grid.GridItem;
  * // TODO: Add class description
  *
  * @author Luke Reed
- * @project Storm
+ * @Project LightningUi
  */
 public abstract class GridViewHolder<T> extends ViewHolder<T>
 {

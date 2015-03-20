@@ -22,7 +22,7 @@ import java.util.List;
  * // TODO: Add class description
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @Project LightningUi
  */
 public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 {

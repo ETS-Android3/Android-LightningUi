@@ -23,7 +23,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * managed asynchronously.
  *
  * @author Matt Allen
- * @project Storm
+ * @Project LightningUi
  */
 public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem>
 {

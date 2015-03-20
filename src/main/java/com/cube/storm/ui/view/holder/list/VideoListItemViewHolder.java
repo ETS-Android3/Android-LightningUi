@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * View holder for {@link com.cube.storm.ui.model.list.VideoListItem} in the adapter
  *
  * @author Alan Le Fournis
- * @project Storm
+ * @Project LightningUi
  */
 public class VideoListItemViewHolder extends ViewHolder<VideoListItem> implements OnClickListener
 {

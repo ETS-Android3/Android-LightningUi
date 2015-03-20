@@ -10,7 +10,7 @@ import lombok.Getter;
  * the language manager, else it is left. Do not set a language manager to disable this behaviour.
  *
  * @author Callum Taylor
- * @project StormUI
+ * @project LightningUi
  */
 public class TextProperty extends Property
 {

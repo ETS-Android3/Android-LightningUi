@@ -22,7 +22,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * has returned.
  *
  * @author Luke Reed
- * @project Storm
+ * @project LightningUi
  */
 public class AnimatedImageListItemViewHolder extends ViewHolder<AnimatedImageListItem>
 {

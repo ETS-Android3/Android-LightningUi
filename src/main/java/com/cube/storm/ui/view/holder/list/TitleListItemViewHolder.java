@@ -16,7 +16,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * View holder for {@link com.cube.storm.ui.model.list.TitleListItem} in the adapter
  *
  * @author Alan Le Fournis
- * @project StormUI
+ * @project LightningUi
  */
 public class TitleListItemViewHolder extends ViewHolder<TitleListItem>
 {

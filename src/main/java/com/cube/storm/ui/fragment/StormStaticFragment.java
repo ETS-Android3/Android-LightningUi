@@ -72,7 +72,6 @@ public class StormStaticFragment extends Fragment
 			}
 			else if (page instanceof GridPage)
 			{
-				// TODO: Implement grid functionality for grid page
 				adapter.setItems(((GridPage)page).getGrid().getChildren());
 			}
 		}

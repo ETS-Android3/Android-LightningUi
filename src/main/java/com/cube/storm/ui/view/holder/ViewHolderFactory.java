@@ -7,7 +7,7 @@ import android.view.ViewGroup;
  * with the necessary view which is then retrievable with {@link ViewHolderFactory#getViewHolder()}
  *
  * @author Callum Taylor
- * @project Storm Test
+ * @Project LightningUi Test
  */
 public abstract class ViewHolderFactory
 {
