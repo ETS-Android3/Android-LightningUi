@@ -15,24 +15,24 @@ import com.cube.storm.ui.view.holder.ViewHolderController;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Animated image list item shows a series of items in turn. This is done by creating an asynchronous
  * {@link java.util.Timer} thread and creating a new {@link java.util.TimerTask} for each the next
  * image after each image is shown on screen.
- *
+ * <p/>
  * We're no longer relying on properties of a {@link android.graphics.drawable.AnimationDrawable}, this
  * is now asynchronous for performance reasons.
- *
+ * <p/>
  * The purpose of the Handler is to let us back onto the UI thread once the {@link java.util.TimerTask}
  * has returned.
  *
  * @author Luke Reed
- * @project Storm
+ * @project LightningUi
  */
 public class AnimatedImageListItemHolder extends ViewHolderController
 {
-
 	@Override public ViewHolder createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.animated_image_list_item_view, parent, false);
@@ -80,28 +80,28 @@ public class AnimatedImageListItemHolder extends ViewHolderController
 
 		private void updateView()
 		{
-			if (model.getImages() != null)
+			if (model.getAnimation() != null)
 			{
-				if (currentIndex >= model.getImages().size())
+				if (currentIndex >= model.getAnimation().getFrames().size())
 				{
 					currentIndex = 0;
 				}
 
-				ImageLoader.getInstance().displayImage(ImageHelper.getImageSrc(model.getImages().get(currentIndex)), image);
+				ImageLoader.getInstance().displayImage(ImageHelper.getImageSrc(model.getAnimation().getFrames().get(currentIndex).getImage()), image);
 
 				currentIndex++;
-				if (currentIndex >= model.getImages().size())
+				if (currentIndex >= model.getAnimation().getFrames().size())
 				{
 					currentIndex = 0;
 				}
 
-//				getTimer().schedule(new TimerTask()
-//				{
-//					@Override public void run()
-//					{
-//						handler.sendEmptyMessage(MSG_UPDATE);
-//					}
-//				}, model.getImages().get(currentIndex).getDelay());
+				getTimer().schedule(new TimerTask()
+				{
+					@Override public void run()
+					{
+						handler.sendEmptyMessage(MSG_UPDATE);
+					}
+				}, model.getAnimation().getFrames().get(currentIndex).getDelay());
 			}
 		}
 
@@ -118,6 +118,7 @@ public class AnimatedImageListItemHolder extends ViewHolderController
 					timer = new Timer("Animated Image List Item timer");
 				}
 			}
+
 			return timer;
 		}
 	}
