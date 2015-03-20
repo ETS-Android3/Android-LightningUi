@@ -1,11 +1,9 @@
 package com.cube.storm.ui.view.holder.grid;
 
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,10 +11,9 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.grid.StandardGridItem;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
  * // TODO: Add class description
@@ -56,27 +53,7 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 		link = model.getLink();
 		image.setVisibility(View.GONE);
 
-		if (model.getImage() != null)
-		{
-			UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getSrc(), image, new SimpleImageLoadingListener()
-			{
-				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-				{
-					if (loadedImage != null)
-					{
-						image.setVisibility(View.VISIBLE);
-					}
-				}
-
-				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
-				{
-					if (!imageUri.equalsIgnoreCase(model.getImage().getFallbackSrc()))
-					{
-						UiSettings.getInstance().getImageLoader().displayImage(model.getImage().getFallbackSrc(), image, this);
-					}
-				}
-			});
-		}
+		image.populate(model.getImage());
 
 		description.setVisibility(View.GONE);
 		title.setVisibility(View.GONE);

@@ -11,7 +11,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.ui.view.holder.grid.GridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.StandardGridItemViewHolder;
-import com.cube.storm.ui.view.holder.list.AnimatedImageListItemViewHolder;
+import com.cube.storm.ui.view.holder.list.AnimationListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.AppCollectionItemViewHolder;
 import com.cube.storm.ui.view.holder.list.ButtonListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.CheckableListItemViewHolder;
@@ -24,7 +24,7 @@ import com.cube.storm.ui.view.holder.list.ListFooterViewHolder;
 import com.cube.storm.ui.view.holder.list.ListHeaderViewHolder;
 import com.cube.storm.ui.view.holder.list.LogoListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.OrderedListItemViewHolder;
-import com.cube.storm.ui.view.holder.list.SpotlightImageListItemViewHolder;
+import com.cube.storm.ui.view.holder.list.SpotlightListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.StandardListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.TextListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.TitleListItemViewHolder;
@@ -65,8 +65,8 @@ public enum View
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemViewHolder.Factory.class),
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemViewHolder.Factory.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemViewHolder.Factory.class),
-	SpotlightListItem(com.cube.storm.ui.model.list.SpotlightListItem.class, SpotlightImageListItemViewHolder.Factory.class),
-	AnimationListItem(com.cube.storm.ui.model.list.AnimationListItem.class, AnimatedImageListItemViewHolder.Factory.class),
+	SpotlightListItem(com.cube.storm.ui.model.list.SpotlightListItem.class, SpotlightListItemViewHolder.Factory.class),
+	AnimationListItem(com.cube.storm.ui.model.list.AnimationListItem.class, AnimationListItemViewHolder.Factory.class),
 	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemViewHolder.Factory.class),
 
 	/**
