@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.cube.storm.UiSettings;
@@ -53,16 +54,16 @@ public class TextView extends android.widget.TextView
 			if (!TextUtils.isEmpty(content))
 			{
 				// TODO: Don't overwrite user's custom clickListener
-				this.setOnClickListener(new OnClickListener()
+				if (link != null)
 				{
-					@Override public void onClick(View v)
+					this.setOnClickListener(new OnClickListener()
 					{
-						if (link != null)
+						@Override public void onClick(View v)
 						{
 							UiSettings.getInstance().getLinkHandler().handleLink(getContext(), link);
 						}
-					}
-				});
+					});
+				}
 
 				this.setText(content);
 				this.setVisibility(View.VISIBLE);
