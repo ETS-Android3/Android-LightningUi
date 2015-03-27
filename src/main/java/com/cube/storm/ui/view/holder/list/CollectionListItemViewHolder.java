@@ -88,8 +88,9 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 					Class<? extends ViewHolderFactory> cls = UiSettings.getInstance().getViewFactory().getHolderForView(itemModel.getClassName());
 					holderFactory = cls.newInstance();
 					holder = (ViewHolder<? super CollectionItem>)holderFactory.createViewHolder((ViewGroup)linearLayout.getParent());
+					view = holder.itemView;
 					holder.populateView(itemModel);
-					holder.itemView.setTag(holder);
+					view.setTag(holder);
 				}
 				catch (InstantiationException e)
 				{
@@ -105,6 +106,7 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 				if (view.getTag() != null)
 				{
 					holder = (ViewHolder<? super CollectionItem>)view.getTag();
+					holder.populateView(itemModel);
 				}
 			}
 
