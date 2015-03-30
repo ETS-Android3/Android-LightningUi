@@ -14,7 +14,7 @@ import lombok.Getter;
  */
 public class TextProperty extends Property
 {
-	@Getter protected String content;
+	@Getter public String content;
 
 	@Override public int describeContents()
 	{
