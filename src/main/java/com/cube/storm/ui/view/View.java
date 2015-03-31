@@ -9,6 +9,7 @@ import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.NativeImageProperty;
 import com.cube.storm.ui.model.property.NativeLinkProperty;
 import com.cube.storm.ui.model.property.ShareLinkProperty;
+import com.cube.storm.ui.model.property.SmsLinkProperty;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
 import com.cube.storm.ui.model.property.UriLinkProperty;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
@@ -113,6 +114,7 @@ public enum View
 	ExternalLink(ExternalLinkProperty.class, null),
 	UriLink(UriLinkProperty.class, null),
 	ShareLink(ShareLinkProperty.class, null),
+	SmsLink(SmsLinkProperty.class, null),
 	NativeLink(NativeLinkProperty.class, null);
 
 	private Class<? extends Model> model;
