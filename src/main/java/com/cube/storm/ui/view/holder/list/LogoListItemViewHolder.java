@@ -17,7 +17,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Alan Le Fournis
  * @Project LightningUi
  */
-public class LogoListItemViewHolder extends ViewHolder<LogoListItem>
+public class LogoListItemViewHolder extends ViewHolder<LogoListItem> implements View.OnClickListener
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -34,7 +34,7 @@ public class LogoListItemViewHolder extends ViewHolder<LogoListItem>
 	public LogoListItemViewHolder(View view)
 	{
 		super(view);
-
+		view.setOnClickListener(this);
 		image = (ImageView)view.findViewById(R.id.image_view);
 		linkTitle = (TextView)view.findViewById(R.id.link_title);
 	}
@@ -42,6 +42,12 @@ public class LogoListItemViewHolder extends ViewHolder<LogoListItem>
 	@Override public void populateView(final LogoListItem model)
 	{
 		image.populate(model.getImage());
-		linkTitle.populate(model.getTitle());
+		linkTitle.populate(model.getLink().getTitle(), model.getLink());
 	}
+
+	@Override public void onClick(View v)
+	{
+		linkTitle.callOnClick();
+	}
+
 }
