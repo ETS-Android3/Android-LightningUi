@@ -1,6 +1,7 @@
 package com.cube.storm.ui.model.page;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.grid.Grid;
@@ -21,6 +22,12 @@ public class GridPage extends Page
 	 * The array list of children {@link com.cube.storm.ui.model.list.ListItem}
 	 */
 	@Getter protected Grid grid;
+
+	public GridPage(@NonNull String title, @NonNull String name, @NonNull Grid grid)
+	{
+		super(title, name);
+		this.grid = grid;
+	}
 
 	@Override public Collection<? extends Model> getChildren()
 	{
