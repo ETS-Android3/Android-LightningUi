@@ -83,4 +83,18 @@ public class App extends Model
 
 		return null;
 	}
+
+	@Nullable
+	public PageDescriptor findPageDescriptor(@NonNull String name)
+	{
+		for (PageDescriptor pageDescriptor : getMap())
+		{
+			if (pageDescriptor.getName() != null && pageDescriptor.getName().equals(name))
+			{
+				return pageDescriptor;
+			}
+		}
+
+		return null;
+	}
 }
