@@ -1,5 +1,7 @@
 package com.cube.storm.ui.model.property;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 
 import lombok.Getter;
@@ -13,4 +15,14 @@ import lombok.Getter;
 public abstract class MessageLinkProperty extends ShareLinkProperty
 {
 	@Getter private ArrayList<String> recipients;
+
+	public MessageLinkProperty(@Nullable String title)
+	{
+		super(title);
+	}
+
+	public MessageLinkProperty(@Nullable String title, @Nullable String body)
+	{
+		super(title, body);
+	}
 }
