@@ -15,7 +15,7 @@ import com.cube.storm.ui.model.property.LinkProperty;
  */
 public abstract class Populator
 {
-	public static void populate(ViewGroup embeddedLinksContainer, Iterable<LinkProperty> linkProperties)
+	public static void populate(ViewGroup embeddedLinksContainer, Iterable<? extends LinkProperty> linkProperties)
 	{
 		if (linkProperties != null)
 		{
