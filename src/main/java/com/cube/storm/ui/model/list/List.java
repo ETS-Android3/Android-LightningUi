@@ -23,6 +23,8 @@ import lombok.Setter;
  */
 public class List extends ListItem
 {
+	{ this.className = View.List.name(); }
+
 	@Getter protected TextProperty header;
 	@Getter protected TextProperty footer;
 	@Getter protected ArrayList<ListItem> children;
@@ -62,6 +64,8 @@ public class List extends ListItem
 	 */
 	public static class ListHeader extends ListItem
 	{
+		{ this.className = getClassName(); }
+
 		@Getter @Setter protected TextProperty header;
 
 		@Override public String getClassName()
@@ -89,6 +93,8 @@ public class List extends ListItem
 	 */
 	public static class ListFooter extends ListItem
 	{
+		{ this.className = getClassName(); }
+
 		@Getter @Setter protected TextProperty footer;
 
 		@Override public String getClassName()

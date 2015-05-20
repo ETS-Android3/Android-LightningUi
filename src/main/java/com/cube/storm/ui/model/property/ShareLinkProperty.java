@@ -1,9 +1,13 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
-import android.support.annotation.Nullable;
 
-import lombok.Getter;
+import com.cube.storm.ui.view.View;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A link property which deals with opening an send intent with {@link com.cube.storm.ui.model.property.ShareLinkProperty#body} content
@@ -11,28 +15,13 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class ShareLinkProperty extends LinkProperty
 {
-	@Getter protected TextProperty body;
+	{ this.className = View.ShareLink.name(); }
 
-	private ShareLinkProperty()
-	{
-
-	}
-
-	public ShareLinkProperty(@Nullable String title)
-	{
-		this(title, null);
-	}
-
-	public ShareLinkProperty(@Nullable String title, @Nullable String body)
-	{
-		super(title);
-		if (body != null)
-		{
-			this.body = new TextProperty(body);
-		}
-	}
+	protected TextProperty body;
 
 	@Override public int describeContents()
 	{

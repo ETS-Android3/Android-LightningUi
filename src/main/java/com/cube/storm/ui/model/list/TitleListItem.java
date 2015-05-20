@@ -1,16 +1,17 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.view.View;
 
-import java.util.Arrays;
 import java.util.Collection;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A view model with a title property
@@ -18,26 +19,14 @@ import lombok.Getter;
  * @author Alan Le Fournis
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class TitleListItem extends ListItem
 {
-	@Getter protected TextProperty title;
-	@Getter protected Collection<? extends LinkProperty> embeddedLinks;
+	{ this.className = View.TitleListItem.name(); }
 
-	protected TitleListItem()
-	{
-		this(null);
-	}
-
-	public TitleListItem(@Nullable String title, @NonNull LinkProperty... embeddedLinks)
-	{
-		this(title, Arrays.asList(embeddedLinks));
-	}
-
-	public TitleListItem(@Nullable String title, @NonNull Collection<? extends LinkProperty> embeddedLinks)
-	{
-		this.title = new TextProperty(title);
-		this.embeddedLinks = embeddedLinks;
-	}
+	protected TextProperty title;
+	protected Collection<? extends LinkProperty> embeddedLinks;
 
 	@Override public int describeContents()
 	{

@@ -1,8 +1,12 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import com.cube.storm.ui.view.View;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A link property which deals with opening an internal Uri
@@ -10,22 +14,11 @@ import android.support.annotation.Nullable;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor
+@Accessors(chain = true) @Data
 public class InternalLinkProperty extends DestinationLinkProperty
 {
-	private InternalLinkProperty()
-	{
-
-	}
-
-	public InternalLinkProperty(@NonNull String destination)
-	{
-		this(null, destination);
-	}
-
-	public InternalLinkProperty(@Nullable String title, @NonNull String destination)
-	{
-		super(title, destination);
-	}
+	{ this.className = View.InternalLink.name(); }
 
 	@Override public int describeContents()
 	{

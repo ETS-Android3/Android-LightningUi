@@ -1,8 +1,10 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A link property which deals with opening an external Uri, externally via an intent
@@ -10,23 +12,10 @@ import android.support.annotation.Nullable;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor
+@Accessors(chain = true) @Data
 public class UriLinkProperty extends DestinationLinkProperty
 {
-	private UriLinkProperty()
-	{
-
-	}
-
-	public UriLinkProperty(@NonNull String destination)
-	{
-		this(null, destination);
-	}
-
-	public UriLinkProperty(@Nullable String title, @NonNull String destination)
-	{
-		super(title, destination);
-	}
-
 	@Override public int describeContents()
 	{
 		return 0;

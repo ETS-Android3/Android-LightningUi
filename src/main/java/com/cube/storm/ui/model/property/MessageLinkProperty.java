@@ -1,10 +1,11 @@
 package com.cube.storm.ui.model.property;
 
-import android.support.annotation.Nullable;
-
 import java.util.ArrayList;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * Abstract message model
@@ -12,17 +13,9 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public abstract class MessageLinkProperty extends ShareLinkProperty
 {
-	@Getter private ArrayList<String> recipients;
-
-	public MessageLinkProperty(@Nullable String title)
-	{
-		super(title);
-	}
-
-	public MessageLinkProperty(@Nullable String title, @Nullable String body)
-	{
-		super(title, body);
-	}
+	private ArrayList<String> recipients;
 }

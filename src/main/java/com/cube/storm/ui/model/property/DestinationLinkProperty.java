@@ -1,38 +1,24 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A link property with a destination Uri variable. Destination can be any Uri. This class is not
- * usually instantiated directly, one of its subclasses, {@link InternalLinkProperty}, {@link ExternalLinkProperty},
- * or {@link AppLinkProperty}.
+ * usually instantiated directly, one of its subclasses, {@link InternalLinkProperty}, {@link ExternalLinkProperty}
  *
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class DestinationLinkProperty extends LinkProperty
 {
-	@Getter protected String destination;
-
-	protected DestinationLinkProperty()
-	{
-
-	}
-
-	protected DestinationLinkProperty(@NonNull String destination)
-	{
-		this(null, destination);
-	}
-
-	protected DestinationLinkProperty(@Nullable String title, @NonNull String destination)
-	{
-		super(title);
-		this.destination = destination;
-	}
+	protected String destination;
 
 	@Override public int describeContents()
 	{

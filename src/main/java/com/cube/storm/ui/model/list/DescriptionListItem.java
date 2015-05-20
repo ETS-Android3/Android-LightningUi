@@ -1,16 +1,14 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.view.View;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A view model with a description property
@@ -18,33 +16,13 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class DescriptionListItem extends TitleListItem
 {
-	@Getter protected TextProperty description;
+	{ this.className = View.DescriptionListItem.name(); }
 
-	protected DescriptionListItem()
-	{
-		this(null);
-	}
-
-	public DescriptionListItem(@Nullable String description, @NonNull LinkProperty... embeddedLinks)
-	{
-		this(null, description, embeddedLinks);
-	}
-
-	public DescriptionListItem(@Nullable String title, @Nullable String description, @NonNull LinkProperty... embeddedLinks)
-	{
-		this(title, description, Arrays.asList(embeddedLinks));
-	}
-
-	public DescriptionListItem(@Nullable String title, @Nullable String description, @NonNull Collection<? extends LinkProperty> embeddedLinks)
-	{
-		super(title, embeddedLinks);
-		if (description != null)
-		{
-			this.description = new TextProperty(description);
-		}
-	}
+	protected TextProperty description;
 
 	@Override public int describeContents()
 	{
