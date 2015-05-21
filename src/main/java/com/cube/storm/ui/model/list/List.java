@@ -3,11 +3,14 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A model which hosts an array set of child {@link com.cube.storm.ui.model.list.ListItem} models. Used
@@ -19,11 +22,15 @@ import lombok.Setter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class List extends ListItem
 {
-	@Getter protected TextProperty header;
-	@Getter protected TextProperty footer;
-	@Getter protected ArrayList<ListItem> children;
+	{ this.className = View.List.name(); }
+
+	protected TextProperty header;
+	protected TextProperty footer;
+	protected ArrayList<ListItem> children;
 
 	/**
 	 * This is the model used when displaying the list in the adapter. The list model is processed
@@ -33,9 +40,13 @@ public class List extends ListItem
 	 * we instantiate 2 'place holder' models to handle it. {@link com.cube.storm.ui.model.list.List} isn't
 	 * actually a visible view, where as it's members is.
 	 */
+	@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+	@Accessors(chain = true) @Data
 	public static class ListHeader extends ListItem
 	{
-		@Getter @Setter protected TextProperty header;
+		{ this.className = getClassName(); }
+
+		protected TextProperty header;
 
 		@Override public String getClassName()
 		{
@@ -60,9 +71,13 @@ public class List extends ListItem
 	 * we instantiate 2 'place holder' models to handle it. {@link com.cube.storm.ui.model.list.List} isn't
 	 * actually a visible view, where as it's members is.
 	 */
+	@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+	@Accessors(chain = true) @Data
 	public static class ListFooter extends ListItem
 	{
-		@Getter @Setter protected TextProperty footer;
+		{ this.className = getClassName(); }
+
+		protected TextProperty footer;
 
 		@Override public String getClassName()
 		{

@@ -3,8 +3,14 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.AnimationImageProperty;
+import com.cube.storm.ui.view.View;
 
-import lombok.Getter;
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * Stored properties for an animated list item
@@ -12,9 +18,13 @@ import lombok.Getter;
  * @author Luke Reed
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class AnimatedImageListItem extends ListItem
 {
-	@Getter private java.util.List<AnimationImageProperty> images;
+	{ this.className = View.AnimatedImageListItem.name(); }
+
+	protected List<AnimationImageProperty> images;
 
 	@Override public int describeContents()
 	{

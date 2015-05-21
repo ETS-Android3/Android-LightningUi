@@ -224,7 +224,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		try
 		{
-			if(viewHolder instanceof GridViewHolder)
+			if (viewHolder instanceof GridViewHolder)
 			{
 				GridItem model = (GridItem)getItem(position);
 				((GridViewHolder)viewHolder).checkSpan(model);

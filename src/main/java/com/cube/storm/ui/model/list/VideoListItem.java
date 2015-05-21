@@ -3,10 +3,14 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.VideoProperty;
+import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A view model with a video collection property
@@ -14,9 +18,13 @@ import lombok.Getter;
  * @author Alan Le Fournis
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class VideoListItem extends ImageListItem
 {
-	@Getter protected Collection<VideoProperty> videos;
+	{ this.className = View.VideoListItem.name(); }
+
+	protected Collection<? extends VideoProperty> videos;
 
 	@Override public int describeContents()
 	{

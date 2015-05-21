@@ -2,9 +2,13 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.view.View;
 import com.google.gson.annotations.SerializedName;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A view model with a boolean property
@@ -13,9 +17,13 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class CheckableListItem extends DescriptionListItem
 {
-	@SerializedName("volatile") @Getter protected boolean isVolatile;
+	{ this.className = View.CheckableListItem.name(); }
+
+	@SerializedName("volatile") protected boolean isVolatile;
 
 	@Override public int describeContents()
 	{

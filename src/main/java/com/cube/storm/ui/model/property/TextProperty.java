@@ -2,7 +2,10 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * Text property class. This class has a content string which can either be a language coded string
@@ -12,9 +15,13 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class TextProperty extends Property
 {
-	@Getter public String content;
+	{ this.className = "Text"; }
+
+	protected String content;
 
 	@Override public int describeContents()
 	{

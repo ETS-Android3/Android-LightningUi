@@ -3,8 +3,12 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.view.View;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A view model with an image and description property
@@ -12,9 +16,13 @@ import lombok.Getter;
  * @author Alan Le Fournis
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class HeaderListItem extends ImageListItem
 {
-	@Getter protected TextProperty description;
+	{ this.className = View.HeaderListItem.name(); }
+
+	protected TextProperty description;
 
 	@Override public int describeContents()
 	{
