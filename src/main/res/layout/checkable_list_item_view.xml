@@ -27,7 +27,7 @@
 		android:layout_toLeftOf="@id/checkbox"
 		android:layout_marginRight="16dp"
 	>
-		<TextView
+		<com.cube.storm.ui.view.TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/title"
@@ -37,7 +37,7 @@
 			android:fontFamily="sans-serif-regular"
 		/>
 
-		<TextView
+		<com.cube.storm.ui.view.TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/description"
@@ -46,6 +46,7 @@
 			android:fontFamily="sans-serif-regular"
 			android:visibility="gone"
 		/>
+
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
