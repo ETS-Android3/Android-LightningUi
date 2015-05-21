@@ -1,21 +1,21 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 
+import com.cube.storm.ui.view.View;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class NativeImageProperty extends ImageProperty
 {
-	private String src;
+	{ this.className = View.NativeImage.name(); }
 
-	private NativeImageProperty()
-	{
-
-	}
-
-	public NativeImageProperty(@NonNull String src)
-	{
-		this.src = src;
-	}
+	protected String src;
 
 	@Override public String getSrc()
 	{

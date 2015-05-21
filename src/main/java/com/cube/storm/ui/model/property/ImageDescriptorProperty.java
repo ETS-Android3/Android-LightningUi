@@ -1,37 +1,25 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 
+import com.cube.storm.ui.view.View;
 import com.google.gson.annotations.SerializedName;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class ImageDescriptorProperty extends Property
 {
-	@SerializedName("x0.75") @Getter protected String x075;
-	@SerializedName("x1") @Getter protected String x1;
-	@SerializedName("x1.5") @Getter protected String x15;
-	@SerializedName("x2") @Getter protected String x2;
+	{ this.className = View.Image.name(); }
 
-
-	private ImageDescriptorProperty()
-	{
-
-	}
-
-	public ImageDescriptorProperty(@NonNull String src)
-	{
-		this(src, src, src, src);
-	}
-
-	public ImageDescriptorProperty(@NonNull String x075, @NonNull String x1, @NonNull String x15, @NonNull String x2)
-	{
-		this.x075 = x075;
-		this.x1 = x1;
-		this.x15 = x15;
-		this.x2 = x2;
-	}
+	@SerializedName("x0.75") protected String x075;
+	@SerializedName("x1") protected String x1;
+	@SerializedName("x1.5") protected String x15;
+	@SerializedName("x2") protected String x2;
 
 	@Override public int describeContents()
 	{

@@ -2,8 +2,6 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.view.View;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class ButtonProperty extends Property
 {
-	{ this.className = View.ButtonListItem.name(); }
+	{ this.className = "Button"; }
 
 	private TextProperty title;
 	private LinkProperty link;

@@ -1,14 +1,17 @@
 package com.cube.storm.ui.model.page;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.grid.Grid;
+import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * // TODO: Add class description
@@ -16,18 +19,16 @@ import lombok.Getter;
  * @author Matt Allen
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class GridPage extends Page
 {
+	{ this.className = View.GridPage.name(); }
+
 	/**
 	 * The array list of children {@link com.cube.storm.ui.model.list.ListItem}
 	 */
-	@Getter protected Grid grid;
-
-	public GridPage(@NonNull String title, @NonNull String name, @NonNull Grid grid)
-	{
-		super(title, name);
-		this.grid = grid;
-	}
+	protected Grid grid;
 
 	@Override public Collection<? extends Model> getChildren()
 	{

@@ -1,9 +1,11 @@
 package com.cube.storm.ui.model.property;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import com.cube.storm.ui.view.View;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * // TODO: Add class description
@@ -11,33 +13,12 @@ import lombok.Getter;
  * @author Matt Allen
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class SpotlightImageProperty extends AnimationImageProperty
 {
-	@Getter private TextProperty text;
-	@Getter private LinkProperty link;
+	{ this.className = View.SpotlightImage.name(); }
 
-	protected SpotlightImageProperty()
-	{
-	}
-
-	public SpotlightImageProperty(@NonNull String src, long delay, @NonNull String text)
-	{
-		this(src, delay, text, null);
-	}
-
-	public SpotlightImageProperty(@NonNull String src, long delay, @NonNull String text, @Nullable LinkProperty link)
-	{
-		this(new ImageDescriptorProperty(src), delay, text, link);
-	}
-
-	public SpotlightImageProperty(@NonNull ImageDescriptorProperty src, long delay, @NonNull String text, @Nullable LinkProperty link)
-	{
-		super(src, delay);
-		this.text = new TextProperty(text);
-
-		if (link != null)
-		{
-			this.link = link;
-		}
-	}
+	protected TextProperty text;
+	protected LinkProperty link;
 }

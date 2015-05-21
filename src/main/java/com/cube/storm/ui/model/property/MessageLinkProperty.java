@@ -17,5 +17,5 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public abstract class MessageLinkProperty extends ShareLinkProperty
 {
-	private ArrayList<String> recipients;
+	protected ArrayList<String> recipients;
 }

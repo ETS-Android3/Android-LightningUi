@@ -2,6 +2,8 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.view.View;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class DestinationLinkProperty extends LinkProperty
 {
+	{ this.className = View.DestinationLink.name(); }
+
 	protected String destination;
 
 	@Override public int describeContents()

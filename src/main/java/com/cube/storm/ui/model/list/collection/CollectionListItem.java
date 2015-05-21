@@ -4,10 +4,14 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * // TODO: Add class description
@@ -15,10 +19,14 @@ import lombok.Getter;
  * @author Alan Le Fournis
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class CollectionListItem extends ListItem
 {
-	@Getter protected Collection<CollectionItem> cells;
-	@Getter protected Collection<LinkProperty> embeddedLinks;
+	{ this.className = View.CollectionListItem.name(); }
+
+	protected Collection<CollectionItem> cells;
+	protected Collection<LinkProperty> embeddedLinks;
 
 	@Override public int describeContents()
 	{

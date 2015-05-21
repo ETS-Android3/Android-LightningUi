@@ -1,29 +1,24 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.data.ContentDensity;
+import com.cube.storm.ui.view.View;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class BundleImageProperty extends ImageProperty
 {
+	{ this.className = View.Image.name(); }
+
 	protected ImageDescriptorProperty src;
-
-	protected BundleImageProperty()
-	{
-	}
-
-	public BundleImageProperty(@NonNull String src)
-	{
-		this(new ImageDescriptorProperty(src));
-	}
-
-	public BundleImageProperty(@NonNull ImageDescriptorProperty src)
-	{
-		this.src = src;
-	}
 
 	@Override public String getSrc()
 	{

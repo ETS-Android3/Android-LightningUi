@@ -2,8 +2,10 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.view.View;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -12,10 +14,12 @@ import lombok.experimental.Accessors;
  * @author Callum Taylor
  * @project LightningUi
  */
-@NoArgsConstructor
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Accessors(chain = true) @Data
 public class UriLinkProperty extends DestinationLinkProperty
 {
+	{ this.className = View.UriLink.name(); }
+
 	@Override public int describeContents()
 	{
 		return 0;

@@ -1,8 +1,11 @@
 package com.cube.storm.ui.model.property;
 
-import android.support.annotation.NonNull;
+import com.cube.storm.ui.view.View;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * // TODO: Add class description
@@ -10,23 +13,11 @@ import lombok.Getter;
  * @author Matt Allen
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class AnimationImageProperty extends BundleImageProperty
 {
-	@Getter protected long delay;
+	{ this.className = View.AnimationImage.name(); }
 
-	protected AnimationImageProperty()
-	{
-	}
-
-	public AnimationImageProperty(@NonNull String src, long delay)
-	{
-		this(new ImageDescriptorProperty(src), delay);
-	}
-
-	public AnimationImageProperty(@NonNull ImageDescriptorProperty src, long delay)
-	{
-		super(src);
-		this.delay = delay;
-	}
-
+	protected long delay;
 }

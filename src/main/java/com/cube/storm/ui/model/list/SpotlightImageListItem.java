@@ -1,14 +1,16 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
+import com.cube.storm.ui.view.View;
 
-import java.util.Arrays;
 import java.util.List;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * // TODO: Add class description
@@ -16,23 +18,13 @@ import lombok.Getter;
  * @author Matt Allen
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class SpotlightImageListItem extends ListItem
 {
-	@Getter protected List<SpotlightImageProperty> images;
+	{ this.className = View.SpotlightImageListItem.name(); }
 
-	protected SpotlightImageListItem()
-	{
-	}
-
-	public SpotlightImageListItem(@NonNull SpotlightImageProperty... images)
-	{
-		this(Arrays.asList(images));
-	}
-
-	public SpotlightImageListItem(@NonNull List<SpotlightImageProperty> images)
-	{
-		this.images = images;
-	}
+	protected List<SpotlightImageProperty> images;
 
 	@Override public int describeContents()
 	{

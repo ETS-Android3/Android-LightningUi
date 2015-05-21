@@ -4,7 +4,6 @@ import android.os.Parcel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -20,7 +19,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class TextProperty extends Property
 {
-	@Getter public String content;
+	{ this.className = "Text"; }
+
+	protected String content;
 
 	@Override public int describeContents()
 	{
