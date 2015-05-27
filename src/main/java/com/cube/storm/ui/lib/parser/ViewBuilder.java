@@ -298,6 +298,33 @@ public abstract class ViewBuilder
 	/**
 	 * Builds a class from a json string input
 	 *
+	 * @param stream The json input stream to build from
+	 * @param outClass The out class type
+	 * @param <T> The type of class returned
+	 *
+	 * @return The built object, or null
+	 */
+	@Nullable
+	public <T> T build(InputStream stream, Type outClass)
+	{
+		try
+		{
+			if (stream != null)
+			{
+				return getGson().fromJson(new InputStreamReader(new BufferedInputStream(stream, 8192)), outClass);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Builds a class from a json string input
+	 *
 	 * @param input The json string input to build from
 	 * @param outClass The out class type
 	 * @param <T> The type of class returned
