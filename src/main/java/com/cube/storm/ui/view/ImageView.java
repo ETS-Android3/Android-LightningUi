@@ -106,7 +106,7 @@ public class ImageView extends android.widget.ImageView
 					AnimationImageProperty frame = frames.get(frameIndex % frames.size());
 					populateFrame(frame, null);
 					++frameIndex;
-					animator.postDelayed(this, frame.getDelay());
+					if (frames.size() > 1) animator.postDelayed(this, frame.getDelay());
 
 					if (listener != null)
 					{
@@ -150,9 +150,7 @@ public class ImageView extends android.widget.ImageView
 	{
 		populate(frames, new OnAnimationFrameChangeListener()
 		{
-			@Override public void onAnimationFrameChange(ImageView imageView,
-														 int frameIndex,
-														 AnimationImageProperty frame)
+			@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame)
 			{
 				SpotlightImageProperty spotlightFrame = (SpotlightImageProperty)frame;
 				textView.populate(spotlightFrame.getText(), spotlightFrame.getLink());
