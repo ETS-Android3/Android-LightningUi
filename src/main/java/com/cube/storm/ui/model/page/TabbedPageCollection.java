@@ -6,6 +6,7 @@ import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class TabbedPageCollection extends PageCollection
 {
 	{ this.className = View.TabbedPageCollection.name(); }
 
-	protected Collection<TabbedPageDescriptor> pages;
+	protected List<TabbedPageDescriptor> pages;
 
 	@Override public int describeContents()
 	{
