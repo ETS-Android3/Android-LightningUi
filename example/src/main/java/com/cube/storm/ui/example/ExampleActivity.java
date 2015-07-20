@@ -1,4 +1,4 @@
-package com.cube.storm.util.example;
+package com.cube.storm.ui.example;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -7,8 +7,6 @@ android {
 	defaultConfig {
 		minSdkVersion 15
 		targetSdkVersion 21
-		versionCode 2
-		versionName "0.2"
 	}
 
 	packagingOptions {
@@ -33,19 +31,19 @@ android {
 }
 
 dependencies {
-	compile 'com.android.support:support-annotations:21.0.+'
-	compile 'com.android.support:support-v13:21.0.+'
-	compile "com.android.support:appcompat-v7:21.0.+"
+	compile 'com.android.support:support-annotations:22.2.0'
+	compile 'com.android.support:support-v13:22.2.0'
+	compile "com.android.support:appcompat-v7:22.2.0"
+	compile 'com.android.support:recyclerview-v7:22.2.0'
+
 	compile 'org.projectlombok:lombok:1.14.8'
 	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 	compile 'com.google.code.gson:gson:2.3'
 	compile 'net.callumtaylor:asynchttpclient:1.5'
-//	compile 'com.3sidedcube.storm:util:0.2'
-	compile project(':Libraries:LightningUtil')
 
-	compile project(':Libraries:LightningUi:Libraries:ExoPlayer:library')
-	compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-	compile 'com.android.support:recyclerview-v7:21.0.+'
+	compile 'com.3sidedcube.storm:util:0.3-internal'
+
+	compile project(':library:Libraries:ExoPlayer:library')
 }
 
 def srcJava = 'src/main/java'
@@ -119,4 +117,7 @@ android.libraryVariants.all { variant ->
 		exclude '**/com/acme/sdk/api/**'
 	}
 }
+
+//apply from: '../gradle/sonatype.gradle'
+apply from: '../gradle/artifactory.gradle'
 
