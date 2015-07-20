@@ -1,0 +1,4 @@
+[submodule "library/Libraries/ExoPlayer"]
+	path = library/Libraries/ExoPlayer
+	url = https://scruffyfox@github.com/3sidedcube/Android-ExoPlayer.git
+	branch = master
