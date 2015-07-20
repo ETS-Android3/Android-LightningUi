@@ -42,8 +42,7 @@ dependencies {
 	compile 'net.callumtaylor:asynchttpclient:1.5'
 
 	compile 'com.3sidedcube.storm:util:0.3-internal'
-
-	compile project(':library:Libraries:ExoPlayer:library')
+	compile 'com.3sidedcube.storm:exoplayer:1.0.1'
 }
 
 def srcJava = 'src/main/java'
