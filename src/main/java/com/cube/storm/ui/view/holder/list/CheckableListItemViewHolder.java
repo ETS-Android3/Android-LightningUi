@@ -65,6 +65,10 @@ public class CheckableListItemViewHolder extends ViewHolder<CheckableListItem> i
 			SharedPreferences checkboxPrefs = PreferenceManager.getDefaultSharedPreferences(checkBox.getContext());
 			checkBox.setChecked(checkboxPrefs.getBoolean("checkbox_" + model.getId(), false));
 		}
+		else
+		{
+			checkBox.setChecked(false);
+		}
 
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
 	}
