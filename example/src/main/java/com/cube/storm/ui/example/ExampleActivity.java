@@ -1,12 +1,11 @@
 package com.cube.storm.ui.example;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
-import com.cube.storm.util.lib.debug.Debug;
-import com.cube.storm.util.lib.manager.FileManager;
-
-import junit.framework.Assert;
+import com.cube.storm.UiSettings;
 
 /**
  * @author Callum Taylor
@@ -18,40 +17,12 @@ public class ExampleActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 
-		exampleDebug();
-		exampleFilemanager();
-	}
+		// Load the initial page
+		Intent start = UiSettings.getInstance().getIntentFactory().getIntentForPageUri(this, Uri.parse(UiSettings.getInstance().getApp().getVector()));
 
-	/**
-	 * This is a demo method using the {@link com.cube.storm.util.lib.debug.Debug} class
-	 */
-	private void exampleDebug()
-	{
-		// Dump an array
-		Debug.out(new String[]
+		if (start != null)
 		{
-			"First output",
-			"Second output",
-			"Third output"
-		});
-	}
-
-	/**
-	 * This is a demo method using the {@link com.cube.storm.util.lib.manager.FileManager} class
-	 */
-	private void exampleFilemanager()
-	{
-		String file = getFilesDir().getAbsolutePath() + "/tmp";
-
-		if (FileManager.getInstance().fileExists(file))
-		{
-			String read = FileManager.getInstance().readFileAsString(file);
-
-			Assert.assertNotNull(read);
-		}
-		else
-		{
-			FileManager.getInstance().writeFile(file, "Some string".getBytes());
+			startActivity(start);
 		}
 	}
 }
