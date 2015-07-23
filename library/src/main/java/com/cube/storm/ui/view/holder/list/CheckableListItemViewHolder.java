@@ -60,18 +60,14 @@ public class CheckableListItemViewHolder extends ViewHolder<CheckableListItem> i
 		modelId = model.getId();
 		isVolatile = model.isVolatile();
 
-		if (checkBox.getTag() != null)
+		if (!model.isVolatile())
 		{
-			checkBox.setChecked((Boolean)checkBox.getTag());
+			SharedPreferences checkboxPrefs = PreferenceManager.getDefaultSharedPreferences(checkBox.getContext());
+			checkBox.setChecked(checkboxPrefs.getBoolean("checkbox_" + model.getId(), false));
 		}
 		else
 		{
-			if (model.isVolatile())
-			{
-				SharedPreferences checkboxPrefs = PreferenceManager.getDefaultSharedPreferences(checkBox.getContext());
-				checkBox.setChecked(checkboxPrefs.getBoolean("checkbox_" + model.getId(), false));
-				checkBox.setTag(checkBox.isChecked());
-			}
+			checkBox.setChecked(false);
 		}
 
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
@@ -80,9 +76,8 @@ public class CheckableListItemViewHolder extends ViewHolder<CheckableListItem> i
 	@Override public void onClick (View v)
 	{
 		checkBox.setChecked(!checkBox.isChecked());
-		checkBox.setTag(checkBox.isChecked());
 
-		if (isVolatile)
+		if (!isVolatile)
 		{
 			SharedPreferences checkboxPrefs = PreferenceManager.getDefaultSharedPreferences(title.getContext());
 			checkboxPrefs.edit().putBoolean("checkbox_" + modelId, checkBox.isChecked()).apply();
