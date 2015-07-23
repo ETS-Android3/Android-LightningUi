@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -22,21 +23,30 @@ public class TextView extends android.widget.TextView
 	public TextView(Context context)
 	{
 		super(context);
+		setTypeface(context);
 	}
 
 	public TextView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+		setTypeface(context);
 	}
 
 	public TextView(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context, attrs, defStyleAttr);
+		setTypeface(context);
 	}
 
 	public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
 	{
 		super(context, attrs, defStyleAttr, defStyleRes);
+		setTypeface(context);
+	}
+
+	private void setTypeface(Context context)
+	{
+		super.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/courier.ttf"));
 	}
 
 	public void populate(TextProperty text)
