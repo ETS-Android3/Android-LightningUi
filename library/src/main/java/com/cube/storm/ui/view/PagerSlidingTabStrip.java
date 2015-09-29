@@ -84,6 +84,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 
 	private boolean shouldExpand = false;
 	private boolean textAllCaps = true;
+	private boolean textOnly = false;
 
 	private int scrollOffset = 52;
 	private int indicatorHeight = 8;
@@ -167,6 +168,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 		shouldExpand = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsShouldExpand, shouldExpand);
 		scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsScrollOffset, scrollOffset);
 		textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextAllCaps, textAllCaps);
+		textOnly = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextOnly, textOnly);
 		tabSwitch = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTabSwitch, tabSwitch);
 		tabIconTint = a.getColor(R.styleable.PagerSlidingTabStrip_pstsActivateIconTint, tabIconTint);
 		tabTextColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsActivateTextColor, tabTextColor);
@@ -217,7 +219,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 
 		for (int i = 0; i < tabCount; i++)
 		{
-			if (pager.getAdapter() instanceof IconTabProvider)
+			if (pager.getAdapter() instanceof IconTabProvider && !textOnly)
 			{
 				if (((IconTabProvider)pager.getAdapter()).getPageIconResId(i) > 0)
 				{

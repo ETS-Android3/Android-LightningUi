@@ -13,6 +13,7 @@
 		<attr name="pstsScrollOffset" format="dimension" />
 		<attr name="pstsTabBackground" format="reference" />
 		<attr name="pstsShouldExpand" format="boolean" />
+		<attr name="pstsTextOnly" format="boolean" />
 		<attr name="pstsTextAllCaps" format="boolean" />
 		<attr name="pstsTabSwitch" format="boolean" />
 		<attr name="pstsActivateIconTint" format="color" />
