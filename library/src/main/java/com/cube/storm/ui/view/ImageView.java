@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -84,8 +85,7 @@ public class ImageView extends android.widget.ImageView
 	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
 	 * @param listener
 	 */
-	public void populate(@Nullable final List<? extends AnimationImageProperty> frames,
-						 @Nullable final OnAnimationFrameChangeListener listener)
+	public void populate(@Nullable final List<? extends AnimationImageProperty> frames, @Nullable final OnAnimationFrameChangeListener listener)
 	{
 		// Cancel all current loading tasks
 		populate((ImageProperty)null);
@@ -144,9 +144,7 @@ public class ImageView extends android.widget.ImageView
 	 * 		will be called with the relevant details each time the spotlight changes.
 	 * @param listener
 	 */
-	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames,
-						 @NonNull final TextView textView,
-						 @Nullable final OnAnimationFrameChangeListener listener)
+	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, @NonNull final TextView textView, @Nullable final OnAnimationFrameChangeListener listener)
 	{
 		populate(frames, new OnAnimationFrameChangeListener()
 		{
@@ -203,50 +201,51 @@ public class ImageView extends android.widget.ImageView
 	{
 		UiSettings.getInstance().getImageLoader().cancelDisplayTask(this);
 
-		if (image != null)
+		if (image != null && !TextUtils.isEmpty(image.getSrc()) && !TextUtils.isEmpty(image.getFallbackSrc()))
 		{
+			setVisibility(View.INVISIBLE);
 			UiSettings.getInstance()
-					.getImageLoader()
-					.displayImage(image.getSrc(), this, new SimpleImageLoadingListener()
+				.getImageLoader()
+				.displayImage(image.getSrc(), this, new SimpleImageLoadingListener()
+				{
+					@Override public void onLoadingStarted(String imageUri, View view)
 					{
-						@Override public void onLoadingStarted(String imageUri, View view)
+						setVisibility(View.INVISIBLE);
+						if (progress != null)
 						{
-							setVisibility(View.INVISIBLE);
-							if (progress != null)
-							{
-								progress.setVisibility(View.VISIBLE);
-							}
+							progress.setVisibility(View.VISIBLE);
+						}
+					}
+
+					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					{
+						if (!imageUri.equalsIgnoreCase(image.getFallbackSrc()))
+						{
+							UiSettings.getInstance().getImageLoader().displayImage(image.getFallbackSrc(), ImageView.this, this);
+							return;
 						}
 
-						@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+						setVisibility(View.GONE);
+						if (progress != null)
 						{
-							if (!imageUri.equalsIgnoreCase(image.getFallbackSrc()))
-							{
-								UiSettings.getInstance()
-										.getImageLoader()
-										.displayImage(image.getFallbackSrc(), ImageView.this, this);
-							}
-
-							setVisibility(View.VISIBLE);
-							if (progress != null)
-							{
-								progress.setVisibility(View.GONE);
-							}
+							progress.setVisibility(View.GONE);
 						}
+					}
 
-						@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+					{
+						setVisibility(View.VISIBLE);
+						if (progress != null)
 						{
-							setVisibility(View.VISIBLE);
-							if (progress != null)
-							{
-								progress.setVisibility(View.GONE);
-							}
+							progress.setVisibility(View.GONE);
 						}
-					});
+					}
+				});
 		}
 		else
 		{
 			setImageBitmap(null);
+			setVisibility(View.GONE);
 		}
 	}
 }
