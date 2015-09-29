@@ -105,15 +105,40 @@ public class ImageView extends android.widget.ImageView
 				{
 					AnimationImageProperty frame = frames.get(frameIndex % frames.size());
 					populateFrame(frame, null);
-					++frameIndex;
-					if (frames.size() > 1) animator.postDelayed(this, frame.getDelay());
 
 					if (listener != null)
 					{
-						listener.onAnimationFrameChange(ImageView.this, frameIndex, frame);
+						listener.onAnimationFrameChange(ImageView.this, frameIndex % frames.size(), frame);
+					}
+
+					++frameIndex;
+
+					if (frames.size() > 1)
+					{
+						animator.postDelayed(this, frame.getDelay());
 					}
 				}
 			};
+			animator.post(displayNextFrame);
+		}
+	}
+
+	@Override protected void onDetachedFromWindow()
+	{
+		super.onDetachedFromWindow();
+
+		if (animator != null)
+		{
+			animator.removeCallbacks(displayNextFrame);
+		}
+	}
+
+	@Override protected void onAttachedToWindow()
+	{
+		super.onAttachedToWindow();
+
+		if (animator != null)
+		{
 			animator.post(displayNextFrame);
 		}
 	}
@@ -201,16 +226,20 @@ public class ImageView extends android.widget.ImageView
 	{
 		UiSettings.getInstance().getImageLoader().cancelDisplayTask(this);
 
-		if (image != null && !TextUtils.isEmpty(image.getSrc()) && !TextUtils.isEmpty(image.getFallbackSrc()))
+		if (image != null && (!TextUtils.isEmpty(image.getSrc()) || !TextUtils.isEmpty(image.getFallbackSrc())))
 		{
-			setVisibility(View.INVISIBLE);
+			//setVisibility(View.INVISIBLE);
 			UiSettings.getInstance()
 				.getImageLoader()
-				.displayImage(image.getSrc(), this, new SimpleImageLoadingListener()
+				.displayImage(TextUtils.isEmpty(image.getSrc()) ? image.getFallbackSrc() : image.getSrc(), this, new SimpleImageLoadingListener()
 				{
 					@Override public void onLoadingStarted(String imageUri, View view)
 					{
-						setVisibility(View.INVISIBLE);
+						if (animator == null)
+						{
+							setVisibility(View.INVISIBLE);
+						}
+
 						if (progress != null)
 						{
 							progress.setVisibility(View.VISIBLE);
