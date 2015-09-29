@@ -22,6 +22,7 @@
 			android:src="@drawable/ic_expand"
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
+			android:layout_marginLeft="8dp"
 		/>
 
 		<com.cube.storm.ui.view.TextView
@@ -41,6 +42,7 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/toggle_container"
 		android:orientation="vertical"
+		android:paddingTop="8dp"
 		android:visibility="gone"
 	>
 		<com.cube.storm.ui.view.TextView
