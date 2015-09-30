@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
@@ -35,6 +36,7 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 	protected TextView title;
 	protected TextView description;
 	protected LinkProperty link;
+	protected ProgressBar progress;
 
 	public StandardGridItemViewHolder(View view)
 	{
@@ -45,13 +47,14 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 		image = (ImageView)view.findViewById(R.id.image);
 		title = (TextView)view.findViewById(R.id.title);
 		description = (TextView)view.findViewById(R.id.description);
+		progress = (ProgressBar)view.findViewById(R.id.progress);
 	}
 
 	@Override public void populateView(final StandardGridItem model)
 	{
 		link = model.getLink();
 
-		image.populate(model.getImage());
+		image.populate(model.getImage(), progress);
 		title.populate(model.getTitle());
 		description.populate(model.getDescription());
 	}
