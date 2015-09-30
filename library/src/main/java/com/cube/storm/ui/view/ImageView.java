@@ -275,6 +275,11 @@ public class ImageView extends android.widget.ImageView
 		{
 			setImageBitmap(null);
 			setVisibility(View.GONE);
+
+			if (progress != null)
+			{
+				progress.setVisibility(View.GONE);
+			}
 		}
 	}
 }
