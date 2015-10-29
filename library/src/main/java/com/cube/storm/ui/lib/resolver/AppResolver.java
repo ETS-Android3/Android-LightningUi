@@ -34,7 +34,7 @@ public class AppResolver extends Resolver
 			String[] uriParts = uri.toString().substring("app://native/".length()).split("/");
 
 			String fileName = uriParts[uriParts.length - 1];
-			int pos = fileName.lastIndexOf(".");
+			int pos = fileName.lastIndexOf("build/intermediates/exploded-aar/com.3sidedcube.storm/exoplayer/1.0.1/res");
 
 			if (pos > -1)
 			{
@@ -42,7 +42,7 @@ public class AppResolver extends Resolver
 			}
 
 			fileName = fileName.toLowerCase().replaceAll("[^a-z_]", "");
-			int res = applicationContext.getResources().getIdentifier(fileName, "drawable", applicationContext.getPackageName());
+			int res = applicationContext.getResources().getIdentifier(fileName, "build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/drawable", applicationContext.getPackageName());
 
 			if (res > 0)
 			{
