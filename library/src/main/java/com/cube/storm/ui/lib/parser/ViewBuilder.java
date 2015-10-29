@@ -8,12 +8,18 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
+import com.cube.storm.ui.model.property.TextProperty;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * View parser used to process the json files into models to be used with the list/grid adapters
@@ -50,6 +56,26 @@ public abstract class ViewBuilder
 			{
 				builder.registerTypeAdapter(instanceClass, UiSettings.getInstance().getViewProcessors().get(instanceClass));
 			}
+
+			builder.registerTypeAdapter(TextProperty.class, new JsonDeserializer<TextProperty>()
+			{
+				@Override public TextProperty deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
+				{
+					JsonElement content = json.getAsJsonObject().get("content");
+					if (content.isJsonPrimitive())
+					{
+						TextProperty text = new TextProperty();
+						text.setContent(new HashMap<String, String>());
+						text.getContent().put(Locale.getDefault().getLanguage(), content.getAsString());
+
+						return text;
+					}
+					else
+					{
+						return new Gson().fromJson(json, TextProperty.class);
+					}
+				}
+			});
 
 			viewBuilder = builder.create();
 		}
