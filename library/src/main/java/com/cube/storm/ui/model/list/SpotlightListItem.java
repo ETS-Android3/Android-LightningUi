@@ -6,7 +6,10 @@ import com.cube.storm.ui.model.property.SpotlightImageProperty;
 
 import java.util.ArrayList;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * List item class that displays a series of rotating images with text overlaid on top.
@@ -14,9 +17,11 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class SpotlightListItem extends ListItem
 {
-	@Getter protected ArrayList<SpotlightImageProperty> spotlights;
+	protected ArrayList<SpotlightImageProperty> spotlights;
 
 	@Override public int describeContents()
 	{

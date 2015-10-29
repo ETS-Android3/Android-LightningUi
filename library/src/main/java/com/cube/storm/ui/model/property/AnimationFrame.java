@@ -6,7 +6,10 @@ import com.cube.storm.ui.model.Model;
 
 import java.util.ArrayList;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * Animation frame class that has an array of {@link com.cube.storm.ui.model.property.ImageProperty} and a delay used
@@ -15,10 +18,12 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class AnimationFrame extends Model
 {
-	@Getter private ArrayList<ImageProperty> image;
-	@Getter private long delay;
+	protected ArrayList<ImageProperty> image;
+	protected long delay;
 
 	@Override public int describeContents()
 	{

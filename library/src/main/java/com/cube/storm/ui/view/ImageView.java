@@ -5,18 +5,20 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.lib.helper.ImageHelper;
+import com.cube.storm.ui.model.property.AnimationFrame;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +35,7 @@ public class ImageView extends android.widget.ImageView
 	 */
 	public interface OnAnimationFrameChangeListener
 	{
-		void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame);
+		public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame);
 	}
 
 	/**
@@ -42,7 +44,7 @@ public class ImageView extends android.widget.ImageView
 	private Handler animator = null;
 
 	/**
-	 * Runnable used to update the curent frame. Null until an animation is explicitly
+	 * Runnable used to update the current frame. Null until an animation is explicitly
 	 */
 	private Runnable displayNextFrame = null;
 
@@ -61,18 +63,13 @@ public class ImageView extends android.widget.ImageView
 		super(context, attrs, defStyleAttr);
 	}
 
-	public ImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-	{
-		super(context, attrs, defStyleAttr, defStyleRes);
-	}
-
 	/**
 	 * Alternately display each of a sequence of Storm animation frames.
 	 *
 	 * @param frames
 	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
 	 */
-	public void populate(@Nullable final List<? extends AnimationImageProperty> frames)
+	public void populate(@Nullable final AnimationImageProperty frames)
 	{
 		populate(frames, null);
 	}
@@ -81,16 +78,15 @@ public class ImageView extends android.widget.ImageView
 	 * Alternately display each of a sequence of Storm animation frames, alerting an optional listener whenever the
 	 * frame changes.
 	 *
-	 * @param frames
-	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
+	 * @param imageProperty If null, the current image is cleared and all pending animation tasks are cancelled.
 	 * @param listener
 	 */
-	public void populate(@Nullable final List<? extends AnimationImageProperty> frames, @Nullable final OnAnimationFrameChangeListener listener)
+	public void populate(@Nullable final AnimationImageProperty imageProperty, @Nullable final OnAnimationFrameChangeListener listener)
 	{
 		// Cancel all current loading tasks
-		populate((ImageProperty)null);
+		populate((ArrayList<ImageProperty>)null);
 
-		if (frames != null)
+		if (imageProperty != null)
 		{
 			if (animator == null)
 			{
@@ -103,22 +99,23 @@ public class ImageView extends android.widget.ImageView
 
 				@Override public void run()
 				{
-					AnimationImageProperty frame = frames.get(frameIndex % frames.size());
-					populateFrame(frame, null);
+					AnimationFrame frame = imageProperty.getFrames().get(frameIndex % imageProperty.getFrames().size());
+					populateFrame(frame.getImage(), null);
 
 					if (listener != null)
 					{
-						listener.onAnimationFrameChange(ImageView.this, frameIndex % frames.size(), frame);
+						listener.onAnimationFrameChange(ImageView.this, frameIndex % imageProperty.getFrames().size(), imageProperty);
 					}
 
 					++frameIndex;
 
-					if (frames.size() > 1)
+					if (imageProperty.getFrames().size() > 1)
 					{
 						animator.postDelayed(this, frame.getDelay());
 					}
 				}
 			};
+
 			animator.post(displayNextFrame);
 		}
 	}
@@ -171,11 +168,11 @@ public class ImageView extends android.widget.ImageView
 	 */
 	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, @NonNull final TextView textView, @Nullable final OnAnimationFrameChangeListener listener)
 	{
-		populate(frames, new OnAnimationFrameChangeListener()
+		populate((AnimationImageProperty)frames, new OnAnimationFrameChangeListener()
 		{
 			@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame)
 			{
-				SpotlightImageProperty spotlightFrame = (SpotlightImageProperty)frame;
+				SpotlightImageProperty spotlightFrame = (SpotlightImageProperty)frame.getFrames().get(frameIndex);
 				textView.populate(spotlightFrame.getText(), spotlightFrame.getLink());
 
 				if (listener != null)
@@ -192,7 +189,7 @@ public class ImageView extends android.widget.ImageView
 	 * @param image
 	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
 	 */
-	public void populate(@Nullable final ImageProperty image)
+	public void populate(@Nullable final ArrayList<ImageProperty> image)
 	{
 		populate(image, null);
 	}
@@ -205,7 +202,7 @@ public class ImageView extends android.widget.ImageView
 	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
 	 * @param progress
 	 */
-	public void populate(@Nullable final ImageProperty image, @Nullable final ProgressBar progress)
+	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress)
 	{
 		// The user is explicitly setting a static image so cancel the animation task
 		if (animator != null && displayNextFrame != null)
@@ -222,64 +219,49 @@ public class ImageView extends android.widget.ImageView
 	 * @param image
 	 * @param progress
 	 */
-	private void populateFrame(@Nullable final ImageProperty image, @Nullable final ProgressBar progress)
+	private void populateFrame(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress)
 	{
 		UiSettings.getInstance().getImageLoader().cancelDisplayTask(this);
 
-		if (image != null && (!TextUtils.isEmpty(image.getSrc()) || !TextUtils.isEmpty(image.getFallbackSrc())))
+		if (image != null)
 		{
-			//setVisibility(View.INVISIBLE);
-			UiSettings.getInstance()
-				.getImageLoader()
-				.displayImage(TextUtils.isEmpty(image.getSrc()) ? image.getFallbackSrc() : image.getSrc(), this, new SimpleImageLoadingListener()
+			ImageHelper.displayImage(this, image, new SimpleImageLoadingListener()
+			{
+				@Override public void onLoadingStarted(String imageUri, View view)
 				{
-					@Override public void onLoadingStarted(String imageUri, View view)
+					if (animator == null)
 					{
-						if (animator == null)
-						{
-							setVisibility(View.INVISIBLE);
-						}
-
-						if (progress != null)
-						{
-							progress.setVisibility(View.VISIBLE);
-						}
+						setVisibility(View.INVISIBLE);
 					}
 
-					@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+					if (progress != null)
 					{
-						if (!imageUri.equalsIgnoreCase(image.getFallbackSrc()))
-						{
-							UiSettings.getInstance().getImageLoader().displayImage(image.getFallbackSrc(), ImageView.this, this);
-							return;
-						}
-
-						setVisibility(View.GONE);
-						if (progress != null)
-						{
-							progress.setVisibility(View.GONE);
-						}
+						progress.setVisibility(View.VISIBLE);
 					}
+				}
 
-					@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
+				{
+					setVisibility(View.GONE);
+					if (progress != null)
 					{
-						setVisibility(View.VISIBLE);
-						if (progress != null)
-						{
-							progress.setVisibility(View.GONE);
-						}
+						progress.setVisibility(View.GONE);
 					}
-				});
+				}
+
+				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+				{
+					setVisibility(View.VISIBLE);
+					if (progress != null)
+					{
+						progress.setVisibility(View.GONE);
+					}
+				}
+			});
 		}
 		else
 		{
 			setImageBitmap(null);
-			setVisibility(View.GONE);
-
-			if (progress != null)
-			{
-				progress.setVisibility(View.GONE);
-			}
 		}
 	}
 }
