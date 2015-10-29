@@ -2,7 +2,10 @@ package com.cube.storm.ui.lib.processor;
 
 import android.support.annotation.Nullable;
 
+import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.util.lib.processor.Processor;
+
+import java.util.Locale;
 
 /**
  * Processor class used for dealing with {@link com.cube.storm.ui.model.property.TextProperty#content} strings by processing them
@@ -13,16 +16,16 @@ import com.cube.storm.util.lib.processor.Processor;
  * @author Callum Taylor
  * @project Lightning
  */
-public class TextProcessor extends Processor<String, String>
+public class TextProcessor extends Processor<TextProperty, String>
 {
 	@Nullable
-	@Override public String process(@Nullable String textProperty)
+	@Override public String process(@Nullable TextProperty textProperty)
 	{
-		if (textProperty == null)
+		if (textProperty != null && textProperty.getContent().containsKey(Locale.getDefault().getLanguage()))
 		{
-			return "";
+			return String.valueOf(textProperty.getContent().get(Locale.getDefault().getLanguage()));
 		}
 
-		return String.valueOf(textProperty);
+		return "";
 	}
 }
