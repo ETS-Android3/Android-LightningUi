@@ -3,8 +3,12 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.view.View;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A view model with a description property
@@ -12,9 +16,13 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class TextListItem extends ListItem
 {
-	@Getter protected TextProperty description;
+	{ this.className = View.TextListItem.name(); }
+
+	protected TextProperty description;
 
 	@Override public int describeContents()
 	{

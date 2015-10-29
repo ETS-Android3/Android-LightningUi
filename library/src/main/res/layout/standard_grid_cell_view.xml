@@ -31,11 +31,13 @@
 		android:gravity="center_horizontal"
 		android:layout_gravity="center_horizontal"
 		android:layout_marginTop="4dp"
+		android:visibility="gone"
 	/>
 
 	<com.cube.storm.ui.view.TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/description"
+		android:visibility="gone"
 	/>
 </LinearLayout>

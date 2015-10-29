@@ -24,7 +24,8 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-def setupPomInfo(pom) {
+def setupPomInfo(pom)
+{
 	pom.groupId = GROUP
 	pom.artifactId = POM_ARTIFACT_ID
 	pom.version = VERSION_NAME
@@ -106,21 +107,34 @@ afterEvaluate { project ->
 		source "${buildDir}/generated/source/buildConfig/release/"
 		source "${buildDir}/generated/source/r/release/"
 
-		classpath = files(androidJar) + files (matchingVariant.javaCompile.classpath.files)
+		classpath = files(androidJar) + files(matchingVariant.javaCompile.classpath.files)
 
 		options {
-			linksOffline 'http://d.android.com/reference', "${android.sdkDirectory}/docs/reference"
 			charSet = 'UTF-8'
 			use = true
 			splitIndex = true
 		}
+
+		options.links("http://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/", "com.google.gson")
+		options.linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference");
+		options.links("http://docs.oracle.com/javase/7/docs/api/");
+
+		// exclude generated files
+		exclude '**/BuildConfig.java'
+		exclude '**/R.java'
+
+		// exclude any internal packages
+		exclude '**/com/acme/sdk/api/**'
 	}
 
 	androidMavenJavadocs.dependsOn {
 		// Use the delomboked source instead of the raw source if applicable.
-		if (tasks.findByPath('delombok')) {
+		if (tasks.findByPath('delombok'))
+		{
 			tasks.delombok
-		} else {
+		}
+		else
+		{
 			[tasks.processReleaseResources, tasks.generateReleaseBuildConfig]
 		}
 	}

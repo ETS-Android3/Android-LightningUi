@@ -15,6 +15,7 @@ import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.NativeLinkProperty;
 import com.cube.storm.ui.model.property.ShareLinkProperty;
+import com.cube.storm.ui.model.property.SmsLinkProperty;
 import com.cube.storm.ui.model.property.UriLinkProperty;
 
 import java.util.Locale;
@@ -62,6 +63,22 @@ public class LinkHandler
 				if (toLoad != null)
 				{
 					context.startActivity(toLoad);
+				}
+			}
+		}
+		else if (link instanceof SmsLinkProperty)
+		{
+			if (((SmsLinkProperty)link).getRecipients().size() > 0)
+			{
+				try
+				{
+					Intent sendIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:" + ((SmsLinkProperty)link).getRecipients().get(0)));
+					sendIntent.putExtra("sms_body", UiSettings.getInstance().getTextProcessor().process(((SmsLinkProperty)link).getBody().getContent()));
+					context.startActivity(sendIntent);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
 				}
 			}
 		}

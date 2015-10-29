@@ -3,10 +3,15 @@ package com.cube.storm.ui.model.page;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
+import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
+import java.util.List;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * // TODO: Add class description
@@ -14,9 +19,13 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class TabbedPageCollection extends PageCollection
 {
-	@Getter protected Collection<TabbedPageDescriptor> pages;
+	{ this.className = View.TabbedPageCollection.name(); }
+
+	protected List<TabbedPageDescriptor> pages;
 
 	@Override public int describeContents()
 	{

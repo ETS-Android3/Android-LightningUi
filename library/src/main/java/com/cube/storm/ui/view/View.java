@@ -6,12 +6,13 @@ import com.cube.storm.ui.model.property.ExternalLinkProperty;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.NativeLinkProperty;
 import com.cube.storm.ui.model.property.ShareLinkProperty;
+import com.cube.storm.ui.model.property.SmsLinkProperty;
 import com.cube.storm.ui.model.property.UriLinkProperty;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.ui.view.holder.grid.GridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.StandardGridItemViewHolder;
-import com.cube.storm.ui.view.holder.list.AnimationListItemViewHolder;
+import com.cube.storm.ui.view.holder.list.AnimatedImageListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.AppCollectionItemViewHolder;
 import com.cube.storm.ui.view.holder.list.ButtonListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.CheckableListItemViewHolder;
@@ -66,7 +67,7 @@ public enum View
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemViewHolder.Factory.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemViewHolder.Factory.class),
 	SpotlightListItem(com.cube.storm.ui.model.list.SpotlightListItem.class, SpotlightListItemViewHolder.Factory.class),
-	AnimationListItem(com.cube.storm.ui.model.list.AnimationListItem.class, AnimationListItemViewHolder.Factory.class),
+	AnimatedImageListItem(com.cube.storm.ui.model.list.AnimatedImageListItem.class, AnimatedImageListItemViewHolder.Factory.class),
 	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemViewHolder.Factory.class),
 
 	/**
@@ -104,6 +105,7 @@ public enum View
 	ExternalLink(ExternalLinkProperty.class, null),
 	UriLink(UriLinkProperty.class, null),
 	ShareLink(ShareLinkProperty.class, null),
+	SmsLink(SmsLinkProperty.class, null),
 	NativeLink(NativeLinkProperty.class, null);
 
 	private Class<? extends Model> model;

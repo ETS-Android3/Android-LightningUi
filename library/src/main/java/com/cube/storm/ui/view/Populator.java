@@ -15,12 +15,13 @@ import com.cube.storm.ui.model.property.LinkProperty;
  */
 public abstract class Populator
 {
-	public static void populate(ViewGroup embeddedLinksContainer, Iterable<LinkProperty> linkProperties)
+	public static void populate(ViewGroup embeddedLinksContainer, Iterable<? extends LinkProperty> linkProperties)
 	{
+		embeddedLinksContainer.setVisibility(View.GONE);
+		embeddedLinksContainer.removeAllViews();
+
 		if (linkProperties != null)
 		{
-			embeddedLinksContainer.removeAllViews();
-
 			for (LinkProperty linkProperty : linkProperties)
 			{
 				View embeddedLinkView = LayoutInflater.from(embeddedLinksContainer.getContext()).inflate(R.layout.button_embedded_link, embeddedLinksContainer, false);

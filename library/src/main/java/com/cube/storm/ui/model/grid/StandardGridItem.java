@@ -5,10 +5,14 @@ import android.os.Parcel;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * // TODO: Add class description
@@ -16,12 +20,16 @@ import lombok.Getter;
  * @author Matt Allen
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class StandardGridItem extends GridItem
 {
-	@Getter protected ArrayList<ImageProperty> image;
-	@Getter protected LinkProperty link;
-	@Getter protected TextProperty description;
-	@Getter protected TextProperty title;
+	{ this.className = View.StandardGridItem.name(); }
+
+	protected ArrayList<ImageProperty> image;
+	protected LinkProperty link;
+	protected TextProperty description;
+	protected TextProperty title;
 
 	@Override public int describeContents()
 	{

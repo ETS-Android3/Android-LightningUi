@@ -2,7 +2,10 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * button property class.
@@ -10,10 +13,14 @@ import lombok.Getter;
  * @author Alan Le Fournis
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class ButtonProperty extends Property
 {
-	@Getter private TextProperty title;
-	@Getter private LinkProperty link;
+	{ this.className = "Button"; }
+
+	private TextProperty title;
+	private LinkProperty link;
 
 	@Override public int describeContents()
 	{

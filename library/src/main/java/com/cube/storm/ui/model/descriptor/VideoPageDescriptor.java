@@ -8,5 +8,4 @@ package com.cube.storm.ui.model.descriptor;
  */
 public class VideoPageDescriptor extends PageDescriptor
 {
-
 }

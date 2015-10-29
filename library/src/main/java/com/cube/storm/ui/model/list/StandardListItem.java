@@ -4,10 +4,14 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * A view model with an image property
@@ -15,10 +19,14 @@ import lombok.Getter;
  * @author Alan Le Fournis
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class StandardListItem extends DescriptionListItem
 {
-	@Getter protected ArrayList<ImageProperty> image;
-	@Getter protected LinkProperty link;
+	{ this.className = View.StandardListItem.name(); }
+
+	protected ArrayList<ImageProperty> image;
+	protected LinkProperty link;
 
 	@Override public int describeContents()
 	{

@@ -1,6 +1,11 @@
 package com.cube.storm.ui.model.property;
 
-import lombok.Getter;
+import com.cube.storm.ui.view.View;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * Image property for {@link com.cube.storm.ui.model.list.SpotlightListItem}. Contains text to be overlaid on the image,
@@ -9,8 +14,13 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class SpotlightImageProperty extends AnimationFrame
 {
-	@Getter private TextProperty text;
-	@Getter private LinkProperty link;
+	{ this.className = View.SpotlightImage.name(); }
+
+	protected TextProperty text;
+	protected LinkProperty link;
 }

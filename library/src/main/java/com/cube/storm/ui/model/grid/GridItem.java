@@ -3,8 +3,12 @@ package com.cube.storm.ui.model.grid;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.view.View;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * // TODO: Add class description
@@ -12,9 +16,13 @@ import lombok.Getter;
  * @author Matt Allen
  * @Project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public abstract class GridItem extends Model
 {
-	@Getter protected Boolean spanned;
+	{ this.className = View.GridItem.name(); }
+
+	protected Boolean spanned;
 
 	@Override public int describeContents()
 	{
