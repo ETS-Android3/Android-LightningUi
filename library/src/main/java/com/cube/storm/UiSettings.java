@@ -23,6 +23,7 @@ import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
 import com.cube.storm.util.lib.resolver.FileResolver;
@@ -127,7 +128,7 @@ public class UiSettings
 	/**
 	 * Processor class used to process strings as part of {@link com.cube.storm.ui.model.property.TextProperty}
 	 */
-	@Getter @Setter private Processor<String, String> textProcessor;
+	@Getter @Setter private Processor<TextProperty, String> textProcessor;
 
 	/**
 	 * Uri resolver used to load a file based on it's protocol. You should not need to use this instance
@@ -349,7 +350,7 @@ public class UiSettings
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder textProcessor(Processor<String, String> textProcessor)
+		public Builder textProcessor(Processor<TextProperty, String> textProcessor)
 		{
 			construct.textProcessor = textProcessor;
 			return this;

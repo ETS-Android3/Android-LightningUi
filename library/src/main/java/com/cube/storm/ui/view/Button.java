@@ -47,7 +47,7 @@ public class Button extends android.widget.Button
 
 			if (button.getTitle() != null)
 			{
-				String buttonContent = UiSettings.getInstance().getTextProcessor().process(button.getTitle().getContent());
+				String buttonContent = UiSettings.getInstance().getTextProcessor().process(button.getTitle());
 
 				if (!TextUtils.isEmpty(buttonContent))
 				{
@@ -75,7 +75,7 @@ public class Button extends android.widget.Button
 
 			if (link.getTitle() != null)
 			{
-				String buttonContent = UiSettings.getInstance().getTextProcessor().process(link.getTitle().getContent());
+				String buttonContent = UiSettings.getInstance().getTextProcessor().process(link.getTitle());
 
 				if (!TextUtils.isEmpty(buttonContent))
 				{

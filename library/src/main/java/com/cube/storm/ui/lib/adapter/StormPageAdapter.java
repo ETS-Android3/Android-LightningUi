@@ -66,7 +66,7 @@ public class StormPageAdapter extends FragmentPagerAdapter implements IconTabPro
 			{
 				if (((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle() != null)
 				{
-					return UiSettings.getInstance().getTextProcessor().process(((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle().getContent());
+					return UiSettings.getInstance().getTextProcessor().process(((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getTitle());
 				}
 			}
 
@@ -77,7 +77,7 @@ public class StormPageAdapter extends FragmentPagerAdapter implements IconTabPro
 				tabName = fragmentPackage.getPageDescriptor().getName();
 			}
 
-			return UiSettings.getInstance().getTextProcessor().process(tabName);
+			return tabName;
 		}
 		else if (!TextUtils.isEmpty(fragmentPackage.getFragmentIntent().getTitle()))
 		{

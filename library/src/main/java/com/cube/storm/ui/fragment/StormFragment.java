@@ -82,7 +82,7 @@ public class StormFragment extends Fragment
 
 		if (page.getTitle() != null)
 		{
-			String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle().getContent());
+			String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle());
 
 			if (!TextUtils.isEmpty(title))
 			{

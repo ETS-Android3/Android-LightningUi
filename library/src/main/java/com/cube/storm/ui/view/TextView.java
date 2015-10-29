@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.cube.storm.UiSettings;
@@ -50,7 +49,7 @@ public class TextView extends android.widget.TextView
 
 		if (text != null)
 		{
-			String content = UiSettings.getInstance().getTextProcessor().process(text.getContent());
+			String content = UiSettings.getInstance().getTextProcessor().process(text);
 			if (!TextUtils.isEmpty(content))
 			{
 				// TODO: Don't overwrite user's custom clickListener
