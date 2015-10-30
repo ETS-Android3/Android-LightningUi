@@ -32,6 +32,7 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -98,10 +99,10 @@ public class UiSettings
 	@Getter @Setter private FileFactory fileFactory;
 
 	/**
-	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewBuilder}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Class, com.cube.storm.ui.lib.parser.ViewProcessor)} to
+	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewBuilder}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Type, com.cube.storm.ui.lib.parser.ViewProcessor)} to
 	 * override the processor used to match models with json class names
 	 */
-	@Getter @Setter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
+	@Getter @Setter private Map<Type, ViewProcessor> viewProcessors = new LinkedHashMap<Type, ViewProcessor>(0);
 
 	/**
 	 * Image loader which is used when displaying images in the list
@@ -362,7 +363,7 @@ public class UiSettings
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder registerType(Class instanceClass, ViewProcessor deserializer)
+		public Builder registerType(Type instanceClass, ViewProcessor deserializer)
 		{
 			construct.viewProcessors.put(instanceClass, deserializer);
 			return this;
