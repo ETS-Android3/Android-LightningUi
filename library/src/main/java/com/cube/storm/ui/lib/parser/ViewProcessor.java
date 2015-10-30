@@ -26,7 +26,7 @@ public abstract class ViewProcessor<T> extends GsonProcessor<T>
 	 */
 	public abstract Class<? extends T> getClassFromName(String name);
 
-	@Override public final T deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException
+	@Override public T deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException
 	{
 		arg0 = preInflate(arg0);
 
