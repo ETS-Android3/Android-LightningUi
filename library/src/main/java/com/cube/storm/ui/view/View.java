@@ -3,11 +3,13 @@ package com.cube.storm.ui.view;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.property.DestinationLinkProperty;
 import com.cube.storm.ui.model.property.ExternalLinkProperty;
+import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
 import com.cube.storm.ui.model.property.NativeLinkProperty;
 import com.cube.storm.ui.model.property.ShareLinkProperty;
 import com.cube.storm.ui.model.property.SmsLinkProperty;
 import com.cube.storm.ui.model.property.UriLinkProperty;
+import com.cube.storm.ui.model.property.VideoProperty;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.ui.view.holder.grid.GridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemViewHolder;
@@ -100,6 +102,8 @@ public enum View
 	/**
 	 * Properties
 	 */
+	Image(ImageProperty.class, null),
+	Video(VideoProperty.class, null),
 	DestinationLink(DestinationLinkProperty.class, null),
 	InternalLink(InternalLinkProperty.class, null),
 	ExternalLink(ExternalLinkProperty.class, null),

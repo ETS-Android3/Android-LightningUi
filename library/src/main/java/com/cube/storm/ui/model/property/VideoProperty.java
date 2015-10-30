@@ -2,6 +2,8 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.view.View;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class VideoProperty extends Property
 {
-	{ this.className = "Video"; }
+	{ this.className = View.Video.name(); }
 
 	protected String locale;
 	protected ExternalLinkProperty src;
