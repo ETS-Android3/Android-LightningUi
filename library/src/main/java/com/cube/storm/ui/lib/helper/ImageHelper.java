@@ -70,7 +70,14 @@ public class ImageHelper
 	@Nullable
 	public static String getImageSrc(@NonNull List<? extends ImageProperty> images, int width, int height)
 	{
-		return getImageProperty(images, width, height).getSrc().getDestination();
+		ImageProperty imageProperty = getImageProperty(images, width, height);
+
+		if (imageProperty != null)
+		{
+			return imageProperty.getSrc().getDestination();
+		}
+
+		return null;
 	}
 
 	@Nullable
