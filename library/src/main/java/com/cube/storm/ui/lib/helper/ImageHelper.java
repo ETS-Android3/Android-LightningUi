@@ -111,19 +111,14 @@ public class ImageHelper
 		}
 		else
 		{
-			int area = width * height;
-			double ratio = (double)width / (double)height;
 			int closest = 0;
-			double bestRatio = 0;
-
 			for (int index = 0, count = images.size(); index < count; index++)
 			{
 				int imageWidth = images.get(index).getDimensions().getWidth();
 				int imageHeight = images.get(index).getDimensions().getHeight();
 
-				if (imageWidth >= width && imageHeight >= height && imageWidth * imageHeight >= bestRatio)
+				if (width >= imageWidth && height >= imageHeight)
 				{
-					bestRatio = imageWidth * imageHeight;
 					closest = index;
 				}
 			}

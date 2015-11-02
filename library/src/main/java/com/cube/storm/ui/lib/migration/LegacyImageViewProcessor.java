@@ -1,5 +1,8 @@
 package com.cube.storm.ui.lib.migration;
 
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.cube.storm.UiSettings;
@@ -12,6 +15,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,25 +52,40 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 					JsonObject newImageDimensions = new JsonObject();
 
 					int w = 0, h = 0;
-					if (stringJsonElementEntry.getKey().equals("x0.75"))
+
+					InputStream imageStream = UiSettings.getInstance().getFileFactory().loadFromUri(Uri.parse(image.getAsString()));
+					if (imageStream != null)
 					{
-						w = 512;
-						h = 512;
+						BitmapFactory.Options opts = new BitmapFactory.Options();
+						opts.inJustDecodeBounds = true;
+						BitmapFactory.decodeStream(imageStream, new Rect(0, 0, 0, 0), opts);
+
+						w = opts.outWidth;
+						h = opts.outHeight;
 					}
-					else if (stringJsonElementEntry.getKey().equals("x1"))
+
+					if (w == 0 && h == 0)
 					{
-						w = 1024;
-						h = 1024;
-					}
-					else if (stringJsonElementEntry.getKey().equals("x1.5"))
-					{
-						w = 1356;
-						h = 1356;
-					}
-					else if (stringJsonElementEntry.getKey().equals("x2"))
-					{
-						w = 2048;
-						h = 2048;
+						if (stringJsonElementEntry.getKey().equals("x0.75"))
+						{
+							w = 512;
+							h = 512;
+						}
+						else if (stringJsonElementEntry.getKey().equals("x1"))
+						{
+							w = 1024;
+							h = 1024;
+						}
+						else if (stringJsonElementEntry.getKey().equals("x1.5"))
+						{
+							w = 1356;
+							h = 1356;
+						}
+						else if (stringJsonElementEntry.getKey().equals("x2"))
+						{
+							w = 2048;
+							h = 2048;
+						}
 					}
 
 					newImageDimensions.addProperty("width", w);
