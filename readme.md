@@ -49,6 +49,20 @@ This will use the `vector` string in your App.json to determine what page to loa
 
 There are many options in the UiSettings object that allows you to override specific parts of the module.
 
+##Language
+
+In order to support the use of the Language module, you must include the following code for your UiSettings Builder
+
+```java
+.textProcessor(new TextProcessor()
+{
+    @Nullable @Override public String process(@Nullable TextProperty textProperty)
+    {
+        return new LanguageTextProcessor().process(super.process(textProperty));
+    }
+})
+```
+
 #Documentation
 
 See the [Javadoc](http://3sidedcube.github.io/Android-LightningUi/) for full in-depth code-level documentation

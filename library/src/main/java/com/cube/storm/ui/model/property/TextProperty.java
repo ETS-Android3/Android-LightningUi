@@ -2,6 +2,8 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,7 @@ public class TextProperty extends Property
 {
 	{ this.className = "Text"; }
 
-	protected String content;
+	protected Map<String, String> content;
 
 	@Override public int describeContents()
 	{

@@ -49,7 +49,7 @@ public class TextListItemView extends LinearLayout
 	{
 		if (model.getDescription() != null)
 		{
-			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent()));
+			title.setText(UiSettings.getInstance().getTextProcessor().process(model.getDescription()));
 		}
 	}
 }

@@ -145,7 +145,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (item instanceof List)
 		{
-			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader().getContent())))
+			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader())))
 			{
 				ListHeader header = new ListHeader();
 				header.setHeader(((List)item).getHeader());
@@ -164,7 +164,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 				}
 			}
 
-			if (((List)item).getFooter() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getFooter().getContent())))
+			if (((List)item).getFooter() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getFooter())))
 			{
 				ListFooter footer = new ListFooter();
 				footer.setFooter(((List)item).getFooter());

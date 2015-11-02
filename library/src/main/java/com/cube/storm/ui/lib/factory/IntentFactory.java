@@ -52,7 +52,7 @@ public abstract class IntentFactory
 
 		if (pageData instanceof ListPage)
 		{
-			intent = new FragmentIntent(StormFragment.class, pageData.getTitle() != null ? pageData.getTitle().getContent() : "", arguments);
+			intent = new FragmentIntent(StormFragment.class, pageData.getTitle() != null ? UiSettings.getInstance().getTextProcessor().process(pageData.getTitle()) : "", arguments);
 			return intent;
 		}
 

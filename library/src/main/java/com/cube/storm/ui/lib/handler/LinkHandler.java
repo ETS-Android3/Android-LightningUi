@@ -73,7 +73,7 @@ public class LinkHandler
 				try
 				{
 					Intent sendIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:" + ((SmsLinkProperty)link).getRecipients().get(0)));
-					sendIntent.putExtra("sms_body", UiSettings.getInstance().getTextProcessor().process(((SmsLinkProperty)link).getBody().getContent()));
+					sendIntent.putExtra("sms_body", UiSettings.getInstance().getTextProcessor().process(((SmsLinkProperty)link).getBody()));
 					context.startActivity(sendIntent);
 				}
 				catch (Exception e)
@@ -86,7 +86,7 @@ public class LinkHandler
 		{
 			Intent shareIntent = new Intent(Intent.ACTION_SEND);
 			shareIntent.setType("text/plain");
-			shareIntent.putExtra(Intent.EXTRA_TEXT, UiSettings.getInstance().getTextProcessor().process(((ShareLinkProperty)link).getBody().getContent()));
+			shareIntent.putExtra(Intent.EXTRA_TEXT, UiSettings.getInstance().getTextProcessor().process(((ShareLinkProperty)link).getBody()));
 			context.startActivity(shareIntent);
 		}
 		else if (link instanceof UriLinkProperty)
