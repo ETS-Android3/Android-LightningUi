@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.LinkProperty;
-import com.cube.storm.ui.view.View;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +19,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class LogoListItem extends ImageListItem
 {
-	{ this.className = View.LogoListItem.name(); }
-
 	protected LinkProperty link;
 
 	@Override public int describeContents()

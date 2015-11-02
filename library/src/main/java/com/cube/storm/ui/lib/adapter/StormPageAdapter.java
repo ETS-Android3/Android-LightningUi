@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.data.FragmentPackage;
+import com.cube.storm.ui.lib.helper.ImageHelper;
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.view.PagerSlidingTabStrip.IconTabProvider;
@@ -101,14 +102,10 @@ public class StormPageAdapter extends FragmentPagerAdapter implements IconTabPro
 		{
 			if (((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getImage() != null)
 			{
-				ImageProperty imageProperty = ((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getImage();
+				ArrayList<ImageProperty> imageProperty = ((TabbedPageDescriptor)fragmentPackage.getPageDescriptor()).getTabBarItem().getImage();
+				String imageSrc = ImageHelper.getImageSrc(imageProperty);
 
-				image = UiSettings.getInstance().getImageLoader().loadImageSync(imageProperty.getSrc());
-
-				if (image == null && !TextUtils.isEmpty(imageProperty.getFallbackSrc()))
-				{
-					image = UiSettings.getInstance().getImageLoader().loadImageSync(imageProperty.getFallbackSrc());
-				}
+				image = UiSettings.getInstance().getImageLoader().loadImageSync(imageSrc);
 
 				return image;
 			}

@@ -7,6 +7,8 @@ import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.ui.view.View;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,7 @@ public class StandardGridItem extends GridItem
 {
 	{ this.className = View.StandardGridItem.name(); }
 
-	protected ImageProperty image;
+	protected ArrayList<ImageProperty> image;
 	protected LinkProperty link;
 	protected TextProperty description;
 	protected TextProperty title;

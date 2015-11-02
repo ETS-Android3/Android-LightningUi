@@ -1,11 +1,10 @@
-package com.cube.storm.ui.model.list;
+package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.model.property.SpotlightImageProperty;
-import com.cube.storm.ui.view.View;
+import com.cube.storm.ui.model.Model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,18 +12,18 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * // TODO: Add class description
+ * Animation frame class that has an array of {@link com.cube.storm.ui.model.property.ImageProperty} and a delay used
+ * in {@link com.cube.storm.ui.model.property.AnimationImageProperty}
  *
- * @author Matt Allen
+ * @author Callum Taylor
  * @project LightningUi
  */
 @NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
 @Accessors(chain = true) @Data
-public class SpotlightImageListItem extends ListItem
+public class AnimationFrame extends Model
 {
-	{ this.className = View.SpotlightImageListItem.name(); }
-
-	protected List<SpotlightImageProperty> images;
+	protected ArrayList<ImageProperty> image;
+	protected long delay;
 
 	@Override public int describeContents()
 	{

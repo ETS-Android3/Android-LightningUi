@@ -1,17 +1,15 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
-import com.cube.storm.ui.model.property.AnimationImageProperty;
-import com.cube.storm.ui.model.property.BundleImageProperty;
 import com.cube.storm.ui.model.property.DestinationLinkProperty;
 import com.cube.storm.ui.model.property.ExternalLinkProperty;
+import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.InternalLinkProperty;
-import com.cube.storm.ui.model.property.NativeImageProperty;
 import com.cube.storm.ui.model.property.NativeLinkProperty;
 import com.cube.storm.ui.model.property.ShareLinkProperty;
 import com.cube.storm.ui.model.property.SmsLinkProperty;
-import com.cube.storm.ui.model.property.SpotlightImageProperty;
 import com.cube.storm.ui.model.property.UriLinkProperty;
+import com.cube.storm.ui.model.property.VideoProperty;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.ui.view.holder.grid.GridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemViewHolder;
@@ -29,7 +27,7 @@ import com.cube.storm.ui.view.holder.list.ListFooterViewHolder;
 import com.cube.storm.ui.view.holder.list.ListHeaderViewHolder;
 import com.cube.storm.ui.view.holder.list.LogoListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.OrderedListItemViewHolder;
-import com.cube.storm.ui.view.holder.list.SpotlightImageListItemViewHolder;
+import com.cube.storm.ui.view.holder.list.SpotlightListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.StandardListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.TextListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.TitleListItemViewHolder;
@@ -70,7 +68,7 @@ public enum View
 	ToggleableListItem(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemViewHolder.Factory.class),
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemViewHolder.Factory.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemViewHolder.Factory.class),
-	SpotlightImageListItem(com.cube.storm.ui.model.list.SpotlightImageListItem.class, SpotlightImageListItemViewHolder.Factory.class),
+	SpotlightListItem(com.cube.storm.ui.model.list.SpotlightListItem.class, SpotlightListItemViewHolder.Factory.class),
 	AnimatedImageListItem(com.cube.storm.ui.model.list.AnimatedImageListItem.class, AnimatedImageListItemViewHolder.Factory.class),
 	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemViewHolder.Factory.class),
 
@@ -104,11 +102,8 @@ public enum View
 	/**
 	 * Properties
 	 */
-	Image(BundleImageProperty.class, null),
-	NativeImage(NativeImageProperty.class, null),
-	Icon(BundleImageProperty.class, null),
-	AnimationImage(AnimationImageProperty.class, null),
-	SpotlightImage(SpotlightImageProperty.class, null),
+	Image(ImageProperty.class, null),
+	Video(VideoProperty.class, null),
 	DestinationLink(DestinationLinkProperty.class, null),
 	InternalLink(InternalLinkProperty.class, null),
 	ExternalLink(ExternalLinkProperty.class, null),

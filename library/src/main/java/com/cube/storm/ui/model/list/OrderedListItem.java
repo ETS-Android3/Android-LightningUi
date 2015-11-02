@@ -2,12 +2,7 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.view.View;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import lombok.Getter;
 
 /**
  * A view model
@@ -15,13 +10,9 @@ import lombok.experimental.Accessors;
  * @author Alan Le Fournis
  * @project LightningUi
  */
-@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
-@Accessors(chain = true) @Data
 public class OrderedListItem extends DescriptionListItem
 {
-	{ this.className = View.OrderedListItem.name(); }
-
-	protected String annotation;
+	@Getter protected String annotation;
 
 	@Override public int describeContents()
 	{

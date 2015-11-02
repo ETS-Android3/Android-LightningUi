@@ -47,7 +47,7 @@ public interface ImageDownloader
 	 */
 	public enum Scheme
 	{
-		HTTP("http"), HTTPS("https"), FILE("file"), CONTENT("content"), ASSETS("assets"), DRAWABLE("drawable"), UNKNOWN("");
+		HTTP("http"), HTTPS("https"), FILE("file"), CONTENT("content"), ASSETS("assets"), DRAWABLE("build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/drawable"), UNKNOWN("");
 
 		private String scheme;
 		private String uriPrefix;

@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.cube.storm.ui.data.ContentDensity;
+import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.factory.ViewFactory;
@@ -21,7 +21,6 @@ import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
-import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
@@ -33,6 +32,7 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -99,10 +99,10 @@ public class UiSettings
 	@Getter @Setter private FileFactory fileFactory;
 
 	/**
-	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewBuilder}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Class, com.cube.storm.ui.lib.parser.ViewProcessor)} to
+	 * The view processor map used by {@link com.cube.storm.ui.lib.parser.ViewBuilder}. Use {@link com.cube.storm.UiSettings.Builder#registerType(Type, com.cube.storm.ui.lib.parser.ViewProcessor)} to
 	 * override the processor used to match models with json class names
 	 */
-	@Getter @Setter private Map<Class, ViewProcessor> viewProcessors = new LinkedHashMap<Class, ViewProcessor>(0);
+	@Getter @Setter private Map<Type, ViewProcessor> viewProcessors = new LinkedHashMap<Type, ViewProcessor>(0);
 
 	/**
 	 * Image loader which is used when displaying images in the list
@@ -112,7 +112,7 @@ public class UiSettings
 	/**
 	 * The density to use when loading images
 	 */
-	@Getter @Setter private ContentDensity contentDensity;
+	@Getter @Setter private ContentSize contentSize;
 
 	/**
 	 * The handler used when a link is triggered
@@ -181,7 +181,7 @@ public class UiSettings
 			linkHandler(new LinkHandler());
 			textProcessor(new TextProcessor());
 
-			contentDensity(ContentDensity.x1_00);
+			contentSize(ContentSize.MEDIUM);
 
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
 			{
@@ -194,7 +194,6 @@ public class UiSettings
 			registerType(Page.class, baseProcessor);
 			registerType(ListItem.class, baseProcessor);
 			registerType(CollectionItem.class, baseProcessor);
-			registerType(ImageProperty.class, baseProcessor);
 			registerType(LinkProperty.class, baseProcessor);
 
 			registerUriResolver("file", new FileResolver());
@@ -304,15 +303,15 @@ public class UiSettings
 		}
 
 		/**
-		 * Sets the default {@link com.cube.storm.ui.data.ContentDensity} for the module
+		 * Sets the default {@link com.cube.storm.ui.data.ContentSize} for the module
 		 *
-		 * @param contentDensity The new {@link com.cube.storm.ui.data.ContentDensity}
+		 * @param contentSize The new {@link com.cube.storm.ui.data.ContentSize}
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder contentDensity(ContentDensity contentDensity)
+		public Builder contentSize(ContentSize contentSize)
 		{
-			construct.contentDensity = contentDensity;
+			construct.contentSize = contentSize;
 			return this;
 		}
 
@@ -364,7 +363,7 @@ public class UiSettings
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder registerType(Class instanceClass, ViewProcessor deserializer)
+		public Builder registerType(Type instanceClass, ViewProcessor deserializer)
 		{
 			construct.viewProcessors.put(instanceClass, deserializer);
 			return this;

@@ -46,7 +46,7 @@ public abstract class ViewBuilder
 		{
 			GsonBuilder builder = new GsonBuilder();
 
-			for (Class instanceClass : UiSettings.getInstance().getViewProcessors().keySet())
+			for (Type instanceClass : UiSettings.getInstance().getViewProcessors().keySet())
 			{
 				builder.registerTypeAdapter(instanceClass, UiSettings.getInstance().getViewProcessors().get(instanceClass));
 			}

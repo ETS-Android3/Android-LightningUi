@@ -6,6 +6,8 @@ import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.View;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,7 @@ public class StandardListItem extends DescriptionListItem
 {
 	{ this.className = View.StandardListItem.name(); }
 
-	protected ImageProperty image;
+	protected ArrayList<ImageProperty> image;
 	protected LinkProperty link;
 
 	@Override public int describeContents()
@@ -33,6 +35,5 @@ public class StandardListItem extends DescriptionListItem
 
 	@Override public void writeToParcel(Parcel dest, int flags)
 	{
-
 	}
 }

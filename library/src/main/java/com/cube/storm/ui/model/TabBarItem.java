@@ -5,6 +5,8 @@ import android.os.Parcel;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.TextProperty;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 
 /**
@@ -16,7 +18,7 @@ import lombok.Getter;
 public class TabBarItem extends Model
 {
 	@Getter protected TextProperty title;
-	@Getter protected ImageProperty image;
+	@Getter protected ArrayList<ImageProperty> image;
 
 	@Override public int describeContents()
 	{

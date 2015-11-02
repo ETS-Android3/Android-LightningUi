@@ -9,6 +9,7 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -24,7 +25,7 @@ public class AnimatedImageListItem extends ListItem
 {
 	{ this.className = View.AnimatedImageListItem.name(); }
 
-	protected List<AnimationImageProperty> images;
+	protected AnimationImageProperty animation;
 
 	@Override public int describeContents()
 	{

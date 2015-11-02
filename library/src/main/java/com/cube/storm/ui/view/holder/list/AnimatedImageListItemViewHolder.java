@@ -50,8 +50,7 @@ public class AnimatedImageListItemViewHolder extends ViewHolder<AnimatedImageLis
 		if (this.model != model)
 		{
 			this.model = model;
-			image.populate(model.getImages());
+			image.populate(model.getAnimation());
 		}
 	}
-
 }
