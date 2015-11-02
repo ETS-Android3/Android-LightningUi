@@ -1,17 +1,15 @@
 package com.cube.storm.ui.view.holder.grid;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.grid.StandardGridItem;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.ImageView;
+import com.cube.storm.ui.view.TextView;
 import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
@@ -55,29 +53,7 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 
 		image.populate(model.getImage());
 
-		description.setVisibility(View.GONE);
-		title.setVisibility(View.GONE);
-
-		if (model.getTitle() != null)
-		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getTitle().getContent());
-
-			if (!TextUtils.isEmpty(content))
-			{
-				title.setText(content);
-				title.setVisibility(View.VISIBLE);
-			}
-		}
-
-		if (model.getDescription() != null)
-		{
-			String content = UiSettings.getInstance().getTextProcessor().process(model.getDescription().getContent());
-
-			if (!TextUtils.isEmpty(content))
-			{
-				description.setText(content);
-				description.setVisibility(View.VISIBLE);
-			}
-		}
+		title.populate(model.getTitle());
+		description.populate(model.getDescription());
 	}
 }

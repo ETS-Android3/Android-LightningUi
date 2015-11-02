@@ -4,7 +4,12 @@ import android.app.Application;
 import android.net.Uri;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.lib.migration.LegacyImageViewProcessor;
 import com.cube.storm.ui.model.App;
+import com.cube.storm.ui.model.property.ImageProperty;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 public class MainApplication extends Application
 {
@@ -13,7 +18,9 @@ public class MainApplication extends Application
 		super.onCreate();
 
 		// Initiate settings
-		UiSettings uiSettings = new UiSettings.Builder(this).build();
+		UiSettings uiSettings = new UiSettings.Builder(this)
+			.registerType(new TypeToken<ArrayList<ImageProperty>>(){}.getType(), new LegacyImageViewProcessor())
+			.build();
 
 		// Loading app json
 		String appUri = "assets://app.json";
