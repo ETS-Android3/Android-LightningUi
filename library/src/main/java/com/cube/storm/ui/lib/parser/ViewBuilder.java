@@ -16,6 +16,9 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -93,11 +96,11 @@ public abstract class ViewBuilder
 	@Nullable
 	public App buildApp(@NonNull Uri fileUri)
 	{
-		byte[] appData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
+		InputStream appData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
 
 		if (appData != null)
 		{
-			return buildApp(appData);
+			return build(appData, App.class);
 		}
 
 		return null;
@@ -135,11 +138,11 @@ public abstract class ViewBuilder
 	@Nullable
 	public Page buildPage(@NonNull Uri fileUri)
 	{
-		byte[] pageData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
+		InputStream pageData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
 
 		if (pageData != null)
 		{
-			return buildPage(pageData);
+			return build(pageData, Page.class);
 		}
 
 		return null;
@@ -203,11 +206,11 @@ public abstract class ViewBuilder
 	@Nullable
 	public TabbedPageCollection buildTabbedPage(@NonNull Uri fileUri)
 	{
-		byte[] pageData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
+		InputStream pageData = UiSettings.getInstance().getFileFactory().loadFromUri(fileUri);
 
 		if (pageData != null)
 		{
-			return buildTabbedPage(pageData);
+			return build(pageData, TabbedPageCollection.class);
 		}
 
 		return null;
@@ -264,7 +267,7 @@ public abstract class ViewBuilder
 	/**
 	 * Builds a class from a json string input
 	 *
-	 * @param input The json string input to build from
+	 * @param input The json input stream to build from
 	 * @param outClass The out class type
 	 * @param <T> The type of class returned
 	 *
@@ -274,6 +277,33 @@ public abstract class ViewBuilder
 	public <T> T build(String input, Class<T> outClass)
 	{
 		return outClass.cast(getGson().fromJson(input, outClass));
+	}
+
+	/**
+	 * Builds a class from a json string input
+	 *
+	 * @param stream The json input stream to build from
+	 * @param outClass The out class type
+	 * @param <T> The type of class returned
+	 *
+	 * @return The built object, or null
+	 */
+	@Nullable
+	public <T> T build(InputStream stream, Class<T> outClass)
+	{
+		try
+		{
+			if (stream != null)
+			{
+				return outClass.cast(getGson().fromJson(new InputStreamReader(new BufferedInputStream(stream, 8192)), outClass));
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/**
@@ -289,6 +319,33 @@ public abstract class ViewBuilder
 	public <T> T build(JsonElement input, Class<T> outClass)
 	{
 		return outClass.cast(getGson().fromJson(input, outClass));
+	}
+
+	/**
+	 * Builds a class from a json string input
+	 *
+	 * @param stream The json input stream to build from
+	 * @param outClass The out class type
+	 * @param <T> The type of class returned
+	 *
+	 * @return The built object, or null
+	 */
+	@Nullable
+	public <T> T build(InputStream stream, Type outClass)
+	{
+		try
+		{
+			if (stream != null)
+			{
+				return getGson().fromJson(new InputStreamReader(new BufferedInputStream(stream, 8192)), outClass);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/**
