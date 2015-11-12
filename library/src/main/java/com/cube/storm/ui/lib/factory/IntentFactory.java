@@ -139,7 +139,7 @@ public abstract class IntentFactory
 		{
 			for (PageDescriptor pageDescriptor : app.getMap())
 			{
-				if (pageUri.toString().equalsIgnoreCase(pageDescriptor.getSrc()))
+				if (pageDescriptor != null && pageUri.toString().equalsIgnoreCase(pageDescriptor.getSrc()))
 				{
 					return getIntentForPageDescriptor(context, pageDescriptor);
 				}
