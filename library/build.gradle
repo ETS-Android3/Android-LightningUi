@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-	compileSdkVersion 21
-	buildToolsVersion "21.1.2"
+	compileSdkVersion 22
+	buildToolsVersion "22.0.1"
 
 	defaultConfig {
 		minSdkVersion 15
-		targetSdkVersion 21
+		targetSdkVersion 22
 	}
 
 	packagingOptions {
@@ -41,7 +41,7 @@ dependencies {
 	compile 'com.google.code.gson:gson:2.3'
 	compile 'net.callumtaylor:asynchttpclient:1.5'
 
-	compile 'com.3sidedcube.storm:util:0.3-internal'
+	compile 'com.3sidedcube.storm:util:0.3-streaming'
 	compile 'com.3sidedcube.storm:exoplayer:1.0.1'
 }
 
