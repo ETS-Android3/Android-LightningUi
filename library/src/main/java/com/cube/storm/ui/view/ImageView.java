@@ -152,23 +152,7 @@ public class ImageView extends android.widget.ImageView
 	 * 		{@link TextView#populate(com.cube.storm.ui.model.property.TextProperty, com.cube.storm.ui.model.property.LinkProperty)}
 	 * 		will be called with the relevant details each time the spotlight changes.
 	 */
-	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, @NonNull TextView textView)
-	{
-		populate(frames, textView, null);
-	}
-
-	/**
-	 * Alternately display each of a sequence of Storm spotlight frames, updating a text view and alerting an optional
-	 * listener whenever the spotlight changes.
-	 *
-	 * @param frames
-	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
-	 * @param textView
-	 * 		{@link TextView#populate(com.cube.storm.ui.model.property.TextProperty, com.cube.storm.ui.model.property.LinkProperty)}
-	 * 		will be called with the relevant details each time the spotlight changes.
-	 * @param listener
-	 */
-	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, @NonNull final TextView textView, @Nullable final OnAnimationFrameChangeListener listener)
+	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, final @NonNull TextView textView)
 	{
 		populate(frames, new OnAnimationFrameChangeListener()
 		{
@@ -176,11 +160,6 @@ public class ImageView extends android.widget.ImageView
 			{
 				SpotlightImageProperty spotlightFrame = (SpotlightImageProperty)frame;
 				textView.populate(spotlightFrame.getText(), spotlightFrame.getLink());
-
-				if (listener != null)
-				{
-					listener.onAnimationFrameChange(imageView, frameIndex, frame);
-				}
 			}
 		});
 	}

@@ -1,6 +1,6 @@
 package com.cube.storm.ui.view.holder.list;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +9,9 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.SpotlightImageListItem;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
+import com.cube.storm.ui.model.property.SpotlightImageProperty;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.TextView;
-import com.cube.storm.ui.view.ViewClickable;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Matt Allen
  * @Project LightningUi
  */
-public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
+public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements View.OnClickListener
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -51,6 +51,8 @@ public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageL
 	public SpotlightImageListItemViewHolder(View view)
 	{
 		super(view);
+
+		view.setOnClickListener(this);
 		image = (ImageView)view.findViewById(R.id.image_view);
 		text = (TextView)view.findViewById(R.id.text_ticker);
 	}
@@ -61,17 +63,22 @@ public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageL
 		if (this.model != model)
 		{
 			this.model = model;
-			image.populate(model.getImages(), text, new ImageView.OnAnimationFrameChangeListener()
+			image.populate(model.getImages(), new ImageView.OnAnimationFrameChangeListener()
 			{
 				@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame)
 				{
 					index.set(frameIndex);
+
+					if (frame instanceof SpotlightImageProperty)
+					{
+						text.populate(((SpotlightImageProperty)frame).getText());
+					}
 				}
 			});
 		}
 	}
 
-	@Override public void onClick(@NonNull SpotlightImageListItem model, @NonNull View view)
+	@Override public void onClick(@Nullable View view)
 	{
 		if (model.getImages().get(index.get()) != null)
 		{
