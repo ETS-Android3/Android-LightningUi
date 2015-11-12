@@ -119,7 +119,6 @@ public class ImageView extends android.widget.ImageView
 					}
 				}
 			};
-			animator.post(displayNextFrame);
 		}
 	}
 
