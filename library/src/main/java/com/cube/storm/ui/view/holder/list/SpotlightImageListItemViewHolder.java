@@ -1,15 +1,21 @@
 package com.cube.storm.ui.view.holder.list;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.SpotlightImageListItem;
+import com.cube.storm.ui.model.property.AnimationImageProperty;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.TextView;
+import com.cube.storm.ui.view.ViewClickable;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Holder for populating the Spotlight image at the top of a list view.
@@ -25,7 +31,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Matt Allen
  * @Project LightningUi
  */
-public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem>
+public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageListItem> implements ViewClickable<SpotlightImageListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -40,6 +46,8 @@ public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageL
 	private TextView text;
 	private SpotlightImageListItem model;
 
+	private AtomicInteger index = new AtomicInteger(0);
+
 	public SpotlightImageListItemViewHolder(View view)
 	{
 		super(view);
@@ -53,7 +61,21 @@ public class SpotlightImageListItemViewHolder extends ViewHolder<SpotlightImageL
 		if (this.model != model)
 		{
 			this.model = model;
-			image.populate(model.getImages(), text);
+			image.populate(model.getImages(), text, new ImageView.OnAnimationFrameChangeListener()
+			{
+				@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame)
+				{
+					index.set(frameIndex);
+				}
+			});
+		}
+	}
+
+	@Override public void onClick(@NonNull SpotlightImageListItem model, @NonNull View view)
+	{
+		if (model.getImages().get(index.get()) != null)
+		{
+			UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), model.getImages().get(index.get()).getLink());
 		}
 	}
 }
