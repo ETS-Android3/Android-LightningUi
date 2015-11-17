@@ -115,8 +115,6 @@ public class ImageView extends android.widget.ImageView
 					}
 				}
 			};
-
-			animator.post(displayNextFrame);
 		}
 	}
 
@@ -150,23 +148,7 @@ public class ImageView extends android.widget.ImageView
 	 * 		{@link TextView#populate(com.cube.storm.ui.model.property.TextProperty, com.cube.storm.ui.model.property.LinkProperty)}
 	 * 		will be called with the relevant details each time the spotlight changes.
 	 */
-	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, @NonNull TextView textView)
-	{
-		populate(frames, textView, null);
-	}
-
-	/**
-	 * Alternately display each of a sequence of Storm spotlight frames, updating a text view and alerting an optional
-	 * listener whenever the spotlight changes.
-	 *
-	 * @param frames
-	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
-	 * @param textView
-	 * 		{@link TextView#populate(com.cube.storm.ui.model.property.TextProperty, com.cube.storm.ui.model.property.LinkProperty)}
-	 * 		will be called with the relevant details each time the spotlight changes.
-	 * @param listener
-	 */
-	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, @NonNull final TextView textView, @Nullable final OnAnimationFrameChangeListener listener)
+	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, final @NonNull TextView textView)
 	{
 		populate((AnimationImageProperty)frames, new OnAnimationFrameChangeListener()
 		{
@@ -174,13 +156,22 @@ public class ImageView extends android.widget.ImageView
 			{
 				SpotlightImageProperty spotlightFrame = (SpotlightImageProperty)frame.getFrames().get(frameIndex);
 				textView.populate(spotlightFrame.getText(), spotlightFrame.getLink());
-
-				if (listener != null)
-				{
-					listener.onAnimationFrameChange(imageView, frameIndex, frame);
-				}
 			}
 		});
+	}
+
+	/**
+	 * Alternately display each of a sequence of Storm spotlight frames, updating a text view to display the spotlight
+	 * text whenever it changes.
+	 *
+	 * @param frames
+	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
+	 * @param listener
+	 * 		The listener for frame change
+	 */
+	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, @Nullable final OnAnimationFrameChangeListener listener)
+	{
+		populate((AnimationImageProperty)frames, listener);
 	}
 
 	/**

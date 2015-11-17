@@ -1,15 +1,21 @@
 package com.cube.storm.ui.view.holder.list;
 
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.SpotlightListItem;
+import com.cube.storm.ui.model.property.AnimationImageProperty;
+import com.cube.storm.ui.model.property.SpotlightImageProperty;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.TextView;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Holder for populating the Spotlight image at the top of a list view.
@@ -25,7 +31,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Matt Allen
  * @Project LightningUi
  */
-public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
+public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem> implements View.OnClickListener
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -40,9 +46,13 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 	private TextView text;
 	private SpotlightListItem model;
 
+	private AtomicInteger index = new AtomicInteger(0);
+
 	public SpotlightListItemViewHolder(View view)
 	{
 		super(view);
+
+		view.setOnClickListener(this);
 		image = (ImageView)view.findViewById(R.id.image_view);
 		text = (TextView)view.findViewById(R.id.text_ticker);
 	}
@@ -53,7 +63,24 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		if (this.model != model)
 		{
 			this.model = model;
-			image.populate(model.getSpotlights(), text);
+			image.populate(model.getSpotlights(), new ImageView.OnAnimationFrameChangeListener()
+			{
+				@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame)
+				{
+					index.set(frameIndex);
+
+					SpotlightImageProperty spotlightFrame = (SpotlightImageProperty)frame.getFrames().get(frameIndex);
+					text.populate(spotlightFrame.getText(), spotlightFrame.getLink());
+				}
+			});
+		}
+	}
+
+	@Override public void onClick(@Nullable View view)
+	{
+		if (model.getSpotlights().get(index.get()) != null)
+		{
+			UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), model.getSpotlights().get(index.get()).getLink());
 		}
 	}
 }
