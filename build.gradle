@@ -16,5 +16,6 @@ allprojects {
 		maven {
 			url 'http://oss.3sidedcube.com:8081/artifactory/internal'
 		}
+		maven { url "https://jitpack.io" }
 	}
 }
