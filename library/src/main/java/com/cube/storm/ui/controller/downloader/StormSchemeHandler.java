@@ -5,12 +5,11 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.download.handlers.SchemeHandler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * TODO Class doc
@@ -22,29 +21,30 @@ public class StormSchemeHandler extends SchemeHandler
 	@Override
 	public InputStream getStreamForPath(Context context, String path, Object optionForDownloader, int connectTimeout, int readTimeout)
 	{
-		try
-		{
-			String scheme = Uri.parse(path).getScheme();
-			String imageUri = null;
+		String scheme = Uri.parse(path).getScheme();
+		String imageUri = null;
 
-			if (!TextUtils.isEmpty(scheme))
+		if (!TextUtils.isEmpty(scheme))
+		{
+			for (String protocol : UiSettings.getInstance().getUriResolvers().keySet())
 			{
-				for (String protocol : UiSettings.getInstance().getUriResolvers().keySet())
+				if (protocol.equalsIgnoreCase(scheme))
 				{
-					if (protocol.equalsIgnoreCase(scheme))
-					{
-						imageUri = UiSettings.getInstance().getUriResolvers().get(protocol).resolveUri(path).toString();
-					}
+					imageUri = UiSettings.getInstance().getUriResolvers().get(protocol).resolveUri(path).toString();
 				}
 			}
-			if (!TextUtils.isEmpty(imageUri))
-			{
-				return new FileInputStream(new File(imageUri));
-			}
 		}
-		catch (FileNotFoundException e)
+		if (!TextUtils.isEmpty(imageUri))
 		{
-			e.printStackTrace();
+			Map<String, SchemeHandler> handlers = ImageLoader.getInstance().getRegisteredSchemeHandlers();
+			for (String protocol : handlers.keySet())
+			{
+				String actualScheme = Uri.parse(imageUri).getScheme();
+				if (protocol.equalsIgnoreCase(actualScheme) && !(handlers.get(protocol) instanceof StormSchemeHandler))
+				{
+					return handlers.get(protocol).getStreamForPath(context, imageUri, optionForDownloader, connectTimeout, readTimeout);
+				}
+			}
 		}
 		return null;
 	}
