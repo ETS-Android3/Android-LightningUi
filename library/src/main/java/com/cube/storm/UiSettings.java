@@ -260,8 +260,6 @@ public class UiSettings
 		 * of {@link #getUriResolvers()} to resolve the uris for loading images. Use {@link #registerUriResolver(String, com.cube.storm.util.lib.resolver.Resolver)}
 		 * to register any additional custom uris you wish to override.
 		 *
-		 * TODO: Find a better way to allow users to use their own imagedownloader, we should not be blocking this config
-		 *
 		 * @param configuration The new configuration for the image loader
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
@@ -355,7 +353,10 @@ public class UiSettings
 		public Builder registerUriResolver(String protocol, Resolver resolver)
 		{
 			construct.uriResolvers.put(protocol, resolver);
-			ImageLoader.getInstance().registerSchemeHandler(protocol, new StormSchemeHandler());
+			if (!ImageLoader.getInstance().getRegisteredSchemeHandlers().containsKey(protocol))
+			{
+				ImageLoader.getInstance().registerSchemeHandler(protocol, new StormSchemeHandler());
+			}
 			return this;
 		}
 
@@ -371,7 +372,10 @@ public class UiSettings
 			construct.uriResolvers.putAll(resolvers);
 			for (String protocol : resolvers.keySet())
 			{
-				ImageLoader.getInstance().registerSchemeHandler(protocol, new StormSchemeHandler());
+				if (!ImageLoader.getInstance().getRegisteredSchemeHandlers().containsKey(protocol))
+				{
+					ImageLoader.getInstance().registerSchemeHandler(protocol, new StormSchemeHandler());
+				}
 			}
 			return this;
 		}
