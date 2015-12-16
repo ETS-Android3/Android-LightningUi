@@ -196,7 +196,7 @@ public class ImageView extends android.widget.ImageView
 
 					if (listener != null)
 					{
-						listener.onAnimationFrameChange(ImageView.this, frameIndex % frames.size(), frames.get(frameIndex));
+						listener.onAnimationFrameChange(ImageView.this, frameIndex % frames.size(), frames.get(frameIndex % frames.size()));
 					}
 
 					++frameIndex;
