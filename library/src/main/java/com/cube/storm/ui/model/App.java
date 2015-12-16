@@ -10,7 +10,10 @@ import com.cube.storm.ui.model.page.Page;
 
 import java.util.Collection;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * App class is a global data set which defines the content in the module handled by StormContent.
@@ -40,10 +43,12 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class App extends Model
 {
-	@Getter private String vector;
-	@Getter private Collection<PageDescriptor> map;
+	protected String vector;
+	protected Collection<PageDescriptor> map;
 
 	@Override public int describeContents()
 	{
