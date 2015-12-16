@@ -7,7 +7,10 @@ import com.cube.storm.ui.model.property.TextProperty;
 
 import java.util.ArrayList;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * Descriptor model used for populating tab details in {@link com.cube.storm.ui.model.descriptor.TabbedPageDescriptor}
@@ -15,10 +18,12 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(chain = true) @Data
 public class TabBarItem extends Model
 {
-	@Getter protected TextProperty title;
-	@Getter protected ArrayList<ImageProperty> image;
+	protected TextProperty title;
+	protected ArrayList<ImageProperty> image;
 
 	@Override public int describeContents()
 	{
