@@ -36,6 +36,7 @@ public class ImageView extends android.widget.ImageView
 	public interface OnAnimationFrameChangeListener
 	{
 		public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame);
+		public void onAnimationFrameChange(ImageView imageView, int frameIndex, SpotlightImageProperty frame);
 	}
 
 	/**
@@ -61,6 +62,26 @@ public class ImageView extends android.widget.ImageView
 	public ImageView(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context, attrs, defStyleAttr);
+	}
+
+	@Override protected void onDetachedFromWindow()
+	{
+		super.onDetachedFromWindow();
+
+		if (animator != null)
+		{
+			animator.removeCallbacks(displayNextFrame);
+		}
+	}
+
+	@Override protected void onAttachedToWindow()
+	{
+		super.onAttachedToWindow();
+
+		if (animator != null)
+		{
+			animator.post(displayNextFrame);
+		}
 	}
 
 	/**
@@ -118,26 +139,6 @@ public class ImageView extends android.widget.ImageView
 		}
 	}
 
-	@Override protected void onDetachedFromWindow()
-	{
-		super.onDetachedFromWindow();
-
-		if (animator != null)
-		{
-			animator.removeCallbacks(displayNextFrame);
-		}
-	}
-
-	@Override protected void onAttachedToWindow()
-	{
-		super.onAttachedToWindow();
-
-		if (animator != null)
-		{
-			animator.post(displayNextFrame);
-		}
-	}
-
 	/**
 	 * Alternately display each of a sequence of Storm spotlight frames, updating a text view to display the spotlight
 	 * text whenever it changes.
@@ -150,12 +151,15 @@ public class ImageView extends android.widget.ImageView
 	 */
 	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, final @NonNull TextView textView)
 	{
-		populate((AnimationImageProperty)frames, new OnAnimationFrameChangeListener()
+		populate(frames, new OnAnimationFrameChangeListener()
 		{
 			@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame)
 			{
-				SpotlightImageProperty spotlightFrame = (SpotlightImageProperty)frame.getFrames().get(frameIndex);
-				textView.populate(spotlightFrame.getText(), spotlightFrame.getLink());
+			}
+
+			@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, SpotlightImageProperty frame)
+			{
+				textView.populate(frame.getText(), frame.getLink());
 			}
 		});
 	}
@@ -171,7 +175,39 @@ public class ImageView extends android.widget.ImageView
 	 */
 	public void populate(@Nullable final List<? extends SpotlightImageProperty> frames, @Nullable final OnAnimationFrameChangeListener listener)
 	{
-		populate((AnimationImageProperty)frames, listener);
+		// Cancel all current loading tasks
+		populate((ArrayList<ImageProperty>)null);
+
+		if (frames != null)
+		{
+			if (animator == null)
+			{
+				animator = new Handler();
+			}
+
+			displayNextFrame = new Runnable()
+			{
+				private int frameIndex = 0;
+
+				@Override public void run()
+				{
+					AnimationFrame frame = frames.get(frameIndex % frames.size());
+					populateFrame(frame.getImage(), null);
+
+					if (listener != null)
+					{
+						listener.onAnimationFrameChange(ImageView.this, frameIndex % frames.size(), frames.get(frameIndex % frames.size()));
+					}
+
+					++frameIndex;
+
+					if (frames.size() > 1)
+					{
+						animator.postDelayed(this, frame.getDelay());
+					}
+				}
+			};
+		}
 	}
 
 	/**

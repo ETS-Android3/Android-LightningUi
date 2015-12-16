@@ -67,10 +67,12 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem> i
 			{
 				@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame)
 				{
-					index.set(frameIndex);
+				}
 
-					SpotlightImageProperty spotlightFrame = (SpotlightImageProperty)frame.getFrames().get(frameIndex);
-					text.populate(spotlightFrame.getText(), spotlightFrame.getLink());
+				@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, SpotlightImageProperty frame)
+				{
+					index.set(frameIndex);
+					text.populate(frame.getText(), frame.getLink());
 				}
 			});
 		}

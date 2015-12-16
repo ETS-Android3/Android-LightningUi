@@ -1,6 +1,7 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
 
@@ -22,6 +23,20 @@ import lombok.experimental.Accessors;
 public class SpotlightListItem extends ListItem
 {
 	protected ArrayList<SpotlightImageProperty> spotlights;
+
+	// Legacy property name.
+	@Deprecated protected ArrayList<SpotlightImageProperty> images;
+
+	@Nullable
+	public ArrayList<SpotlightImageProperty> getSpotlights()
+	{
+		if (spotlights != null)
+		{
+			return spotlights;
+		}
+
+		return images;
+	}
 
 	@Override public int describeContents()
 	{

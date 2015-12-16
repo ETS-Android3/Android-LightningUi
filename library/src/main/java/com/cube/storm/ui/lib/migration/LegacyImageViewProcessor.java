@@ -37,70 +37,82 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 		if (json.isJsonObject())
 		{
 			JsonArray formatted = new JsonArray();
-			JsonObject src = json.getAsJsonObject().get("src").getAsJsonObject();
+			JsonObject src = null;
 
-			for (Map.Entry<String, JsonElement> stringJsonElementEntry : src.entrySet())
+			if (json.getAsJsonObject().has("src"))
 			{
-				if (!stringJsonElementEntry.getKey().equals("class"))
-				{
-					JsonElement image = src.get(stringJsonElementEntry.getKey());
-
-					JsonObject newImageSrc = new JsonObject();
-					newImageSrc.addProperty("class", View.DestinationLink.name());
-					newImageSrc.addProperty("destination", image.getAsString());
-
-					JsonObject newImageDimensions = new JsonObject();
-
-					int w = 0, h = 0;
-
-					InputStream imageStream = UiSettings.getInstance().getFileFactory().loadFromUri(Uri.parse(image.getAsString()));
-					if (imageStream != null)
-					{
-						BitmapFactory.Options opts = new BitmapFactory.Options();
-						opts.inJustDecodeBounds = true;
-						BitmapFactory.decodeStream(imageStream, new Rect(0, 0, 0, 0), opts);
-
-						w = opts.outWidth;
-						h = opts.outHeight;
-					}
-
-					if (w == 0 && h == 0)
-					{
-						if (stringJsonElementEntry.getKey().equals("x0.75"))
-						{
-							w = 512;
-							h = 512;
-						}
-						else if (stringJsonElementEntry.getKey().equals("x1"))
-						{
-							w = 1024;
-							h = 1024;
-						}
-						else if (stringJsonElementEntry.getKey().equals("x1.5"))
-						{
-							w = 1356;
-							h = 1356;
-						}
-						else if (stringJsonElementEntry.getKey().equals("x2"))
-						{
-							w = 2048;
-							h = 2048;
-						}
-					}
-
-					newImageDimensions.addProperty("width", w);
-					newImageDimensions.addProperty("height", h);
-
-					JsonObject newImage = new JsonObject();
-					newImage.addProperty("class", View.Image.name());
-					newImage.add("src", newImageSrc);
-					newImage.add("dimensions", newImageDimensions);
-
-					formatted.add(newImage);
-				}
+				src = json.getAsJsonObject().get("src").getAsJsonObject();
+			}
+			else if (json.getAsJsonObject().get("class").getAsString().equalsIgnoreCase("ImageDescriptor"))
+			{
+				src = json.getAsJsonObject();
 			}
 
-			return formatted;
+			if (src != null)
+			{
+				for (Map.Entry<String, JsonElement> stringJsonElementEntry : src.entrySet())
+				{
+					if (!stringJsonElementEntry.getKey().equals("class"))
+					{
+						JsonElement image = src.get(stringJsonElementEntry.getKey());
+
+						JsonObject newImageSrc = new JsonObject();
+						newImageSrc.addProperty("class", View.DestinationLink.name());
+						newImageSrc.addProperty("destination", image.getAsString());
+
+						JsonObject newImageDimensions = new JsonObject();
+
+						int w = 0, h = 0;
+
+						InputStream imageStream = UiSettings.getInstance().getFileFactory().loadFromUri(Uri.parse(image.getAsString()));
+						if (imageStream != null)
+						{
+							BitmapFactory.Options opts = new BitmapFactory.Options();
+							opts.inJustDecodeBounds = true;
+							BitmapFactory.decodeStream(imageStream, new Rect(0, 0, 0, 0), opts);
+
+							w = opts.outWidth;
+							h = opts.outHeight;
+						}
+
+						if (w == 0 && h == 0)
+						{
+							if (stringJsonElementEntry.getKey().equals("x0.75"))
+							{
+								w = 512;
+								h = 512;
+							}
+							else if (stringJsonElementEntry.getKey().equals("x1"))
+							{
+								w = 1024;
+								h = 1024;
+							}
+							else if (stringJsonElementEntry.getKey().equals("x1.5"))
+							{
+								w = 1356;
+								h = 1356;
+							}
+							else if (stringJsonElementEntry.getKey().equals("x2"))
+							{
+								w = 2048;
+								h = 2048;
+							}
+						}
+
+						newImageDimensions.addProperty("width", w);
+						newImageDimensions.addProperty("height", h);
+
+						JsonObject newImage = new JsonObject();
+						newImage.addProperty("class", View.Image.name());
+						newImage.add("src", newImageSrc);
+						newImage.add("dimensions", newImageDimensions);
+
+						formatted.add(newImage);
+					}
+				}
+
+				return formatted;
+			}
 		}
 
 		return super.preInflate(json);
