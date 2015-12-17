@@ -107,7 +107,7 @@ public class ImageHelper
 				return images.get(images.size() - 1);
 			}
 
-			return images.get((int)Math.max(Math.ceil((double)images.size() / 2d), images.size() - 1));
+			return images.get((int)Math.min(Math.ceil((double)images.size() / 2d), images.size() - 1));
 		}
 		else
 		{
