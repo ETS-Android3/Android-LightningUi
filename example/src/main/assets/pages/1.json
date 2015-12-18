@@ -15,6 +15,66 @@
 		{
 			"children": [
 				{
+					"class": "AnimationListItem",
+					"animation": {
+						"class": "Animation",
+						"looped": true,
+						"frames": [
+							{
+								"class": "AnimationFrame",
+								"delay": 400,
+								"image": [
+									{
+										"class": "Image",
+										"src": {
+											"class": "InternalLink",
+											"destination": "assets://content/141501992968_hammer_x2.png"
+										},
+										"dimensions": {
+											"width": 88,
+											"height": 88
+										}
+									}
+								]
+							},
+							{
+								"class": "AnimationFrame",
+								"delay": 400,
+								"image": [
+									{
+										"class": "Image",
+										"src": {
+											"class": "InternalLink",
+											"destination": "assets://content/1414409279402_flash_x2.png"
+										},
+										"dimensions": {
+											"width": 88,
+											"height": 88
+										}
+									}
+								]
+							},
+							{
+								"class": "AnimationFrame",
+								"delay": 400,
+								"image": [
+									{
+										"class": "Image",
+										"src": {
+											"class": "InternalLink",
+											"destination": "assets://content/1415019799016_plugin_x2.png"
+										},
+										"dimensions": {
+											"width": 88,
+											"height": 88
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				{
 					"class": "StandardListItem",
 					"image": {
 						"class": "Icon",
