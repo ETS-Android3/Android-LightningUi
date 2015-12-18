@@ -1,6 +1,7 @@
 package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.model.Model;
 
@@ -24,6 +25,19 @@ public class AnimationFrame extends Model
 {
 	protected ArrayList<ImageProperty> image;
 	protected long delay;
+
+	// Support for legacy spotlight image
+	@Deprecated protected ArrayList<ImageProperty> src;
+
+	@Nullable public ArrayList<ImageProperty> getImage()
+	{
+		if (image != null)
+		{
+			return image;
+		}
+
+		return src;
+	}
 
 	@Override public int describeContents()
 	{
