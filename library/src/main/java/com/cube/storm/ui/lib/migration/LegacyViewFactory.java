@@ -18,7 +18,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.ui.view.holder.grid.GridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.StandardGridItemViewHolder;
-import com.cube.storm.ui.view.holder.list.AnimatedImageListItemViewHolder;
+import com.cube.storm.ui.view.holder.list.AnimationListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.AppCollectionItemViewHolder;
 import com.cube.storm.ui.view.holder.list.ButtonListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.CheckableListItemViewHolder;
@@ -75,7 +75,7 @@ public class LegacyViewFactory extends ViewFactory
 		LogoListItemView(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemViewHolder.Factory.class),
 		VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemViewHolder.Factory.class),
 		SpotlightImageListItemView(com.cube.storm.ui.model.list.SpotlightListItem.class, SpotlightListItemViewHolder.Factory.class),
-		AnimatedImageListItemView(com.cube.storm.ui.model.list.AnimatedImageListItem.class, AnimatedImageListItemViewHolder.Factory.class),
+		AnimatedImageListItemView(com.cube.storm.ui.model.list.AnimationListItem.class, AnimationListItemViewHolder.Factory.class),
 		HeaderListItemView(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemViewHolder.Factory.class),
 		GroupedTextListItemView(com.cube.storm.ui.model.list.DescriptionListItem.class, DescriptionListItemViewHolder.Factory.class),
 
