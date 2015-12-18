@@ -250,7 +250,7 @@ public class ImageView extends android.widget.ImageView
 	{
 		UiSettings.getInstance().getImageLoader().cancelDisplayTask(this);
 
-		if (image != null)
+		if (image != null && image.size() > 0)
 		{
 			ImageHelper.displayImage(this, image, new SimpleImageLoadingListener()
 			{
@@ -289,6 +289,7 @@ public class ImageView extends android.widget.ImageView
 		else
 		{
 			setImageBitmap(null);
+			setVisibility(View.GONE);
 		}
 	}
 }

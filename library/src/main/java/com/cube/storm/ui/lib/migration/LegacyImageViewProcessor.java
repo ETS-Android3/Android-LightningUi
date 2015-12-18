@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
@@ -55,6 +56,11 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 					if (!stringJsonElementEntry.getKey().equals("class"))
 					{
 						JsonElement image = src.get(stringJsonElementEntry.getKey());
+
+						if (image == null || TextUtils.isEmpty(image.getAsString()))
+						{
+							continue;
+						}
 
 						JsonObject newImageSrc = new JsonObject();
 						newImageSrc.addProperty("class", View.DestinationLink.name());
