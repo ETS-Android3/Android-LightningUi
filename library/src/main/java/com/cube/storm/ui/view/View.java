@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view;
 
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.list.AnimationListItem;
 import com.cube.storm.ui.model.property.DestinationLinkProperty;
 import com.cube.storm.ui.model.property.ExternalLinkProperty;
 import com.cube.storm.ui.model.property.ImageProperty;
@@ -14,7 +15,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.ui.view.holder.grid.GridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.ImageGridItemViewHolder;
 import com.cube.storm.ui.view.holder.grid.StandardGridItemViewHolder;
-import com.cube.storm.ui.view.holder.list.AnimatedImageListItemViewHolder;
+import com.cube.storm.ui.view.holder.list.AnimationListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.AppCollectionItemViewHolder;
 import com.cube.storm.ui.view.holder.list.ButtonListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.CheckableListItemViewHolder;
@@ -69,7 +70,7 @@ public enum View
 	LogoListItem(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemViewHolder.Factory.class),
 	VideoListItem(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemViewHolder.Factory.class),
 	SpotlightListItem(com.cube.storm.ui.model.list.SpotlightListItem.class, SpotlightListItemViewHolder.Factory.class),
-	AnimatedImageListItem(com.cube.storm.ui.model.list.AnimatedImageListItem.class, AnimatedImageListItemViewHolder.Factory.class),
+	AnimationListItem(AnimationListItem.class, AnimationListItemViewHolder.Factory.class),
 	HeaderListItem(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemViewHolder.Factory.class),
 
 	/**

@@ -2,6 +2,8 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.model.list.AnimationListItem;
+
 import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * Animation frame wrapper used in {@link com.cube.storm.ui.model.list.AnimatedImageListItem}
+ * Animation frame wrapper used in {@link AnimationListItem}
  *
  * @author Callum Taylor
  * @project LightningUi

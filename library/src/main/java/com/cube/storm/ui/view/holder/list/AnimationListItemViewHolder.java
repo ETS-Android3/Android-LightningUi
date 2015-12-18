@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.model.list.AnimatedImageListItem;
+import com.cube.storm.ui.model.list.AnimationListItem;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
@@ -24,27 +24,27 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Luke Reed
  * @project LightningUi
  */
-public class AnimatedImageListItemViewHolder extends ViewHolder<AnimatedImageListItem>
+public class AnimationListItemViewHolder extends ViewHolder<AnimationListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
-		@Override public AnimatedImageListItemViewHolder createViewHolder(ViewGroup parent)
+		@Override public AnimationListItemViewHolder createViewHolder(ViewGroup parent)
 		{
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.animated_image_list_item_view, parent, false);
-			return new AnimatedImageListItemViewHolder(view);
+			return new AnimationListItemViewHolder(view);
 		}
 	}
 
 	private ImageView image;
-	private AnimatedImageListItem model;
+	private AnimationListItem model;
 
-	public AnimatedImageListItemViewHolder(View view)
+	public AnimationListItemViewHolder(View view)
 	{
 		super(view);
 		image = (ImageView)view.findViewById(R.id.image_view);
 	}
 
-	@Override public void populateView(AnimatedImageListItem model)
+	@Override public void populateView(AnimationListItem model)
 	{
 		// Only restart the animation if it is from a different model
 		if (this.model != model)

@@ -1,15 +1,16 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
+import com.cube.storm.ui.model.property.AnimationFrame;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
 import com.cube.storm.ui.view.View;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -21,11 +22,24 @@ import lombok.experimental.Accessors;
  */
 @NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
 @Accessors(chain = true) @Data
-public class AnimatedImageListItem extends ListItem
+public class AnimationListItem extends ListItem
 {
-	{ this.className = View.AnimatedImageListItem.name(); }
+	{ this.className = View.AnimationListItem.name(); }
 
 	protected AnimationImageProperty animation;
+
+	@Deprecated protected ArrayList<AnimationFrame> images;
+
+	@Nullable
+	public AnimationImageProperty getAnimation()
+	{
+		if (animation == null && images != null)
+		{
+			animation = new AnimationImageProperty(true, images);
+		}
+
+		return animation;
+	}
 
 	@Override public int describeContents()
 	{
