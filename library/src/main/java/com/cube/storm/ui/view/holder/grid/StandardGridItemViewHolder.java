@@ -4,7 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.grid.StandardGridItem;
 import com.cube.storm.ui.model.property.LinkProperty;
@@ -19,7 +21,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Matt Allen
  * @project LightningUi
  */
-public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
+public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem> implements View.OnClickListener
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -34,16 +36,20 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 	protected TextView title;
 	protected TextView description;
 	protected LinkProperty link;
+	protected ProgressBar progress;
 	protected LinearLayout embeddedLinksContainer;
 
 	public StandardGridItemViewHolder(View view)
 	{
 		super(view);
 
+		view.setOnClickListener(this);
+
 		image = (ImageView)view.findViewById(R.id.image);
 		title = (TextView)view.findViewById(R.id.title);
 		description = (TextView)view.findViewById(R.id.description);
 		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
+		progress = (ProgressBar)view.findViewById(R.id.progress);
 	}
 
 	@Override public void populateView(final StandardGridItem model)
@@ -51,9 +57,17 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 		link = model.getLink();
 		image.setVisibility(View.GONE);
 
-		image.populate(model.getImage());
+		image.populate(model.getImage(), progress);
 
 		title.populate(model.getTitle());
 		description.populate(model.getDescription());
+	}
+
+	@Override public void onClick(View v)
+	{
+		if (link != null)
+		{
+			UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
+		}
 	}
 }
