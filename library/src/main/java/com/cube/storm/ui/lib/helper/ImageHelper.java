@@ -104,6 +104,10 @@ public class ImageHelper
 			}
 			else if (UiSettings.getInstance().getContentSize() == ContentSize.LARGE)
 			{
+				return images.get(Math.max(images.size() - 2, 0));
+			}
+			else if (UiSettings.getInstance().getContentSize() == ContentSize.XLARGE)
+			{
 				return images.get(images.size() - 1);
 			}
 
