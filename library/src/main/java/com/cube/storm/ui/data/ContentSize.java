@@ -11,7 +11,8 @@ public enum ContentSize
 {
 	SMALL(0.75, "x0.75"),
 	MEDIUM(1, "x1.0"),
-	LARGE(1.5, "x1.5");
+	LARGE(1.5, "x1.5"),
+	XLARGE(2.0, "x2.0");
 
 	@Getter double maxPixels;
 	@Getter String density;
@@ -45,7 +46,7 @@ public enum ContentSize
 		}
 		else if (densityName >= DisplayMetrics.DENSITY_XHIGH)
 		{
-			return ContentSize.LARGE;
+			return ContentSize.XLARGE;
 		}
 
 		return MEDIUM;

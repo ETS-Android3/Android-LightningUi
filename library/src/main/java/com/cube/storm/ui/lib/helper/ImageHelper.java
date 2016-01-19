@@ -104,6 +104,10 @@ public class ImageHelper
 			}
 			else if (UiSettings.getInstance().getContentSize() == ContentSize.LARGE)
 			{
+				return images.get(Math.max(images.size() - 2, 0));
+			}
+			else if (UiSettings.getInstance().getContentSize() == ContentSize.XLARGE)
+			{
 				return images.get(images.size() - 1);
 			}
 
@@ -117,7 +121,7 @@ public class ImageHelper
 				int imageWidth = images.get(index).getDimensions().getWidth();
 				int imageHeight = images.get(index).getDimensions().getHeight();
 
-				if (width >= imageWidth && height >= imageHeight)
+				if ((width == 0 || width >= imageWidth) && (height == 0 || height >= imageHeight))
 				{
 					closest = index;
 				}
