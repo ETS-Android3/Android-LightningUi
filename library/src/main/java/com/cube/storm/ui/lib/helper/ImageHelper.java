@@ -117,7 +117,7 @@ public class ImageHelper
 				int imageWidth = images.get(index).getDimensions().getWidth();
 				int imageHeight = images.get(index).getDimensions().getHeight();
 
-				if (width >= imageWidth && height >= imageHeight)
+				if ((width == 0 || width >= imageWidth) && (height == 0 || height >= imageHeight))
 				{
 					closest = index;
 				}
