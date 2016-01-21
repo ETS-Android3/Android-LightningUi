@@ -1,10 +1,9 @@
 package com.cube.storm;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
+import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
@@ -29,10 +28,7 @@ import com.cube.storm.util.lib.resolver.FileResolver;
 import com.cube.storm.util.lib.resolver.Resolver;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -264,8 +260,6 @@ public class UiSettings
 		 * of {@link #getUriResolvers()} to resolve the uris for loading images. Use {@link #registerUriResolver(String, com.cube.storm.util.lib.resolver.Resolver)}
 		 * to register any additional custom uris you wish to override.
 		 *
-		 * TODO: Find a better way to allow users to use their own imagedownloader, we should not be blocking this config
-		 *
 		 * @param configuration The new configuration for the image loader
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
@@ -276,28 +270,6 @@ public class UiSettings
 			{
 				construct.imageLoader.destroy();
 			}
-
-			configuration.imageDownloader(new BaseImageDownloader(context)
-			{
-				@Override public InputStream getStream(String imageUri, Object extra) throws IOException
-				{
-					// Loop through the resolvers to resolve the file
-					Uri fileUri = Uri.parse(imageUri);
-
-					if (!TextUtils.isEmpty(fileUri.getScheme()))
-					{
-						for (String protocol : UiSettings.getInstance().getUriResolvers().keySet())
-						{
-							if (protocol.equalsIgnoreCase(fileUri.getScheme()))
-							{
-								imageUri = UiSettings.getInstance().getUriResolvers().get(protocol).resolveUri(fileUri).toString();
-							}
-						}
-					}
-
-					return super.getStream(imageUri, extra);
-				}
-			});
 
 			construct.imageLoader.init(configuration.build());
 			return this;
@@ -381,6 +353,10 @@ public class UiSettings
 		public Builder registerUriResolver(String protocol, Resolver resolver)
 		{
 			construct.uriResolvers.put(protocol, resolver);
+			if (!ImageLoader.getInstance().getRegisteredSchemeHandlers().containsKey(protocol))
+			{
+				ImageLoader.getInstance().registerSchemeHandler(protocol, new StormSchemeHandler());
+			}
 			return this;
 		}
 
@@ -394,6 +370,13 @@ public class UiSettings
 		public Builder registerUriResolver(Map<String, Resolver> resolvers)
 		{
 			construct.uriResolvers.putAll(resolvers);
+			for (String protocol : resolvers.keySet())
+			{
+				if (!ImageLoader.getInstance().getRegisteredSchemeHandlers().containsKey(protocol))
+				{
+					ImageLoader.getInstance().registerSchemeHandler(protocol, new StormSchemeHandler());
+				}
+			}
 			return this;
 		}
 

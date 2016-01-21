@@ -35,12 +35,13 @@ dependencies {
 	compile 'com.android.support:recyclerview-v7:23.1.1'
 
 	compile 'org.projectlombok:lombok:1.14.8'
-	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 	compile 'com.google.code.gson:gson:2.3'
 	compile 'net.callumtaylor:asynchttpclient:1.5'
 
 	compile 'com.3sidedcube.storm:util:0.4.1-internal'
 	compile 'com.3sidedcube.storm:exoplayer:1.0.1'
+
+	compile 'com.github.3sidedcube:Android-Universal-Image-Loader:v2.1.2'
 }
 
 def srcJava = 'src/main/java'
