@@ -28,6 +28,7 @@ import com.cube.storm.util.lib.resolver.FileResolver;
 import com.cube.storm.util.lib.resolver.Resolver;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.download.handlers.SchemeHandler;
 
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
@@ -266,12 +267,24 @@ public class UiSettings
 		 */
 		public Builder imageLoaderConfiguration(ImageLoaderConfiguration.Builder configuration)
 		{
+			// Retain existing handlers if any exist
+			Map<String, SchemeHandler> handlers = null;
 			if (construct.imageLoader.isInited())
 			{
+				handlers = construct.imageLoader.getRegisteredSchemeHandlers();
 				construct.imageLoader.destroy();
 			}
 
 			construct.imageLoader.init(configuration.build());
+
+			if (handlers != null && handlers.size() > 0)
+			{
+				for (String key : handlers.keySet())
+				{
+					construct.imageLoader.registerSchemeHandler(key, handlers.get(key));
+				}
+			}
+
 			return this;
 		}
 
