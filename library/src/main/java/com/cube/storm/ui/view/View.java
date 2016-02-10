@@ -90,6 +90,7 @@ public enum View
 	/**
 	 * Pages
 	 */
+	NativePage(com.cube.storm.ui.model.page.NativePage.class, null),
 	ListPage(com.cube.storm.ui.model.page.ListPage.class, null),
 	GridPage(com.cube.storm.ui.model.page.GridPage.class, null),
 	TabbedPageCollection(com.cube.storm.ui.model.page.TabbedPageCollection.class, null),
