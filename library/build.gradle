@@ -36,7 +36,7 @@ dependencies {
 
 	compile 'org.projectlombok:lombok:1.14.8'
 	compile 'com.google.code.gson:gson:2.3'
-	compile 'net.callumtaylor:asynchttpclient:1.5'
+	compile 'net.callumtaylor:asynchttpclient:1.5.1'
 
 	compile 'com.3sidedcube.storm:util:0.4.1-internal'
 	compile 'com.3sidedcube.storm:exoplayer:1.0.1'
