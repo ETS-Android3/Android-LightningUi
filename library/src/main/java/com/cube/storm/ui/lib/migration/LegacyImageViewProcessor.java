@@ -126,7 +126,7 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 
 	@Override public Class getClassFromName(String name)
 	{
-		return UiSettings.getInstance().getViewFactory().getModelForView(name);
+		return UiSettings.getInstance().getViewResolvers().get(name).resolveModel();
 	}
 
 	@Override public ArrayList<ImageProperty> deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException
