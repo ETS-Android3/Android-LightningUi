@@ -119,7 +119,7 @@ public enum LegacyViews
 	@Getter private Class<? extends Model> model;
 	@Getter private Class<? extends ViewHolderFactory> holder;
 
-	private LegacyView(Class<? extends Model> model, Class<? extends ViewHolderFactory> holder)
+	private LegacyViews(Class<? extends Model> model, Class<? extends ViewHolderFactory> holder)
 	{
 		this.model = model;
 		this.holder = holder;
