@@ -8,7 +8,6 @@ import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
-import com.cube.storm.ui.lib.factory.ViewFactory;
 import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
@@ -88,12 +87,6 @@ public class UiSettings
 	 * every activity/fragment for a storm page/Uri
 	 */
 	@Getter @Setter private IntentFactory intentFactory;
-
-	/**
-	 * The view factory instance of the module. This is the instance that will be used to resolve
-	 * models and holders for a specific view
-	 */
-	@Getter @Setter private ViewFactory viewFactory;
 
 	/**
 	 * Factory class responsible for loading a file from disk based on its Uri
@@ -182,7 +175,6 @@ public class UiSettings
 			this.context = context.getApplicationContext();
 
 			intentFactory(new IntentFactory(){});
-			viewFactory(new ViewFactory(){});
 			fileFactory(new FileFactory(){});
 			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(this.context));
 			linkHandler(new LinkHandler());
@@ -259,19 +251,6 @@ public class UiSettings
 		public Builder intentFactory(IntentFactory intentFactory)
 		{
 			construct.intentFactory = intentFactory;
-			return this;
-		}
-
-		/**
-		 * Sets the default {@link com.cube.storm.ui.lib.factory.ViewFactory} for the module
-		 *
-		 * @param viewFactory The new {@link com.cube.storm.ui.lib.factory.ViewFactory}
-		 *
-		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
-		 */
-		public Builder viewFactory(ViewFactory viewFactory)
-		{
-			construct.viewFactory = viewFactory;
 			return this;
 		}
 
@@ -363,8 +342,8 @@ public class UiSettings
 		}
 
 		/**
-		 * Registers a deserializer type for a class instance. Use this method to override what processor
-		 * gets used for a specific view type.
+		 * Registers a view resolver for matching class name with model and viewholder. Use this method to set what class
+		 * gets used for a specific view/model.
 		 *
 		 * @param viewName The name of the view to register
 		 * @param resolver The view resolver class
@@ -374,6 +353,20 @@ public class UiSettings
 		public Builder registerViewResolver(String viewName, ViewResolver resolver)
 		{
 			construct.viewResolvers.put(viewName, resolver);
+			return this;
+		}
+
+		/**
+		 * Registers a view resolver for matching class name with model and viewholder. Use this method to set what class
+		 * gets used for a specific view/model.
+		 *
+		 * @param resolvers The map of view resolver classes
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerViewResolver(Map<String, ViewResolver> resolvers)
+		{
+			construct.viewResolvers.putAll(resolvers);
 			return this;
 		}
 
