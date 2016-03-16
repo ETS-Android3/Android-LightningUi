@@ -1,4 +1,4 @@
-package com.cube.storm.ui.resolver;
+package com.cube.storm.ui.lib.resolver;
 
 import android.support.annotation.Nullable;
 
