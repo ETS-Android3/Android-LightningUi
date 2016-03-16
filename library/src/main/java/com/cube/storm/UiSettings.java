@@ -2,6 +2,7 @@ package com.cube.storm;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
@@ -13,6 +14,7 @@ import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
 import com.cube.storm.ui.lib.resolver.AppResolver;
+import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.lib.spec.DividerSpec;
 import com.cube.storm.ui.lib.spec.ListDividerSpec;
 import com.cube.storm.ui.model.App;
@@ -22,7 +24,8 @@ import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
-import com.cube.storm.ui.resolver.ViewResolver;
+import com.cube.storm.ui.view.View;
+import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
 import com.cube.storm.util.lib.resolver.FileResolver;
@@ -187,6 +190,24 @@ public class UiSettings
 
 			contentSize(ContentSize.MEDIUM);
 
+			// Register views and models
+			for (final View view : View.values())
+			{
+				registerViewResolver(view.name(), new ViewResolver()
+				{
+					@Nullable @Override public Class<? extends Model> resolveModel()
+					{
+						return view.getModel();
+					}
+
+					@Nullable @Override public Class<? extends ViewHolderFactory> resolveViewHolder()
+					{
+						return view.getHolder();
+					}
+				});
+			}
+
+			// Register view resolvers for Gson adapters
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
 			{
 				@Override public Class<? extends Model> getClassFromName(String name)
@@ -338,6 +359,21 @@ public class UiSettings
 		public Builder textProcessor(Processor<TextProperty, String> textProcessor)
 		{
 			construct.textProcessor = textProcessor;
+			return this;
+		}
+
+		/**
+		 * Registers a deserializer type for a class instance. Use this method to override what processor
+		 * gets used for a specific view type.
+		 *
+		 * @param viewName The name of the view to register
+		 * @param resolver The view resolver class
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerViewResolver(String viewName, ViewResolver resolver)
+		{
+			construct.viewResolvers.put(viewName, resolver);
 			return this;
 		}
 

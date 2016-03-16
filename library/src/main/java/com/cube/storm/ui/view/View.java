@@ -36,6 +36,8 @@ import com.cube.storm.ui.view.holder.list.ToggleableListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.UnorderedListItemViewHolder;
 import com.cube.storm.ui.view.holder.list.VideoListItemViewHolder;
 
+import lombok.Getter;
+
 /**
  * This is the enum class with the list of all supported view types, their model classes and their
  * corresponding view holder class. This list should not be modified or overridden
@@ -114,28 +116,12 @@ public enum View
 	SmsLink(SmsLinkProperty.class, null),
 	NativeLink(NativeLinkProperty.class, null);
 
-	private Class<? extends Model> model;
-	private Class<? extends ViewHolderFactory> holder;
+	@Getter private Class<? extends Model> model;
+	@Getter private Class<? extends ViewHolderFactory> holder;
 
 	private View(Class<? extends Model> model, Class<? extends ViewHolderFactory> holder)
 	{
 		this.model = model;
 		this.holder = holder;
-	}
-
-	/**
-	 * @return Gets the holder class of the view
-	 */
-	public Class<? extends ViewHolderFactory> getHolderClass()
-	{
-		return holder;
-	}
-
-	/**
-	 * @return Gets the model class of the view
-	 */
-	public Class<? extends Model> getModelClass()
-	{
-		return model;
 	}
 }
