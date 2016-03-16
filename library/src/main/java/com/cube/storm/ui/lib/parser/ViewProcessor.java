@@ -1,5 +1,7 @@
 package com.cube.storm.ui.lib.parser;
 
+import android.support.annotation.Nullable;
+
 import com.cube.storm.UiSettings;
 import com.cube.storm.util.lib.processor.GsonProcessor;
 import com.google.gson.JsonDeserializationContext;
@@ -24,8 +26,10 @@ public abstract class ViewProcessor<T> extends GsonProcessor<T>
 	 *
 	 * @return The class to inflate into
 	 */
+	@Nullable
 	public abstract Class<? extends T> getClassFromName(String name);
 
+	@Nullable
 	@Override public T deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException
 	{
 		arg0 = preInflate(arg0);

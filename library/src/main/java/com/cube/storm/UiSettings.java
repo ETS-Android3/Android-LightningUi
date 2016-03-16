@@ -22,6 +22,7 @@ import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.resolver.ViewResolver;
 import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
 import com.cube.storm.util.lib.resolver.FileResolver;
@@ -30,6 +31,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -131,7 +133,12 @@ public class UiSettings
 	 * directly to load a file, instead use {@link com.cube.storm.ui.lib.factory.FileFactory} which uses this
 	 * to resolve a file and load it. Only use this if you want to load a specific scheme
 	 */
-	@Getter @Setter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
+	@Getter @Setter private Map<String, Resolver> uriResolvers = new HashMap<String, Resolver>(2);
+
+	/**
+	 * Maps class names with a view resolver object to resolve models/viewholders.
+	 */
+	@Getter @Setter private Map<String, ViewResolver> viewResolvers = new HashMap<String, ViewResolver>(2);
 
 	/**
 	 * Default divider spec to use in {@link com.cube.storm.ui.controller.adapter.StormListAdapter}
@@ -184,7 +191,14 @@ public class UiSettings
 			{
 				@Override public Class<? extends Model> getClassFromName(String name)
 				{
-					return UiSettings.getInstance().getViewFactory().getModelForView(name);
+					ViewResolver resolver = UiSettings.getInstance().getViewResolvers().get(name);
+
+					if (resolver != null)
+					{
+						return resolver.resolveModel();
+					}
+
+					return null;
 				}
 			};
 
