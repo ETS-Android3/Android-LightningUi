@@ -29,10 +29,10 @@ android {
 }
 
 dependencies {
-	compile 'com.android.support:support-annotations:23.1.1'
-	compile 'com.android.support:support-v13:23.1.1'
-	compile "com.android.support:appcompat-v7:23.1.1"
-	compile 'com.android.support:recyclerview-v7:23.1.1'
+	compile 'com.android.support:support-annotations:23.2.1'
+	compile 'com.android.support:support-v13:23.2.1'
+	compile "com.android.support:appcompat-v7:23.2.1"
+	compile 'com.android.support:recyclerview-v7:23.2.1'
 
 	compile 'org.projectlombok:lombok:1.14.8'
 	compile 'com.google.code.gson:gson:2.3'
@@ -41,7 +41,7 @@ dependencies {
 	compile 'com.3sidedcube.storm:util:0.4.1-internal'
 	compile 'com.3sidedcube.storm:exoplayer:1.0.1'
 
-	compile 'com.github.3sidedcube:Android-Universal-Image-Loader:v2.1.2'
+	compile 'com.3sidedcube.util:universal-image-loader:2.1.2'
 }
 
 def srcJava = 'src/main/java'
