@@ -37,7 +37,7 @@ if (app != null)
 Then in your entry activity add the following code
 
 ```java
-Intent start = UiSettings.getInstance().getIntentFactory().geIntentForPageUri(this, Uri.parse(UiSettings.getInstance().getApp().getVector()));
+Intent start = UiSettings.getInstance().getIntentFactory().getIntentForPageUri(this, Uri.parse(UiSettings.getInstance().getApp().getVector()));
 
 if (start != null)
 {
@@ -49,13 +49,27 @@ This will use the `vector` string in your App.json to determine what page to loa
 
 There are many options in the UiSettings object that allows you to override specific parts of the module.
 
+##Language
+
+In order to support the use of the Language module, you must include the following code for your UiSettings Builder
+
+```java
+.textProcessor(new TextProcessor()
+{
+    @Nullable @Override public String process(@Nullable TextProperty textProperty)
+    {
+        return new LanguageTextProcessor().process(super.process(textProperty));
+    }
+})
+```
+
 #Documentation
 
 See the [Javadoc](http://3sidedcube.github.io/Android-LightningUi/) for full in-depth code-level documentation
 
 #Contributors
 
-[Callum Taylor (9A8BAD)](http://keybase.io/scruffyfox), [Matt Allen (DB74F5)](https://keybase.io/mallen), [Alan Le Fournis (067EA0)](https://keybase.io/alan3sc), Luke Reed
+[Callum Taylor (9A8BAD)](http://keybase.io/scruffyfox), [Tim Mathews (5C4869)](https://keybase.io/timxyz), [Matt Allen (DB74F5)](https://keybase.io/mallen), [Alan Le Fournis (067EA0)](https://keybase.io/alan3sc)
 
 #License
 

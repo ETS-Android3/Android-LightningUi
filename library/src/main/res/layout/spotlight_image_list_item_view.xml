@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="192dp"
+	android:id="@+id/spotlight_container"
+>
+	<com.cube.storm.ui.view.ImageView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/image_view"
+		android:scaleType="centerCrop"
+	/>
+
+	<com.cube.storm.ui.view.TextView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="8dp"
+		android:id="@+id/text_ticker"
+		android:textSize="24sp"
+		android:textColor="#ffffffff"
+		android:shadowColor="#ff000000"
+		android:shadowDx="1"
+		android:shadowDy="1"
+		android:shadowRadius="2"
+		android:textStyle="bold"
+		android:layout_gravity="center"
+		android:gravity="center"
+	/>
+</FrameLayout>
