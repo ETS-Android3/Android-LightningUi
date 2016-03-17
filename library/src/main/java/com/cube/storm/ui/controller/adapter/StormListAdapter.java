@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.lib.spec.DividerSpec;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.grid.GridItem;
@@ -126,7 +127,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	}
 
 	/**
-	 * Adds an item to the list, only if a holder class is found as returned by {@link com.cube.storm.ui.lib.factory.ViewFactory#getHolderForView(String)}
+	 * Adds an item to the list, only if a holder class is found as returned by {@link ViewResolver#resolveViewHolder()}
 	 *
 	 * @param item The model to add to the list
 	 */
@@ -136,7 +137,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	}
 
 	/**
-	 * Adds an item to the list, only if a holder class is found as returned by {@link com.cube.storm.ui.lib.factory.ViewFactory#getHolderForView(String)}
+	 * Adds an item to the list, only if a holder class is found as returned by {@link ViewResolver#resolveViewHolder()}
 	 *
 	 * @param index The index to where to add the item
 	 * @param item The model to add to the list
@@ -174,7 +175,7 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 		}
 		else
 		{
-			Class<? extends ViewHolderFactory> holderClass = UiSettings.getInstance().getViewFactory().getHolderForView(item.getClassName());
+			Class<? extends ViewHolderFactory> holderClass = UiSettings.getInstance().getViewResolvers().get(item.getClassName()).resolveViewHolder();
 
 			if (holderClass != null)
 			{
@@ -244,6 +245,6 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	@Override public int getItemViewType(int position)
 	{
 		Model view = items.get(position);
-		return itemTypes.indexOf(UiSettings.getInstance().getViewFactory().getHolderForView(view.getClassName()));
+		return itemTypes.indexOf(UiSettings.getInstance().getViewResolvers().get(view.getClassName()).resolveViewHolder());
 	}
 }

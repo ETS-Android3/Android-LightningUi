@@ -85,7 +85,7 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 			{
 				try
 				{
-					Class<? extends ViewHolderFactory> cls = UiSettings.getInstance().getViewFactory().getHolderForView(itemModel.getClassName());
+					Class<? extends ViewHolderFactory> cls = UiSettings.getInstance().getViewResolvers().get(itemModel.getClassName()).resolveViewHolder();
 					holderFactory = cls.newInstance();
 					holder = (ViewHolder<? super CollectionItem>)holderFactory.createViewHolder((ViewGroup)linearLayout.getParent());
 					view = holder.itemView;

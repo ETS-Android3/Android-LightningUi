@@ -172,7 +172,7 @@ public abstract class IntentFactory
 	public FragmentIntent getFragmentIntentForPageDescriptor(@NonNull PageDescriptor pageDescriptor)
 	{
 		FragmentIntent intent;
-		Class<? extends Model> pageType = UiSettings.getInstance().getViewFactory().getModelForView(pageDescriptor.getType());
+		Class<? extends Model> pageType = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType()).resolveModel();
 
 		if (pageType != null)
 		{
@@ -211,7 +211,7 @@ public abstract class IntentFactory
 	{
 		Intent intent;
 		Bundle arguments = new Bundle();
-		Class<? extends Model> pageType = UiSettings.getInstance().getViewFactory().getModelForView(pageDescriptor.getType());
+		Class<? extends Model> pageType = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType()).resolveModel();
 
 		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 

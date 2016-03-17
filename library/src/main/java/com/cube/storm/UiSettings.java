@@ -2,17 +2,18 @@ package com.cube.storm;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
-import com.cube.storm.ui.lib.factory.ViewFactory;
 import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
 import com.cube.storm.ui.lib.resolver.AppResolver;
+import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.lib.spec.DividerSpec;
 import com.cube.storm.ui.lib.spec.ListDividerSpec;
 import com.cube.storm.ui.model.App;
@@ -22,6 +23,8 @@ import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
+import com.cube.storm.ui.view.View;
+import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
 import com.cube.storm.util.lib.resolver.FileResolver;
@@ -30,6 +33,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -85,12 +89,6 @@ public class UiSettings
 	@Getter @Setter private IntentFactory intentFactory;
 
 	/**
-	 * The view factory instance of the module. This is the instance that will be used to resolve
-	 * models and holders for a specific view
-	 */
-	@Getter @Setter private ViewFactory viewFactory;
-
-	/**
 	 * Factory class responsible for loading a file from disk based on its Uri
 	 */
 	@Getter @Setter private FileFactory fileFactory;
@@ -131,7 +129,12 @@ public class UiSettings
 	 * directly to load a file, instead use {@link com.cube.storm.ui.lib.factory.FileFactory} which uses this
 	 * to resolve a file and load it. Only use this if you want to load a specific scheme
 	 */
-	@Getter @Setter private Map<String, Resolver> uriResolvers = new LinkedHashMap<String, Resolver>(2);
+	@Getter @Setter private Map<String, Resolver> uriResolvers = new HashMap<String, Resolver>(2);
+
+	/**
+	 * Maps class names with a view resolver object to resolve models/viewholders.
+	 */
+	@Getter @Setter private Map<String, ViewResolver> viewResolvers = new HashMap<String, ViewResolver>(2);
 
 	/**
 	 * Default divider spec to use in {@link com.cube.storm.ui.controller.adapter.StormListAdapter}
@@ -172,7 +175,6 @@ public class UiSettings
 			this.context = context.getApplicationContext();
 
 			intentFactory(new IntentFactory(){});
-			viewFactory(new ViewFactory(){});
 			fileFactory(new FileFactory(){});
 			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(this.context));
 			linkHandler(new LinkHandler());
@@ -180,11 +182,36 @@ public class UiSettings
 
 			contentSize(ContentSize.MEDIUM);
 
+			// Register views and models
+			for (final View view : View.values())
+			{
+				registerViewResolver(view.name(), new ViewResolver()
+				{
+					@Nullable @Override public Class<? extends Model> resolveModel()
+					{
+						return view.getModel();
+					}
+
+					@Nullable @Override public Class<? extends ViewHolderFactory> resolveViewHolder()
+					{
+						return view.getHolder();
+					}
+				});
+			}
+
+			// Register view resolvers for Gson adapters
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
 			{
 				@Override public Class<? extends Model> getClassFromName(String name)
 				{
-					return UiSettings.getInstance().getViewFactory().getModelForView(name);
+					ViewResolver resolver = UiSettings.getInstance().getViewResolvers().get(name);
+
+					if (resolver != null)
+					{
+						return resolver.resolveModel();
+					}
+
+					return null;
 				}
 			};
 
@@ -224,19 +251,6 @@ public class UiSettings
 		public Builder intentFactory(IntentFactory intentFactory)
 		{
 			construct.intentFactory = intentFactory;
-			return this;
-		}
-
-		/**
-		 * Sets the default {@link com.cube.storm.ui.lib.factory.ViewFactory} for the module
-		 *
-		 * @param viewFactory The new {@link com.cube.storm.ui.lib.factory.ViewFactory}
-		 *
-		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
-		 */
-		public Builder viewFactory(ViewFactory viewFactory)
-		{
-			construct.viewFactory = viewFactory;
 			return this;
 		}
 
@@ -324,6 +338,35 @@ public class UiSettings
 		public Builder textProcessor(Processor<TextProperty, String> textProcessor)
 		{
 			construct.textProcessor = textProcessor;
+			return this;
+		}
+
+		/**
+		 * Registers a view resolver for matching class name with model and viewholder. Use this method to set what class
+		 * gets used for a specific view/model.
+		 *
+		 * @param viewName The name of the view to register
+		 * @param resolver The view resolver class
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerViewResolver(String viewName, ViewResolver resolver)
+		{
+			construct.viewResolvers.put(viewName, resolver);
+			return this;
+		}
+
+		/**
+		 * Registers a view resolver for matching class name with model and viewholder. Use this method to set what class
+		 * gets used for a specific view/model.
+		 *
+		 * @param resolvers The map of view resolver classes
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerViewResolver(Map<String, ViewResolver> resolvers)
+		{
+			construct.viewResolvers.putAll(resolvers);
 			return this;
 		}
 
