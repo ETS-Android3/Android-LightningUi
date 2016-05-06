@@ -46,9 +46,9 @@ public class YouTubeHelper
 		{
 			private String streamingUrl;
 
-			@Override public void onFinish(boolean failed)
+			@Override public void onFinish()
 			{
-				if (failed || TextUtils.isEmpty(streamingUrl))
+				if (getConnectionInfo().responseCode / 100 != 2 || TextUtils.isEmpty(streamingUrl))
 				{
 					callback.onFailed(getContent());
 				}
