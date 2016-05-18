@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.data.FragmentIntent;
-import com.cube.storm.ui.model.page.Page;
 
 /**
  * Base storm activity that hosts a single fragment to host any {@link com.cube.storm.ui.model.page.Page} subclass.
@@ -20,7 +19,6 @@ import com.cube.storm.ui.model.page.Page;
  */
 public class StormActivity extends ActionBarActivity
 {
-	public static final String EXTRA_PAGE = "stormui.page";
 	public static final String EXTRA_URI = "stormui.uri";
 
 	@Override protected void onCreate(Bundle savedInstanceState)
@@ -37,16 +35,7 @@ public class StormActivity extends ActionBarActivity
 			return;
 		}
 
-		if (getIntent().getExtras().containsKey(EXTRA_PAGE))
-		{
-			Page pageData = (Page)getIntent().getExtras().get(EXTRA_PAGE);
-
-			if (pageData != null)
-			{
-				loadPage(pageData);
-			}
-		}
-		else if (getIntent().getExtras().containsKey(EXTRA_URI))
+		if (getIntent().getExtras().containsKey(EXTRA_URI))
 		{
 			String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
 			FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageUri(Uri.parse(pageUri));
@@ -61,11 +50,6 @@ public class StormActivity extends ActionBarActivity
 				finish();
 			}
 		}
-	}
-
-	protected void loadPage(Page page)
-	{
-		loadPage(UiSettings.getInstance().getIntentFactory().getFragmentIntentForPage(page));
 	}
 
 	protected void loadPage(FragmentIntent fragmentIntent)
