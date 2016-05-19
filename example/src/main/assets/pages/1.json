@@ -88,7 +88,7 @@
 					},
 					"link": {
 						"class": "InternalLink",
-						"destination": "assets://pages/1.json"
+						"destination": "test://page"
 					},
 					"title": {
 						"class": "Text",

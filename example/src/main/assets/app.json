@@ -6,6 +6,12 @@
             "src": "assets://pages/1.json",
             "type": "ListPage"
         },
+		{
+            "class": "PageDescriptor",
+            "src": "test://page",
+			"name": "name",
+            "type": "ListPage"
+        }
     ],
     "vector": "assets://pages/1.json"
 }

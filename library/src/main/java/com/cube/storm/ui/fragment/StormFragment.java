@@ -46,11 +46,7 @@ public class StormFragment extends Fragment
 
 		adapter = new StormListAdapter();
 
-		if (getArguments().containsKey(StormActivity.EXTRA_PAGE))
-		{
-			page = (Page)getArguments().get(StormActivity.EXTRA_PAGE);
-		}
-		else if (getArguments().containsKey(StormActivity.EXTRA_URI))
+		if (getArguments().containsKey(StormActivity.EXTRA_URI))
 		{
 			String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
 			page = UiSettings.getInstance().getViewBuilder().buildPage(Uri.parse(pageUri));
