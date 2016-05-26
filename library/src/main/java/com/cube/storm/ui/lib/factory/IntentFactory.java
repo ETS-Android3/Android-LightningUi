@@ -14,6 +14,7 @@ import com.cube.storm.ui.activity.VideoPlayerActivity;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormFragment;
 import com.cube.storm.ui.fragment.StormTabbedFragment;
+import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
@@ -172,15 +173,20 @@ public abstract class IntentFactory
 	public FragmentIntent getFragmentIntentForPageDescriptor(@NonNull PageDescriptor pageDescriptor)
 	{
 		FragmentIntent intent;
-		Class<? extends Model> pageType = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType()).resolveModel();
+		Bundle arguments = new Bundle();
+		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
+		Class<? extends Model> pageType = null;
+
+		if (viewResolver != null)
+		{
+			pageType = viewResolver.resolveModel();
+		}
 
 		if (pageType != null)
 		{
-			Bundle arguments = new Bundle();
 			arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
-			if (ListPage.class.isAssignableFrom(pageType) ||
-				GridPage.class.isAssignableFrom(pageType))
+			if (ListPage.class == pageType || GridPage.class == pageType)
 			{
 				intent = new FragmentIntent(StormFragment.class, null, arguments);
 				return intent;
@@ -211,7 +217,13 @@ public abstract class IntentFactory
 	{
 		Intent intent;
 		Bundle arguments = new Bundle();
-		Class<? extends Model> pageType = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType()).resolveModel();
+		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
+		Class<? extends Model> pageType = null;
+
+		if (viewResolver != null)
+		{
+			pageType = viewResolver.resolveModel();
+		}
 
 		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
@@ -231,7 +243,7 @@ public abstract class IntentFactory
 
 			return intent;
 		}
-		else if (pageType != null && (Page.class.isAssignableFrom(pageType) || PageCollection.class.isAssignableFrom(pageType)))
+		else if (pageType != null && (ListPage.class == pageType || GridPage.class == pageType || PageCollection.class == pageType))
 		{
 			intent = new Intent(context, StormActivity.class);
 			intent.putExtras(arguments);
