@@ -15,6 +15,7 @@ import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormFragment;
 import com.cube.storm.ui.fragment.StormTabbedFragment;
 import com.cube.storm.ui.lib.resolver.IntentResolver;
+import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
@@ -22,7 +23,6 @@ import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
 import com.cube.storm.ui.model.descriptor.WebPageDescriptor;
 import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
-import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.page.PageCollection;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
 
@@ -105,7 +105,13 @@ public abstract class IntentFactory
 	{
 		FragmentIntent intent;
 		Bundle arguments = new Bundle();
-		Class<? extends Model> pageType = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType()).resolveModel();
+		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
+		Class<? extends Model> pageType = null;
+
+		if (viewResolver != null)
+		{
+			pageType = viewResolver.resolveModel();
+		}
 
 		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
@@ -143,7 +149,7 @@ public abstract class IntentFactory
 		// Fallback to default resolution
 		if (pageType != null)
 		{
-			if (ListPage.class.isAssignableFrom(pageType) || GridPage.class.isAssignableFrom(pageType))
+			if (ListPage.class == pageType || GridPage.class == pageType)
 			{
 				intent = new FragmentIntent(StormFragment.class, null, arguments);
 				return intent;
@@ -175,7 +181,13 @@ public abstract class IntentFactory
 	{
 		Intent intent;
 		Bundle arguments = new Bundle();
-		Class<? extends Model> pageType = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType()).resolveModel();
+		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
+		Class<? extends Model> pageType = null;
+
+		if (viewResolver != null)
+		{
+			pageType = viewResolver.resolveModel();
+		}
 
 		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
@@ -220,7 +232,7 @@ public abstract class IntentFactory
 
 			return intent;
 		}
-		else if (pageType != null && (Page.class.isAssignableFrom(pageType) || PageCollection.class.isAssignableFrom(pageType)))
+		else if (pageType != null && (ListPage.class == pageType || GridPage.class == pageType || PageCollection.class == pageType))
 		{
 			intent = new Intent(context, StormActivity.class);
 			intent.putExtras(arguments);
