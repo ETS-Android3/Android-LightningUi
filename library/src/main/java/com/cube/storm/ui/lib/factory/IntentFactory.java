@@ -154,7 +154,7 @@ public abstract class IntentFactory
 				intent = new FragmentIntent(StormFragment.class, null, arguments);
 				return intent;
 			}
-			else if (TabbedPageCollection.class.isAssignableFrom(pageType))
+			else if (TabbedPageCollection.class == pageType)
 			{
 				intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
 				return intent;
@@ -232,7 +232,7 @@ public abstract class IntentFactory
 
 			return intent;
 		}
-		else if (pageType != null && (ListPage.class == pageType || GridPage.class == pageType || PageCollection.class == pageType))
+		else if (pageType != null && (ListPage.class == pageType || GridPage.class == pageType || PageCollection.class == pageType || TabbedPageCollection.class == pageType))
 		{
 			intent = new Intent(context, StormActivity.class);
 			intent.putExtras(arguments);
