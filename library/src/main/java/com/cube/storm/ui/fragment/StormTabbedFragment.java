@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
@@ -51,7 +52,27 @@ public class StormTabbedFragment extends Fragment
 			{
 				loadPages(pages);
 			}
+			else
+			{
+				fail();
+			}
 		}
+		else
+		{
+			fail();
+			return;
+		}
+
+		if (savedInstanceState != null && savedInstanceState.containsKey("current_tab"))
+		{
+			viewPager.setCurrentItem(savedInstanceState.getInt("current_tab", 0));
+		}
+	}
+
+	@Override public void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+		outState.putInt("current_tab", viewPager.getCurrentItem());
 	}
 
 	protected void loadPages(@NonNull TabbedPageCollection collection)
@@ -76,5 +97,11 @@ public class StormTabbedFragment extends Fragment
 		pageAdapter.setPages(fragmentPages);
 		viewPager.setAdapter(pageAdapter);
 		indicator.setViewPager(viewPager);
+	}
+
+	protected void fail()
+	{
+		Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
+		getActivity().finish();
 	}
 }
