@@ -26,8 +26,8 @@ import lombok.Getter;
 public class StormTabbedFragment extends Fragment
 {
 	@Getter protected StormPageAdapter pageAdapter;
-	protected ViewPager viewPager;
-	protected PagerSlidingTabStrip indicator;
+	@Getter protected ViewPager viewPager;
+	@Getter protected PagerSlidingTabStrip indicator;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
