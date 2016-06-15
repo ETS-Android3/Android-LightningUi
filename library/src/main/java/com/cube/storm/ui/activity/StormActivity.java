@@ -3,7 +3,7 @@ package com.cube.storm.ui.activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -17,7 +17,7 @@ import com.cube.storm.ui.data.FragmentIntent;
  * @author Callum Taylor
  * @project LightingUi
  */
-public class StormActivity extends ActionBarActivity
+public class StormActivity extends AppCompatActivity implements StormInterface
 {
 	public static final String EXTRA_URI = "stormui.uri";
 
@@ -25,38 +25,31 @@ public class StormActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_view);
-
-		if (getIntent().getExtras() == null)
-		{
-			Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
-			finish();
-
-			return;
-		}
+		setContentView(getLayoutResource());
 
 		if (savedInstanceState == null)
 		{
 			if (getIntent().getExtras().containsKey(EXTRA_URI))
 			{
 				String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
-				FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageUri(Uri.parse(pageUri));
-
-				if (fragmentIntent != null)
-				{
-					loadPage(fragmentIntent);
-				}
-				else
-				{
-					Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
-					finish();
-				}
+				loadPage(pageUri);
+			}
+			else
+			{
+				onLoadFail();
 			}
 		}
 	}
 
-	protected void loadPage(FragmentIntent fragmentIntent)
+	@Override public int getLayoutResource()
 	{
+		return R.layout.activity_view;
+	}
+
+	@Override public void loadPage(String pageUri)
+	{
+		FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageUri(Uri.parse(pageUri));
+
 		if (fragmentIntent != null)
 		{
 			if (fragmentIntent.getArguments() == null)
@@ -74,5 +67,15 @@ public class StormActivity extends ActionBarActivity
 				setTitle(fragmentIntent.getTitle());
 			}
 		}
+		else
+		{
+			onLoadFail();
+		}
+	}
+
+	@Override public void onLoadFail()
+	{
+		Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
+		finish();
 	}
 }
