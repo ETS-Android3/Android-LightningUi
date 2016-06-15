@@ -35,19 +35,22 @@ public class StormActivity extends ActionBarActivity
 			return;
 		}
 
-		if (getIntent().getExtras().containsKey(EXTRA_URI))
+		if (savedInstanceState == null)
 		{
-			String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
-			FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageUri(Uri.parse(pageUri));
+			if (getIntent().getExtras().containsKey(EXTRA_URI))
+			{
+				String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
+				FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageUri(Uri.parse(pageUri));
 
-			if (fragmentIntent != null)
-			{
-				loadPage(fragmentIntent);
-			}
-			else
-			{
-				Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
-				finish();
+				if (fragmentIntent != null)
+				{
+					loadPage(fragmentIntent);
+				}
+				else
+				{
+					Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
+					finish();
+				}
 			}
 		}
 	}
