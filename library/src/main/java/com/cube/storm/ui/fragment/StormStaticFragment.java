@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
+import com.cube.storm.ui.activity.StormInterface;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
 import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
@@ -28,15 +29,15 @@ import lombok.Getter;
  * @author Callum Taylor
  * @project LightningUi
  */
-public class StormStaticFragment extends Fragment
+public class StormStaticFragment extends Fragment implements StormInterface
 {
-	@Getter private AdapterLinearLayout adapterView;
-	@Getter private StormListAdapter adapter;
-	@Getter private Page page;
+	@Getter protected AdapterLinearLayout adapterView;
+	@Getter protected StormListAdapter adapter;
+	@Getter protected Page page;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View v = inflater.inflate(R.layout.static_page_fragment_view, container, false);
+		View v = inflater.inflate(getLayoutResource(), container, false);
 		adapterView = (AdapterLinearLayout)v.findViewById(R.id.adapterview);
 
 		return v;
@@ -48,21 +49,26 @@ public class StormStaticFragment extends Fragment
 
 		adapter = new StormListAdapter();
 
-		if (getArguments().containsKey(StormActivity.EXTRA_PAGE))
-		{
-			page = (Page)getArguments().get(StormActivity.EXTRA_PAGE);
-		}
-		else if (getArguments().containsKey(StormActivity.EXTRA_URI))
+		if (getArguments().containsKey(StormActivity.EXTRA_URI))
 		{
 			String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
-			page = UiSettings.getInstance().getViewBuilder().buildPage(Uri.parse(pageUri));
+			loadPage(pageUri);
 		}
 		else
 		{
-			Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
-			getActivity().finish();
+			onLoadFail();
 			return;
 		}
+	}
+
+	@Override public int getLayoutResource()
+	{
+		return R.layout.static_page_fragment_view;
+	}
+
+	@Override public void loadPage(String pageUri)
+	{
+		page = UiSettings.getInstance().getViewBuilder().buildPage(Uri.parse(pageUri));
 
 		if (page != null)
 		{
@@ -74,9 +80,19 @@ public class StormStaticFragment extends Fragment
 			{
 				adapter.setItems(((GridPage)page).getGrid().getChildren());
 			}
-		}
 
-		adapterView.setAdapter(adapter);
-		adapterView.notifyDataSetChanged();
+			adapterView.setAdapter(adapter);
+			adapterView.notifyDataSetChanged();
+		}
+		else
+		{
+			onLoadFail();
+		}
+	}
+
+	@Override public void onLoadFail()
+	{
+		Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
+		getActivity().finish();
 	}
 }

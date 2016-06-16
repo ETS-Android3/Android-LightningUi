@@ -3,14 +3,13 @@ package com.cube.storm.ui.activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.data.FragmentIntent;
-import com.cube.storm.ui.model.page.Page;
 
 /**
  * Base storm activity that hosts a single fragment to host any {@link com.cube.storm.ui.model.page.Page} subclass.
@@ -18,58 +17,39 @@ import com.cube.storm.ui.model.page.Page;
  * @author Callum Taylor
  * @project LightingUi
  */
-public class StormActivity extends ActionBarActivity
+public class StormActivity extends AppCompatActivity implements StormInterface
 {
-	public static final String EXTRA_PAGE = "stormui.page";
 	public static final String EXTRA_URI = "stormui.uri";
 
 	@Override protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_view);
+		setContentView(getLayoutResource());
 
-		if (getIntent().getExtras() == null)
+		if (savedInstanceState == null)
 		{
-			Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
-			finish();
-
-			return;
-		}
-
-		if (getIntent().getExtras().containsKey(EXTRA_PAGE))
-		{
-			Page pageData = (Page)getIntent().getExtras().get(EXTRA_PAGE);
-
-			if (pageData != null)
+			if (getIntent().getExtras().containsKey(EXTRA_URI))
 			{
-				loadPage(pageData);
-			}
-		}
-		else if (getIntent().getExtras().containsKey(EXTRA_URI))
-		{
-			String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
-			FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageUri(Uri.parse(pageUri));
-
-			if (fragmentIntent != null)
-			{
-				loadPage(fragmentIntent);
+				String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
+				loadPage(pageUri);
 			}
 			else
 			{
-				Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
-				finish();
+				onLoadFail();
 			}
 		}
 	}
 
-	protected void loadPage(Page page)
+	@Override public int getLayoutResource()
 	{
-		loadPage(UiSettings.getInstance().getIntentFactory().getFragmentIntentForPage(page));
+		return R.layout.activity_view;
 	}
 
-	protected void loadPage(FragmentIntent fragmentIntent)
+	@Override public void loadPage(String pageUri)
 	{
+		FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageUri(Uri.parse(pageUri));
+
 		if (fragmentIntent != null)
 		{
 			if (fragmentIntent.getArguments() == null)
@@ -87,5 +67,15 @@ public class StormActivity extends ActionBarActivity
 				setTitle(fragmentIntent.getTitle());
 			}
 		}
+		else
+		{
+			onLoadFail();
+		}
+	}
+
+	@Override public void onLoadFail()
+	{
+		Toast.makeText(this, "Failed to load page", Toast.LENGTH_SHORT).show();
+		finish();
 	}
 }

@@ -1,6 +1,7 @@
 package com.cube.storm;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -13,11 +14,14 @@ import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
 import com.cube.storm.ui.lib.resolver.AppResolver;
+import com.cube.storm.ui.lib.resolver.IntentResolver;
+import com.cube.storm.ui.lib.resolver.IntentResolverMap;
 import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.lib.spec.DividerSpec;
 import com.cube.storm.ui.lib.spec.ListDividerSpec;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
+import com.cube.storm.ui.model.descriptor.PageDescriptor;
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
@@ -31,6 +35,7 @@ import com.cube.storm.util.lib.resolver.FileResolver;
 import com.cube.storm.util.lib.resolver.Resolver;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.download.handlers.SchemeHandler;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -87,6 +92,12 @@ public class UiSettings
 	 * every activity/fragment for a storm page/Uri
 	 */
 	@Getter @Setter private IntentFactory intentFactory;
+
+	/**
+	 * Intent resolver used to resolving specific pages to an fragment/intent using either a page ID/Uri/descriptor.
+	 * Intents registered here are prioritised over default resolutions from {@link #intentFactory}
+	 */
+	@Getter @Setter private IntentResolverMap intentResolver = new IntentResolverMap();
 
 	/**
 	 * Factory class responsible for loading a file from disk based on its Uri
@@ -242,6 +253,48 @@ public class UiSettings
 		}
 
 		/**
+		 * Registers a page id/name to resolve to a specific intent resolver.
+		 *
+		 * @param pageId The id of the page. This will also match on a page's `name`
+		 * @param resolver The intent resolver class
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerIntentResolver(String pageId, IntentResolver resolver)
+		{
+			construct.getIntentResolver().registerPageId(pageId, resolver);
+			return this;
+		}
+
+		/**
+		 * Registers a page URI to resolve to a specific intent resolver.
+		 *
+		 * @param pageUri The URI of the page.
+		 * @param resolver The intent resolver class
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerIntentResolver(Uri pageUri, IntentResolver resolver)
+		{
+			construct.getIntentResolver().registerPageUri(pageUri, resolver);
+			return this;
+		}
+
+		/**
+		 * Registers a page descriptor to resolve to a specific intent resolver.
+		 *
+		 * @param pageDescriptor The descriptor of the page.
+		 * @param resolver The intent resolver class
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerIntentResolver(PageDescriptor pageDescriptor, IntentResolver resolver)
+		{
+			construct.getIntentResolver().registerPageDescriptor(pageDescriptor, resolver);
+			return this;
+		}
+
+		/**
 		 * Sets the default {@link com.cube.storm.ui.lib.factory.IntentFactory} for the module
 		 *
 		 * @param intentFactory The new {@link com.cube.storm.ui.lib.factory.IntentFactory}
@@ -280,12 +333,24 @@ public class UiSettings
 		 */
 		public Builder imageLoaderConfiguration(ImageLoaderConfiguration.Builder configuration)
 		{
+			// Retain existing handlers if any exist
+			Map<String, SchemeHandler> handlers = null;
 			if (construct.imageLoader.isInited())
 			{
+				handlers = construct.imageLoader.getRegisteredSchemeHandlers();
 				construct.imageLoader.destroy();
 			}
 
 			construct.imageLoader.init(configuration.build());
+
+			if (handlers != null && handlers.size() > 0)
+			{
+				for (String key : handlers.keySet())
+				{
+					construct.imageLoader.registerSchemeHandler(key, handlers.get(key));
+				}
+			}
+
 			return this;
 		}
 

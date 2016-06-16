@@ -8,14 +8,18 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
+import com.cube.storm.ui.activity.StormInterface;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.data.FragmentPackage;
 import com.cube.storm.ui.lib.adapter.StormPageAdapter;
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
+import com.cube.storm.ui.model.page.GridPage;
+import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
 import com.cube.storm.ui.view.PagerSlidingTabStrip;
 
@@ -23,15 +27,21 @@ import java.util.ArrayList;
 
 import lombok.Getter;
 
-public class StormTabbedFragment extends Fragment
+/**
+ * Base storm fragment that hosts a collection of {@link ListPage} or {@link GridPage}
+ *
+ * @author Callum Taylor
+ * @project LightingUi
+ */
+public class StormTabbedFragment extends Fragment implements StormInterface
 {
 	@Getter protected StormPageAdapter pageAdapter;
-	protected ViewPager viewPager;
-	protected PagerSlidingTabStrip indicator;
+	@Getter protected ViewPager viewPager;
+	@Getter protected PagerSlidingTabStrip indicator;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(R.layout.tabbed_page_fragment_view, container, false);
+		View view = inflater.inflate(getLayoutResource(), container, false);
 		viewPager = (ViewPager)view.findViewById(R.id.view_pager);
 		indicator = (PagerSlidingTabStrip)view.findViewById(R.id.indicator);
 
@@ -45,12 +55,12 @@ public class StormTabbedFragment extends Fragment
 		if (getArguments().containsKey(StormActivity.EXTRA_URI))
 		{
 			String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
-			TabbedPageCollection pages = UiSettings.getInstance().getViewBuilder().buildTabbedPage(Uri.parse(pageUri));
-
-			if (pages != null)
-			{
-				loadPages(pages);
-			}
+			loadPage(pageUri);
+		}
+		else
+		{
+			onLoadFail();
+			return;
 		}
 	}
 
@@ -76,5 +86,30 @@ public class StormTabbedFragment extends Fragment
 		pageAdapter.setPages(fragmentPages);
 		viewPager.setAdapter(pageAdapter);
 		indicator.setViewPager(viewPager);
+	}
+
+	@Override public int getLayoutResource()
+	{
+		return R.layout.tabbed_page_fragment_view;
+	}
+
+	@Override public void loadPage(String pageUri)
+	{
+		TabbedPageCollection pages = UiSettings.getInstance().getViewBuilder().buildTabbedPage(Uri.parse(pageUri));
+
+		if (pages != null)
+		{
+			loadPages(pages);
+		}
+		else
+		{
+			onLoadFail();
+		}
+	}
+
+	@Override public void onLoadFail()
+	{
+		Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
+		getActivity().finish();
 	}
 }

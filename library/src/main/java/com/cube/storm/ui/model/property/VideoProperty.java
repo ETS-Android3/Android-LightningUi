@@ -22,7 +22,7 @@ public class VideoProperty extends Property
 	{ this.className = View.Video.name(); }
 
 	protected String locale;
-	protected ExternalLinkProperty src;
+	protected DestinationLinkProperty src;
 
 	@Override public int describeContents()
 	{

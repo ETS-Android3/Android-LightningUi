@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +29,7 @@ import com.cube.storm.ui.R;
  * @author Alan Le Fournis
  * @project LightningUi
  */
-public class StormWebActivity extends ActionBarActivity implements OnClickListener
+public class StormWebActivity extends AppCompatActivity implements OnClickListener
 {
 	public static final String EXTRA_FILE_NAME = "extra_file_name";
 	public static final String EXTRA_TITLE = "extra_title";
