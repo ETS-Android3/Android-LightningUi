@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="exoplayer-1.0.1">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/library/build/intermediates/exploded-aar/com.3sidedcube.storm/exoplayer/1.0.1/res" />
+      <root url="jar://$PROJECT_DIR$/library/build/intermediates/exploded-aar/com.3sidedcube.storm/exoplayer/1.0.1/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.3sidedcube.storm/exoplayer/1.0.1/66bdb256eb810f55209463838e6e217aca7aff91/exoplayer-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

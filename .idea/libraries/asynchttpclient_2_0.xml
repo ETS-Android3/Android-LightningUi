@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="asynchttpclient-2.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/library/build/intermediates/exploded-aar/net.callumtaylor/asynchttpclient/2.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/library/build/intermediates/exploded-aar/net.callumtaylor/asynchttpclient/2.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.callumtaylor/asynchttpclient/2.0/5e484e04539cddf4edea36fd6e7fae5dfeccb035/asynchttpclient-2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
