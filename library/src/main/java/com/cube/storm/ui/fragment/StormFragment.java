@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
+import com.cube.storm.ui.activity.StormInterface;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
 import com.cube.storm.ui.lib.helper.RecycledViewPoolHelper;
 import com.cube.storm.ui.model.page.GridPage;
@@ -24,18 +25,24 @@ import com.cube.storm.ui.model.page.Page;
 
 import lombok.Getter;
 
-public class StormFragment extends Fragment
+/**
+ * Base storm fragment that hosts a {@link ListPage} or {@link GridPage}
+ *
+ * @author Callum Taylor
+ * @project LightingUi
+ */
+public class StormFragment extends Fragment implements StormInterface
 {
-	@Getter private RecyclerView listView;
-	@Getter private StormListAdapter adapter;
-	@Getter private Page page;
+	@Getter protected RecyclerView recyclerView;
+	@Getter protected StormListAdapter adapter;
+	@Getter protected Page page;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View v = inflater.inflate(R.layout.list_page_fragment_view, container, false);
-		listView = (RecyclerView)v.findViewById(R.id.recyclerview);
-		listView.setRecycledViewPool(RecycledViewPoolHelper.getInstance().getRecycledViewPool());
-		listView.setItemAnimator(new DefaultItemAnimator());
+		View v = inflater.inflate(getLayoutResource(), container, false);
+		recyclerView = (RecyclerView)v.findViewById(R.id.recyclerview);
+		recyclerView.setRecycledViewPool(RecycledViewPoolHelper.getInstance().getRecycledViewPool());
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 		return v;
 	}
@@ -49,41 +56,60 @@ public class StormFragment extends Fragment
 		if (getArguments().containsKey(StormActivity.EXTRA_URI))
 		{
 			String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
-			page = UiSettings.getInstance().getViewBuilder().buildPage(Uri.parse(pageUri));
+			loadPage(pageUri);
 		}
 		else
 		{
-			Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
-			getActivity().finish();
+			onLoadFail();
 			return;
 		}
+	}
+
+	@Override public int getLayoutResource()
+	{
+		return R.layout.list_page_fragment_view;
+	}
+
+	@Override public void loadPage(String pageUri)
+	{
+		page = UiSettings.getInstance().getViewBuilder().buildPage(Uri.parse(pageUri));
 
 		if (page != null)
 		{
 			if (page instanceof ListPage)
 			{
-				listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+				recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 				adapter.setItems(page.getChildren());
 			}
 			else if (page instanceof GridPage)
 			{
 				StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 				layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-				listView.setLayoutManager(layoutManager);
+				recyclerView.setLayoutManager(layoutManager);
 				adapter.setItems(((GridPage)page).getGrid().getChildren());
 			}
-		}
 
-		listView.setAdapter(adapter);
+			recyclerView.setAdapter(adapter);
 
-		if (page.getTitle() != null)
-		{
-			String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle());
-
-			if (!TextUtils.isEmpty(title))
+			if (page.getTitle() != null)
 			{
-				getActivity().setTitle(title);
+				String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle());
+
+				if (!TextUtils.isEmpty(title))
+				{
+					getActivity().setTitle(title);
+				}
 			}
 		}
+		else
+		{
+			onLoadFail();
+		}
+	}
+
+	@Override public void onLoadFail()
+	{
+		Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
+		getActivity().finish();
 	}
 }
