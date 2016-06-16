@@ -25,6 +25,12 @@ import com.cube.storm.ui.model.page.Page;
 
 import lombok.Getter;
 
+/**
+ * Base storm fragment that hosts a {@link ListPage} or {@link GridPage}
+ *
+ * @author Callum Taylor
+ * @project LightingUi
+ */
 public class StormFragment extends Fragment implements StormInterface
 {
 	@Getter protected RecyclerView recyclerView;

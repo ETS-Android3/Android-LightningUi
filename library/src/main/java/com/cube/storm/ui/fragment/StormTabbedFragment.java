@@ -18,6 +18,8 @@ import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.data.FragmentPackage;
 import com.cube.storm.ui.lib.adapter.StormPageAdapter;
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
+import com.cube.storm.ui.model.page.GridPage;
+import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
 import com.cube.storm.ui.view.PagerSlidingTabStrip;
 
@@ -25,6 +27,12 @@ import java.util.ArrayList;
 
 import lombok.Getter;
 
+/**
+ * Base storm fragment that hosts a collection of {@link ListPage} or {@link GridPage}
+ *
+ * @author Callum Taylor
+ * @project LightingUi
+ */
 public class StormTabbedFragment extends Fragment implements StormInterface
 {
 	@Getter protected StormPageAdapter pageAdapter;
