@@ -3,13 +3,13 @@ package com.cube.storm;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.handler.LinkHandler;
+import com.cube.storm.ui.lib.helper.ViewHelper;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
@@ -27,8 +27,6 @@ import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
-import com.cube.storm.ui.view.View;
-import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
 import com.cube.storm.util.lib.resolver.FileResolver;
@@ -194,21 +192,7 @@ public class UiSettings
 			contentSize(ContentSize.MEDIUM);
 
 			// Register views and models
-			for (final View view : View.values())
-			{
-				registerViewResolver(view.name(), new ViewResolver()
-				{
-					@Nullable @Override public Class<? extends Model> resolveModel()
-					{
-						return view.getModel();
-					}
-
-					@Nullable @Override public Class<? extends ViewHolderFactory> resolveViewHolder()
-					{
-						return view.getHolder();
-					}
-				});
-			}
+			registerViewResolver(ViewHelper.getViewResolvers());
 
 			// Register view resolvers for Gson adapters
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()

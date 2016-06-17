@@ -90,8 +90,7 @@ public abstract class IntentFactory
 	}
 
 	/**
-	 * Loads a fragment intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()} in the
-	 * {@link com.cube.storm.ui.view.View} enum.
+	 * Loads a fragment intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()}
 	 * <p/>
 	 * To register a specific URI or page ID, use {@link UiSettings#getIntentResolver()} instead. Order of resolve priority is
 	 * `pageDescriptor` -> `pageSrc` -> `pageId` -> `pageName`
@@ -165,8 +164,7 @@ public abstract class IntentFactory
 	}
 
 	/**
-	 * Loads an intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()} in the
-	 * {@link com.cube.storm.ui.view.View} enum.
+	 * Loads an intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()}
 	 * <p/>
 	 * To register a specific URI or page ID, use {@link UiSettings#getIntentResolver()} instead. Order of resolve priority is
 	 * `pageDescriptor` -> `pageSrc` -> `pageId` -> `pageName`
