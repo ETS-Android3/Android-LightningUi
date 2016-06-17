@@ -2,7 +2,35 @@ package com.cube.storm.ui.lib.helper;
 
 import com.cube.storm.ui.lib.resolver.DefaultViewResolver;
 import com.cube.storm.ui.lib.resolver.ViewResolver;
+import com.cube.storm.ui.model.descriptor.PageDescriptor;
+import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
+import com.cube.storm.ui.model.grid.Grid;
+import com.cube.storm.ui.model.grid.GridItem;
+import com.cube.storm.ui.model.grid.ImageGridItem;
+import com.cube.storm.ui.model.grid.StandardGridItem;
 import com.cube.storm.ui.model.list.AnimationListItem;
+import com.cube.storm.ui.model.list.ButtonListItem;
+import com.cube.storm.ui.model.list.CheckableListItem;
+import com.cube.storm.ui.model.list.DescriptionListItem;
+import com.cube.storm.ui.model.list.Divider;
+import com.cube.storm.ui.model.list.HeaderListItem;
+import com.cube.storm.ui.model.list.ImageListItem;
+import com.cube.storm.ui.model.list.List;
+import com.cube.storm.ui.model.list.LogoListItem;
+import com.cube.storm.ui.model.list.OrderedListItem;
+import com.cube.storm.ui.model.list.SpotlightListItem;
+import com.cube.storm.ui.model.list.StandardListItem;
+import com.cube.storm.ui.model.list.TextListItem;
+import com.cube.storm.ui.model.list.TitleListItem;
+import com.cube.storm.ui.model.list.ToggleableListItem;
+import com.cube.storm.ui.model.list.UnorderedListItem;
+import com.cube.storm.ui.model.list.VideoListItem;
+import com.cube.storm.ui.model.list.collection.AppCollectionItem;
+import com.cube.storm.ui.model.list.collection.CollectionListItem;
+import com.cube.storm.ui.model.page.GridPage;
+import com.cube.storm.ui.model.page.ListPage;
+import com.cube.storm.ui.model.page.NativePage;
+import com.cube.storm.ui.model.page.TabbedPageCollection;
 import com.cube.storm.ui.model.property.DestinationLinkProperty;
 import com.cube.storm.ui.model.property.ExternalLinkProperty;
 import com.cube.storm.ui.model.property.ImageProperty;
@@ -56,70 +84,70 @@ public class ViewHelper
 		 * Private views - These are not driven by the CMS, these are internal classes derived from
 		 * the list model.
 		 */
-		views.put("_ListHeader", new DefaultViewResolver(com.cube.storm.ui.model.list.List.ListHeader.class, ListHeaderViewHolder.Factory.class));
-		views.put("_ListFooter", new DefaultViewResolver(com.cube.storm.ui.model.list.List.ListFooter.class, ListFooterViewHolder.Factory.class));
-		views.put("_Divider", new DefaultViewResolver(com.cube.storm.ui.model.list.Divider.class, DividerViewHolder.Factory.class));
+		views.put(List.ListHeader.CLASS_NAME, new DefaultViewResolver(List.ListHeader.class, ListHeaderViewHolder.Factory.class));
+		views.put(List.ListFooter.CLASS_NAME, new DefaultViewResolver(List.ListFooter.class, ListFooterViewHolder.Factory.class));
+		views.put(Divider.CLASS_NAME, new DefaultViewResolver(Divider.class, DividerViewHolder.Factory.class));
 
 		/**
 		 * List items
 		 */
-		views.put("List", new DefaultViewResolver(com.cube.storm.ui.model.list.List.class, null));
-		views.put("TextListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.TextListItem.class, TextListItemViewHolder.Factory.class));
-		views.put("ImageListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.ImageListItem.class, ImageListItemViewHolder.Factory.class));
-		views.put("TitleListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.TitleListItem.class, TitleListItemViewHolder.Factory.class));
-		views.put("DescriptionListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.DescriptionListItem.class, DescriptionListItemViewHolder.Factory.class));
-		views.put("StandardListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.StandardListItem.class, StandardListItemViewHolder.Factory.class));
-		views.put("OrderedListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.OrderedListItem.class, OrderedListItemViewHolder.Factory.class));
-		views.put("UnorderedListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.UnorderedListItem.class, UnorderedListItemViewHolder.Factory.class));
-		views.put("CheckableListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.CheckableListItem.class, CheckableListItemViewHolder.Factory.class));
-		views.put("ButtonListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.ButtonListItem.class, ButtonListItemViewHolder.Factory.class));
-		views.put("ToggleableListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.ToggleableListItem.class, ToggleableListItemViewHolder.Factory.class));
-		views.put("LogoListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.LogoListItem.class, LogoListItemViewHolder.Factory.class));
-		views.put("VideoListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.VideoListItem.class, VideoListItemViewHolder.Factory.class));
-		views.put("SpotlightListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.SpotlightListItem.class, SpotlightListItemViewHolder.Factory.class));
-		views.put("AnimationListItem", new DefaultViewResolver(AnimationListItem.class, AnimationListItemViewHolder.Factory.class));
-		views.put("HeaderListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.HeaderListItem.class, HeaderListItemViewHolder.Factory.class));
+		views.put(List.CLASS_NAME, new DefaultViewResolver(List.class, null));
+		views.put(TextListItem.CLASS_NAME, new DefaultViewResolver(TextListItem.class, TextListItemViewHolder.Factory.class));
+		views.put(ImageListItem.CLASS_NAME, new DefaultViewResolver(ImageListItem.class, ImageListItemViewHolder.Factory.class));
+		views.put(TitleListItem.CLASS_NAME, new DefaultViewResolver(TitleListItem.class, TitleListItemViewHolder.Factory.class));
+		views.put(DescriptionListItem.CLASS_NAME, new DefaultViewResolver(DescriptionListItem.class, DescriptionListItemViewHolder.Factory.class));
+		views.put(StandardListItem.CLASS_NAME, new DefaultViewResolver(StandardListItem.class, StandardListItemViewHolder.Factory.class));
+		views.put(OrderedListItem.CLASS_NAME, new DefaultViewResolver(OrderedListItem.class, OrderedListItemViewHolder.Factory.class));
+		views.put(UnorderedListItem.CLASS_NAME, new DefaultViewResolver(UnorderedListItem.class, UnorderedListItemViewHolder.Factory.class));
+		views.put(CheckableListItem.CLASS_NAME, new DefaultViewResolver(CheckableListItem.class, CheckableListItemViewHolder.Factory.class));
+		views.put(ButtonListItem.CLASS_NAME, new DefaultViewResolver(ButtonListItem.class, ButtonListItemViewHolder.Factory.class));
+		views.put(ToggleableListItem.CLASS_NAME, new DefaultViewResolver(ToggleableListItem.class, ToggleableListItemViewHolder.Factory.class));
+		views.put(LogoListItem.CLASS_NAME, new DefaultViewResolver(LogoListItem.class, LogoListItemViewHolder.Factory.class));
+		views.put(VideoListItem.CLASS_NAME, new DefaultViewResolver(VideoListItem.class, VideoListItemViewHolder.Factory.class));
+		views.put(SpotlightListItem.CLASS_NAME, new DefaultViewResolver(SpotlightListItem.class, SpotlightListItemViewHolder.Factory.class));
+		views.put(AnimationListItem.CLASS_NAME, new DefaultViewResolver(AnimationListItem.class, AnimationListItemViewHolder.Factory.class));
+		views.put(HeaderListItem.CLASS_NAME, new DefaultViewResolver(HeaderListItem.class, HeaderListItemViewHolder.Factory.class));
 
 		/**
 		 * Grid items
 		 */
-		views.put("Grid", new DefaultViewResolver(com.cube.storm.ui.model.grid.Grid.class, null));
-		views.put("GridItem", new DefaultViewResolver(com.cube.storm.ui.model.grid.GridItem.class, GridItemViewHolder.Factory.class));
-		views.put("StandardGridItem", new DefaultViewResolver(com.cube.storm.ui.model.grid.StandardGridItem.class, StandardGridItemViewHolder.Factory.class));
-		views.put("ImageGridItem", new DefaultViewResolver(com.cube.storm.ui.model.grid.ImageGridItem.class, ImageGridItemViewHolder.Factory.class));
+		views.put(Grid.CLASS_NAME, new DefaultViewResolver(Grid.class, null));
+		views.put(GridItem.CLASS_NAME, new DefaultViewResolver(GridItem.class, GridItemViewHolder.Factory.class));
+		views.put(StandardGridItem.CLASS_NAME, new DefaultViewResolver(StandardGridItem.class, StandardGridItemViewHolder.Factory.class));
+		views.put(ImageGridItem.CLASS_NAME, new DefaultViewResolver(ImageGridItem.class, ImageGridItemViewHolder.Factory.class));
 
 		/**
 		 * Collection cells
 		 */
-		views.put("CollectionListItem", new DefaultViewResolver(com.cube.storm.ui.model.list.collection.CollectionListItem.class, CollectionListItemViewHolder.Factory.class));
-		views.put("AppCollectionItem", new DefaultViewResolver(com.cube.storm.ui.model.list.collection.AppCollectionItem.class, AppCollectionItemViewHolder.Factory.class));
+		views.put(CollectionListItem.CLASS_NAME, new DefaultViewResolver(CollectionListItem.class, CollectionListItemViewHolder.Factory.class));
+		views.put(AppCollectionItem.CLASS_NAME, new DefaultViewResolver(AppCollectionItem.class, AppCollectionItemViewHolder.Factory.class));
 
 		/**
 		 * Pages
 		 */
-		views.put("NativePage", new DefaultViewResolver(com.cube.storm.ui.model.page.NativePage.class, null));
-		views.put("ListPage", new DefaultViewResolver(com.cube.storm.ui.model.page.ListPage.class, null));
-		views.put("GridPage", new DefaultViewResolver(com.cube.storm.ui.model.page.GridPage.class, null));
-		views.put("TabbedPageCollection", new DefaultViewResolver(com.cube.storm.ui.model.page.TabbedPageCollection.class, null));
+		views.put(NativePage.CLASS_NAME, new DefaultViewResolver(NativePage.class, null));
+		views.put(ListPage.CLASS_NAME, new DefaultViewResolver(ListPage.class, null));
+		views.put(GridPage.CLASS_NAME, new DefaultViewResolver(GridPage.class, null));
+		views.put(TabbedPageCollection.CLASS_NAME, new DefaultViewResolver(TabbedPageCollection.class, null));
 
 		/**
 		 * Descriptors
 		 */
-		views.put("PageDescriptor", new DefaultViewResolver(com.cube.storm.ui.model.descriptor.PageDescriptor.class, null));
-		views.put("TabbedPageDescriptor", new DefaultViewResolver(com.cube.storm.ui.model.descriptor.TabbedPageDescriptor.class, null));
+		views.put(PageDescriptor.CLASS_NAME, new DefaultViewResolver(PageDescriptor.class, null));
+		views.put(TabbedPageDescriptor.CLASS_NAME, new DefaultViewResolver(TabbedPageDescriptor.class, null));
 
 		/**
 		 * Properties
 		 */
-		views.put("Image", new DefaultViewResolver(ImageProperty.class, null));
-		views.put("Video", new DefaultViewResolver(VideoProperty.class, null));
-		views.put("DestinationLink", new DefaultViewResolver(DestinationLinkProperty.class, null));
-		views.put("InternalLink", new DefaultViewResolver(InternalLinkProperty.class, null));
-		views.put("ExternalLink", new DefaultViewResolver(ExternalLinkProperty.class, null));
-		views.put("UriLink", new DefaultViewResolver(UriLinkProperty.class, null));
-		views.put("ShareLink", new DefaultViewResolver(ShareLinkProperty.class, null));
-		views.put("SmsLink", new DefaultViewResolver(SmsLinkProperty.class, null));
-		views.put("NativeLink", new DefaultViewResolver(NativeLinkProperty.class, null));
+		views.put(ImageProperty.CLASS_NAME, new DefaultViewResolver(ImageProperty.class, null));
+		views.put(VideoProperty.CLASS_NAME, new DefaultViewResolver(VideoProperty.class, null));
+		views.put(DestinationLinkProperty.CLASS_NAME, new DefaultViewResolver(DestinationLinkProperty.class, null));
+		views.put(InternalLinkProperty.CLASS_NAME, new DefaultViewResolver(InternalLinkProperty.class, null));
+		views.put(ExternalLinkProperty.CLASS_NAME, new DefaultViewResolver(ExternalLinkProperty.class, null));
+		views.put(UriLinkProperty.CLASS_NAME, new DefaultViewResolver(UriLinkProperty.class, null));
+		views.put(ShareLinkProperty.CLASS_NAME, new DefaultViewResolver(ShareLinkProperty.class, null));
+		views.put(SmsLinkProperty.CLASS_NAME, new DefaultViewResolver(SmsLinkProperty.class, null));
+		views.put(NativeLinkProperty.CLASS_NAME, new DefaultViewResolver(NativeLinkProperty.class, null));
 
 		return views;
 	}
