@@ -19,6 +19,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class LogoListItem extends ImageListItem
 {
+	public static String CLASS_NAME = "LogoListItem";
+
+	{ this.className = CLASS_NAME; }
+
 	protected LinkProperty link;
 
 	@Override public int describeContents()

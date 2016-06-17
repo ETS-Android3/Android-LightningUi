@@ -21,7 +21,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class TextProperty extends Property
 {
-	{ this.className = "Text"; }
+	public static String CLASS_NAME = "Text";
+
+	{ this.className = CLASS_NAME; }
 
 	protected Map<String, String> content;
 

@@ -4,7 +4,6 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
-import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
@@ -23,7 +22,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class CollectionListItem extends ListItem
 {
-	{ this.className = View.CollectionListItem.name(); }
+	public static String CLASS_NAME = "CollectionListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected Collection<CollectionItem> cells;
 	protected Collection<LinkProperty> embeddedLinks;

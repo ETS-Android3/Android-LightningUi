@@ -4,7 +4,6 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
-import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
@@ -23,7 +22,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class TitleListItem extends ListItem
 {
-	{ this.className = View.TitleListItem.name(); }
+	public static String CLASS_NAME = "TitleListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected TextProperty title;
 	protected Collection<? extends LinkProperty> embeddedLinks;

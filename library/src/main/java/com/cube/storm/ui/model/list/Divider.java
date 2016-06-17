@@ -2,8 +2,6 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.view.View;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,12 +16,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class Divider extends ListItem
 {
-	{ this.className = View._Divider.name(); }
+	public static String CLASS_NAME = "_Divider";
 
-	@Override public String getClassName()
-	{
-		return "_Divider";
-	}
+	{ this.className = CLASS_NAME; }
 
 	@Override public int describeContents()
 	{

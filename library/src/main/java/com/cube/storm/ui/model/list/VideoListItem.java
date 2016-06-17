@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.VideoProperty;
-import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
@@ -22,7 +21,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class VideoListItem extends ImageListItem
 {
-	{ this.className = View.VideoListItem.name(); }
+	public static String CLASS_NAME = "VideoListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected Collection<? extends VideoProperty> videos;
 

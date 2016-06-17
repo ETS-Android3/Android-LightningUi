@@ -4,7 +4,6 @@ import android.os.Parcel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -18,6 +17,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class OrderedListItem extends DescriptionListItem
 {
+	public static String CLASS_NAME = "OrderedListItem";
+
+	{ this.className = CLASS_NAME; }
+
 	protected String annotation;
 
 	@Override public int describeContents()

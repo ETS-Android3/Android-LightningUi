@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.model.property.AnimationFrame;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
-import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class AnimationListItem extends ListItem
 {
-	{ this.className = View.AnimationListItem.name(); }
+	public static String CLASS_NAME = "AnimationListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected AnimationImageProperty animation;
 

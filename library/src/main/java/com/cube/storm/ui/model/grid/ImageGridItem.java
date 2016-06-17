@@ -4,11 +4,9 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
-import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
-import lombok.Getter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +22,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class ImageGridItem extends GridItem
 {
-	{ this.className = View.ImageGridItem.name(); }
+	public static String CLASS_NAME = "ImageGridItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected ArrayList<ImageProperty> image;
 	protected LinkProperty link;

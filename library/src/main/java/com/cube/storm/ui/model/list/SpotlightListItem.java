@@ -22,6 +22,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class SpotlightListItem extends ListItem
 {
+	public static String CLASS_NAME = "SpotlightListItem";
+
+	{ this.className = CLASS_NAME; }
+
 	protected ArrayList<SpotlightImageProperty> spotlights;
 
 	// Legacy property name.
