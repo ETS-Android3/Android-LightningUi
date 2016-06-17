@@ -2,8 +2,6 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.view.View;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,7 +16,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class UnorderedListItem extends DescriptionListItem
 {
-	{ this.className = View.UnorderedListItem.name(); }
+	public static String CLASS_NAME = "UnorderedListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	@Override public int describeContents()
 	{

@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.descriptor;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.TabBarItem;
-import com.cube.storm.ui.view.View;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class TabbedPageDescriptor extends PageDescriptor
 {
-	{ this.className = View.TabbedPageDescriptor.name(); }
+	public static String CLASS_NAME = "TabbedPageDescriptor";
+
+	{ this.className = CLASS_NAME; }
 
 	protected TabBarItem tabBarItem;
 

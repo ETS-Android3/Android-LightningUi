@@ -5,7 +5,6 @@ import android.os.Parcel;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
-import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class AppCollectionItem extends CollectionItem
 {
-	{ this.className = View.AppCollectionItem.name(); }
+	public static String CLASS_NAME = "AppCollectionItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected String identifier;
 	protected ArrayList<ImageProperty> icon;

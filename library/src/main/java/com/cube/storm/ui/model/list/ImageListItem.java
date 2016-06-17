@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.ImageProperty;
-import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class ImageListItem extends TitleListItem
 {
-	{ this.className = View.ImageListItem.name(); }
+	public static String CLASS_NAME = "ImageListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected ArrayList<ImageProperty> image;
 

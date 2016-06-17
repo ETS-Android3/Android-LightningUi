@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.TextProperty;
-import com.cube.storm.ui.view.View;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class TextListItem extends ListItem
 {
-	{ this.className = View.TextListItem.name(); }
+	public static String CLASS_NAME = "TextListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected TextProperty description;
 

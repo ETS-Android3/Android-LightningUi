@@ -3,9 +3,7 @@ package com.cube.storm.ui.model.page;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
-import com.cube.storm.ui.view.View;
 
-import java.util.Collection;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +21,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class TabbedPageCollection extends PageCollection
 {
-	{ this.className = View.TabbedPageCollection.name(); }
+	public static String CLASS_NAME = "TabbedPageCollection";
+
+	{ this.className = CLASS_NAME; }
 
 	protected List<TabbedPageDescriptor> pages;
 

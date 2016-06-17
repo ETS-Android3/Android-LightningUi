@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.descriptor;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.Model;
-import com.cube.storm.ui.view.View;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class PageDescriptor extends Model
 {
-	{ this.className = View.PageDescriptor.name(); }
+	public static String CLASS_NAME = "PageDescriptor";
+
+	{ this.className = CLASS_NAME; }
 
 	protected String name;
 	protected String type;

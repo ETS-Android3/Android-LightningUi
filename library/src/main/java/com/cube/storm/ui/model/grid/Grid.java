@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.grid;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.list.ListItem;
-import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class Grid extends GridItem
 {
-	{ this.className = View.Grid.name(); }
+	public static String CLASS_NAME = "Grid";
+
+	{ this.className = CLASS_NAME; }
 
 	protected ArrayList<ListItem> children;
 

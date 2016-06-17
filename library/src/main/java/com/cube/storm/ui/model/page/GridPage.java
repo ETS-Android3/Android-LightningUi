@@ -4,7 +4,6 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.grid.Grid;
-import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
@@ -23,7 +22,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class GridPage extends Page
 {
-	{ this.className = View.GridPage.name(); }
+	public static String CLASS_NAME = "GridPage";
+
+	{ this.className = CLASS_NAME; }
 
 	/**
 	 * The array list of children {@link com.cube.storm.ui.model.list.ListItem}

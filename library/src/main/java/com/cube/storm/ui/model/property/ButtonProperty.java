@@ -17,7 +17,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class ButtonProperty extends Property
 {
-	{ this.className = "Button"; }
+	public static String CLASS_NAME = "Button";
+
+	{ this.className = CLASS_NAME; }
 
 	private TextProperty title;
 	private LinkProperty link;

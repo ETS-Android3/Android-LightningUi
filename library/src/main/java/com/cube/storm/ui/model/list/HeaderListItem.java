@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.TextProperty;
-import com.cube.storm.ui.view.View;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class HeaderListItem extends ImageListItem
 {
-	{ this.className = View.HeaderListItem.name(); }
+	public static String CLASS_NAME = "HeaderListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected TextProperty description;
 
