@@ -25,6 +25,7 @@ public class PageDescriptor extends Model
 	protected String name;
 	protected String type;
 	protected String src;
+	protected String tag;
 	protected boolean startPage;
 
 	@Override public int describeContents()
