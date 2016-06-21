@@ -7,6 +7,7 @@ import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.model.grid.Grid;
 import com.cube.storm.ui.model.grid.GridItem;
 import com.cube.storm.ui.model.grid.ImageGridItem;
+import com.cube.storm.ui.model.grid.NativeGridItem;
 import com.cube.storm.ui.model.grid.StandardGridItem;
 import com.cube.storm.ui.model.list.AnimationListItem;
 import com.cube.storm.ui.model.list.ButtonListItem;
@@ -17,6 +18,7 @@ import com.cube.storm.ui.model.list.HeaderListItem;
 import com.cube.storm.ui.model.list.ImageListItem;
 import com.cube.storm.ui.model.list.List;
 import com.cube.storm.ui.model.list.LogoListItem;
+import com.cube.storm.ui.model.list.NativeListItem;
 import com.cube.storm.ui.model.list.OrderedListItem;
 import com.cube.storm.ui.model.list.SpotlightListItem;
 import com.cube.storm.ui.model.list.StandardListItem;
@@ -27,6 +29,7 @@ import com.cube.storm.ui.model.list.UnorderedListItem;
 import com.cube.storm.ui.model.list.VideoListItem;
 import com.cube.storm.ui.model.list.collection.AppCollectionItem;
 import com.cube.storm.ui.model.list.collection.CollectionListItem;
+import com.cube.storm.ui.model.list.collection.NativeCollectionItem;
 import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.NativePage;
@@ -107,6 +110,7 @@ public class ViewHelper
 		views.put(SpotlightListItem.CLASS_NAME, new DefaultViewResolver(SpotlightListItem.class, SpotlightListItemViewHolder.Factory.class));
 		views.put(AnimationListItem.CLASS_NAME, new DefaultViewResolver(AnimationListItem.class, AnimationListItemViewHolder.Factory.class));
 		views.put(HeaderListItem.CLASS_NAME, new DefaultViewResolver(HeaderListItem.class, HeaderListItemViewHolder.Factory.class));
+		views.put(NativeListItem.CLASS_NAME, new DefaultViewResolver(NativeListItem.class, null));
 
 		/**
 		 * Grid items
@@ -115,20 +119,22 @@ public class ViewHelper
 		views.put(GridItem.CLASS_NAME, new DefaultViewResolver(GridItem.class, GridItemViewHolder.Factory.class));
 		views.put(StandardGridItem.CLASS_NAME, new DefaultViewResolver(StandardGridItem.class, StandardGridItemViewHolder.Factory.class));
 		views.put(ImageGridItem.CLASS_NAME, new DefaultViewResolver(ImageGridItem.class, ImageGridItemViewHolder.Factory.class));
+		views.put(NativeGridItem.CLASS_NAME, new DefaultViewResolver(NativeGridItem.class, null));
 
 		/**
 		 * Collection cells
 		 */
 		views.put(CollectionListItem.CLASS_NAME, new DefaultViewResolver(CollectionListItem.class, CollectionListItemViewHolder.Factory.class));
 		views.put(AppCollectionItem.CLASS_NAME, new DefaultViewResolver(AppCollectionItem.class, AppCollectionItemViewHolder.Factory.class));
+		views.put(NativeCollectionItem.CLASS_NAME, new DefaultViewResolver(NativeCollectionItem.class, null));
 
 		/**
 		 * Pages
 		 */
-		views.put(NativePage.CLASS_NAME, new DefaultViewResolver(NativePage.class, null));
 		views.put(ListPage.CLASS_NAME, new DefaultViewResolver(ListPage.class, null));
 		views.put(GridPage.CLASS_NAME, new DefaultViewResolver(GridPage.class, null));
 		views.put(TabbedPageCollection.CLASS_NAME, new DefaultViewResolver(TabbedPageCollection.class, null));
+		views.put(NativePage.CLASS_NAME, new DefaultViewResolver(NativePage.class, null));
 
 		/**
 		 * Descriptors
