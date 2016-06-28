@@ -90,11 +90,15 @@ public class App extends Model
 	}
 
 	@Nullable
-	public PageDescriptor findPageDescriptor(@NonNull String name)
+	public PageDescriptor findPageDescriptor(@NonNull String nameOrId)
 	{
 		for (PageDescriptor pageDescriptor : getMap())
 		{
-			if (pageDescriptor.getName() != null && pageDescriptor.getName().equals(name))
+			if (pageDescriptor.getName() != null && pageDescriptor.getName().equals(nameOrId))
+			{
+				return pageDescriptor;
+			}
+			else if (pageDescriptor.getId() != null && pageDescriptor.getId().equalsIgnoreCase(nameOrId))
 			{
 				return pageDescriptor;
 			}

@@ -50,12 +50,16 @@ public abstract class IntentFactory
 
 		if (app != null)
 		{
-			for (PageDescriptor pageDescriptor : app.getMap())
+			PageDescriptor descriptor = app.findPageDescriptor(pageUri);
+
+			if (descriptor == null)
 			{
-				if (pageUri.toString().equalsIgnoreCase(pageDescriptor.getSrc()))
-				{
-					return getFragmentIntentForPageDescriptor(pageDescriptor);
-				}
+				descriptor = app.findPageDescriptor(pageUri.getLastPathSegment());
+			}
+
+			if (descriptor != null)
+			{
+				return getFragmentIntentForPageDescriptor(descriptor);
 			}
 		}
 
@@ -77,12 +81,16 @@ public abstract class IntentFactory
 
 		if (app != null)
 		{
-			for (PageDescriptor pageDescriptor : app.getMap())
+			PageDescriptor descriptor = app.findPageDescriptor(pageUri);
+
+			if (descriptor == null)
 			{
-				if (pageUri.toString().equalsIgnoreCase(pageDescriptor.getSrc()))
-				{
-					return getIntentForPageDescriptor(context, pageDescriptor);
-				}
+				descriptor = app.findPageDescriptor(pageUri.getLastPathSegment());
+			}
+
+			if (descriptor != null)
+			{
+				return getIntentForPageDescriptor(context, descriptor);
 			}
 		}
 
