@@ -19,6 +19,7 @@ import com.cube.storm.ui.view.holder.GridViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -42,6 +43,22 @@ import java.util.Collection;
  */
 public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 {
+	/**
+	 * Temporary store for adapter state
+	 * {@hide}
+	 */
+	public static final class AdapterState implements Serializable
+	{
+		private ArrayList<Model> items;
+		private ArrayList<Class<? extends ViewHolderFactory>> itemsTypes;
+
+		public AdapterState(ArrayList<Model> items, ArrayList<Class<? extends ViewHolderFactory>> itemsTypes)
+		{
+			this.items = items;
+			this.itemsTypes = itemsTypes;
+		}
+	}
+
 	/**
 	 * The list of models of the views we are rendering in the list. This is a 1 dimensional representation
 	 * of a multi-dimensional 'sub listed' array set which is outlined by the json. When setting the items
@@ -72,6 +89,23 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		dividerSpec = UiSettings.getInstance().getDividerSpec();
 		setItems(items);
+	}
+
+	public AdapterState saveState()
+	{
+		return new AdapterState(items, itemTypes);
+	}
+
+	public void restoreState(@Nullable AdapterState state)
+	{
+		if (state != null)
+		{
+			this.items = new ArrayList<>(state.items);
+			this.itemTypes = new ArrayList<>(state.itemsTypes);
+
+			state = null;
+			notifyDataSetChanged();
+		}
 	}
 
 	/**

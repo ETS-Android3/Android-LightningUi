@@ -53,21 +53,62 @@ public class StormFragment extends Fragment implements StormInterface
 
 		adapter = new StormListAdapter();
 
-		if (getArguments().containsKey(StormActivity.EXTRA_URI))
+		if (savedInstanceState == null)
 		{
-			String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
-			loadPage(pageUri);
+			if (getArguments().containsKey(StormActivity.EXTRA_URI))
+			{
+				String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
+				loadPage(pageUri);
+			}
+			else
+			{
+				onLoadFail();
+			}
 		}
 		else
 		{
-			onLoadFail();
-			return;
+			if (savedInstanceState.containsKey("page"))
+			{
+				page = (Page)savedInstanceState.get("page");
+				setAdapter();
+			}
+
+			if (savedInstanceState.containsKey("adapter"))
+			{
+				adapter.restoreState((StormListAdapter.AdapterState)savedInstanceState.getSerializable("adapter"));
+			}
 		}
+	}
+
+	public void setAdapter()
+	{
+		if (page instanceof ListPage)
+		{
+			recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+			adapter.setItems(page.getChildren());
+		}
+		else if (page instanceof GridPage)
+		{
+			StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+			layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+			recyclerView.setLayoutManager(layoutManager);
+			adapter.setItems(((GridPage)page).getGrid().getChildren());
+		}
+
+		recyclerView.setAdapter(adapter);
 	}
 
 	@Override public int getLayoutResource()
 	{
 		return R.layout.list_page_fragment_view;
+	}
+
+	@Override public void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+
+		outState.putSerializable("adapter", adapter.saveState());
+		outState.putSerializable("page", page);
 	}
 
 	@Override public void loadPage(String pageUri)
@@ -76,20 +117,7 @@ public class StormFragment extends Fragment implements StormInterface
 
 		if (page != null)
 		{
-			if (page instanceof ListPage)
-			{
-				recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-				adapter.setItems(page.getChildren());
-			}
-			else if (page instanceof GridPage)
-			{
-				StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-				layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-				recyclerView.setLayoutManager(layoutManager);
-				adapter.setItems(((GridPage)page).getGrid().getChildren());
-			}
-
-			recyclerView.setAdapter(adapter);
+			setAdapter();
 
 			if (page.getTitle() != null)
 			{

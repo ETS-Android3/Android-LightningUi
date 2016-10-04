@@ -23,6 +23,7 @@ public class ExampleActivity extends Activity
 		if (start != null)
 		{
 			startActivity(start);
+			finish();
 		}
 	}
 }
