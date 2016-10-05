@@ -11,12 +11,14 @@
 	android:paddingBottom="20dp"
 >
 	<com.cube.storm.ui.view.ImageView
-		android:layout_width="40dp"
-		android:layout_height="40dp"
+		android:layout_width="42dp"
+		android:layout_height="42dp"
 		android:id="@+id/image"
 		android:layout_marginRight="16dp"
 		android:layout_gravity="center_vertical"
-		android:visibility="gone"
+		android:scaleType="centerCrop"
+		android:adjustViewBounds="true"
+		android:visibility="invisible"
 	/>
 
 	<LinearLayout
