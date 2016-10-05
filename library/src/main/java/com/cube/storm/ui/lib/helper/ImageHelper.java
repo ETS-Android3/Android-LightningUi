@@ -96,7 +96,7 @@ public class ImageHelper
 			return null;
 		}
 
-		if (width == 0 && height == 0)
+		if ((width == 0 && height == 0) || UiSettings.getInstance().getContentSize() != ContentSize.AUTO)
 		{
 			if (UiSettings.getInstance().getContentSize() == ContentSize.SMALL)
 			{

@@ -189,7 +189,7 @@ public class UiSettings
 			linkHandler(new LinkHandler());
 			textProcessor(new TextProcessor());
 
-			contentSize(ContentSize.MEDIUM);
+			contentSize(ContentSize.AUTO);
 
 			// Register views and models
 			registerViewResolver(ViewHelper.getViewResolvers());
