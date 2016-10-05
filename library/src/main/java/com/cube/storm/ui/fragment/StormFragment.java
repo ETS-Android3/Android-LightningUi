@@ -71,6 +71,7 @@ public class StormFragment extends Fragment implements StormInterface
 			{
 				page = (Page)savedInstanceState.get("page");
 				setAdapter();
+				setTitle();
 			}
 
 			if (savedInstanceState.containsKey("adapter"))
@@ -98,6 +99,19 @@ public class StormFragment extends Fragment implements StormInterface
 		recyclerView.setAdapter(adapter);
 	}
 
+	public void setTitle()
+	{
+		if (page.getTitle() != null)
+		{
+			String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle());
+
+			if (!TextUtils.isEmpty(title))
+			{
+				getActivity().setTitle(title);
+			}
+		}
+	}
+
 	@Override public int getLayoutResource()
 	{
 		return R.layout.list_page_fragment_view;
@@ -118,16 +132,7 @@ public class StormFragment extends Fragment implements StormInterface
 		if (page != null)
 		{
 			setAdapter();
-
-			if (page.getTitle() != null)
-			{
-				String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle());
-
-				if (!TextUtils.isEmpty(title))
-				{
-					getActivity().setTitle(title);
-				}
-			}
+			setTitle();
 		}
 		else
 		{
