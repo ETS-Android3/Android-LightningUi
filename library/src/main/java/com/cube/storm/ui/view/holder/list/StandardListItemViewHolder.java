@@ -56,6 +56,7 @@ public class StandardListItemViewHolder extends ViewHolder<StandardListItem> imp
 		link = model.getLink();
 
 		image.populate(model.getImage());
+
 		title.populate(model.getTitle());
 		description.populate(model.getDescription());
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
