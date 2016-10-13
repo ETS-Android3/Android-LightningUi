@@ -10,8 +10,8 @@
 	android:paddingBottom="20dp"
 >
 	<com.cube.storm.ui.view.ImageView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_width="86dp"
+		android:layout_height="86dp"
 		android:id="@+id/image_view"
 		android:maxWidth="144dp"
 		android:maxHeight="144dp"
