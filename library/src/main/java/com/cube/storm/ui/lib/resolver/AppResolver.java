@@ -52,7 +52,7 @@ public class AppResolver extends Resolver
 
 	@Nullable @Override public InputStream resolveFile(@NonNull Uri uri)
 	{
-		if ("app".equalsIgnoreCase(uri.getHost()))
+		if ("app".equalsIgnoreCase(uri.getScheme()))
 		{
 			uri = resolveUri(uri);
 		}
