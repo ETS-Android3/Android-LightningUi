@@ -52,11 +52,6 @@ public class StormActivity extends AppCompatActivity implements StormInterface
 
 		if (fragmentIntent != null)
 		{
-			if (fragmentIntent.getArguments() == null)
-			{
-				fragmentIntent.setArguments(new Bundle());
-			}
-
 			fragmentIntent.getArguments().putAll(getIntent().getExtras());
 
 			Fragment fragment = Fragment.instantiate(this, fragmentIntent.getFragment().getName(), fragmentIntent.getArguments());
