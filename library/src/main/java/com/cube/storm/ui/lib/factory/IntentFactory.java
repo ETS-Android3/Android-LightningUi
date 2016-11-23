@@ -12,6 +12,7 @@ import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.lib.provider.IntentProvider;
 import com.cube.storm.ui.lib.resolver.IntentResolver;
 import com.cube.storm.ui.lib.resolver.ViewResolver;
+import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
 
@@ -30,38 +31,67 @@ import com.cube.storm.ui.model.descriptor.PageDescriptor;
  *
  * @author Callum Taylor
  */
-public class IntentFactory extends IntentProvider
+public class IntentFactory
 {
-	@Nullable @Override public FragmentIntent getFragmentIntentForPageUri(@NonNull Uri pageUri)
+	/**
+	 * Loads a fragment intent from a Uri by finding the {@link com.cube.storm.ui.model.descriptor.PageDescriptor} in the {@link com.cube.storm.ui.model.App} model defined
+	 * in {@link com.cube.storm.UiSettings#getApp()}. It will load the page from disk if {@link com.cube.storm.UiSettings#getApp()} is null.
+	 * If no page descriptor is found, an empty one will be created with {@link PageDescriptor#src} set to {@param pageUri}
+	 *
+	 * @param pageUri The page uri
+	 *
+	 * @return The intent, or null if one was not suitable enough
+	 */
+	@Nullable public FragmentIntent getFragmentIntentForPageUri(@NonNull Uri pageUri)
 	{
-		for (IntentProvider intentProvider : UiSettings.getInstance().getIntentProviders())
-		{
-			FragmentIntent fragmentIntentForPageUri = intentProvider.getFragmentIntentForPageUri(pageUri);
+		App app = UiSettings.getInstance().getApp();
 
-			if (fragmentIntentForPageUri != null)
+		if (app != null)
+		{
+			PageDescriptor descriptor = app.findPageDescriptor(pageUri);
+
+			if (descriptor == null)
 			{
-				fragmentIntentForPageUri.getArguments().putString(StormActivity.EXTRA_URI, pageUri.toString());
-				return fragmentIntentForPageUri;
+				descriptor = app.findPageDescriptor(pageUri.getLastPathSegment());
+			}
+
+			if (descriptor != null)
+			{
+				return getFragmentIntentForPageDescriptor(descriptor);
 			}
 		}
 
-		return null;
+		return getFragmentIntentForPageDescriptor(new PageDescriptor("", "", pageUri.toString(), "", false));
 	}
 
-	@Nullable @Override public Intent getIntentForPageUri(@NonNull Context context, @NonNull Uri pageUri)
+	/**
+	 * Loads an intent from a Uri by finding the {@link com.cube.storm.ui.model.descriptor.PageDescriptor} in the {@link com.cube.storm.ui.model.App} model defined
+	 * in {@link com.cube.storm.UiSettings#getApp()}. If no page descriptor is found, an empty one will be created with {@link PageDescriptor#src} set to {@param pageUri}
+	 *
+	 * @param pageUri The page uri
+	 *
+	 * @return The intent, or null if one was not suitable enough
+	 */
+	@Nullable public Intent getIntentForPageUri(@NonNull Context context, @NonNull Uri pageUri)
 	{
-		for (IntentProvider intentProvider : UiSettings.getInstance().getIntentProviders())
-		{
-			Intent intentForPageUri = intentProvider.getIntentForPageUri(context, pageUri);
+		App app = UiSettings.getInstance().getApp();
 
-			if (intentForPageUri != null)
+		if (app != null)
+		{
+			PageDescriptor descriptor = app.findPageDescriptor(pageUri);
+
+			if (descriptor == null)
 			{
-				intentForPageUri.putExtra(StormActivity.EXTRA_URI, pageUri.toString());
-				return intentForPageUri;
+				descriptor = app.findPageDescriptor(pageUri.getLastPathSegment());
+			}
+
+			if (descriptor != null)
+			{
+				return getIntentForPageDescriptor(context, descriptor);
 			}
 		}
 
-		return null;
+		return getIntentForPageDescriptor(context, new PageDescriptor("", "", pageUri.toString(), "", false));
 	}
 
 	/**
@@ -71,7 +101,7 @@ public class IntentFactory extends IntentProvider
 	 *
 	 * @return
 	 */
-	@Nullable @Override public FragmentIntent getFragmentIntentForPageDescriptor(@NonNull PageDescriptor pageDescriptor)
+	@Nullable public FragmentIntent getFragmentIntentForPageDescriptor(@NonNull PageDescriptor pageDescriptor)
 	{
 		FragmentIntent intent = null;
 		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
@@ -104,11 +134,12 @@ public class IntentFactory extends IntentProvider
 			}
 		}
 
+		// If no intent was resolved, try the intent providers
 		if (intent == null)
 		{
 			for (IntentProvider intentProvider : UiSettings.getInstance().getIntentProviders())
 			{
-				intent = intentProvider.getFragmentIntentForPageDescriptor(pageDescriptor);
+				intent = intentProvider.provideFragmentIntentForPageDescriptor(pageDescriptor);
 
 				if (intent != null)
 				{
@@ -134,7 +165,7 @@ public class IntentFactory extends IntentProvider
 	 *
 	 * @return
 	 */
-	@Nullable @Override public Intent getIntentForPageDescriptor(@NonNull Context context, @NonNull PageDescriptor pageDescriptor)
+	@Nullable public Intent getIntentForPageDescriptor(@NonNull Context context, @NonNull PageDescriptor pageDescriptor)
 	{
 		Intent intent = null;
 		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
@@ -167,13 +198,17 @@ public class IntentFactory extends IntentProvider
 			}
 		}
 
-		for (IntentProvider intentProvider : UiSettings.getInstance().getIntentProviders())
+		// If no intent was resolved, try the intent providers
+		if (intent == null)
 		{
-			intent = intentProvider.getIntentForPageDescriptor(context, pageDescriptor);
-
-			if (intent != null)
+			for (IntentProvider intentProvider : UiSettings.getInstance().getIntentProviders())
 			{
-				break;
+				intent = intentProvider.provideIntentForPageDescriptor(context, pageDescriptor);
+
+				if (intent != null)
+				{
+					break;
+				}
 			}
 		}
 

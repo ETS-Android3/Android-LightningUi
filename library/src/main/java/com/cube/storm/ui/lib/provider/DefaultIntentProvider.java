@@ -43,7 +43,7 @@ public class DefaultIntentProvider extends IntentProvider
 	 * @return The intent, or null if one was not suitable enough
 	 */
 	@Override @Nullable
-	public FragmentIntent getFragmentIntentForPageDescriptor(@NonNull PageDescriptor pageDescriptor)
+	public FragmentIntent provideFragmentIntentForPageDescriptor(@NonNull PageDescriptor pageDescriptor)
 	{
 		FragmentIntent intent = null;
 		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
@@ -82,7 +82,7 @@ public class DefaultIntentProvider extends IntentProvider
 	 * @return The intent, or null if one was not suitable enough
 	 */
 	@Override @Nullable
-	public Intent getIntentForPageDescriptor(@NonNull Context context, @NonNull PageDescriptor pageDescriptor)
+	public Intent provideIntentForPageDescriptor(@NonNull Context context, @NonNull PageDescriptor pageDescriptor)
 	{
 		Intent intent = null;
 		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
