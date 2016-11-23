@@ -1,13 +1,14 @@
 package com.cube.storm.ui.example;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.example.provider.CustomIntentProvider;
+import com.cube.storm.ui.fragment.StormStaticFragment;
 import com.cube.storm.ui.lib.migration.LegacyImageViewProcessor;
-import com.cube.storm.ui.lib.resolver.IntentResolver;
+import com.cube.storm.ui.lib.provider.DefaultIntentProvider;
+import com.cube.storm.ui.lib.resolver.DefaultIntentResolver;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.google.gson.reflect.TypeToken;
@@ -23,13 +24,9 @@ public class MainApplication extends Application
 		// Initiate settings
 		UiSettings uiSettings = new UiSettings.Builder(this)
 			.registerType(new TypeToken<ArrayList<ImageProperty>>(){}.getType(), new LegacyImageViewProcessor())
-			.registerIntentResolver(Uri.parse("test://page"), new IntentResolver()
-			{
-				@Override public Intent resolveIntent(Context context)
-				{
-					return new Intent(context, ExampleActivity.class);
-				}
-			})
+			.registerIntentResolver(Uri.parse("assets://pages/3.json"), new DefaultIntentResolver(CustomStormActivity.class, StormStaticFragment.class))
+			.registerIntentProvider(new CustomIntentProvider())
+			.registerIntentProvider(new DefaultIntentProvider())
 			.build();
 
 		// Loading app json
