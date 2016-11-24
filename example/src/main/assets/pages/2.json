@@ -23,7 +23,7 @@
 		{
 			"class": "TabPageDescriptor",
 			"name": "",
-			"src": "assets:\/\/pages\/1.json",
+			"src": "assets:\/\/pages\/3.json",
 			"startPage": false,
 			"tabBarItem": {
 				"class": "TabBarItem",
@@ -34,42 +34,6 @@
 				"title": {
 					"class": "Text",
 					"content": "Tab 2"
-				}
-			},
-			"type": "ListPage"
-		},
-		{
-			"class": "TabPageDescriptor",
-			"name": "",
-			"src": "assets:\/\/pages\/1.json",
-			"startPage": false,
-			"tabBarItem": {
-				"class": "TabBarItem",
-				"description": {
-					"class": "Text",
-					"content": "Tab 3"
-				},
-				"title": {
-					"class": "Text",
-					"content": "Tab 3"
-				}
-			},
-			"type": "ListPage"
-		},
-		{
-			"class": "TabPageDescriptor",
-			"name": "",
-			"src": "assets:\/\/pages\/1.json",
-			"startPage": false,
-			"tabBarItem": {
-				"class": "TabBarItem",
-				"description": {
-					"class": "Text",
-					"content": "Tab 4"
-				},
-				"title": {
-					"class": "Text",
-					"content": "Tab 4"
 				}
 			},
 			"type": "ListPage"

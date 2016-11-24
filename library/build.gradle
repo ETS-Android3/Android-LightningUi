@@ -20,7 +20,7 @@ dependencies {
 	compile "com.android.support:appcompat-v7:23.3.0"
 	compile 'com.android.support:recyclerview-v7:23.3.0'
 
-	compile 'org.projectlombok:lombok:1.16.8'
+	compile 'org.projectlombok:lombok:1.16.10'
 	compile 'com.google.code.gson:gson:2.6.2'
 	compile 'net.callumtaylor:asynchttpclient:2.0'
 
