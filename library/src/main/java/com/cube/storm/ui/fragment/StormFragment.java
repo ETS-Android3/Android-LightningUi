@@ -121,8 +121,15 @@ public class StormFragment extends Fragment implements StormInterface
 	{
 		super.onSaveInstanceState(outState);
 
-		outState.putSerializable("adapter", adapter.saveState());
-		outState.putSerializable("page", page);
+		if (adapter != null)
+		{
+			outState.putSerializable("adapter", adapter.saveState());
+		}
+
+		if (page != null)
+		{
+			outState.putSerializable("page", page);
+		}
 	}
 
 	@Override public void loadPage(String pageUri)
