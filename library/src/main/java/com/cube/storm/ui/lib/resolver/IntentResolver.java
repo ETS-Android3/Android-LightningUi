@@ -2,6 +2,7 @@ package com.cube.storm.ui.lib.resolver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.data.FragmentIntent;
@@ -15,13 +16,9 @@ import com.cube.storm.ui.data.FragmentIntent;
  */
 public abstract class IntentResolver
 {
-	public Intent resolveIntent(Context context)
-	{
-		return null;
-	}
+	@Nullable
+	public abstract Intent resolveIntent(Context context);
 
-	public FragmentIntent resolveFragmentIntent()
-	{
-		return null;
-	}
+	@Nullable
+	public abstract FragmentIntent resolveFragmentIntent();
 }

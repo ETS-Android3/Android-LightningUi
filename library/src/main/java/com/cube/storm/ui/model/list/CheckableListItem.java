@@ -2,7 +2,6 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.view.View;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +20,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class CheckableListItem extends DescriptionListItem
 {
-	{ this.className = View.CheckableListItem.name(); }
+	public static String CLASS_NAME = "CheckableListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	@SerializedName("volatile") protected boolean isVolatile;
 

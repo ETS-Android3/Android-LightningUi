@@ -3,6 +3,7 @@ package com.cube.storm.ui.fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,15 +50,59 @@ public class StormStaticFragment extends Fragment implements StormInterface
 
 		adapter = new StormListAdapter();
 
-		if (getArguments().containsKey(StormActivity.EXTRA_URI))
+		if (savedInstanceState == null)
 		{
-			String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
-			loadPage(pageUri);
+			if (getArguments().containsKey(StormActivity.EXTRA_URI))
+			{
+				String pageUri = getArguments().getString(StormActivity.EXTRA_URI);
+				loadPage(pageUri);
+			}
+			else
+			{
+				onLoadFail();
+			}
 		}
 		else
 		{
-			onLoadFail();
-			return;
+			if (savedInstanceState.containsKey("page"))
+			{
+				page = (Page)savedInstanceState.get("page");
+				setAdapter();
+				setTitle();
+			}
+
+			if (savedInstanceState.containsKey("adapter"))
+			{
+				adapter.restoreState((StormListAdapter.AdapterState)savedInstanceState.getSerializable("adapter"));
+			}
+		}
+	}
+
+	public void setAdapter()
+	{
+		if (page instanceof ListPage)
+		{
+			adapter.setItems(page.getChildren());
+		}
+		else if (page instanceof GridPage)
+		{
+			adapter.setItems(((GridPage)page).getGrid().getChildren());
+		}
+
+		adapterView.setAdapter(adapter);
+		adapterView.notifyDataSetChanged();
+	}
+
+	public void setTitle()
+	{
+		if (page.getTitle() != null)
+		{
+			String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle());
+
+			if (!TextUtils.isEmpty(title))
+			{
+				getActivity().setTitle(title);
+			}
 		}
 	}
 
@@ -66,23 +111,29 @@ public class StormStaticFragment extends Fragment implements StormInterface
 		return R.layout.static_page_fragment_view;
 	}
 
+	@Override public void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+
+		if (adapter != null)
+		{
+			outState.putSerializable("adapter", adapter.saveState());
+		}
+
+		if (page != null)
+		{
+			outState.putSerializable("page", page);
+		}
+	}
+
 	@Override public void loadPage(String pageUri)
 	{
 		page = UiSettings.getInstance().getViewBuilder().buildPage(Uri.parse(pageUri));
 
 		if (page != null)
 		{
-			if (page instanceof ListPage)
-			{
-				adapter.setItems(page.getChildren());
-			}
-			else if (page instanceof GridPage)
-			{
-				adapter.setItems(((GridPage)page).getGrid().getChildren());
-			}
-
-			adapterView.setAdapter(adapter);
-			adapterView.notifyDataSetChanged();
+			setAdapter();
+			setTitle();
 		}
 		else
 		{

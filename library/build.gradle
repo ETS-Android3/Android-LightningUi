@@ -20,7 +20,7 @@ dependencies {
 	compile "com.android.support:appcompat-v7:23.3.0"
 	compile 'com.android.support:recyclerview-v7:23.3.0'
 
-	compile 'org.projectlombok:lombok:1.16.8'
+	compile 'org.projectlombok:lombok:1.16.10'
 	compile 'com.google.code.gson:gson:2.6.2'
 	compile 'net.callumtaylor:asynchttpclient:2.0'
 
@@ -83,6 +83,7 @@ android.libraryVariants.all { variant ->
 		options.linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference");
 		options.links("http://docs.oracle.com/javase/7/docs/api/");
 		options.encoding("utf-8")
+		options.addStringOption('Xdoclint:none', '-quiet')
 
 		// exclude generated files
 		exclude '**/BuildConfig.java'
@@ -94,5 +95,4 @@ android.libraryVariants.all { variant ->
 }
 
 //apply from: '../gradle/sonatype.gradle'
-//apply from: '../gradle/artifactory.gradle'
-
+apply from: '../gradle/artifactory.gradle'

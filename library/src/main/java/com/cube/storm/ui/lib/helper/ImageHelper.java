@@ -96,7 +96,7 @@ public class ImageHelper
 			return null;
 		}
 
-		if (width == 0 && height == 0)
+		if ((width == 0 && height == 0) || UiSettings.getInstance().getContentSize() != ContentSize.AUTO)
 		{
 			if (UiSettings.getInstance().getContentSize() == ContentSize.SMALL)
 			{
@@ -115,7 +115,7 @@ public class ImageHelper
 		}
 		else
 		{
-			int closest = 0;
+			int closest = -1;
 			for (int index = 0, count = images.size(); index < count; index++)
 			{
 				int imageWidth = images.get(index).getDimensions().getWidth();
@@ -125,6 +125,12 @@ public class ImageHelper
 				{
 					closest = index;
 				}
+			}
+
+			if (closest == -1)
+			{
+				// return image based on content size instead if an image couldnt be matched
+				return getImageProperty(images, 0, 0);
 			}
 
 			return images.get(closest);

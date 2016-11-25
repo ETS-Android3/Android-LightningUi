@@ -2,8 +2,6 @@ package com.cube.storm.ui.model.property;
 
 import android.os.Parcel;
 
-import com.cube.storm.ui.view.View;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -18,7 +16,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class ExternalLinkProperty extends DestinationLinkProperty
 {
-	{ this.className = View.ExternalLink.name(); }
+	public static String CLASS_NAME = "ExternalLink";
+
+	{ this.className = CLASS_NAME; }
 
 	@Override public int describeContents()
 	{

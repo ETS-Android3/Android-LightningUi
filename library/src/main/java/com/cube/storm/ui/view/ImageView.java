@@ -7,9 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.helper.ImageHelper;
 import com.cube.storm.ui.model.property.AnimationFrame;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
@@ -231,6 +233,30 @@ public class ImageView extends android.widget.ImageView
 	 */
 	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress)
 	{
+		// If image size isnt calculated yet, wait till it has
+		if (getWidth() == 0 && getHeight() == 0 && image != null && getVisibility() != GONE && UiSettings.getInstance().getContentSize() == ContentSize.AUTO)
+		{
+			getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener()
+			{
+				@Override public boolean onPreDraw()
+				{
+					getViewTreeObserver().removeOnPreDrawListener(this);
+
+					if (getWidth() == 0 && getHeight() == 0)
+					{
+						// fuck android
+						populateFrame(image, progress);
+						return false;
+					}
+
+					populate(image, progress);
+					return false;
+				}
+			});
+
+			return;
+		}
+
 		// The user is explicitly setting a static image so cancel the animation task
 		if (animator != null && displayNextFrame != null)
 		{

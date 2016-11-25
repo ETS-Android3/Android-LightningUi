@@ -1,7 +1,5 @@
 package com.cube.storm.ui.model.property;
 
-import com.cube.storm.ui.view.View;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -10,5 +8,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class SmsLinkProperty extends MessageLinkProperty
 {
-	{ this.className = View.SmsLink.name(); }
+	public static String CLASS_NAME = "SmsLink";
+
+	{ this.className = CLASS_NAME; }
 }

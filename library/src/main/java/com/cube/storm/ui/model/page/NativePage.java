@@ -4,7 +4,6 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
-import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
@@ -22,7 +21,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class NativePage extends Page
 {
-	{ this.className = View.NativePage.name(); }
+	public static String CLASS_NAME = "NativePage";
+
+	{ this.className = CLASS_NAME; }
 
 	@Override public Collection<? extends Model> getChildren()
 	{

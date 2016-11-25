@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.TextProperty;
-import com.cube.storm.ui.view.View;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class List extends ListItem
 {
-	{ this.className = View.List.name(); }
+	public static String CLASS_NAME = "List";
+
+	{ this.className = CLASS_NAME; }
 
 	protected TextProperty header;
 	protected TextProperty footer;
@@ -44,14 +45,11 @@ public class List extends ListItem
 	@Accessors(chain = true) @Data
 	public static class ListHeader extends ListItem
 	{
-		{ this.className = getClassName(); }
+		public static String CLASS_NAME = "_ListHeader";
+
+		{ this.className = CLASS_NAME; }
 
 		protected TextProperty header;
-
-		@Override public String getClassName()
-		{
-			return "_ListHeader";
-		}
 
 		@Override public int describeContents()
 		{
@@ -75,14 +73,11 @@ public class List extends ListItem
 	@Accessors(chain = true) @Data
 	public static class ListFooter extends ListItem
 	{
-		{ this.className = getClassName(); }
+		public static String CLASS_NAME = "_ListFooter";
+
+		{ this.className = CLASS_NAME; }
 
 		protected TextProperty footer;
-
-		@Override public String getClassName()
-		{
-			return "_ListFooter";
-		}
 
 		@Override public int describeContents()
 		{

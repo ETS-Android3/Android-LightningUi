@@ -9,6 +9,7 @@ import lombok.Getter;
 
 public enum ContentSize
 {
+	AUTO(0, "0"),
 	SMALL(0.75, "x0.75"),
 	MEDIUM(1, "x1.0"),
 	LARGE(1.5, "x1.5"),

@@ -8,6 +8,27 @@
 						"class": "Text",
 						"content": "This is an example storm page complete with a few selection of standard storm objects rendered into an efficient, reusable recycler view."
 					}
+				},
+				{
+					"class": "LogoListItem",
+					"image": {
+						"class": "Icon",
+						"src": {
+							"class": "ImageDescriptor",
+							"x0.75": "assets://content/141501992968_hammer_x2.png",
+							"x1": "assets://content/141501992968_hammer_x2.png",
+							"x1.5": "assets://content/141501992968_hammer_x2.png",
+							"x2": "assets://content/141501992968_hammer_x2.png"
+						}
+					},
+					"link": {
+						"class": "ExternalLink",
+						"destination": "https:\/\/3sidedcube.com\/",
+						"title": {
+							"class": "Text",
+							"content": "el6ib"
+						}
+					}
 				}
 			],
 			"class": "List"
@@ -92,7 +113,7 @@
 					},
 					"title": {
 						"class": "Text",
-						"content": "Link with no description"
+						"content": "Native link"
 					}
 				},
 				{
@@ -149,7 +170,65 @@
 					},
 					"title": {
 						"class": "Text",
-						"content": "Link with no description"
+						"content": "Storm link"
+					}
+				}
+				,
+				{
+					"class": "StandardListItem",
+					"image": [
+						{
+							"class": "Icon",
+							"src": {
+								"class": "InternalLink",
+								"destination": "assets://content/141501992968_hammer_x0.75.png"
+							},
+							"dimensions": {
+								"width": 22,
+								"height": 22
+							}
+						},
+						{
+							"class": "Icon",
+							"src": {
+								"class": "InternalLink",
+								"destination": "assets://content/141501992968_hammer_x1.png"
+							},
+							"dimensions": {
+								"width": 44,
+								"height": 44
+							}
+						},
+						{
+							"class": "Icon",
+							"src": {
+								"class": "InternalLink",
+								"destination": "assets://content/141501992968_hammer_x1.5.png"
+							},
+							"dimensions": {
+								"width": 66,
+								"height": 66
+							}
+						},
+						{
+							"class": "Icon",
+							"src": {
+								"class": "InternalLink",
+								"destination": "assets://content/141501992968_hammer_x2.png"
+							},
+							"dimensions": {
+								"width": 88,
+								"height": 88
+							}
+						}
+					],
+					"link": {
+						"class": "InternalLink",
+						"destination": "assets://pages/3.json"
+					},
+					"title": {
+						"class": "Text",
+						"content": "Overridden link"
 					}
 				}
 			],

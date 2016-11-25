@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.page;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.list.ListItem;
-import com.cube.storm.ui.view.View;
 
 import java.util.Collection;
 
@@ -22,7 +21,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class ListPage extends Page
 {
-	{ this.className = View.ListPage.name(); }
+	public static String CLASS_NAME = "ListPage";
+
+	{ this.className = CLASS_NAME; }
 
 	/**
 	 * The array list of children {@link com.cube.storm.ui.model.list.ListItem}

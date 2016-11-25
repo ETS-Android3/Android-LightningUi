@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.property;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.Model;
-import com.cube.storm.ui.view.View;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +13,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class ImageProperty extends Property
 {
-	{ this.className = View.Image.name(); }
+	public static String CLASS_NAME = "Image";
+
+	{ this.className = CLASS_NAME; }
 
 	protected DestinationLinkProperty src;
 	protected Dimensions dimensions;

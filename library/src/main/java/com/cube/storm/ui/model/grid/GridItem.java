@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.grid;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.Model;
-import com.cube.storm.ui.view.View;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public abstract class GridItem extends Model
 {
-	{ this.className = View.GridItem.name(); }
+	public static String CLASS_NAME = "GridItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected Boolean spanned;
 

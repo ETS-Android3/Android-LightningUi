@@ -3,108 +3,107 @@ package com.cube.storm.ui.lib.factory;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
-import com.cube.storm.ui.activity.StormWebActivity;
-import com.cube.storm.ui.activity.VideoPlayerActivity;
 import com.cube.storm.ui.data.FragmentIntent;
-import com.cube.storm.ui.fragment.StormFragment;
-import com.cube.storm.ui.fragment.StormTabbedFragment;
+import com.cube.storm.ui.lib.provider.IntentProvider;
 import com.cube.storm.ui.lib.resolver.IntentResolver;
 import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.model.App;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
-import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
-import com.cube.storm.ui.model.descriptor.WebPageDescriptor;
-import com.cube.storm.ui.model.page.GridPage;
-import com.cube.storm.ui.model.page.ListPage;
-import com.cube.storm.ui.model.page.PageCollection;
-import com.cube.storm.ui.model.page.TabbedPageCollection;
 
 /**
- * This is the factory class which is used by Storm to decide which activity/fragments to instantiate
- * based on the source file's class type, name, or Uri.
+ * Factory class used to provide fragment/activity intents. This class shouldn't be overridden unles you wish to change
+ * the way the factory resolves intents.
+ *
+ * The main methods are {@link #getFragmentIntentForPageDescriptor(PageDescriptor)} and {@link #getIntentForPageDescriptor(Context, PageDescriptor)}. The two methods
+ * {@link #getFragmentIntentForPageUri(Uri)} and {@link #getIntentForPageUri(Context, Uri)} loop through {@link UiSettings#getIntentProviders()} to resolve the intents.
+ *
+ * In the main methods, firstly, {@link UiSettings#intentResolver} are checked for matching page Uri/id/descriptors, then move on to
+ * checking {@link UiSettings#getIntentProviders()} to resolve the intents.
+ *
+ * This class does not fully resolve intents itself, only queries the aforementioned data stores. Actual functionality is
+ * implemented by {@link com.cube.storm.ui.lib.provider.DefaultIntentProvider} by default.
  *
  * @author Callum Taylor
- * @project LightningUi
  */
-public abstract class IntentFactory
+public class IntentFactory
 {
 	/**
 	 * Loads a fragment intent from a Uri by finding the {@link com.cube.storm.ui.model.descriptor.PageDescriptor} in the {@link com.cube.storm.ui.model.App} model defined
 	 * in {@link com.cube.storm.UiSettings#getApp()}. It will load the page from disk if {@link com.cube.storm.UiSettings#getApp()} is null.
+	 * If no page descriptor is found, an empty one will be created with {@link PageDescriptor#src} set to {@param pageUri}
 	 *
 	 * @param pageUri The page uri
 	 *
 	 * @return The intent, or null if one was not suitable enough
 	 */
-	@Nullable
-	public FragmentIntent getFragmentIntentForPageUri(@NonNull Uri pageUri)
+	@Nullable public FragmentIntent getFragmentIntentForPageUri(@NonNull Uri pageUri)
 	{
 		App app = UiSettings.getInstance().getApp();
 
 		if (app != null)
 		{
-			for (PageDescriptor pageDescriptor : app.getMap())
+			PageDescriptor descriptor = app.findPageDescriptor(pageUri);
+
+			if (descriptor == null)
 			{
-				if (pageUri.toString().equalsIgnoreCase(pageDescriptor.getSrc()))
-				{
-					return getFragmentIntentForPageDescriptor(pageDescriptor);
-				}
+				descriptor = app.findPageDescriptor(pageUri.getLastPathSegment());
+			}
+
+			if (descriptor != null)
+			{
+				return getFragmentIntentForPageDescriptor(descriptor);
 			}
 		}
 
-		return null;
+		return getFragmentIntentForPageDescriptor(new PageDescriptor("", "", pageUri.toString(), "", false));
 	}
 
 	/**
 	 * Loads an intent from a Uri by finding the {@link com.cube.storm.ui.model.descriptor.PageDescriptor} in the {@link com.cube.storm.ui.model.App} model defined
-	 * in {@link com.cube.storm.UiSettings#getApp()}.
+	 * in {@link com.cube.storm.UiSettings#getApp()}. If no page descriptor is found, an empty one will be created with {@link PageDescriptor#src} set to {@param pageUri}
 	 *
 	 * @param pageUri The page uri
 	 *
 	 * @return The intent, or null if one was not suitable enough
 	 */
-	@Nullable
-	public Intent getIntentForPageUri(@NonNull Context context, @NonNull Uri pageUri)
+	@Nullable public Intent getIntentForPageUri(@NonNull Context context, @NonNull Uri pageUri)
 	{
 		App app = UiSettings.getInstance().getApp();
 
 		if (app != null)
 		{
-			for (PageDescriptor pageDescriptor : app.getMap())
+			PageDescriptor descriptor = app.findPageDescriptor(pageUri);
+
+			if (descriptor == null)
 			{
-				if (pageUri.toString().equalsIgnoreCase(pageDescriptor.getSrc()))
-				{
-					return getIntentForPageDescriptor(context, pageDescriptor);
-				}
+				descriptor = app.findPageDescriptor(pageUri.getLastPathSegment());
+			}
+
+			if (descriptor != null)
+			{
+				return getIntentForPageDescriptor(context, descriptor);
 			}
 		}
 
-		return null;
+		return getIntentForPageDescriptor(context, new PageDescriptor("", "", pageUri.toString(), "", false));
 	}
 
 	/**
-	 * Loads a fragment intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()} in the
-	 * {@link com.cube.storm.ui.view.View} enum.
-	 * <p/>
-	 * To register a specific URI or page ID, use {@link UiSettings#getIntentResolver()} instead. Order of resolve priority is
-	 * `pageDescriptor` -> `pageSrc` -> `pageId` -> `pageName`
-	 *
+	 * Firstly loops through the {@link UiSettings#intentResolver} to resolve intent, if nothing was consumed, loops through {@link UiSettings#intentProviders}
+	 * until consumed, or returns null.
 	 * @param pageDescriptor The page descriptor to load from
 	 *
-	 * @return The intent, or null if one was not suitable enough
+	 * @return
 	 */
-	@Nullable
-	public FragmentIntent getFragmentIntentForPageDescriptor(@NonNull PageDescriptor pageDescriptor)
+	@Nullable public FragmentIntent getFragmentIntentForPageDescriptor(@NonNull PageDescriptor pageDescriptor)
 	{
-		FragmentIntent intent;
-		Bundle arguments = new Bundle();
+		FragmentIntent intent = null;
 		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
 		Class<? extends Model> pageType = null;
 
@@ -112,8 +111,6 @@ public abstract class IntentFactory
 		{
 			pageType = viewResolver.resolveModel();
 		}
-
-		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
 		// Check intent resolver
 		IntentResolver[] resolvers =
@@ -132,55 +129,45 @@ public abstract class IntentFactory
 
 				if (intent != null)
 				{
-					if (intent.getArguments() != null)
-					{
-						intent.getArguments().putAll(arguments);
-					}
-					else
-					{
-						intent.setArguments(arguments);
-					}
-
-					return intent;
+					break;
 				}
 			}
 		}
 
-		// Fallback to default resolution
-		if (pageType != null)
+		// If no intent was resolved, try the intent providers
+		if (intent == null)
 		{
-			if (ListPage.class == pageType || GridPage.class == pageType)
+			for (IntentProvider intentProvider : UiSettings.getInstance().getIntentProviders())
 			{
-				intent = new FragmentIntent(StormFragment.class, null, arguments);
-				return intent;
+				intent = intentProvider.provideFragmentIntentForPageDescriptor(pageDescriptor);
+
+				if (intent != null)
+				{
+					break;
+				}
 			}
-			else if (TabbedPageCollection.class == pageType)
-			{
-				intent = new FragmentIntent(StormTabbedFragment.class, null, arguments);
-				return intent;
-			}
+		}
+
+		if (intent != null)
+		{
+			intent.getArguments().putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
+			return intent;
 		}
 
 		return null;
 	}
 
 	/**
-	 * Loads an intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()} in the
-	 * {@link com.cube.storm.ui.view.View} enum.
-	 * <p/>
-	 * To register a specific URI or page ID, use {@link UiSettings#getIntentResolver()} instead. Order of resolve priority is
-	 * `pageDescriptor` -> `pageSrc` -> `pageId` -> `pageName`
-	 *
+	 * Firstly loops through the {@link UiSettings#intentResolver} to resolve intent, if nothing was consumed, loops through {@link UiSettings#intentProviders}
+	 * until consumed, or returns null.
 	 * @param context The context used to create the intent
 	 * @param pageDescriptor The page descriptor to load from
 	 *
-	 * @return The intent, or null if one was not suitable enough
+	 * @return
 	 */
-	@Nullable
-	public Intent getIntentForPageDescriptor(@NonNull Context context, @NonNull PageDescriptor pageDescriptor)
+	@Nullable public Intent getIntentForPageDescriptor(@NonNull Context context, @NonNull PageDescriptor pageDescriptor)
 	{
-		Intent intent;
-		Bundle arguments = new Bundle();
+		Intent intent = null;
 		ViewResolver viewResolver = UiSettings.getInstance().getViewResolvers().get(pageDescriptor.getType());
 		Class<? extends Model> pageType = null;
 
@@ -188,8 +175,6 @@ public abstract class IntentFactory
 		{
 			pageType = viewResolver.resolveModel();
 		}
-
-		arguments.putString(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 
 		// Check intent resolver
 		IntentResolver[] resolvers =
@@ -208,35 +193,28 @@ public abstract class IntentFactory
 
 				if (intent != null)
 				{
-					intent.putExtras(arguments);
-					return intent;
+					break;
 				}
 			}
 		}
 
-		// Fallback to default resolution
-		if (pageDescriptor instanceof VideoPageDescriptor
-		|| UiSettings.getInstance().getLinkHandler().isYoutubeVideo(Uri.parse(pageDescriptor.getSrc()))
-		|| UiSettings.getInstance().getLinkHandler().isVideo(Uri.parse(pageDescriptor.getSrc())))
+		// If no intent was resolved, try the intent providers
+		if (intent == null)
 		{
-			intent = new Intent(context, VideoPlayerActivity.class);
-			intent.putExtras(arguments);
+			for (IntentProvider intentProvider : UiSettings.getInstance().getIntentProviders())
+			{
+				intent = intentProvider.provideIntentForPageDescriptor(context, pageDescriptor);
 
-			return intent;
+				if (intent != null)
+				{
+					break;
+				}
+			}
 		}
-		else if (pageDescriptor instanceof WebPageDescriptor)
-		{
-			intent = new Intent(context, StormWebActivity.class);
-			intent.putExtras(arguments);
-			intent.putExtra(StormWebActivity.EXTRA_FILE_NAME, pageDescriptor.getSrc());
 
-			return intent;
-		}
-		else if (pageType != null && (ListPage.class == pageType || GridPage.class == pageType || PageCollection.class == pageType || TabbedPageCollection.class == pageType))
+		if (intent != null)
 		{
-			intent = new Intent(context, StormActivity.class);
-			intent.putExtras(arguments);
-
+			intent.putExtra(StormActivity.EXTRA_URI, pageDescriptor.getSrc());
 			return intent;
 		}
 

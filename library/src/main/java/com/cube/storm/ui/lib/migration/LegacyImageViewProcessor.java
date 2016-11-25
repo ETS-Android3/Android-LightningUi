@@ -8,8 +8,8 @@ import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
+import com.cube.storm.ui.model.property.DestinationLinkProperty;
 import com.cube.storm.ui.model.property.ImageProperty;
-import com.cube.storm.ui.view.View;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
@@ -63,7 +63,7 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 						}
 
 						JsonObject newImageSrc = new JsonObject();
-						newImageSrc.addProperty("class", View.DestinationLink.name());
+						newImageSrc.addProperty("class", DestinationLinkProperty.CLASS_NAME);
 						newImageSrc.addProperty("destination", image.getAsString());
 
 						JsonObject newImageDimensions = new JsonObject();
@@ -109,7 +109,7 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 						newImageDimensions.addProperty("height", h);
 
 						JsonObject newImage = new JsonObject();
-						newImage.addProperty("class", View.Image.name());
+						newImage.addProperty("class", ImageProperty.CLASS_NAME);
 						newImage.add("src", newImageSrc);
 						newImage.add("dimensions", newImageDimensions);
 

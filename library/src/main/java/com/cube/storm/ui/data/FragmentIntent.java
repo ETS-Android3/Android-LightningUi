@@ -3,6 +3,7 @@ package com.cube.storm.ui.data;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import lombok.Data;
 
@@ -18,19 +19,30 @@ import lombok.Data;
 @Data
 public class FragmentIntent implements Parcelable
 {
-	private Class<?> fragment;
-	private String title;
-	private Bundle arguments;
+	@NonNull private Class<?> fragment = Object.class;
+	@NonNull private String title = "";
+	@NonNull private Bundle arguments = new Bundle();
 
 	public FragmentIntent(){}
 
-	public FragmentIntent(Class<?> fragment, Bundle arguments)
+	public FragmentIntent(@NonNull Class<?> fragment)
+	{
+		this.fragment = fragment;
+	}
+
+	public FragmentIntent(@NonNull Class<?> fragment, @NonNull Bundle arguments)
 	{
 		this.fragment = fragment;
 		this.arguments = arguments;
 	}
 
-	public FragmentIntent(Class<?> fragment, String title, Bundle arguments)
+	public FragmentIntent(@NonNull Class<?> fragment, @NonNull String title)
+	{
+		this.fragment = fragment;
+		this.title = title;
+	}
+
+	public FragmentIntent(@NonNull Class<?> fragment, @NonNull String title, @NonNull Bundle arguments)
 	{
 		this.fragment = fragment;
 		this.title = title;
@@ -61,7 +73,7 @@ public class FragmentIntent implements Parcelable
 		}
 
 		this.title = dest.readString();
-		this.arguments = dest.readBundle();
+		this.arguments = dest.readBundle(getClass().getClassLoader());
 	}
 
 	public static Creator<FragmentIntent> CREATOR = new Creator<FragmentIntent>()

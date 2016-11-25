@@ -3,16 +3,18 @@ package com.cube.storm;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.handler.LinkHandler;
+import com.cube.storm.ui.lib.helper.ViewHelper;
 import com.cube.storm.ui.lib.parser.ViewBuilder;
 import com.cube.storm.ui.lib.parser.ViewProcessor;
 import com.cube.storm.ui.lib.processor.TextProcessor;
+import com.cube.storm.ui.lib.provider.DefaultIntentProvider;
+import com.cube.storm.ui.lib.provider.IntentProvider;
 import com.cube.storm.ui.lib.resolver.AppResolver;
 import com.cube.storm.ui.lib.resolver.IntentResolver;
 import com.cube.storm.ui.lib.resolver.IntentResolverMap;
@@ -27,8 +29,6 @@ import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
-import com.cube.storm.ui.view.View;
-import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import com.cube.storm.util.lib.processor.Processor;
 import com.cube.storm.util.lib.resolver.AssetsResolver;
 import com.cube.storm.util.lib.resolver.FileResolver;
@@ -38,8 +38,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.handlers.SchemeHandler;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
@@ -88,10 +91,17 @@ public class UiSettings
 	@Getter private App app;
 
 	/**
-	 * The intent factory instance of the module. This is the instance that will be used to resolve
-	 * every activity/fragment for a storm page/Uri
+	 * The central point of the library to work out how to link between pages based on page descriptors or Uris.
+	 * ALWAYS call this to deal with resolving intents/fragments over {@link #intentProviders} as this implementation
+	 * calls {@link #intentProviders}
 	 */
-	@Getter @Setter private IntentFactory intentFactory;
+	@Getter @Setter private IntentFactory intentFactory = new IntentFactory();
+
+	/**
+	 * List of providers for dealing with intents. Intent provider should return null in each method it doesnt consume.
+	 * Intent providers are executed in order or list with user-overridden providers to be prioritised.
+	 */
+	@Getter @Setter private List<IntentProvider> intentProviders = new ArrayList<>();
 
 	/**
 	 * Intent resolver used to resolving specific pages to an fragment/intent using either a page ID/Uri/descriptor.
@@ -185,30 +195,15 @@ public class UiSettings
 			this.construct = new UiSettings();
 			this.context = context.getApplicationContext();
 
-			intentFactory(new IntentFactory(){});
 			fileFactory(new FileFactory(){});
 			imageLoaderConfiguration(new ImageLoaderConfiguration.Builder(this.context));
 			linkHandler(new LinkHandler());
 			textProcessor(new TextProcessor());
 
-			contentSize(ContentSize.MEDIUM);
+			contentSize(ContentSize.AUTO);
 
 			// Register views and models
-			for (final View view : View.values())
-			{
-				registerViewResolver(view.name(), new ViewResolver()
-				{
-					@Nullable @Override public Class<? extends Model> resolveModel()
-					{
-						return view.getModel();
-					}
-
-					@Nullable @Override public Class<? extends ViewHolderFactory> resolveViewHolder()
-					{
-						return view.getHolder();
-					}
-				});
-			}
+			registerViewResolver(ViewHelper.getViewResolvers());
 
 			// Register view resolvers for Gson adapters
 			ViewProcessor<? extends Model> baseProcessor = new ViewProcessor<Model>()
@@ -295,15 +290,39 @@ public class UiSettings
 		}
 
 		/**
-		 * Sets the default {@link com.cube.storm.ui.lib.factory.IntentFactory} for the module
-		 *
-		 * @param intentFactory The new {@link com.cube.storm.ui.lib.factory.IntentFactory}
+		 * Adds an intent provider to the bottom of the provider list (lowest priority)
+		 * @param provider
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder intentFactory(IntentFactory intentFactory)
+		public Builder registerIntentProvider(IntentProvider provider)
 		{
-			construct.intentFactory = intentFactory;
+			construct.intentProviders.add(provider);
+			return this;
+		}
+
+		/**
+		 * Adds an intent provider to the start of the provider list (top-most priority)
+		 * @param provider
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerIntentProviderStart(IntentProvider provider)
+		{
+			construct.intentProviders.add(0, provider);
+			return this;
+		}
+
+		/**
+		 * Sets the intent provider list
+		 * @param provider The providers to set (in order)
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder setIntentProvider(IntentProvider... provider)
+		{
+			construct.intentProviders.clear();
+			construct.intentProviders.addAll(Arrays.asList(provider));
 			return this;
 		}
 
@@ -496,6 +515,11 @@ public class UiSettings
 		 */
 		public UiSettings build()
 		{
+			if (construct.getIntentProviders().size() == 0)
+			{
+				registerIntentProvider(new DefaultIntentProvider());
+			}
+
 			return (UiSettings.instance = construct);
 		}
 	}

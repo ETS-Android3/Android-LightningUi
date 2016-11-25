@@ -60,7 +60,6 @@ public class StormTabbedFragment extends Fragment implements StormInterface
 		else
 		{
 			onLoadFail();
-			return;
 		}
 	}
 

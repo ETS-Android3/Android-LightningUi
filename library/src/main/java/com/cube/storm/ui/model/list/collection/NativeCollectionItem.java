@@ -1,10 +1,6 @@
-package com.cube.storm.ui.model.page;
+package com.cube.storm.ui.model.list.collection;
 
 import android.os.Parcel;
-
-import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
-
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,20 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * // TODO: Add class description
+ * Native block item for collections
  *
  * @author Callum Taylor
- * @project LightningUi
  */
 @NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
 @Accessors(chain = true) @Data
-public class TabbedPageCollection extends PageCollection
+public class NativeCollectionItem extends CollectionItem
 {
-	public static String CLASS_NAME = "TabbedPageCollection";
+	public static String CLASS_NAME = "NativeCollectionItem";
 
 	{ this.className = CLASS_NAME; }
 
-	protected List<TabbedPageDescriptor> pages;
+	protected String name;
 
 	@Override public int describeContents()
 	{

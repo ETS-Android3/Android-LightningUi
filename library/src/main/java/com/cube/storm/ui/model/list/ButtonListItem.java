@@ -3,7 +3,6 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.ButtonProperty;
-import com.cube.storm.ui.view.View;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data
 public class ButtonListItem extends TitleListItem
 {
-	{ this.className = View.ButtonListItem.name(); }
+	public static String CLASS_NAME = "ButtonListItem";
+
+	{ this.className = CLASS_NAME; }
 
 	protected ButtonProperty button;
 

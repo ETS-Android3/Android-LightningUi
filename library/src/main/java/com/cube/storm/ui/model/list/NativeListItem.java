@@ -4,21 +4,23 @@ import android.os.Parcel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * A view model
+ * Native block item for lists
  *
- * @author Alan Le Fournis
- * @project LightningUi
+ * @author Callum Taylor
  */
-@AllArgsConstructor(suppressConstructorProperties = true)
+@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
 @Accessors(chain = true) @Data
-public class UnorderedListItem extends DescriptionListItem
+public class NativeListItem extends ListItem
 {
-	public static String CLASS_NAME = "UnorderedListItem";
+	public static String CLASS_NAME = "NativeListItem";
 
 	{ this.className = CLASS_NAME; }
+
+	protected String name;
 
 	@Override public int describeContents()
 	{
