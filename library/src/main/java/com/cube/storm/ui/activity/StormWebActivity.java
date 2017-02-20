@@ -52,26 +52,25 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		boolean invalidUrl = getIntent() == null || TextUtils.isEmpty(getIntent().getStringExtra(EXTRA_FILE_NAME));
+		String url = getIntent() != null ? getIntent().getStringExtra(EXTRA_FILE_NAME) : null;
+		String title = getIntent() != null ? getIntent().getStringExtra(EXTRA_TITLE) : null;
 
-		if (invalidUrl)
+		if (TextUtils.isEmpty(url))
 		{
 			Toast.makeText(this, "No url set", Toast.LENGTH_LONG).show();
 			finish();
 		}
 
-		String url = getIntent().getExtras().getString(EXTRA_FILE_NAME);
+		if (!TextUtils.isEmpty(title))
+		{
+			setTitle(title);
+		}
 
 		if (chromeCustomTabsSupported())
 		{
 			launchChromeCustomTabs(url);
 			finish();
 			return;
-		}
-
-		if (getIntent().getExtras().containsKey(EXTRA_TITLE))
-		{
-			setTitle(getIntent().getExtras().getString(EXTRA_TITLE));
 		}
 
 		setContentView(R.layout.web_view);
