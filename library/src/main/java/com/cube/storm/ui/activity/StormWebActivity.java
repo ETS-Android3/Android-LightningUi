@@ -51,6 +51,8 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 
 		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_FILE_NAME))
 		{
+			String fileName = getIntent().getExtras().getString(EXTRA_FILE_NAME);
+
 			if (getIntent().getExtras().containsKey(EXTRA_TITLE))
 			{
 				setTitle(getIntent().getExtras().getString(EXTRA_TITLE));
@@ -110,8 +112,7 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 			}
 			else
 			{
-				String toLoad = getIntent().getExtras().getString(EXTRA_FILE_NAME);
-				webView.loadUrl(toLoad);
+				webView.loadUrl(fileName);
 			}
 		}
 		else
