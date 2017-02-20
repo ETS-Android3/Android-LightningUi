@@ -58,6 +58,7 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 			if (chromeCustomTabsSupported())
 			{
 				launchChromeCustomTabs(fileName);
+				finish();
 				return;
 			}
 
@@ -155,8 +156,6 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 
 		CustomTabsIntent customTabsIntent = builder.build();
 		customTabsIntent.launchUrl(this, Uri.parse(url));
-
-		finish();
 	}
 
 	@Override public void onClick(View v)
