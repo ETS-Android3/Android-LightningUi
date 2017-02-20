@@ -21,6 +21,7 @@ dependencies {
 	compile "com.android.support:support-v13:${supportLibraryVersion}"
 	compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
 	compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+	compile "com.android.support:customtabs:${supportLibraryVersion}"
 
 	compile 'org.projectlombok:lombok:1.16.10'
 	compile 'com.google.code.gson:gson:2.6.2'
