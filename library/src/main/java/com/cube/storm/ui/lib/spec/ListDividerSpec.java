@@ -20,14 +20,14 @@ public class ListDividerSpec implements DividerSpec
 	@Nullable
 	@Override public ListItem shouldAddDivider(int position, List<Model> items)
 	{
-		if (position > 0 && position < items.size() - 1)
+		if (position >= 0 && position < items.size() - 1)
 		{
 			if (items.get(position) instanceof com.cube.storm.ui.model.list.List.ListHeader)
 			{
 				return null;
 			}
 
-			if ((items.get(position + 1) instanceof StandardListItem))
+			if (position + 1 < items.size() && items.get(position + 1) instanceof StandardListItem)
 			{
 				return new Divider();
 			}
