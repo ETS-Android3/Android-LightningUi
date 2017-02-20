@@ -60,11 +60,11 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 			finish();
 		}
 
-		String fileName = getIntent().getExtras().getString(EXTRA_FILE_NAME);
+		String url = getIntent().getExtras().getString(EXTRA_FILE_NAME);
 
 		if (chromeCustomTabsSupported())
 		{
-			launchChromeCustomTabs(fileName);
+			launchChromeCustomTabs(url);
 			finish();
 			return;
 		}
@@ -128,7 +128,7 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 		}
 		else
 		{
-			webView.loadUrl(fileName);
+			webView.loadUrl(url);
 		}
 	}
 
