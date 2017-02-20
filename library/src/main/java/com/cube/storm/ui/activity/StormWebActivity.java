@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -52,6 +54,12 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_FILE_NAME))
 		{
 			String fileName = getIntent().getExtras().getString(EXTRA_FILE_NAME);
+
+			if (chromeCustomTabsSupported())
+			{
+				launchChromeCustomTabs(fileName);
+				return;
+			}
 
 			if (getIntent().getExtras().containsKey(EXTRA_TITLE))
 			{
@@ -120,6 +128,35 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 			Toast.makeText(this, "No url set", Toast.LENGTH_LONG).show();
 			finish();
 		}
+	}
+
+	/**
+	 * Is chrome custom tabs supported for this SDK version?
+	 * More specifically, is the Chrome app supported for this SDK version?
+	 * @return boolean where true means that chrome custom tabs is supported and false meaning it is not supported
+	 */
+	private boolean chromeCustomTabsSupported()
+	{
+		// Chrome is only supported on Jelly Bean and above
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+	}
+
+	/**
+	 * Launches a chrome custom tab with the given {@link String} url
+	 * @param url which you want to load using chrome custom tabs
+	 */
+	public void launchChromeCustomTabs(@NonNull String url)
+	{
+		CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+		builder.addDefaultShareMenuItem();
+
+		builder.setStartAnimations(this, R.anim.slide_in_right, R.anim.slide_out_left);
+		builder.setExitAnimations(this, R.anim.slide_in_left, R.anim.slide_out_right);
+
+		CustomTabsIntent customTabsIntent = builder.build();
+		customTabsIntent.launchUrl(this, Uri.parse(url));
+
+		finish();
 	}
 
 	@Override public void onClick(View v)
