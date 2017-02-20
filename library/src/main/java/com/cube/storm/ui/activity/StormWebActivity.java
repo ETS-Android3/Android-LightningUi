@@ -53,7 +53,6 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		String url = getIntent() != null ? getIntent().getStringExtra(EXTRA_FILE_NAME) : null;
-		String title = getIntent() != null ? getIntent().getStringExtra(EXTRA_TITLE) : null;
 
 		if (TextUtils.isEmpty(url))
 		{
@@ -61,15 +60,17 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 			finish();
 		}
 
-		if (!TextUtils.isEmpty(title))
-		{
-			setTitle(title);
-		}
-
 		if (chromeCustomTabsSupported())
 		{
 			launchChromeCustomTabs(url);
 			finish();
+		}
+
+		String title = getIntent() != null ? getIntent().getStringExtra(EXTRA_TITLE) : null;
+
+		if (!TextUtils.isEmpty(title))
+		{
+			setTitle(title);
 		}
 
 		setContentView(R.layout.web_view);
