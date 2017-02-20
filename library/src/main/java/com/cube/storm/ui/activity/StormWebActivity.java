@@ -70,7 +70,6 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 		{
 			launchChromeCustomTabs(url);
 			finish();
-			return;
 		}
 
 		setContentView(R.layout.web_view);
