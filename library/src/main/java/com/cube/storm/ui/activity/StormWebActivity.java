@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,83 +52,83 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_FILE_NAME))
-		{
-			String fileName = getIntent().getExtras().getString(EXTRA_FILE_NAME);
+		boolean invalidUrl = getIntent() == null || TextUtils.isEmpty(getIntent().getStringExtra(EXTRA_FILE_NAME));
 
-			if (chromeCustomTabsSupported())
-			{
-				launchChromeCustomTabs(fileName);
-				finish();
-				return;
-			}
-
-			if (getIntent().getExtras().containsKey(EXTRA_TITLE))
-			{
-				setTitle(getIntent().getExtras().getString(EXTRA_TITLE));
-			}
-
-			setContentView(R.layout.web_view);
-
-			mButtonContainer = findViewById(R.id.button_container);
-			mWeb = findViewById(R.id.icon_web);
-			mBack = findViewById(R.id.icon_back);
-			mForward = findViewById(R.id.icon_forward);
-			mClose = findViewById(R.id.icon_close);
-			mShare = findViewById(R.id.icon_share);
-			webView = (WebView)findViewById(R.id.web_view);
-
-			mWeb.setOnClickListener(this);
-			mBack.setOnClickListener(this);
-			mForward.setOnClickListener(this);
-			mClose.setOnClickListener(this);
-			mShare.setOnClickListener(this);
-
-			WebSettings settings = webView.getSettings();
-			settings.setJavaScriptEnabled(true);
-			settings.setBuiltInZoomControls(true);
-			settings.setLoadWithOverviewMode(true);
-			settings.setUseWideViewPort(true);
-
-			if (Build.VERSION.SDK_INT >= 11)
-			{
-				settings.setDisplayZoomControls(false);
-			}
-
-			final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
-			webView.setWebViewClient(new WebViewClient());
-			webView.setWebChromeClient(new WebChromeClient()
-			{
-				@Override public void onProgressChanged(WebView view, int progress)
-				{
-					if (progress < 100 && progressBar.getVisibility() == View.GONE)
-					{
-						progressBar.setVisibility(View.VISIBLE);
-					}
-
-					progressBar.setProgress(progress);
-					if (progress == 100)
-					{
-						progressBar.setVisibility(View.GONE);
-					}
-
-					super.onProgressChanged(view, progress);
-				}
-			});
-
-			if (savedInstanceState != null)
-			{
-				webView.restoreState(savedInstanceState);
-			}
-			else
-			{
-				webView.loadUrl(fileName);
-			}
-		}
-		else
+		if (invalidUrl)
 		{
 			Toast.makeText(this, "No url set", Toast.LENGTH_LONG).show();
 			finish();
+		}
+
+		String fileName = getIntent().getExtras().getString(EXTRA_FILE_NAME);
+
+		if (chromeCustomTabsSupported())
+		{
+			launchChromeCustomTabs(fileName);
+			finish();
+			return;
+		}
+
+		if (getIntent().getExtras().containsKey(EXTRA_TITLE))
+		{
+			setTitle(getIntent().getExtras().getString(EXTRA_TITLE));
+		}
+
+		setContentView(R.layout.web_view);
+
+		mButtonContainer = findViewById(R.id.button_container);
+		mWeb = findViewById(R.id.icon_web);
+		mBack = findViewById(R.id.icon_back);
+		mForward = findViewById(R.id.icon_forward);
+		mClose = findViewById(R.id.icon_close);
+		mShare = findViewById(R.id.icon_share);
+		webView = (WebView)findViewById(R.id.web_view);
+
+		mWeb.setOnClickListener(this);
+		mBack.setOnClickListener(this);
+		mForward.setOnClickListener(this);
+		mClose.setOnClickListener(this);
+		mShare.setOnClickListener(this);
+
+		WebSettings settings = webView.getSettings();
+		settings.setJavaScriptEnabled(true);
+		settings.setBuiltInZoomControls(true);
+		settings.setLoadWithOverviewMode(true);
+		settings.setUseWideViewPort(true);
+
+		if (Build.VERSION.SDK_INT >= 11)
+		{
+			settings.setDisplayZoomControls(false);
+		}
+
+		final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+		webView.setWebViewClient(new WebViewClient());
+		webView.setWebChromeClient(new WebChromeClient()
+		{
+			@Override public void onProgressChanged(WebView view, int progress)
+			{
+				if (progress < 100 && progressBar.getVisibility() == View.GONE)
+				{
+					progressBar.setVisibility(View.VISIBLE);
+				}
+
+				progressBar.setProgress(progress);
+				if (progress == 100)
+				{
+					progressBar.setVisibility(View.GONE);
+				}
+
+				super.onProgressChanged(view, progress);
+			}
+		});
+
+		if (savedInstanceState != null)
+		{
+			webView.restoreState(savedInstanceState);
+		}
+		else
+		{
+			webView.loadUrl(fileName);
 		}
 	}
 
