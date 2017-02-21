@@ -35,7 +35,7 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 		}
 	}
 
-	private LinearLayout linearLayout;
+	protected LinearLayout linearLayout;
 	protected LinearLayout embeddedLinksContainer;
 
 	public CollectionListItemViewHolder(View view)

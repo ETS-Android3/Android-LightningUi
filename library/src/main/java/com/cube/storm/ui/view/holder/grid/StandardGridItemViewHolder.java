@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.grid.StandardGridItem;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.ImageView;
@@ -21,7 +22,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Matt Allen
  * @project LightningUi
  */
-public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem> implements View.OnClickListener
+public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -43,8 +44,6 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 	{
 		super(view);
 
-		view.setOnClickListener(this);
-
 		image = (ImageView)view.findViewById(R.id.image);
 		title = (TextView)view.findViewById(R.id.title);
 		description = (TextView)view.findViewById(R.id.description);
@@ -54,6 +53,8 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 
 	@Override public void populateView(final StandardGridItem model)
 	{
+		itemView.setOnClickListener(null);
+
 		link = model.getLink();
 		image.setVisibility(View.GONE);
 
@@ -61,13 +62,21 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 
 		title.populate(model.getTitle());
 		description.populate(model.getDescription());
-	}
 
-	@Override public void onClick(View v)
-	{
 		if (link != null)
 		{
-			UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
+			itemView.setOnClickListener(new View.OnClickListener()
+			{
+				@Override public void onClick(View v)
+				{
+					for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+					{
+						eventHook.onViewLinkedClicked(itemView, model, link);
+					}
+
+					UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
+				}
+			});
 		}
 	}
 }
