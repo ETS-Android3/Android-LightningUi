@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.lib.factory.FileFactory;
 import com.cube.storm.ui.lib.factory.IntentFactory;
 import com.cube.storm.ui.lib.handler.LinkHandler;
@@ -161,6 +162,11 @@ public class UiSettings
 	 * Default divider spec to use in {@link com.cube.storm.ui.controller.adapter.StormListAdapter}
 	 */
 	@Getter @Setter private DividerSpec dividerSpec;
+
+	/**
+	 * Registered hook classes for various events
+	 */
+	@Getter @Setter private ArrayList<EventHook> eventHooks = new ArrayList<>();
 
 	/**
 	 * Sets the app model of the content
@@ -504,6 +510,20 @@ public class UiSettings
 					ImageLoader.getInstance().registerSchemeHandler(protocol, new StormSchemeHandler());
 				}
 			}
+			return this;
+		}
+
+		/**
+		 * Registers an event hook class for various events
+		 *
+		 * @param hook The hook to register
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder registerEventHook(@NonNull EventHook hook)
+		{
+			construct.getEventHooks().add(hook);
+
 			return this;
 		}
 
