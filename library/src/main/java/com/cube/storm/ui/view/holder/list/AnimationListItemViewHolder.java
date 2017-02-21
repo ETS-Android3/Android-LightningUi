@@ -35,8 +35,8 @@ public class AnimationListItemViewHolder extends ViewHolder<AnimationListItem>
 		}
 	}
 
-	private ImageView image;
-	private AnimationListItem model;
+	protected ImageView image;
+	protected AnimationListItem model;
 
 	public AnimationListItemViewHolder(View view)
 	{

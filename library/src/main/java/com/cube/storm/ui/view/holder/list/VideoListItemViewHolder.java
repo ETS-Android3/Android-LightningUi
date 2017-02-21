@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.descriptor.VideoPageDescriptor;
 import com.cube.storm.ui.model.list.VideoListItem;
 import com.cube.storm.ui.model.property.VideoProperty;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
  * @author Alan Le Fournis
  * @Project LightningUi
  */
-public class VideoListItemViewHolder extends ViewHolder<VideoListItem> implements OnClickListener
+public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -47,8 +48,6 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem> implement
 	{
 		super(view);
 
-		view.setOnClickListener(this);
-
 		image = (ImageView)view.findViewById(R.id.image);
 		progress = (ProgressBar)view.findViewById(R.id.progress);
 		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
@@ -59,25 +58,33 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem> implement
 		this.model = model;
 		image.populate(model.getImage(), progress);
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
-	}
 
-	@Override public void onClick(View view)
-	{
-		ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
-		arrayList.addAll(model.getVideos());
-
-		VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
-		pageDescriptor.setType("content");
-		pageDescriptor.setSrc(arrayList.get(0).getSrc().getDestination());
-
-		Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(view.getContext(), pageDescriptor);
-
-		if (video != null)
+		itemView.setOnClickListener(new OnClickListener()
 		{
-			video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME, "Video Asset");
-			video.putExtra(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
+			@Override public void onClick(View v)
+			{
+				ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
+				arrayList.addAll(model.getVideos());
 
-			view.getContext().startActivity(video);
-		}
+				for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+				{
+					eventHook.onViewLinkedClicked(itemView, model, arrayList.get(0).getSrc());
+				}
+
+				VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
+				pageDescriptor.setType("content");
+				pageDescriptor.setSrc(arrayList.get(0).getSrc().getDestination());
+
+				Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(v.getContext(), pageDescriptor);
+
+				if (video != null)
+				{
+					video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME, "Video Asset");
+					video.putExtra(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
+
+					v.getContext().startActivity(video);
+				}
+			}
+		});
 	}
 }

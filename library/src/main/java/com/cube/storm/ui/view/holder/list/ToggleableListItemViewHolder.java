@@ -6,7 +6,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.list.ToggleableListItem;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.Populator;
@@ -20,7 +22,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Alan Le Fournis
  * @Project LightningUi
  */
-public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem> implements OnClickListener
+public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -41,8 +43,6 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 	{
 		super(view);
 
-		view.setOnClickListener(this);
-
 		toggleContainer = (ViewGroup)view.findViewById(R.id.toggle_container);
 		expandIcon = (ImageView)view.findViewById(R.id.expand_icon);
 		title = (TextView)view.findViewById(R.id.title);
@@ -50,25 +50,33 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 	}
 
-	@Override public void populateView(ToggleableListItem model)
+	@Override public void populateView(final ToggleableListItem model)
 	{
 		title.populate(model.getTitle());
 		description.populate(model.getDescription());
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
 		toggleContainer.setVisibility(View.GONE);
-	}
 
-	@Override public void onClick(View view)
-	{
-		if (toggleContainer.getVisibility() == View.GONE)
+		itemView.setOnClickListener(new OnClickListener()
 		{
-			toggleContainer.setVisibility(View.VISIBLE);
-			expandIcon.setImageResource(R.drawable.ic_collapse);
-		}
-		else
-		{
-			toggleContainer.setVisibility(View.GONE);
-			expandIcon.setImageResource(R.drawable.ic_expand);
-		}
+			@Override public void onClick(View v)
+			{
+				for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+				{
+					eventHook.onViewClicked(itemView, model);
+				}
+
+				if (toggleContainer.getVisibility() == View.GONE)
+				{
+					toggleContainer.setVisibility(View.VISIBLE);
+					expandIcon.setImageResource(R.drawable.ic_collapse);
+				}
+				else
+				{
+					toggleContainer.setVisibility(View.GONE);
+					expandIcon.setImageResource(R.drawable.ic_expand);
+				}
+			}
+		});
 	}
 }

@@ -1,11 +1,17 @@
 package com.cube.storm.ui.activity;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,76 +55,131 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_FILE_NAME))
-		{
-			if (getIntent().getExtras().containsKey(EXTRA_TITLE))
-			{
-				setTitle(getIntent().getExtras().getString(EXTRA_TITLE));
-			}
+		String url = getIntent() != null ? getIntent().getStringExtra(EXTRA_FILE_NAME) : null;
 
-			setContentView(R.layout.web_view);
-
-			mButtonContainer = findViewById(R.id.button_container);
-			mWeb = findViewById(R.id.icon_web);
-			mBack = findViewById(R.id.icon_back);
-			mForward = findViewById(R.id.icon_forward);
-			mClose = findViewById(R.id.icon_close);
-			mShare = findViewById(R.id.icon_share);
-			webView = (WebView)findViewById(R.id.web_view);
-
-			mWeb.setOnClickListener(this);
-			mBack.setOnClickListener(this);
-			mForward.setOnClickListener(this);
-			mClose.setOnClickListener(this);
-			mShare.setOnClickListener(this);
-
-			WebSettings settings = webView.getSettings();
-			settings.setJavaScriptEnabled(true);
-			settings.setBuiltInZoomControls(true);
-			settings.setLoadWithOverviewMode(true);
-			settings.setUseWideViewPort(true);
-
-			if (Build.VERSION.SDK_INT >= 11)
-			{
-				settings.setDisplayZoomControls(false);
-			}
-
-			final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
-			webView.setWebViewClient(new WebViewClient());
-			webView.setWebChromeClient(new WebChromeClient()
-			{
-				@Override public void onProgressChanged(WebView view, int progress)
-				{
-					if (progress < 100 && progressBar.getVisibility() == View.GONE)
-					{
-						progressBar.setVisibility(View.VISIBLE);
-					}
-
-					progressBar.setProgress(progress);
-					if (progress == 100)
-					{
-						progressBar.setVisibility(View.GONE);
-					}
-
-					super.onProgressChanged(view, progress);
-				}
-			});
-
-			if (savedInstanceState != null)
-			{
-				webView.restoreState(savedInstanceState);
-			}
-			else
-			{
-				String toLoad = getIntent().getExtras().getString(EXTRA_FILE_NAME);
-				webView.loadUrl(toLoad);
-			}
-		}
-		else
+		if (TextUtils.isEmpty(url))
 		{
 			Toast.makeText(this, "No url set", Toast.LENGTH_LONG).show();
 			finish();
+			return;
 		}
+
+		if (chromeCustomTabsSupported())
+		{
+			launchChromeCustomTabs(url);
+			finish();
+			return;
+		}
+
+		String title = getIntent() != null ? getIntent().getStringExtra(EXTRA_TITLE) : null;
+
+		if (!TextUtils.isEmpty(title))
+		{
+			setTitle(title);
+		}
+
+		setContentView(R.layout.web_view);
+
+		mButtonContainer = findViewById(R.id.button_container);
+		mWeb = findViewById(R.id.icon_web);
+		mBack = findViewById(R.id.icon_back);
+		mForward = findViewById(R.id.icon_forward);
+		mClose = findViewById(R.id.icon_close);
+		mShare = findViewById(R.id.icon_share);
+		webView = (WebView)findViewById(R.id.web_view);
+
+		mWeb.setOnClickListener(this);
+		mBack.setOnClickListener(this);
+		mForward.setOnClickListener(this);
+		mClose.setOnClickListener(this);
+		mShare.setOnClickListener(this);
+
+		WebSettings settings = webView.getSettings();
+		settings.setJavaScriptEnabled(true);
+		settings.setBuiltInZoomControls(true);
+		settings.setLoadWithOverviewMode(true);
+		settings.setUseWideViewPort(true);
+
+		if (Build.VERSION.SDK_INT >= 11)
+		{
+			settings.setDisplayZoomControls(false);
+		}
+
+		final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+		webView.setWebViewClient(new WebViewClient());
+		webView.setWebChromeClient(new WebChromeClient()
+		{
+			@Override public void onProgressChanged(WebView view, int progress)
+			{
+				if (progress < 100 && progressBar.getVisibility() == View.GONE)
+				{
+					progressBar.setVisibility(View.VISIBLE);
+				}
+
+				progressBar.setProgress(progress);
+				if (progress == 100)
+				{
+					progressBar.setVisibility(View.GONE);
+				}
+
+				super.onProgressChanged(view, progress);
+			}
+		});
+
+		if (savedInstanceState != null)
+		{
+			webView.restoreState(savedInstanceState);
+		}
+		else
+		{
+			webView.loadUrl(url);
+		}
+	}
+
+	/**
+	 * Is chrome custom tabs supported for this SDK version?
+	 * More specifically, is the Chrome app supported for this SDK version?
+	 * @return boolean where true means that chrome custom tabs is supported and false meaning it is not supported
+	 */
+	private boolean chromeCustomTabsSupported()
+	{
+		// Chrome is only supported on Jelly Bean and above
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+	}
+
+	/**
+	 * Launches a chrome custom tab with the given {@link String} url
+	 * @param url which you want to load using chrome custom tabs
+	 */
+	public void launchChromeCustomTabs(@NonNull String url)
+	{
+		CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+		builder.addDefaultShareMenuItem();
+
+		int toolbarColor = getToolbarColor();
+
+		if (toolbarColor != 0)
+		{
+			builder.setToolbarColor(toolbarColor);
+		}
+
+		builder.setStartAnimations(this, R.anim.slide_in_right, R.anim.slide_out_left);
+		builder.setExitAnimations(this, R.anim.slide_in_left, R.anim.slide_out_right);
+
+		CustomTabsIntent customTabsIntent = builder.build();
+		customTabsIntent.launchUrl(this, Uri.parse(url));
+	}
+
+	@ColorInt protected int getToolbarColor()
+	{
+		TypedValue typedValue = new TypedValue();
+
+		TypedArray a = obtainStyledAttributes(typedValue.data, new int[] {R.attr.colorPrimary});
+		int color = a.getColor(0, 0);
+
+		a.recycle();
+
+		return color;
 	}
 
 	@Override public void onClick(View v)

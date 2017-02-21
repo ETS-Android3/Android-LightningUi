@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.list.StandardListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.view.ImageView;
@@ -22,7 +23,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Alan Le Fournis
  * @Project LightningUi
  */
-public class StandardListItemViewHolder extends ViewHolder<StandardListItem> implements OnClickListener
+public class StandardListItemViewHolder extends ViewHolder<StandardListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -43,8 +44,6 @@ public class StandardListItemViewHolder extends ViewHolder<StandardListItem> imp
 	{
 		super(view);
 
-		view.setOnClickListener(this);
-
 		image = (ImageView)view.findViewById(R.id.image);
 		title = (TextView)view.findViewById(R.id.title);
 		description = (TextView)view.findViewById(R.id.description);
@@ -53,6 +52,8 @@ public class StandardListItemViewHolder extends ViewHolder<StandardListItem> imp
 
 	@Override public void populateView(final StandardListItem model)
 	{
+		itemView.setOnClickListener(null);
+
 		link = model.getLink();
 
 		image.populate(model.getImage());
@@ -60,13 +61,21 @@ public class StandardListItemViewHolder extends ViewHolder<StandardListItem> imp
 		title.populate(model.getTitle());
 		description.populate(model.getDescription());
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
-	}
 
-	@Override public void onClick(View v)
-	{
 		if (link != null)
 		{
-			UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
+			itemView.setOnClickListener(new OnClickListener()
+			{
+				@Override public void onClick(View v)
+				{
+					for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+					{
+						eventHook.onViewLinkedClicked(itemView, model, link);
+					}
+
+					UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
+				}
+			});
 		}
 	}
 }
