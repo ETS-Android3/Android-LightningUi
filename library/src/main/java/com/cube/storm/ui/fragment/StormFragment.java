@@ -173,7 +173,7 @@ public class StormFragment extends Fragment implements StormInterface
 		{
 			if (page != null)
 			{
-				eventHook.onPageOpened(getActivity(), page);
+				eventHook.onPageOpened(getActivity(), this, page);
 			}
 		}
 	}
@@ -186,7 +186,7 @@ public class StormFragment extends Fragment implements StormInterface
 			{
 				if (page != null)
 				{
-					eventHook.onPageClosed(getActivity(), page);
+					eventHook.onPageClosed(getActivity(), this, page);
 				}
 			}
 		}
