@@ -42,11 +42,11 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		}
 	}
 
-	private ImageView image;
-	private TextView text;
-	private SpotlightListItem model;
+	protected ImageView image;
+	protected TextView text;
+	protected SpotlightListItem model;
 
-	private AtomicInteger index = new AtomicInteger(0);
+	protected AtomicInteger index = new AtomicInteger(0);
 
 	public SpotlightListItemViewHolder(View view)
 	{
