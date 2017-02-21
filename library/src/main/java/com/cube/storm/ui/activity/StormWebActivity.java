@@ -1,14 +1,17 @@
 package com.cube.storm.ui.activity;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -151,11 +154,30 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 		CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
 		builder.addDefaultShareMenuItem();
 
+		int toolbarColor = getToolbarColor();
+
+		if (toolbarColor != 0)
+		{
+			builder.setToolbarColor(toolbarColor);
+		}
+
 		builder.setStartAnimations(this, R.anim.slide_in_right, R.anim.slide_out_left);
 		builder.setExitAnimations(this, R.anim.slide_in_left, R.anim.slide_out_right);
 
 		CustomTabsIntent customTabsIntent = builder.build();
 		customTabsIntent.launchUrl(this, Uri.parse(url));
+	}
+
+	@ColorInt protected int getToolbarColor()
+	{
+		TypedValue typedValue = new TypedValue();
+
+		TypedArray a = obtainStyledAttributes(typedValue.data, new int[] {R.attr.colorPrimary});
+		int color = a.getColor(0, 0);
+
+		a.recycle();
+
+		return color;
 	}
 
 	@Override public void onClick(View v)
