@@ -14,6 +14,7 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.activity.StormInterface;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
@@ -145,5 +146,45 @@ public class StormStaticFragment extends Fragment implements StormInterface
 	{
 		Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
 		getActivity().finish();
+	}
+
+	@Override public void onResume()
+	{
+		super.onResume();
+
+		if (getUserVisibleHint())
+		{
+			onPageOpened();
+		}
+	}
+
+	/**
+	 * Called automatically from {@link #onStart()} for single fragments, or from {@link android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected(int)}
+	 */
+	public void onPageOpened()
+	{
+		for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+		{
+			if (page != null)
+			{
+				eventHook.onPageOpened(getActivity(), page);
+			}
+		}
+	}
+
+	@Override public void onDestroy()
+	{
+		if (getUserVisibleHint())
+		{
+			for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+			{
+				if (page != null)
+				{
+					eventHook.onPageClosed(getActivity(), page);
+				}
+			}
+		}
+
+		super.onDestroy();
 	}
 }
