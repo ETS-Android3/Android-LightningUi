@@ -1,12 +1,12 @@
 package com.cube.storm.ui.view.holder.list;
 
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.list.SpotlightListItem;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Matt Allen
  * @Project LightningUi
  */
-public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem> implements View.OnClickListener
+public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -52,12 +52,11 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem> i
 	{
 		super(view);
 
-		view.setOnClickListener(this);
 		image = (ImageView)view.findViewById(R.id.image_view);
 		text = (TextView)view.findViewById(R.id.text_ticker);
 	}
 
-	@Override public void populateView(SpotlightListItem model)
+	@Override public void populateView(final SpotlightListItem model)
 	{
 		// Only restart the animation if it is from a different model
 		if (this.model != model)
@@ -76,13 +75,21 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem> i
 				}
 			});
 		}
-	}
 
-	@Override public void onClick(@Nullable View view)
-	{
-		if (model.getSpotlights().get(index.get()) != null)
+		itemView.setOnClickListener(new View.OnClickListener()
 		{
-			UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), model.getSpotlights().get(index.get()).getLink());
-		}
+			@Override public void onClick(View v)
+			{
+				if (model.getSpotlights() != null && model.getSpotlights().get(index.get()) != null)
+				{
+					UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), model.getSpotlights().get(index.get()).getLink());
+
+					for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+					{
+						eventHook.onViewLinkedClicked(itemView, model, model.getSpotlights().get(index.get()).getLink());
+					}
+				}
+			}
+		});
 	}
 }

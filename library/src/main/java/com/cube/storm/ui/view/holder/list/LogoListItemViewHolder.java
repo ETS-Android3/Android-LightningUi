@@ -4,7 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.list.LogoListItem;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.TextView;
@@ -17,7 +19,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Alan Le Fournis
  * @Project LightningUi
  */
-public class LogoListItemViewHolder extends ViewHolder<LogoListItem> implements View.OnClickListener
+public class LogoListItemViewHolder extends ViewHolder<LogoListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
@@ -34,7 +36,7 @@ public class LogoListItemViewHolder extends ViewHolder<LogoListItem> implements 
 	public LogoListItemViewHolder(View view)
 	{
 		super(view);
-		view.setOnClickListener(this);
+
 		image = (ImageView)view.findViewById(R.id.image_view);
 		linkTitle = (TextView)view.findViewById(R.id.link_title);
 	}
@@ -43,11 +45,21 @@ public class LogoListItemViewHolder extends ViewHolder<LogoListItem> implements 
 	{
 		image.populate(model.getImage());
 		linkTitle.populate(model.getLink().getTitle(), model.getLink());
-	}
 
-	@Override public void onClick(View v)
-	{
-		linkTitle.callOnClick();
-	}
+		if (model.getLink() != null)
+		{
+			itemView.setOnClickListener(new View.OnClickListener()
+			{
+				@Override public void onClick(View v)
+				{
+					for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+					{
+						eventHook.onViewLinkedClicked(itemView, model, model.getLink());
+					}
 
+					linkTitle.callOnClick();
+				}
+			});
+		}
+	}
 }
