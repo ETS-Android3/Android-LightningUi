@@ -61,12 +61,14 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 		{
 			Toast.makeText(this, "No url set", Toast.LENGTH_LONG).show();
 			finish();
+			return;
 		}
 
 		if (chromeCustomTabsSupported())
 		{
 			launchChromeCustomTabs(url);
 			finish();
+			return;
 		}
 
 		String title = getIntent() != null ? getIntent().getStringExtra(EXTRA_TITLE) : null;
