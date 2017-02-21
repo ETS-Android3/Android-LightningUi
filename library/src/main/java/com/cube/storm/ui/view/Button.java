@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.property.ButtonProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
 
@@ -17,6 +18,8 @@ import com.cube.storm.ui.model.property.LinkProperty;
  */
 public class Button extends android.widget.Button
 {
+	private ButtonProperty buttonProperty;
+
 	public Button(Context context)
 	{
 		super(context);
@@ -40,6 +43,8 @@ public class Button extends android.widget.Button
 	public void populate(final ButtonProperty button)
 	{
 		setVisibility(View.GONE);
+
+		this.buttonProperty = button;
 
 		if (button != null)
 		{
@@ -69,7 +74,12 @@ public class Button extends android.widget.Button
 			{
 				@Override public void onClick(View v)
 				{
-					UiSettings.getInstance().getLinkHandler().handleLink(getContext(), link);
+					for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+					{
+						eventHook.onViewLinkedClicked(v, buttonProperty, link);
+					}
+
+					UiSettings.getInstance().getLinkHandler().handleLink(v.getContext(), link);
 				}
 			});
 

@@ -15,12 +15,25 @@ import com.cube.storm.ui.model.property.LinkProperty;
  */
 public class EventHook
 {
-	public void onViewLinkedClicked(View itemView, Model view, LinkProperty link)
+	/**
+	 * Called when a view is clicked with a link
+	 *
+	 * @param itemView The view that was clicked
+	 * @param model The model attached to the view
+	 * @param link The link that was actioned
+	 */
+	public void onViewLinkedClicked(@NonNull View itemView, @Nullable Model model, @NonNull LinkProperty link)
 	{
 
 	}
 
-	public void onViewClicked(View itemView, Model view)
+	/**
+	 * Called when a view is clicked with no link
+	 *
+	 * @param itemView The view that was clicked
+	 * @param model The model attached to the view
+	 */
+	public void onViewClicked(@NonNull View itemView, @Nullable Model model)
 	{
 
 	}
