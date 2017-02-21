@@ -85,6 +85,32 @@ public class StormTabbedFragment extends Fragment implements StormInterface
 		pageAdapter.setPages(fragmentPages);
 		viewPager.setAdapter(pageAdapter);
 		indicator.setViewPager(viewPager);
+
+		viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+		{
+			@Override public void onPageSelected(int position)
+			{
+				super.onPageSelected(position);
+
+				try
+				{
+					Fragment fragment = getChildFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + position);
+
+					if (fragment instanceof StormFragment)
+					{
+						((StormFragment)fragment).onPageOpened();
+					}
+					else if (fragment instanceof StormStaticFragment)
+					{
+						((StormStaticFragment)fragment).onPageOpened();
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	@Override public int getLayoutResource()
