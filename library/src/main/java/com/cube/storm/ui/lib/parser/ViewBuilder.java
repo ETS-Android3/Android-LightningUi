@@ -32,7 +32,8 @@ import java.util.Locale;
  */
 public abstract class ViewBuilder
 {
-	private static Gson viewBuilder;
+	private static Gson viewGson;
+	private static GsonBuilder viewBuilder;
 
 	/**
 	 * Required to include view overrides
@@ -44,6 +45,43 @@ public abstract class ViewBuilder
 	}
 
 	/**
+	 * Creates a gson builder instance with all registered type adapters necessary for Ui models/views
+	 * @return
+	 */
+	@NonNull
+	public GsonBuilder getGsonBuilder()
+	{
+		GsonBuilder builder = new GsonBuilder();
+
+		for (Type instanceClass : UiSettings.getInstance().getViewProcessors().keySet())
+		{
+			builder.registerTypeAdapter(instanceClass, UiSettings.getInstance().getViewProcessors().get(instanceClass));
+		}
+
+		builder.registerTypeAdapter(TextProperty.class, new JsonDeserializer<TextProperty>()
+		{
+			@Override public TextProperty deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
+			{
+				JsonElement content = json.getAsJsonObject().get("content");
+				if (content.isJsonPrimitive())
+				{
+					TextProperty text = new TextProperty();
+					text.setContent(new HashMap<String, String>());
+					text.getContent().put(Locale.getDefault().getLanguage(), content.getAsString());
+
+					return text;
+				}
+				else
+				{
+					return new Gson().fromJson(json, TextProperty.class);
+				}
+			}
+		});
+
+		return builder;
+	}
+
+	/**
 	 * Gets the gson object with the registered storm view type adapters. Use {@link #build(com.google.gson.JsonElement, Class)} or
 	 * {@link #build(String, Class)} to build your page/view objects.
 	 *
@@ -51,39 +89,13 @@ public abstract class ViewBuilder
 	 */
 	private Gson getGson()
 	{
-		if (viewBuilder == null)
+		if (viewGson == null)
 		{
-			GsonBuilder builder = new GsonBuilder();
-
-			for (Type instanceClass : UiSettings.getInstance().getViewProcessors().keySet())
-			{
-				builder.registerTypeAdapter(instanceClass, UiSettings.getInstance().getViewProcessors().get(instanceClass));
-			}
-
-			builder.registerTypeAdapter(TextProperty.class, new JsonDeserializer<TextProperty>()
-			{
-				@Override public TextProperty deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
-				{
-					JsonElement content = json.getAsJsonObject().get("content");
-					if (content.isJsonPrimitive())
-					{
-						TextProperty text = new TextProperty();
-						text.setContent(new HashMap<String, String>());
-						text.getContent().put(Locale.getDefault().getLanguage(), content.getAsString());
-
-						return text;
-					}
-					else
-					{
-						return new Gson().fromJson(json, TextProperty.class);
-					}
-				}
-			});
-
-			viewBuilder = builder.create();
+			GsonBuilder builder = getGsonBuilder();
+			viewGson = builder.create();
 		}
 
-		return viewBuilder;
+		return viewGson;
 	}
 
 	/**
