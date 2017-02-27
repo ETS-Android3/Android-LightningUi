@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.cube.storm.ui.controller.adapter.StormListAdapter;
 import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.EventHook;
@@ -167,6 +168,11 @@ public class UiSettings
 	 * Registered hook classes for various events
 	 */
 	@Getter @Setter private ArrayList<EventHook> eventHooks = new ArrayList<>();
+
+	/**
+	 * Registered hook classes for various events
+	 */
+	@Getter @Setter private Class<? extends StormListAdapter> viewAdapter = StormListAdapter.class;
 
 	/**
 	 * Sets the app model of the content
@@ -523,6 +529,20 @@ public class UiSettings
 		public Builder registerEventHook(@NonNull EventHook hook)
 		{
 			construct.getEventHooks().add(hook);
+
+			return this;
+		}
+
+		/**
+		 * Sets the default class to use for storm list adapter
+		 *
+		 * @param adapterClass The class to use for list adapters
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder viewAdapter(@NonNull Class<? extends StormListAdapter> adapterClass)
+		{
+			construct.viewAdapter = adapterClass;
 
 			return this;
 		}

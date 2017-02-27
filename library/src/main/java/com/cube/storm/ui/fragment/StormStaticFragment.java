@@ -49,7 +49,14 @@ public class StormStaticFragment extends Fragment implements StormInterface
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		adapter = new StormListAdapter();
+		try
+		{
+			adapter = UiSettings.getInstance().getViewAdapter().newInstance();
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException("Could not instantiate class " + UiSettings.getInstance().getViewAdapter() + " for adapter");
+		}
 
 		if (savedInstanceState == null)
 		{
