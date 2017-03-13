@@ -47,6 +47,7 @@ public class ButtonListItemViewHolder extends ViewHolder<ButtonListItem>
 	{
 		title.populate(model.getTitle());
 		button.populate(model.getButton());
+
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
 	}
 }
