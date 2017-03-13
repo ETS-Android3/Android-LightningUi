@@ -246,6 +246,63 @@
 			"children": [
 				{
 					"annotation": "1",
+					"class": "ToggleableListItem",
+					"title": {
+						"class": "Text",
+						"content": "Toggle this view"
+					},
+					"description": {
+						"class": "Text",
+						"content": "This is the hidden content!"
+					}
+				},
+				{
+					"annotation": "1",
+					"class": "ToggleableListItem",
+					"title": {
+						"class": "Text",
+						"content": "Toggle this view"
+					},
+					"description": {
+						"class": "Text",
+						"content": "This is the hidden content!"
+					}
+				},
+				{
+					"annotation": "1",
+					"class": "ToggleableListItem",
+					"title": {
+						"class": "Text",
+						"content": "Toggle this view"
+					},
+					"description": {
+						"class": "Text",
+						"content": "This is the hidden content!"
+					}
+				},
+				{
+					"annotation": "1",
+					"class": "ToggleableListItem",
+					"title": {
+						"class": "Text",
+						"content": "Toggle this view"
+					},
+					"description": {
+						"class": "Text",
+						"content": "This is the hidden content!"
+					}
+				}
+			],
+			"class": "List",
+			"header": {
+				"class": "Text",
+				"content": "Togglable list"
+			}
+		},
+		{
+			"children": [
+				{
+					"annotation": "1",
 					"class": "OrderedListItem",
 					"title": {
 						"class": "Text",

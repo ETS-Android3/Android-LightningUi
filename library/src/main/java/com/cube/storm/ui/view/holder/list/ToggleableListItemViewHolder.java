@@ -55,7 +55,13 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 		title.populate(model.getTitle());
 		description.populate(model.getDescription());
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
+
 		toggleContainer.setVisibility(View.GONE);
+
+		if (toggleContainer.getTag() != null)
+		{
+			toggleContainer.setVisibility((Boolean)toggleContainer.getTag() ? View.VISIBLE : View.GONE);
+		}
 
 		itemView.setOnClickListener(new OnClickListener()
 		{
@@ -68,11 +74,13 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 
 				if (toggleContainer.getVisibility() == View.GONE)
 				{
+					toggleContainer.setTag(true);
 					toggleContainer.setVisibility(View.VISIBLE);
 					expandIcon.setImageResource(R.drawable.ic_collapse);
 				}
 				else
 				{
+					toggleContainer.setTag(false);
 					toggleContainer.setVisibility(View.GONE);
 					expandIcon.setImageResource(R.drawable.ic_expand);
 				}
