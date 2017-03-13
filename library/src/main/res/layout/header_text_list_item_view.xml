@@ -19,6 +19,7 @@
 		android:fontFamily="sans-serif-medium"
 		android:capitalize="words"
 		android:singleLine="true"
+		android:inputType="textNoSuggestions"
 		android:layout_gravity="center_vertical"
 	/>
 </FrameLayout>
