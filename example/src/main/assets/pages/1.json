@@ -307,12 +307,16 @@
 					"title": {
 						"class": "Text",
 						"content": "First item in the ordered list"
+					},
+					"description": {
+						"class": "Text",
+						"content": "First item description"
 					}
 				},
 				{
 					"annotation": "2",
 					"class": "OrderedListItem",
-					"title": {
+					"description": {
 						"class": "Text",
 						"content": "Second item in the ordered list"
 					}
