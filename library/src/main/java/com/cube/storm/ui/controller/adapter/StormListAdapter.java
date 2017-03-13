@@ -3,7 +3,6 @@ package com.cube.storm.ui.controller.adapter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.cube.storm.UiSettings;
@@ -180,13 +179,10 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (item instanceof List)
 		{
-			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader())))
-			{
-				ListHeader header = new ListHeader();
-				header.setHeader(((List)item).getHeader());
-
-				addItem(header);
-			}
+			// Add list header
+			ListHeader header = new ListHeader();
+			header.setHeader(((List)item).getHeader());
+			addItem(header);
 
 			if (((List)item).getChildren() != null)
 			{
@@ -199,13 +195,10 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 				}
 			}
 
-			if (((List)item).getFooter() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getFooter())))
-			{
-				ListFooter footer = new ListFooter();
-				footer.setFooter(((List)item).getFooter());
-
-				addItem(footer);
-			}
+			// Add list footer
+			ListFooter footer = new ListFooter();
+			footer.setFooter(((List)item).getFooter());
+			addItem(footer);
 		}
 		else
 		{
