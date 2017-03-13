@@ -298,6 +298,36 @@
 				"class": "Text",
 				"content": "Ordered list"
 			}
+		},
+		{
+			"children": [
+				{
+					"class": "UnorderedListItem",
+					"title": {
+						"class": "Text",
+						"content": "First item in the unordered list"
+					}
+				},
+				{
+					"class": "UnorderedListItem",
+					"title": {
+						"class": "Text",
+						"content": "Second item in the unordered list"
+					}
+				},
+				{
+					"class": "UnorderedListItem",
+					"title": {
+						"class": "Text",
+						"content": "Third item in the unordered list"
+					}
+				}
+			],
+			"class": "List",
+			"header": {
+				"class": "Text",
+				"content": "Unordered list"
+			}
 		}
 	],
 	"class": "ListPage",
