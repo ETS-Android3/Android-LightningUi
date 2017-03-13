@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.cube.storm.UiSettings;
+import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.property.LinkProperty;
 import com.cube.storm.ui.model.property.TextProperty;
 
@@ -43,7 +44,7 @@ public class TextView extends android.widget.TextView
 		populate(text, null);
 	}
 
-	public void populate(@Nullable TextProperty text, @Nullable final LinkProperty link)
+	public void populate(@Nullable final TextProperty text, @Nullable final LinkProperty link)
 	{
 		this.setVisibility(View.GONE);
 
@@ -59,6 +60,11 @@ public class TextView extends android.widget.TextView
 					{
 						@Override public void onClick(View v)
 						{
+							for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
+							{
+								eventHook.onViewLinkedClicked(TextView.this, text, link);
+							}
+
 							UiSettings.getInstance().getLinkHandler().handleLink(getContext(), link);
 						}
 					});
