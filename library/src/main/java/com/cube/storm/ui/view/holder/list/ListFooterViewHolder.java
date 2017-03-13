@@ -40,5 +40,8 @@ public class ListFooterViewHolder extends ViewHolder<ListFooter>
 	@Override public void populateView(ListFooter model)
 	{
 		title.populate(model.getFooter());
+
+		itemView.setVisibility(title.getVisibility());
+		itemView.getLayoutParams().height = title.getVisibility() == View.GONE ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT;
 	}
 }
