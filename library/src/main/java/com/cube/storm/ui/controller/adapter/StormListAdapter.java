@@ -21,6 +21,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
@@ -126,6 +127,8 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (items != null)
 		{
+			items.removeAll(Collections.singleton(null));
+
 			this.items = new ArrayList<>(items.size());
 			this.itemTypes = new ArrayList<>(items.size() / 2);
 
@@ -179,26 +182,31 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (item instanceof List)
 		{
-			if (((List)item).getChildren() != null && ((List)item).getChildren().size() > 0)
+			if (((List)item).getChildren() != null)
 			{
-				// Add list header
-				ListHeader header = new ListHeader();
-				header.setHeader(((List)item).getHeader());
-				addItem(header);
+				((List)item).getChildren().removeAll(Collections.singleton(null));
 
-				// Add children
-				for (Model subItem : ((List)item).getChildren())
+				if (((List)item).getChildren().size() > 0)
 				{
-					if (subItem != null)
-					{
-						addItem(subItem);
-					}
-				}
+					// Add list header
+					ListHeader header = new ListHeader();
+					header.setHeader(((List)item).getHeader());
+					addItem(header);
 
-				// Add list footer
-				ListFooter footer = new ListFooter();
-				footer.setFooter(((List)item).getFooter());
-				addItem(footer);
+					// Add children
+					for (Model subItem : ((List)item).getChildren())
+					{
+						if (subItem != null)
+						{
+							addItem(subItem);
+						}
+					}
+
+					// Add list footer
+					ListFooter footer = new ListFooter();
+					footer.setFooter(((List)item).getFooter());
+					addItem(footer);
+				}
 			}
 		}
 		else
