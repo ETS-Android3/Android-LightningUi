@@ -179,13 +179,14 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (item instanceof List)
 		{
-			// Add list header
-			ListHeader header = new ListHeader();
-			header.setHeader(((List)item).getHeader());
-			addItem(header);
-
-			if (((List)item).getChildren() != null)
+			if (((List)item).getChildren() != null && ((List)item).getChildren().size() > 0)
 			{
+				// Add list header
+				ListHeader header = new ListHeader();
+				header.setHeader(((List)item).getHeader());
+				addItem(header);
+
+				// Add children
 				for (Model subItem : ((List)item).getChildren())
 				{
 					if (subItem != null)
@@ -193,12 +194,12 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 						addItem(subItem);
 					}
 				}
-			}
 
-			// Add list footer
-			ListFooter footer = new ListFooter();
-			footer.setFooter(((List)item).getFooter());
-			addItem(footer);
+				// Add list footer
+				ListFooter footer = new ListFooter();
+				footer.setFooter(((List)item).getFooter());
+				addItem(footer);
+			}
 		}
 		else
 		{
