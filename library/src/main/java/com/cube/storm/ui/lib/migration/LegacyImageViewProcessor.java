@@ -13,6 +13,7 @@ import com.cube.storm.ui.model.property.ImageProperty;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
@@ -57,7 +58,7 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 					{
 						JsonElement image = src.get(stringJsonElementEntry.getKey());
 
-						if (image == null || TextUtils.isEmpty(image.getAsString()))
+						if (image == JsonNull.INSTANCE || image == null || TextUtils.isEmpty(image.getAsString()))
 						{
 							continue;
 						}
