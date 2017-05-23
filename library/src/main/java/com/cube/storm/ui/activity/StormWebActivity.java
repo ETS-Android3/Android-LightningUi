@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -26,6 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cube.storm.ui.R;
+
+import java.io.File;
 
 /**
  * Web browser to launch website from URI
@@ -166,8 +169,16 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 		builder.setStartAnimations(this, R.anim.slide_in_right, R.anim.slide_out_left);
 		builder.setExitAnimations(this, R.anim.slide_in_left, R.anim.slide_out_right);
 
+		Uri uri = Uri.parse(url);
+
+		if (uri.getScheme().startsWith("file"))
+		{
+			uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", new File(uri.getPath()));
+		}
+
 		CustomTabsIntent customTabsIntent = builder.build();
-		customTabsIntent.launchUrl(this, Uri.parse(url));
+		customTabsIntent.intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		customTabsIntent.launchUrl(this, uri);
 	}
 
 	@ColorInt protected int getToolbarColor()
