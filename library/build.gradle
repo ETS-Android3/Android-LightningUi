@@ -14,7 +14,7 @@ android {
 	}
 }
 
-def supportLibraryVersion = "25.1.0"
+def supportLibraryVersion = "25.2.0"
 
 dependencies {
 	compile "com.android.support:support-annotations:${supportLibraryVersion}"
@@ -24,7 +24,7 @@ dependencies {
 	compile "com.android.support:customtabs:${supportLibraryVersion}"
 
 	compile 'org.projectlombok:lombok:1.16.10'
-	compile 'com.google.code.gson:gson:2.6.2'
+	compile 'com.google.code.gson:gson:2.7'
 	compile 'net.callumtaylor:asynchttpclient:2.1'
 
 	compile 'com.3sidedcube.storm:util:0.4.2'
