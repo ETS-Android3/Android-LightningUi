@@ -5,7 +5,7 @@ android {
 	buildToolsVersion "25.0.2"
 
 	defaultConfig {
-		minSdkVersion 15
+		minSdkVersion 16
 		targetSdkVersion 25
 	}
 
@@ -27,7 +27,7 @@ dependencies {
 	compile 'com.google.code.gson:gson:2.7'
 	compile 'net.callumtaylor:asynchttpclient:2.1'
 
-	compile 'com.3sidedcube.storm:util:0.4.2'
+	compile 'com.3sidedcube.storm:util:0.4.3'
 	compile 'com.3sidedcube.storm:exoplayer:1.0.1'
 
 	compile 'com.3sidedcube.util:universal-image-loader:2.1.2'
