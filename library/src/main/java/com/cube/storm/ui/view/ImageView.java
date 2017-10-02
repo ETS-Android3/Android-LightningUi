@@ -18,6 +18,7 @@ import com.cube.storm.ui.model.property.AnimationImageProperty;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
@@ -123,7 +124,7 @@ public class ImageView extends android.widget.ImageView
 				@Override public void run()
 				{
 					AnimationFrame frame = imageProperty.getFrames().get(frameIndex % imageProperty.getFrames().size());
-					populateFrame(frame.getImage(), null);
+					populateFrame(frame.getImage(), null, null);
 
 					if (listener != null)
 					{
@@ -194,7 +195,7 @@ public class ImageView extends android.widget.ImageView
 				@Override public void run()
 				{
 					AnimationFrame frame = frames.get(frameIndex % frames.size());
-					populateFrame(frame.getImage(), null);
+					populateFrame(frame.getImage(), null, null);
 
 					if (listener != null)
 					{
@@ -233,6 +234,21 @@ public class ImageView extends android.widget.ImageView
 	 */
 	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress)
 	{
+		populate(image, progress, null);
+	}
+
+	/**
+	 * Load and display the specified image asynchronously, with an optional progress bar visible until the image is
+	 * loaded.
+	 *
+	 * @param image
+	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
+	 * @param progress
+	 * @param listener
+	 *      If provided then the listener will receive callbacks at each stage of the image frame being loaded
+	 */
+	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress, @Nullable final ImageLoadingListener listener)
+	{
 		// If image size isnt calculated yet, wait till it has
 		if (getWidth() == 0 && getHeight() == 0 && image != null && getVisibility() != GONE && UiSettings.getInstance().getContentSize() == ContentSize.AUTO)
 		{
@@ -245,11 +261,11 @@ public class ImageView extends android.widget.ImageView
 					if (getWidth() == 0 && getHeight() == 0)
 					{
 						// fuck android
-						populateFrame(image, progress);
+						populateFrame(image, progress, listener);
 						return false;
 					}
 
-					populate(image, progress);
+					populate(image, progress, listener);
 					return false;
 				}
 			});
@@ -263,7 +279,7 @@ public class ImageView extends android.widget.ImageView
 			animator.removeCallbacks(displayNextFrame);
 		}
 
-		populateFrame(image, progress);
+		populateFrame(image, progress, listener);
 	}
 
 	/**
@@ -272,7 +288,7 @@ public class ImageView extends android.widget.ImageView
 	 * @param image
 	 * @param progress
 	 */
-	private void populateFrame(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress)
+	private void populateFrame(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress, @Nullable final ImageLoadingListener listener)
 	{
 		UiSettings.getInstance().getImageLoader().cancelDisplayTask(this);
 
@@ -282,6 +298,11 @@ public class ImageView extends android.widget.ImageView
 			{
 				@Override public void onLoadingStarted(String imageUri, View view)
 				{
+					if (listener != null)
+					{
+						listener.onLoadingStarted(imageUri, view);
+					}
+
 					if (animator == null)
 					{
 						setVisibility(View.INVISIBLE);
@@ -295,6 +316,11 @@ public class ImageView extends android.widget.ImageView
 
 				@Override public void onLoadingFailed(String imageUri, View view, FailReason failReason)
 				{
+					if (listener != null)
+					{
+						listener.onLoadingFailed(imageUri, view, failReason);
+					}
+
 					setVisibility(View.GONE);
 					if (progress != null)
 					{
@@ -304,6 +330,11 @@ public class ImageView extends android.widget.ImageView
 
 				@Override public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
 				{
+					if (listener != null)
+					{
+						listener.onLoadingComplete(imageUri, view, loadedImage);
+					}
+
 					setVisibility(View.VISIBLE);
 					if (progress != null)
 					{
