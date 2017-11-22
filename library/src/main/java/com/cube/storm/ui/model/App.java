@@ -48,6 +48,7 @@ import lombok.experimental.Accessors;
 public class App extends Model
 {
 	protected String vector;
+	protected String pack;
 	protected Collection<PageDescriptor> map;
 
 	@Override public int describeContents()

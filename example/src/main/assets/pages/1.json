@@ -246,16 +246,77 @@
 			"children": [
 				{
 					"annotation": "1",
+					"class": "ToggleableListItem",
+					"title": {
+						"class": "Text",
+						"content": "Toggle this view"
+					},
+					"description": {
+						"class": "Text",
+						"content": "This is the hidden content!"
+					}
+				},
+				{
+					"annotation": "1",
+					"class": "ToggleableListItem",
+					"title": {
+						"class": "Text",
+						"content": "Toggle this view"
+					},
+					"description": {
+						"class": "Text",
+						"content": "This is the hidden content!"
+					}
+				},
+				{
+					"annotation": "1",
+					"class": "ToggleableListItem",
+					"title": {
+						"class": "Text",
+						"content": "Toggle this view"
+					},
+					"description": {
+						"class": "Text",
+						"content": "This is the hidden content!"
+					}
+				},
+				{
+					"annotation": "1",
+					"class": "ToggleableListItem",
+					"title": {
+						"class": "Text",
+						"content": "Toggle this view"
+					},
+					"description": {
+						"class": "Text",
+						"content": "This is the hidden content!"
+					}
+				}
+			],
+			"class": "List",
+			"header": {
+				"class": "Text",
+				"content": "Togglable list"
+			}
+		},
+		{
+			"children": [
+				{
+					"annotation": "1",
 					"class": "OrderedListItem",
 					"title": {
 						"class": "Text",
 						"content": "First item in the ordered list"
+					},
+					"description": {
+						"class": "Text",
+						"content": "First item description"
 					}
 				},
 				{
 					"annotation": "2",
 					"class": "OrderedListItem",
-					"title": {
+					"description": {
 						"class": "Text",
 						"content": "Second item in the ordered list"
 					}
@@ -297,6 +358,36 @@
 			"header": {
 				"class": "Text",
 				"content": "Ordered list"
+			}
+		},
+		{
+			"children": [
+				{
+					"class": "UnorderedListItem",
+					"title": {
+						"class": "Text",
+						"content": "First item in the unordered list"
+					}
+				},
+				{
+					"class": "UnorderedListItem",
+					"title": {
+						"class": "Text",
+						"content": "Second item in the unordered list"
+					}
+				},
+				{
+					"class": "UnorderedListItem",
+					"title": {
+						"class": "Text",
+						"content": "Third item in the unordered list"
+					}
+				}
+			],
+			"class": "List",
+			"header": {
+				"class": "Text",
+				"content": "Unordered list"
 			}
 		}
 	],

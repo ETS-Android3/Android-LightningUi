@@ -3,7 +3,6 @@ package com.cube.storm.ui.controller.adapter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.cube.storm.UiSettings;
@@ -22,6 +21,7 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * The base adapter used for displaying Storm views in a list. Using an adapter to do such a task has
@@ -127,6 +127,8 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (items != null)
 		{
+			items.removeAll(Collections.singleton(null));
+
 			this.items = new ArrayList<>(items.size());
 			this.itemTypes = new ArrayList<>(items.size() / 2);
 
@@ -180,31 +182,31 @@ public class StormListAdapter extends RecyclerView.Adapter<ViewHolder<?>>
 	{
 		if (item instanceof List)
 		{
-			if (((List)item).getHeader() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getHeader())))
-			{
-				ListHeader header = new ListHeader();
-				header.setHeader(((List)item).getHeader());
-
-				addItem(header);
-			}
-
 			if (((List)item).getChildren() != null)
 			{
-				for (Model subItem : ((List)item).getChildren())
+				((List)item).getChildren().removeAll(Collections.singleton(null));
+
+				if (((List)item).getChildren().size() > 0)
 				{
-					if (subItem != null)
+					// Add list header
+					ListHeader header = new ListHeader();
+					header.setHeader(((List)item).getHeader());
+					addItem(header);
+
+					// Add children
+					for (Model subItem : ((List)item).getChildren())
 					{
-						addItem(subItem);
+						if (subItem != null)
+						{
+							addItem(subItem);
+						}
 					}
+
+					// Add list footer
+					ListFooter footer = new ListFooter();
+					footer.setFooter(((List)item).getFooter());
+					addItem(footer);
 				}
-			}
-
-			if (((List)item).getFooter() != null && !TextUtils.isEmpty(UiSettings.getInstance().getTextProcessor().process(((List)item).getFooter())))
-			{
-				ListFooter footer = new ListFooter();
-				footer.setFooter(((List)item).getFooter());
-
-				addItem(footer);
 			}
 		}
 		else

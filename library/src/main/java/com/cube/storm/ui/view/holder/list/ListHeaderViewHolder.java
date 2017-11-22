@@ -40,5 +40,8 @@ public class ListHeaderViewHolder extends ViewHolder<ListHeader>
 	@Override public void populateView(ListHeader model)
 	{
 		title.populate(model.getHeader());
+
+		itemView.setVisibility(title.getVisibility());
+		itemView.getLayoutParams().height = title.getVisibility() == View.GONE ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT;
 	}
 }
