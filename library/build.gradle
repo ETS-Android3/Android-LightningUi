@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-	compileSdkVersion 25
-	buildToolsVersion "25.0.2"
+	compileSdkVersion 26
+	buildToolsVersion "26.0.2"
 
 	defaultConfig {
 		minSdkVersion 16
-		targetSdkVersion 25
+		targetSdkVersion 26
 	}
 
 	lintOptions {
@@ -14,7 +14,7 @@ android {
 	}
 }
 
-def supportLibraryVersion = "25.2.0"
+def supportLibraryVersion = "26.0.2"
 
 dependencies {
 	compile "com.android.support:support-annotations:${supportLibraryVersion}"
@@ -27,7 +27,7 @@ dependencies {
 	compile 'com.google.code.gson:gson:2.7'
 	compile 'net.callumtaylor:asynchttpclient:2.1'
 
-	compile 'com.3sidedcube.storm:util:0.4.3'
+	compile 'com.3sidedcube.storm:util:0.5.0'
 	compile 'com.3sidedcube.storm:exoplayer:1.0.1'
 
 	compile 'com.3sidedcube.util:universal-image-loader:2.1.2'
