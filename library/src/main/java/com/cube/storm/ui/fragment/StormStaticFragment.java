@@ -58,7 +58,20 @@ public class StormStaticFragment extends Fragment implements StormInterface
 			throw new RuntimeException("Could not instantiate class " + UiSettings.getInstance().getViewAdapter() + " for adapter");
 		}
 
-		if (savedInstanceState == null)
+		if (savedInstanceState != null)
+		{
+			if (savedInstanceState.containsKey("page"))
+			{
+				page = (Page)savedInstanceState.get("page");
+			}
+
+			if (savedInstanceState.containsKey("adapter"))
+			{
+				adapter.restoreState((StormListAdapter.AdapterState)savedInstanceState.getSerializable("adapter"));
+			}
+		}
+
+		if (page == null)
 		{
 			if (getArguments().containsKey(StormActivity.EXTRA_URI))
 			{
@@ -72,17 +85,8 @@ public class StormStaticFragment extends Fragment implements StormInterface
 		}
 		else
 		{
-			if (savedInstanceState.containsKey("page"))
-			{
-				page = (Page)savedInstanceState.get("page");
-				setAdapter();
-				setTitle();
-			}
-
-			if (savedInstanceState.containsKey("adapter"))
-			{
-				adapter.restoreState((StormListAdapter.AdapterState)savedInstanceState.getSerializable("adapter"));
-			}
+			setAdapter();
+			setTitle();
 		}
 	}
 
