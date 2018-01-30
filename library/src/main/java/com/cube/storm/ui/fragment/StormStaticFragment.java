@@ -63,8 +63,6 @@ public class StormStaticFragment extends Fragment implements StormInterface
 			if (savedInstanceState.containsKey("page"))
 			{
 				page = (Page)savedInstanceState.get("page");
-				setAdapter();
-				setTitle();
 			}
 
 			if (savedInstanceState.containsKey("adapter"))
@@ -84,6 +82,11 @@ public class StormStaticFragment extends Fragment implements StormInterface
 			{
 				onLoadFail();
 			}
+		}
+		else
+		{
+			setAdapter();
+			setTitle();
 		}
 	}
 
