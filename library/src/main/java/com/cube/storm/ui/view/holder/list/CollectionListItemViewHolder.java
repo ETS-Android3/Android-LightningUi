@@ -78,15 +78,27 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 	{
 		if (itemModel != null)
 		{
-			ViewHolderFactory holderFactory = null;
+			boolean populated = false;
 			ViewHolder<? super CollectionItem> holder = null;
+			Class<? extends ViewHolderFactory> modelViewResolver = UiSettings.getInstance().getViewResolvers().get(itemModel.getClassName()).resolveViewHolder();
 
-			if (view == null)
+			if (view != null && view.getTag() != null)
+			{
+				holder = (ViewHolder<? super CollectionItem>)view.getTag();
+
+				// check holder is correct instance type
+				if (holder.getClass().isAssignableFrom(modelViewResolver.getClass()))
+				{
+					holder.populateView(itemModel);
+					populated = true;
+				}
+			}
+
+			if (view == null || !populated)
 			{
 				try
 				{
-					Class<? extends ViewHolderFactory> cls = UiSettings.getInstance().getViewResolvers().get(itemModel.getClassName()).resolveViewHolder();
-					holderFactory = cls.newInstance();
+					ViewHolderFactory holderFactory = modelViewResolver.newInstance();
 					holder = (ViewHolder<? super CollectionItem>)holderFactory.createViewHolder((ViewGroup)linearLayout.getParent());
 					view = holder.itemView;
 					holder.populateView(itemModel);
@@ -99,14 +111,6 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 				catch (IllegalAccessException e)
 				{
 					e.printStackTrace();
-				}
-			}
-			else
-			{
-				if (view.getTag() != null)
-				{
-					holder = (ViewHolder<? super CollectionItem>)view.getTag();
-					holder.populateView(itemModel);
 				}
 			}
 
@@ -125,8 +129,10 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 					});
 				}
 			}
+
 			return view;
 		}
+
 		return null;
 	}
 }
