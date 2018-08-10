@@ -404,6 +404,19 @@ public class UiSettings
 		}
 
 		/**
+		 * Sets the default language srcUri
+		 *
+		 * @param languageUri The language uri of the default language
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder setDefaultLanguageUri(String languageUri)
+		{
+			construct.defaultLanguageUri = languageUri;
+			return this;
+		}
+
+		/**
 		 * Sets the default {@link com.cube.storm.ui.lib.handler.LinkHandler} for the module
 		 *
 		 * @param linkHandler The new {@link com.cube.storm.ui.lib.handler.LinkHandler}
