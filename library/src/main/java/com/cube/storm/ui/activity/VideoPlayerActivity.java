@@ -142,6 +142,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 					selectedIndex = 0;
 					contentUri = Uri.parse(otherVideos[0].getSrc().getDestination());
 				}
+				else
+				{
+					contentUri = Uri.parse(otherVideos[selectedIndex].getSrc().getDestination());
+				}
+
 
 				ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, locales);
 
