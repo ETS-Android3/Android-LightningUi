@@ -175,6 +175,11 @@ public class UiSettings
 	@Getter @Setter private Class<? extends StormListAdapter> viewAdapter = StormListAdapter.class;
 
 	/**
+	 * Default language Uri
+	 */
+	@Getter @Setter private String defaultLanguageUri = "";
+
+	/**
 	 * Sets the app model of the content
 	 *
 	 * @param app The new app model

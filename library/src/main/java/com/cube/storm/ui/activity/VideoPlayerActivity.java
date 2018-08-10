@@ -124,7 +124,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 						languageSuffix = languageSuffix.replace("yi", "ji");
 					}
 
-					if (otherVideos[index].getLocale().equals(fileName))
+					if (fileName.contains(otherVideos[index].getLocale()))
 					{
 						selectedIndex = index;
 					}
