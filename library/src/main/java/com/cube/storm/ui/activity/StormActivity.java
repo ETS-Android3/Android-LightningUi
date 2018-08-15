@@ -29,7 +29,7 @@ public class StormActivity extends AppCompatActivity implements StormInterface
 
 		if (savedInstanceState == null)
 		{
-			if (getIntent().getExtras().containsKey(EXTRA_URI))
+			if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_URI))
 			{
 				String pageUri = String.valueOf(getIntent().getExtras().get(EXTRA_URI));
 				loadPage(pageUri);

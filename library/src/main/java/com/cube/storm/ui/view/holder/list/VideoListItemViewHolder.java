@@ -79,7 +79,7 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 
 				if (video != null)
 				{
-					video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME, "Video Asset");
+					video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME,  UiSettings.getInstance().getDefaultLanguageUri());
 					video.putExtra(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
 
 					v.getContext().startActivity(video);
