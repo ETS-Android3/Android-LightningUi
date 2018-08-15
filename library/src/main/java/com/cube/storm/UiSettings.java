@@ -175,6 +175,11 @@ public class UiSettings
 	@Getter @Setter private Class<? extends StormListAdapter> viewAdapter = StormListAdapter.class;
 
 	/**
+	 * Default language Uri
+	 */
+	@Getter @Setter private String defaultLanguageUri = "";
+
+	/**
 	 * Sets the app model of the content
 	 *
 	 * @param app The new app model
@@ -395,6 +400,19 @@ public class UiSettings
 		public Builder contentSize(ContentSize contentSize)
 		{
 			construct.contentSize = contentSize;
+			return this;
+		}
+
+		/**
+		 * Sets the default language srcUri
+		 *
+		 * @param languageUri The language uri of the default language
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder setDefaultLanguageUri(String languageUri)
+		{
+			construct.defaultLanguageUri = languageUri;
 			return this;
 		}
 
