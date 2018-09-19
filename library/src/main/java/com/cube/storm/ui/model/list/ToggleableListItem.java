@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * @author Alan Le Fournis
  * @project LightningUi
  */
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Accessors(chain = true) @Data
 public class ToggleableListItem extends DescriptionListItem
 {

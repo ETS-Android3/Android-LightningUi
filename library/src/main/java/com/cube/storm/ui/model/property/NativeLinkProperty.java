@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * @author Callum Taylor
  * @project LightningUi
  */
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Accessors(chain = true) @Data
 public class NativeLinkProperty extends DestinationLinkProperty
 {

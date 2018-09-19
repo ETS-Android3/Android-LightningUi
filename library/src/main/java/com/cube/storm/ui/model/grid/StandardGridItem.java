@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
  * @author Matt Allen
  * @project LightningUi
  */
-@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@NoArgsConstructor @AllArgsConstructor
 @Accessors(chain = true) @Data
 public class StandardGridItem extends GridItem
 {

@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * @author Callum Taylor
  * @project LightningUi
  */
-@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@NoArgsConstructor @AllArgsConstructor
 @Accessors(chain = true) @Data
 public class SpotlightImageProperty extends AnimationFrame
 {
