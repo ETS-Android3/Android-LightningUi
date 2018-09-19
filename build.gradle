@@ -36,13 +36,5 @@ allprojects {
 			}
 			url 'http://oss.3sidedcube.com:8081/artifactory/private'
 		}
-
-		maven {
-			url "https://jitpack.io"
-		}
 	}
-}
-
-task clean(type: Delete) {
-	delete rootProject.buildDir
 }
