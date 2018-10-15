@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * @author Alan Le Fournis
  * @project LightningUi
  */
-@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@NoArgsConstructor @AllArgsConstructor
 @Accessors(chain = true) @Data
 public class HeaderListItem extends ImageListItem
 {

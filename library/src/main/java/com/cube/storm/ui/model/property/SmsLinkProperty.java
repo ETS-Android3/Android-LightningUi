@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Accessors(chain = true) @Data
 public class SmsLinkProperty extends MessageLinkProperty
 {

@@ -141,7 +141,7 @@ public class IntentResolverMap
 	}
 
 	@NoArgsConstructor
-	@AllArgsConstructor(suppressConstructorProperties = true)
+	@AllArgsConstructor
 	@Accessors(chain = true) @Data
 	private class IntentOptions
 	{
