@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@NoArgsConstructor @AllArgsConstructor
 @Accessors(chain = true) @Data
 public class ImageProperty extends Property
 {
@@ -30,7 +30,7 @@ public class ImageProperty extends Property
 
 	@Override public void writeToParcel(Parcel parcel, int i){}
 
-	@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+	@NoArgsConstructor @AllArgsConstructor
 	@Accessors(chain = true) @Data
 	public class Dimensions extends Model
 	{

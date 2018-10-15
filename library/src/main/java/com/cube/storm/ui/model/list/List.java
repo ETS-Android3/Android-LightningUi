@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * @author Callum Taylor
  * @project LightningUi
  */
-@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+@NoArgsConstructor @AllArgsConstructor
 @Accessors(chain = true) @Data
 public class List extends ListItem
 {
@@ -41,7 +41,7 @@ public class List extends ListItem
 	 * we instantiate 2 'place holder' models to handle it. {@link com.cube.storm.ui.model.list.List} isn't
 	 * actually a visible view, where as it's members is.
 	 */
-	@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+	@NoArgsConstructor @AllArgsConstructor
 	@Accessors(chain = true) @Data
 	public static class ListHeader extends ListItem
 	{
@@ -69,7 +69,7 @@ public class List extends ListItem
 	 * we instantiate 2 'place holder' models to handle it. {@link com.cube.storm.ui.model.list.List} isn't
 	 * actually a visible view, where as it's members is.
 	 */
-	@NoArgsConstructor @AllArgsConstructor(suppressConstructorProperties = true)
+	@NoArgsConstructor @AllArgsConstructor
 	@Accessors(chain = true) @Data
 	public static class ListFooter extends ListItem
 	{
