@@ -1,21 +1,16 @@
 package com.cube.storm.ui.view.holder.list;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.lib.EventHook;
+import com.cube.storm.ui.lib.adapter.StormSpotlightAdapter;
 import com.cube.storm.ui.model.list.SpotlightListItem;
-import com.cube.storm.ui.model.property.AnimationImageProperty;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
-import com.cube.storm.ui.view.ImageView;
-import com.cube.storm.ui.view.TextView;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Holder for populating the Spotlight image at the top of a list view.
@@ -42,54 +37,68 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		}
 	}
 
-	protected ImageView image;
-	protected TextView text;
-	protected SpotlightListItem model;
-
-	protected AtomicInteger index = new AtomicInteger(0);
+	protected ViewPager viewPager;
+	protected TabLayout indicator;
+	protected StormSpotlightAdapter spotlightAdapter = new StormSpotlightAdapter();
+	private Runnable viewPagerTransition = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			if (viewPager.getCurrentItem() < spotlightAdapter.getCount() - 1)
+			{
+				viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+			}
+			else
+			{
+				viewPager.setCurrentItem(0);
+			}
+		}
+	};
 
 	public SpotlightListItemViewHolder(View view)
 	{
 		super(view);
-
-		image = (ImageView)view.findViewById(R.id.image_view);
-		text = (TextView)view.findViewById(R.id.text_ticker);
+		viewPager = view.findViewById(R.id.viewPager);
+		indicator = view.findViewById(R.id.indicator);
+		viewPager.setAdapter(spotlightAdapter);
+		indicator.setupWithViewPager(viewPager, true);
+		viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+		{
+			@Override
+			public void onPageSelected(int position)
+			{
+				scheduleNextTransition();
+			}
+		});
 	}
 
 	@Override public void populateView(final SpotlightListItem model)
 	{
-		// Only restart the animation if it is from a different model
-		if (this.model != model)
-		{
-			this.model = model;
-			image.populate(model.getSpotlights(), new ImageView.OnAnimationFrameChangeListener()
-			{
-				@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, AnimationImageProperty frame)
-				{
-				}
+		spotlightAdapter.setSpotlightListItem(model);
+		scheduleNextTransition();
 
-				@Override public void onAnimationFrameChange(ImageView imageView, int frameIndex, SpotlightImageProperty frame)
-				{
-					index.set(frameIndex);
-					text.populate(frame.getText(), frame.getLink());
-				}
-			});
+		if (spotlightAdapter.getCount() <= 1)
+		{
+			indicator.setVisibility(View.GONE);
+		}
+		else
+		{
+			indicator.setVisibility(View.VISIBLE);
+		}
+	}
+
+	private void scheduleNextTransition()
+	{
+		int currentIndex = viewPager.getCurrentItem();
+		SpotlightImageProperty currentItem = spotlightAdapter.getItem(currentIndex);
+
+		if (currentItem == null || spotlightAdapter.getCount() <= 1)
+		{
+			return;
 		}
 
-		itemView.setOnClickListener(new View.OnClickListener()
-		{
-			@Override public void onClick(View v)
-			{
-				if (model.getSpotlights() != null && model.getSpotlights().get(index.get()) != null)
-				{
-					UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), model.getSpotlights().get(index.get()).getLink());
-
-					for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
-					{
-						eventHook.onViewLinkedClicked(itemView, model, model.getSpotlights().get(index.get()).getLink());
-					}
-				}
-			}
-		});
+		viewPager.removeCallbacks(viewPagerTransition);
+		viewPager.postDelayed(viewPagerTransition, currentItem.getDelay());
 	}
 }
