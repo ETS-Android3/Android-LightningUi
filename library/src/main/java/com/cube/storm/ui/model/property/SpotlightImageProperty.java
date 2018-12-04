@@ -2,6 +2,7 @@ package com.cube.storm.ui.model.property;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
  * @project LightningUi
  */
 @NoArgsConstructor @AllArgsConstructor
-@Accessors(chain = true) @Data
+@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 public class SpotlightImageProperty extends AnimationFrame
 {
 	protected TextProperty text;

@@ -14,6 +14,7 @@ import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -142,7 +143,7 @@ public class IntentResolverMap
 
 	@NoArgsConstructor
 	@AllArgsConstructor
-	@Accessors(chain = true) @Data
+	@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 	private class IntentOptions
 	{
 		protected String pageId;

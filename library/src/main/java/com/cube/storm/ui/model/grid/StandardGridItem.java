@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -20,7 +21,7 @@ import lombok.experimental.Accessors;
  * @project LightningUi
  */
 @NoArgsConstructor @AllArgsConstructor
-@Accessors(chain = true) @Data
+@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 public class StandardGridItem extends GridItem
 {
 	public static String CLASS_NAME = "StandardGridItem";
