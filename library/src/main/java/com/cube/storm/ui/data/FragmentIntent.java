@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * FragmentIntent is a package class for hosting details about a fragment. It works in a similar
@@ -16,7 +17,7 @@ import lombok.Data;
  * @author Callum Taylor
  * @project LightningUi
  */
-@Data
+@Data @EqualsAndHashCode(callSuper=false)
 public class FragmentIntent implements Parcelable
 {
 	@NonNull private Class<?> fragment = Object.class;
