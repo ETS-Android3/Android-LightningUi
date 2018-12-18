@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -17,7 +18,7 @@ import lombok.experimental.Accessors;
  * @project LightningUi
  */
 @NoArgsConstructor @AllArgsConstructor
-@Accessors(chain = true) @Data
+@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 public class CheckableListItem extends DescriptionListItem
 {
 	public static String CLASS_NAME = "CheckableListItem";

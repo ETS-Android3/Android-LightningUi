@@ -3,6 +3,7 @@ package com.cube.storm.ui.model.property;
 import android.os.Parcel;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
  * @project LightningUi
  */
 @NoArgsConstructor
-@Accessors(chain = true) @Data
+@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 public class ExternalLinkProperty extends DestinationLinkProperty
 {
 	public static String CLASS_NAME = "ExternalLink";
