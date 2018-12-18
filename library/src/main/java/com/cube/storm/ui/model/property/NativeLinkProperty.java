@@ -4,6 +4,7 @@ import android.os.Parcel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,7 +15,7 @@ import lombok.experimental.Accessors;
  * @project LightningUi
  */
 @AllArgsConstructor
-@Accessors(chain = true) @Data
+@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 public class NativeLinkProperty extends DestinationLinkProperty
 {
 	public static String CLASS_NAME = "NativeLink";

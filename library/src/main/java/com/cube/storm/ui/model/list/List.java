@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -22,7 +23,7 @@ import lombok.experimental.Accessors;
  * @project LightningUi
  */
 @NoArgsConstructor @AllArgsConstructor
-@Accessors(chain = true) @Data
+@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 public class List extends ListItem
 {
 	public static String CLASS_NAME = "List";
@@ -42,7 +43,7 @@ public class List extends ListItem
 	 * actually a visible view, where as it's members is.
 	 */
 	@NoArgsConstructor @AllArgsConstructor
-	@Accessors(chain = true) @Data
+	@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 	public static class ListHeader extends ListItem
 	{
 		public static String CLASS_NAME = "_ListHeader";
@@ -70,7 +71,7 @@ public class List extends ListItem
 	 * actually a visible view, where as it's members is.
 	 */
 	@NoArgsConstructor @AllArgsConstructor
-	@Accessors(chain = true) @Data
+	@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 	public static class ListFooter extends ListItem
 	{
 		public static String CLASS_NAME = "_ListFooter";
