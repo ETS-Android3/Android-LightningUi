@@ -37,6 +37,24 @@
 				}
 			},
 			"type": "ListPage"
+		},
+		{
+			"class": "TabPageDescriptor",
+			"name": "",
+			"src": "assets:\/\/pages\/4.json",
+			"startPage": false,
+			"tabBarItem": {
+				"class": "TabBarItem",
+				"description": {
+					"class": "Text",
+					"content": "Tab 3"
+				},
+				"title": {
+					"class": "Text",
+					"content": "Tab 3"
+				}
+			},
+			"type": "ListPage"
 		}
 	],
 	"title": {

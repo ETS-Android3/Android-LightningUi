@@ -1,0 +1,520 @@
+{
+    "children": [
+        {
+            "children": [
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                                "x1": "assets://content/1415019799016_plugin_x1.png",
+                                "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                                "x2": "assets://content/1415019799016_plugin_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                                "x1": "assets://content/141501992968_hammer_x1.png",
+                                "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                                "x2": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                                "x1": "assets://content/141501992968_hammer_x1.png",
+                                "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                                "x2": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1414409279402_flash_x0.75.png",
+                                "x1": "assets://content/1414409279402_flash_x1.png",
+                                "x1.5": "assets://content/1414409279402_flash_x1.5.png",
+                                "x2": "assets://content/1414409279402_flash_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1414409279402_flash_x0.75.png",
+                                "x1": "assets://content/1414409279402_flash_x1.png",
+                                "x1.5": "assets://content/1414409279402_flash_x1.5.png",
+                                "x2": "assets://content/1414409279402_flash_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                                "x1": "assets://content/1415019799016_plugin_x1.png",
+                                "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                                "x2": "assets://content/1415019799016_plugin_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                                "x1": "assets://content/141501992968_hammer_x1.png",
+                                "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                                "x2": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                                "x1": "assets://content/1415019799016_plugin_x1.png",
+                                "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                                "x2": "assets://content/1415019799016_plugin_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                                "x1": "assets://content/141501992968_hammer_x1.png",
+                                "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                                "x2": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1414409279402_flash_x0.75.png",
+                                "x1": "assets://content/1414409279402_flash_x1.png",
+                                "x1.5": "assets://content/1414409279402_flash_x1.5.png",
+                                "x2": "assets://content/1414409279402_flash_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                                "x1": "assets://content/141501992968_hammer_x1.png",
+                                "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                                "x2": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                                "x1": "assets://content/141501992968_hammer_x1.png",
+                                "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                                "x2": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                                "x1": "assets://content/1415019799016_plugin_x1.png",
+                                "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                                "x2": "assets://content/1415019799016_plugin_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                                "x1": "assets://content/1415019799016_plugin_x1.png",
+                                "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                                "x2": "assets://content/1415019799016_plugin_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1414409279402_flash_x0.75.png",
+                                "x1": "assets://content/1414409279402_flash_x1.png",
+                                "x1.5": "assets://content/1414409279402_flash_x1.5.png",
+                                "x2": "assets://content/1414409279402_flash_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                                "x1": "assets://content/141501992968_hammer_x1.png",
+                                "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                                "x2": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                                "x1": "assets://content/1415019799016_plugin_x1.png",
+                                "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                                "x2": "assets://content/1415019799016_plugin_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class": "SpotlightListItem",
+                    "images": [
+                        {
+                            "class": "SpotlightImage",
+                            "delay": 5000,
+                            "link": {
+                                "class": "ExternalLink",
+                                "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                                "title": {
+                                    "class": "Text",
+                                    "content": "2u92u"
+                                }
+                            },
+                            "src": {
+                                "class": "ImageDescriptor",
+                                "x0.75": "assets://content/1414409279402_flash_x0.75.png",
+                                "x1": "assets://content/1414409279402_flash_x1.png",
+                                "x1.5": "assets://content/1414409279402_flash_x1.5.png",
+                                "x2": "assets://content/1414409279402_flash_x2.png"
+                            },
+                            "text": {
+                                "class": "Text",
+                                "content": "2u92s"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "class": "List"
+        }
+    ],
+    "class": "ListPage",
+    "id": "3",
+    "name": "",
+    "title": {
+        "class": "Text",
+        "content": "Multiple spotlights in a row"
+    }
+}
