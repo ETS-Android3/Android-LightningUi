@@ -54,6 +54,31 @@ public class StormSpotlightAdapter extends PagerAdapter
 	}
 
 	@Override
+	public int getItemPosition(@NonNull Object object)
+	{
+		if (spotlightListItem != null && spotlightListItem.getSpotlights() != null)
+		{
+			View view = (View)object;
+
+			if (view.getTag() instanceof Integer)
+			{
+				Integer viewTag = (Integer) view.getTag();
+				int idx = 0;
+				for (SpotlightImageProperty imageProperty : spotlightListItem.getSpotlights())
+				{
+					if (imageProperty != null && imageProperty.hashCode() == viewTag)
+					{
+						return idx;
+					}
+					++idx;
+				}
+			}
+		}
+
+		return POSITION_NONE;
+	}
+
+	@Override
 	public boolean isViewFromObject(@NonNull View view, @NonNull Object object)
 	{
 		return view == object;
@@ -65,7 +90,7 @@ public class StormSpotlightAdapter extends PagerAdapter
 	{
 		Context context = container.getContext();
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.spotlight_image_view, null);
+		View view = inflater.inflate(R.layout.spotlight_image_view, container, false);
 
 		final SpotlightImageProperty spotlightItem = getItem(position);
 		if (spotlightItem != null)
@@ -89,8 +114,13 @@ public class StormSpotlightAdapter extends PagerAdapter
 			});
 		}
 
+		// Set the item's hashcode as the view tag so we can identify the original item from the view
+		// in #getItemPosition. The ViewPager uses this method to identify which views have changed after
+		// notifyDataSetChanged is called.
+		view.setTag(spotlightItem != null ? spotlightItem.hashCode() : 0);
+
 		ViewPager viewPager = (ViewPager) container;
-		viewPager.addView(view, 0);
+		viewPager.addView(view, position);
 
 		return view;
 	}
