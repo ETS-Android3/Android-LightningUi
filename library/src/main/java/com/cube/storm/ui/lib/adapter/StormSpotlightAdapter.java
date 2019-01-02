@@ -120,7 +120,7 @@ public class StormSpotlightAdapter extends PagerAdapter
 		view.setTag(spotlightItem != null ? spotlightItem.hashCode() : 0);
 
 		ViewPager viewPager = (ViewPager) container;
-		viewPager.addView(view, position);
+		viewPager.addView(view, 0);
 
 		return view;
 	}
