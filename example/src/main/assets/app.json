@@ -18,6 +18,11 @@
 		},
 		{
 			"class": "PageDescriptor",
+			"src": "assets://pages/4.json",
+			"type": "ListPage"
+		},
+		{
+			"class": "PageDescriptor",
 			"src": "test://page",
 			"name": "name",
 			"type": "ListPage"

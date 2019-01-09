@@ -1,401 +1,520 @@
 {
-	"children": [
-		{
-			"children": [
-				{
-					"class": "TextListItem",
-					"description": {
-						"class": "Text",
-						"content": "This is an example storm page complete with a few selection of standard storm objects rendered into an efficient, reusable recycler view."
-					}
-				},
-				{
-					"class": "LogoListItem",
-					"image": {
-						"class": "Icon",
-						"src": {
-							"class": "ImageDescriptor",
-							"x0.75": "assets://content/141501992968_hammer_x2.png",
-							"x1": "assets://content/141501992968_hammer_x2.png",
-							"x1.5": "assets://content/141501992968_hammer_x2.png",
-							"x2": "assets://content/141501992968_hammer_x2.png"
-						}
-					},
-					"link": {
-						"class": "ExternalLink",
-						"destination": "https:\/\/3sidedcube.com\/",
-						"title": {
-							"class": "Text",
-							"content": "el6ib"
-						}
-					}
-				}
-			],
-			"class": "List"
-		},
-		{
-			"children": [
-				{
-					"class": "AnimationListItem",
-					"animation": {
-						"class": "Animation",
-						"looped": true,
-						"frames": [
-							{
-								"class": "AnimationFrame",
-								"delay": 400,
-								"image": [
-									{
-										"class": "Image",
-										"src": {
-											"class": "InternalLink",
-											"destination": "assets://content/141501992968_hammer_x2.png"
-										},
-										"dimensions": {
-											"width": 88,
-											"height": 88
-										}
-									}
-								]
-							},
-							{
-								"class": "AnimationFrame",
-								"delay": 400,
-								"image": [
-									{
-										"class": "Image",
-										"src": {
-											"class": "InternalLink",
-											"destination": "assets://content/1414409279402_flash_x2.png"
-										},
-										"dimensions": {
-											"width": 88,
-											"height": 88
-										}
-									}
-								]
-							},
-							{
-								"class": "AnimationFrame",
-								"delay": 400,
-								"image": [
-									{
-										"class": "Image",
-										"src": {
-											"class": "InternalLink",
-											"destination": "assets://content/1415019799016_plugin_x2.png"
-										},
-										"dimensions": {
-											"width": 88,
-											"height": 88
-										}
-									}
-								]
-							}
-						]
-					}
-				},
-				{
-					"class": "StandardListItem",
-					"image": {
-						"class": "Icon",
-						"src": {
-							"class": "ImageDescriptor",
-							"x0.75": "assets://content/141501992968_hammer_x0.75.png",
-							"x1": "assets://content/141501992968_hammer_x1.png",
-							"x1.5": "assets://content/141501992968_hammer_x1.5.png",
-							"x2": "assets://content/141501992968_hammer_x2.png"
-						}
-					},
-					"link": {
-						"class": "InternalLink",
-						"destination": "test://page"
-					},
-					"title": {
-						"class": "Text",
-						"content": "Native link"
-					}
-				},
-				{
-					"class": "StandardListItem",
-					"image": [
-						{
-							"class": "Icon",
-							"src": {
-								"class": "InternalLink",
-								"destination": "assets://content/141501992968_hammer_x0.75.png"
-							},
-							"dimensions": {
-								"width": 22,
-								"height": 22
-							}
-						},
-						{
-							"class": "Icon",
-							"src": {
-								"class": "InternalLink",
-								"destination": "assets://content/141501992968_hammer_x1.png"
-							},
-							"dimensions": {
-								"width": 44,
-								"height": 44
-							}
-						},
-						{
-							"class": "Icon",
-							"src": {
-								"class": "InternalLink",
-								"destination": "assets://content/141501992968_hammer_x1.5.png"
-							},
-							"dimensions": {
-								"width": 66,
-								"height": 66
-							}
-						},
-						{
-							"class": "Icon",
-							"src": {
-								"class": "InternalLink",
-								"destination": "assets://content/141501992968_hammer_x2.png"
-							},
-							"dimensions": {
-								"width": 88,
-								"height": 88
-							}
-						}
-					],
-					"link": {
-						"class": "InternalLink",
-						"destination": "assets://pages/1.json"
-					},
-					"title": {
-						"class": "Text",
-						"content": "Storm link"
-					}
-				}
-				,
-				{
-					"class": "StandardListItem",
-					"image": [
-						{
-							"class": "Icon",
-							"src": {
-								"class": "InternalLink",
-								"destination": "assets://content/141501992968_hammer_x0.75.png"
-							},
-							"dimensions": {
-								"width": 22,
-								"height": 22
-							}
-						},
-						{
-							"class": "Icon",
-							"src": {
-								"class": "InternalLink",
-								"destination": "assets://content/141501992968_hammer_x1.png"
-							},
-							"dimensions": {
-								"width": 44,
-								"height": 44
-							}
-						},
-						{
-							"class": "Icon",
-							"src": {
-								"class": "InternalLink",
-								"destination": "assets://content/141501992968_hammer_x1.5.png"
-							},
-							"dimensions": {
-								"width": 66,
-								"height": 66
-							}
-						},
-						{
-							"class": "Icon",
-							"src": {
-								"class": "InternalLink",
-								"destination": "assets://content/141501992968_hammer_x2.png"
-							},
-							"dimensions": {
-								"width": 88,
-								"height": 88
-							}
-						}
-					],
-					"link": {
-						"class": "InternalLink",
-						"destination": "assets://pages/3.json"
-					},
-					"title": {
-						"class": "Text",
-						"content": "Overridden link"
-					}
-				}
-			],
-			"class": "List",
-			"footer": {
-				"class": "Text",
-				"content": "Example footer"
-			},
-			"header": {
-				"class": "Text",
-				"content": "List of links"
-			}
-		},
-		{
-			"children": [
-				{
-					"annotation": "1",
-					"class": "ToggleableListItem",
-					"title": {
-						"class": "Text",
-						"content": "Toggle this view"
-					},
-					"description": {
-						"class": "Text",
-						"content": "This is the hidden content!"
-					}
-				},
-				{
-					"annotation": "1",
-					"class": "ToggleableListItem",
-					"title": {
-						"class": "Text",
-						"content": "Toggle this view"
-					},
-					"description": {
-						"class": "Text",
-						"content": "This is the hidden content!"
-					}
-				},
-				{
-					"annotation": "1",
-					"class": "ToggleableListItem",
-					"title": {
-						"class": "Text",
-						"content": "Toggle this view"
-					},
-					"description": {
-						"class": "Text",
-						"content": "This is the hidden content!"
-					}
-				},
-				{
-					"annotation": "1",
-					"class": "ToggleableListItem",
-					"title": {
-						"class": "Text",
-						"content": "Toggle this view"
-					},
-					"description": {
-						"class": "Text",
-						"content": "This is the hidden content!"
-					}
-				}
-			],
-			"class": "List",
-			"header": {
-				"class": "Text",
-				"content": "Togglable list"
-			}
-		},
-		{
-			"children": [
-				{
-					"annotation": "1",
-					"class": "OrderedListItem",
-					"title": {
-						"class": "Text",
-						"content": "First item in the ordered list"
-					},
-					"description": {
-						"class": "Text",
-						"content": "First item description"
-					}
-				},
-				{
-					"annotation": "2",
-					"class": "OrderedListItem",
-					"description": {
-						"class": "Text",
-						"content": "Second item in the ordered list"
-					}
-				},
-				{
-					"annotation": "3",
-					"class": "OrderedListItem",
-					"title": {
-						"class": "Text",
-						"content": "Third item in the ordered list"
-					}
-				},
-				{
-					"annotation": "A",
-					"class": "OrderedListItem",
-					"title": {
-						"class": "Text",
-						"content": "Custom annotated item in the ordered list"
-					}
-				},
-				{
-					"annotation": "B",
-					"class": "OrderedListItem",
-					"title": {
-						"class": "Text",
-						"content": "Second custom item in the ordered list"
-					}
-				},
-				{
-					"annotation": "C",
-					"class": "OrderedListItem",
-					"title": {
-						"class": "Text",
-						"content": "Third custom item in the ordered list"
-					}
-				}
-			],
-			"class": "List",
-			"header": {
-				"class": "Text",
-				"content": "Ordered list"
-			}
-		},
-		{
-			"children": [
-				{
-					"class": "UnorderedListItem",
-					"title": {
-						"class": "Text",
-						"content": "First item in the unordered list"
-					}
-				},
-				{
-					"class": "UnorderedListItem",
-					"title": {
-						"class": "Text",
-						"content": "Second item in the unordered list"
-					}
-				},
-				{
-					"class": "UnorderedListItem",
-					"title": {
-						"class": "Text",
-						"content": "Third item in the unordered list"
-					}
-				}
-			],
-			"class": "List",
-			"header": {
-				"class": "Text",
-				"content": "Unordered list"
-			}
-		}
-	],
-	"class": "ListPage",
-	"id": "1",
-	"name": "",
-	"title": {
-		"class": "Text",
-		"content": "Example storm page"
-	}
+    "children": [
+        {
+            "children": [
+                {
+                    "class": "TextListItem",
+                    "description": {
+                        "class": "Text",
+                        "content": "This is an example storm page complete with a few selection of standard storm objects rendered into an efficient, reusable recycler view."
+                    }
+                },
+                {
+                    "class": "LogoListItem",
+                    "image": {
+                        "class": "Icon",
+                        "src": {
+                            "class": "ImageDescriptor",
+                            "x0.75": "assets://content/141501992968_hammer_x2.png",
+                            "x1": "assets://content/141501992968_hammer_x2.png",
+                            "x1.5": "assets://content/141501992968_hammer_x2.png",
+                            "x2": "assets://content/141501992968_hammer_x2.png"
+                        }
+                    },
+                    "link": {
+                        "class": "ExternalLink",
+                        "destination": "https:\/\/3sidedcube.com\/",
+                        "title": {
+                            "class": "Text",
+                            "content": "el6ib"
+                        }
+                    }
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "children": [
+                {
+                    "class": "AnimationListItem",
+                    "animation": {
+                        "class": "Animation",
+                        "looped": true,
+                        "frames": [
+                            {
+                                "class": "AnimationFrame",
+                                "delay": 400,
+                                "image": [
+                                    {
+                                        "class": "Image",
+                                        "src": {
+                                            "class": "InternalLink",
+                                            "destination": "assets://content/141501992968_hammer_x2.png"
+                                        },
+                                        "dimensions": {
+                                            "width": 88,
+                                            "height": 88
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "class": "AnimationFrame",
+                                "delay": 400,
+                                "image": [
+                                    {
+                                        "class": "Image",
+                                        "src": {
+                                            "class": "InternalLink",
+                                            "destination": "assets://content/1414409279402_flash_x2.png"
+                                        },
+                                        "dimensions": {
+                                            "width": 88,
+                                            "height": 88
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "class": "AnimationFrame",
+                                "delay": 400,
+                                "image": [
+                                    {
+                                        "class": "Image",
+                                        "src": {
+                                            "class": "InternalLink",
+                                            "destination": "assets://content/1415019799016_plugin_x2.png"
+                                        },
+                                        "dimensions": {
+                                            "width": 88,
+                                            "height": 88
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "class": "StandardListItem",
+                    "image": {
+                        "class": "Icon",
+                        "src": {
+                            "class": "ImageDescriptor",
+                            "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                            "x1": "assets://content/141501992968_hammer_x1.png",
+                            "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                            "x2": "assets://content/141501992968_hammer_x2.png"
+                        }
+                    },
+                    "link": {
+                        "class": "InternalLink",
+                        "destination": "test://page"
+                    },
+                    "title": {
+                        "class": "Text",
+                        "content": "Native link"
+                    }
+                },
+                {
+                    "class": "StandardListItem",
+                    "image": [
+                        {
+                            "class": "Icon",
+                            "src": {
+                                "class": "InternalLink",
+                                "destination": "assets://content/141501992968_hammer_x0.75.png"
+                            },
+                            "dimensions": {
+                                "width": 22,
+                                "height": 22
+                            }
+                        },
+                        {
+                            "class": "Icon",
+                            "src": {
+                                "class": "InternalLink",
+                                "destination": "assets://content/141501992968_hammer_x1.png"
+                            },
+                            "dimensions": {
+                                "width": 44,
+                                "height": 44
+                            }
+                        },
+                        {
+                            "class": "Icon",
+                            "src": {
+                                "class": "InternalLink",
+                                "destination": "assets://content/141501992968_hammer_x1.5.png"
+                            },
+                            "dimensions": {
+                                "width": 66,
+                                "height": 66
+                            }
+                        },
+                        {
+                            "class": "Icon",
+                            "src": {
+                                "class": "InternalLink",
+                                "destination": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "dimensions": {
+                                "width": 88,
+                                "height": 88
+                            }
+                        }
+                    ],
+                    "link": {
+                        "class": "InternalLink",
+                        "destination": "assets://pages/1.json"
+                    },
+                    "title": {
+                        "class": "Text",
+                        "content": "Storm link"
+                    }
+                },
+                {
+                    "class": "StandardListItem",
+                    "image": [
+                        {
+                            "class": "Icon",
+                            "src": {
+                                "class": "InternalLink",
+                                "destination": "assets://content/141501992968_hammer_x0.75.png"
+                            },
+                            "dimensions": {
+                                "width": 22,
+                                "height": 22
+                            }
+                        },
+                        {
+                            "class": "Icon",
+                            "src": {
+                                "class": "InternalLink",
+                                "destination": "assets://content/141501992968_hammer_x1.png"
+                            },
+                            "dimensions": {
+                                "width": 44,
+                                "height": 44
+                            }
+                        },
+                        {
+                            "class": "Icon",
+                            "src": {
+                                "class": "InternalLink",
+                                "destination": "assets://content/141501992968_hammer_x1.5.png"
+                            },
+                            "dimensions": {
+                                "width": 66,
+                                "height": 66
+                            }
+                        },
+                        {
+                            "class": "Icon",
+                            "src": {
+                                "class": "InternalLink",
+                                "destination": "assets://content/141501992968_hammer_x2.png"
+                            },
+                            "dimensions": {
+                                "width": 88,
+                                "height": 88
+                            }
+                        }
+                    ],
+                    "link": {
+                        "class": "InternalLink",
+                        "destination": "assets://pages/3.json"
+                    },
+                    "title": {
+                        "class": "Text",
+                        "content": "Overridden link"
+                    }
+                }
+            ],
+            "class": "List",
+            "footer": {
+                "class": "Text",
+                "content": "Example footer"
+            },
+            "header": {
+                "class": "Text",
+                "content": "List of links"
+            }
+        },
+        {
+            "children": [
+                {
+                    "annotation": "1",
+                    "class": "ToggleableListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Toggle this view"
+                    },
+                    "description": {
+                        "class": "Text",
+                        "content": "This is the hidden content!"
+                    }
+                },
+                {
+                    "annotation": "1",
+                    "class": "ToggleableListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Toggle this view"
+                    },
+                    "description": {
+                        "class": "Text",
+                        "content": "This is the hidden content!"
+                    }
+                },
+                {
+                    "annotation": "1",
+                    "class": "ToggleableListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Toggle this view"
+                    },
+                    "description": {
+                        "class": "Text",
+                        "content": "This is the hidden content!"
+                    }
+                },
+                {
+                    "annotation": "1",
+                    "class": "ToggleableListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Toggle this view"
+                    },
+                    "description": {
+                        "class": "Text",
+                        "content": "This is the hidden content!"
+                    }
+                }
+            ],
+            "class": "List",
+            "header": {
+                "class": "Text",
+                "content": "Togglable list"
+            }
+        },
+        {
+            "children": [
+                {
+                    "annotation": "1",
+                    "class": "OrderedListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "First item in the ordered list"
+                    },
+                    "description": {
+                        "class": "Text",
+                        "content": "First item description"
+                    }
+                },
+                {
+                    "annotation": "2",
+                    "class": "OrderedListItem",
+                    "description": {
+                        "class": "Text",
+                        "content": "Second item in the ordered list"
+                    }
+                },
+                {
+                    "annotation": "3",
+                    "class": "OrderedListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Third item in the ordered list"
+                    }
+                },
+                {
+                    "annotation": "A",
+                    "class": "OrderedListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Custom annotated item in the ordered list"
+                    }
+                },
+                {
+                    "annotation": "B",
+                    "class": "OrderedListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Second custom item in the ordered list"
+                    }
+                },
+                {
+                    "annotation": "C",
+                    "class": "OrderedListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Third custom item in the ordered list"
+                    }
+                }
+            ],
+            "class": "List",
+            "header": {
+                "class": "Text",
+                "content": "Ordered list"
+            }
+        },
+        {
+            "children": [
+                {
+                    "class": "UnorderedListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "First item in the unordered list"
+                    }
+                },
+                {
+                    "class": "UnorderedListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Second item in the unordered list"
+                    }
+                },
+                {
+                    "class": "UnorderedListItem",
+                    "title": {
+                        "class": "Text",
+                        "content": "Third item in the unordered list"
+                    }
+                }
+            ],
+            "class": "List",
+            "header": {
+                "class": "Text",
+                "content": "Unordered list"
+            }
+        },
+        {
+            "class": "SpotlightListItem",
+            "images": [
+                {
+                    "class": "SpotlightImage",
+                    "delay": 5000,
+                    "link": {
+                        "class": "ExternalLink",
+                        "destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+                        "title": {
+                            "class": "Text",
+                            "content": "2u92u"
+                        }
+                    },
+                    "src": {
+                        "class": "ImageDescriptor",
+                        "x0.75": "assets://content/141501992968_hammer_x0.75.png",
+                        "x1": "assets://content/141501992968_hammer_x1.png",
+                        "x1.5": "assets://content/141501992968_hammer_x1.5.png",
+                        "x2": "assets://content/141501992968_hammer_x2.png"
+                    },
+                    "text": {
+                        "class": "Text",
+                        "content": "2u92s"
+                    }
+                },
+                {
+                    "class": "SpotlightImage",
+                    "delay": 4000,
+                    "link": {
+                        "class": "InternalLink",
+                        "destination": "cache:\/\/pages\/911494.json",
+                        "title": {
+                            "class": "Text",
+                            "content": "2f92j"
+                        }
+                    },
+                    "src": {
+                        "class": "ImageDescriptor",
+                        "x0.75": "assets://content/1414409279402_flash_x0.75.png",
+                        "x1": "assets://content/1414409279402_flash_x1.png",
+                        "x1.5": "assets://content/1414409279402_flash_x1.5.png",
+                        "x2": "assets://content/1414409279402_flash_x2.png"
+                    },
+                    "text": {
+                        "class": "Text",
+                        "content": "2egjb"
+                    }
+                },
+                {
+                    "class": "SpotlightImage",
+                    "delay": 4000,
+                    "link": {
+                        "class": "InternalLink",
+                        "destination": "cache:\/\/pages\/925712.json",
+                        "title": {
+                            "class": "Text",
+                            "content": "2fg86"
+                        }
+                    },
+                    "src": {
+                        "class": "ImageDescriptor",
+                        "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                        "x1": "assets://content/1415019799016_plugin_x1.png",
+                        "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                        "x2": "assets://content/1415019799016_plugin_x2.png"
+                    },
+                    "text": {
+                        "class": "Text",
+                        "content": "2fg84"
+                    }
+                },
+                {
+                    "class": "SpotlightImage",
+                    "delay": 4000,
+                    "link": {
+                        "class": "InternalLink",
+                        "destination": "cache:\/\/pages\/925712.json",
+                        "title": {
+                            "class": "Text",
+                            "content": "2fg86"
+                        }
+                    },
+                    "src": {
+                        "class": "ImageDescriptor",
+                        "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                        "x1": "assets://content/1415019799016_plugin_x1.png",
+                        "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                        "x2": "assets://content/1415019799016_plugin_x2.png"
+                    },
+                    "text": {
+                        "class": "Text",
+                        "content": "2fg84"
+                    }
+                },
+                {
+                    "class": "SpotlightImage",
+                    "delay": 4000,
+                    "link": {
+                        "class": "InternalLink",
+                        "destination": "cache:\/\/pages\/925712.json",
+                        "title": {
+                            "class": "Text",
+                            "content": "2fg86"
+                        }
+                    },
+                    "src": {
+                        "class": "ImageDescriptor",
+                        "x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+                        "x1": "assets://content/1415019799016_plugin_x1.png",
+                        "x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+                        "x2": "assets://content/1415019799016_plugin_x2.png"
+                    },
+                    "text": {
+                        "class": "Text",
+                        "content": "2fg84"
+                    }
+                }
+            ]
+        }
+    ],
+    "class": "ListPage",
+    "id": "1",
+    "name": "",
+    "title": {
+        "class": "Text",
+        "content": "Example storm page"
+    }
 }
