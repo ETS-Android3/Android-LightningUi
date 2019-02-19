@@ -7,6 +7,7 @@ import com.cube.storm.UiSettings;
 import com.cube.storm.ui.example.provider.CustomIntentProvider;
 import com.cube.storm.ui.fragment.StormStaticFragment;
 import com.cube.storm.ui.lib.migration.LegacyImageViewProcessor;
+import com.cube.storm.ui.lib.migration.LegacyViews;
 import com.cube.storm.ui.lib.provider.DefaultIntentProvider;
 import com.cube.storm.ui.lib.resolver.DefaultIntentResolver;
 import com.cube.storm.ui.model.App;

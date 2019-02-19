@@ -16,5 +16,6 @@
 		<activity android:name=".CustomStormActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 		<activity android:name="com.cube.storm.ui.activity.StormActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 		<activity android:name="com.cube.storm.ui.activity.StormWebActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+		<activity android:name="com.cube.storm.ui.activity.VideoPlayerActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 	</application>
 </manifest>
