@@ -82,6 +82,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	private Spinner videoLanguages;
 	private int videoIndex;
 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -94,6 +95,11 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		playerView.requestFocus();
 
 		videoLanguages = findViewById(R.id.videos);
+		if (this.uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null)
+		{
+			VideoProperty videoProperty = (VideoProperty)getIntent().getSerializableExtra(EXTRA_VIDEO);
+			this.uri = Uri.parse(videoProperty.getSrc().getDestination());
+		}
 
 		if (savedInstanceState != null)
 		{
@@ -103,11 +109,9 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 			String uriString = savedInstanceState.getString(KEY_URI);
 			uri = uriString != null ? Uri.parse(uriString) : null;
 		}
-
-		if (this.uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null)
+		else
 		{
-			VideoProperty videoProperty = (VideoProperty)getIntent().getSerializableExtra(EXTRA_VIDEO);
-			this.uri = Uri.parse(videoProperty.getSrc().getDestination());
+			clearStartPosition();
 		}
 
 		if (getIntent().hasExtra(EXTRA_OTHER_VIDEOS) && getIntent().getExtras().getSerializable(EXTRA_OTHER_VIDEOS) != null && getIntent().hasExtra(EXTRA_VIDEO_INDEX))
@@ -119,7 +123,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 			{
 				videoLanguages.setVisibility(View.VISIBLE);
 				videoLanguages.setAdapter(new LanguageAdapter(locales));
-				videoLanguages.setSelection(getIntent().getIntExtra(EXTRA_VIDEO_INDEX, 0));
+				videoLanguages.setSelection(getIntent().getIntExtra(EXTRA_VIDEO_INDEX, 0), false);
 				videoLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 				{
 					@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -136,8 +140,6 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 				});
 			}
 		}
-
-		clearStartPosition();
 	}
 
 	@Override
