@@ -12,9 +12,11 @@ import android.widget.Toast;
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
 import at.huber.youtubeExtractor.YtFile;
+import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.model.property.VideoProperty;
+import com.cube.storm.util.lib.resolver.Resolver;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackPreparer;
@@ -44,11 +46,11 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 
 	/**
 	 * Priority list of Youtube itag formats to attempt to retrieve
-	 *
+	 * <p>
 	 * See http://en.wikipedia.org/wiki/YouTube#Quality_and_formats
-	 *
+	 * <p>
 	 * TODO: In future can add DASH media sources
- 	 */
+	 */
 	private static final List<Integer> YOUTUBE_ITAG_PREFERENCE = Arrays.asList(22, 18, 43, 5, 36, 17);
 
 	// Saved instance state keys.
@@ -64,7 +66,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	private SimpleExoPlayer player;
 	private MediaSource mediaSource;
 
-	private String uri;
+	private Uri uri;
 	private boolean startAutoPlay;
 	private int startWindow;
 	private long startPosition;
@@ -85,7 +87,8 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 			startAutoPlay = savedInstanceState.getBoolean(KEY_AUTO_PLAY);
 			startWindow = savedInstanceState.getInt(KEY_WINDOW);
 			startPosition = savedInstanceState.getLong(KEY_POSITION);
-			uri = savedInstanceState.getString(KEY_URI);
+			String uriString = savedInstanceState.getString(KEY_URI);
+			uri = uriString != null ? Uri.parse(uriString) : null;
 		}
 		else
 		{
@@ -156,7 +159,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		outState.putBoolean(KEY_AUTO_PLAY, startAutoPlay);
 		outState.putInt(KEY_WINDOW, startWindow);
 		outState.putLong(KEY_POSITION, startPosition);
-		outState.putString(KEY_URI, uri);
+		outState.putString(KEY_URI, uri != null ? uri.toString() : "");
 	}
 
 	@Override
@@ -172,7 +175,6 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		initializePlayer();
 	}
 
-	@SuppressLint("StaticFieldLeak")
 	private void initializePlayer()
 	{
 		if (player == null)
@@ -186,39 +188,104 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 			if (this.uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null)
 			{
 				VideoProperty videoProperty = (VideoProperty) getIntent().getSerializableExtra(EXTRA_VIDEO);
-				this.uri = videoProperty.getSrc().getDestination();
+				this.uri = Uri.parse(videoProperty.getSrc().getDestination());
 			}
 
-			if (LinkHandler.isYoutubeVideo(Uri.parse(uri)))
+			boolean isResolved = false;
+			boolean isMediaSourceReady = false;
+
+			// Recursively attempt to resolve a uri
+			// This recursion is to support Storm uri resolvers - usually we will only iterate once
+			while (uri != null && uri.getScheme() != null && !isResolved)
 			{
-				new YouTubeExtractor(this)
+				switch (uri.getScheme())
 				{
-					@Override
-					public void onExtractionComplete(
-						SparseArray<YtFile> ytFiles,
-						VideoMeta vMeta
-					)
+					case "assets":
 					{
-						if (ytFiles != null)
+						uri = Uri.parse(uri.toString().replace("assets://", "asset:///"));
+						isResolved = true;
+						isMediaSourceReady = true;
+						break;
+					}
+					case "file":
+					{
+						isResolved = true;
+						isMediaSourceReady = true;
+						break;
+					}
+					case "http":
+					case "https":
+					{
+						isResolved = true;
+						if (LinkHandler.isYoutubeVideo(uri))
 						{
-							for (Integer itag: YOUTUBE_ITAG_PREFERENCE)
+							isMediaSourceReady = false;
+							extractRawYoutubeUri();
+						}
+						else
+						{
+							isMediaSourceReady = true;
+						}
+						break;
+					}
+					default:
+					{
+						Resolver resolver = UiSettings.getInstance().getUriResolvers().get(uri.getScheme());
+						if (resolver != null)
+						{
+							String scheme = uri.getScheme();
+							uri = resolver.resolveUri(uri);
+							if (uri != null && scheme.equals(uri.getScheme()))
 							{
-								YtFile file = ytFiles.get(itag);
-								if (file != null)
-								{
-									VideoPlayerActivity.this.uri = ytFiles.get(itag).getUrl();
-									break;
-								}
+								// avoid infinite recursion
+								isResolved = true;
+								isMediaSourceReady = true;
 							}
-							initialiseMediaSource();
+						}
+						else
+						{
+							// We're not sure what the uri is but may as well try it anyway
+							isResolved = true;
+							isMediaSourceReady = true;
+						}
+						break;
+					}
+				}
+			}
+
+			if (isMediaSourceReady)
+			{
+				initialiseMediaSource();
+			}
+		}
+	}
+
+	@SuppressLint("StaticFieldLeak")
+	private void extractRawYoutubeUri()
+	{
+		new YouTubeExtractor(this)
+		{
+			@Override
+			public void onExtractionComplete(
+				SparseArray<YtFile> ytFiles,
+				VideoMeta vMeta
+			)
+			{
+				if (ytFiles != null)
+				{
+					for (Integer itag : YOUTUBE_ITAG_PREFERENCE)
+					{
+						YtFile file = ytFiles.get(itag);
+						if (file != null)
+						{
+							VideoPlayerActivity.this.uri = Uri.parse(ytFiles.get(itag).getUrl());
+							break;
 						}
 					}
-				}.extract(uri, true, true);
-				return;
+					initialiseMediaSource();
+				}
 			}
-
-			initialiseMediaSource();
-		}
+		}.extract(uri.toString(), true, true);
 	}
 
 	private void initialiseMediaSource()
@@ -227,7 +294,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 
 		if (uri != null)
 		{
-			mediaSource = buildMediaSource(Uri.parse(uri));
+			mediaSource = buildMediaSource(uri);
 		}
 		else
 		{

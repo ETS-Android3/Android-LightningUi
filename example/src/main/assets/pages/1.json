@@ -438,7 +438,8 @@
 					}
 				}
 			]
-		},{
+		},
+		{
 			"class": "VideoListItem",
 			"id": 1207689,
 			"pageId": 1142998,
@@ -469,20 +470,11 @@
 					"tag": "",
 					"locale": "usa_en",
 					"src": {
-						"class": "ExternalLink",
-						"id": 1207693,
-						"pageId": 1142998,
-						"tag": "",
-						"destination": "https:\/\/www.youtube.com\/watch?v=sj0LWlpS_JQ",
+						"class": "InternalLink",
+						"destination": "cache:\/\/content\/1382017805708_app1poisoning.mp4",
 						"title": {
 							"class": "Text",
-							"id": 1207694,
-							"pageId": 1142998,
-							"tag": "",
-							"attributes": [
-							],
-							"content": {
-							}
+							"content": "2g8ch"
 						}
 					}
 				}
