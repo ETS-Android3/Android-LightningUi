@@ -115,24 +115,29 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 			final ArrayList<VideoProperty> videos = (ArrayList<VideoProperty>)getIntent().getSerializableExtra(EXTRA_OTHER_VIDEOS);
 			ArrayList<String> locales = loadLocales(videos);
 
-			videoLanguages.setVisibility(View.VISIBLE);
-			videoLanguages.setAdapter(new LanguageAdapter(locales));
-			videoLanguages.setSelection(getIntent().getIntExtra(EXTRA_VIDEO_INDEX, 0));
-			videoLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+			if (videos.size() > 1)
 			{
-				@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+				videoLanguages.setVisibility(View.VISIBLE);
+				videoLanguages.setAdapter(new LanguageAdapter(locales));
+				videoLanguages.setSelection(getIntent().getIntExtra(EXTRA_VIDEO_INDEX, 0));
+				videoLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 				{
-					releasePlayer();
-					clearStartPosition();
-					uri = Uri.parse(videos.get(position).getSrc().getDestination());
-					initializePlayer();
-				}
+					@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+					{
+						releasePlayer();
+						clearStartPosition();
+						uri = Uri.parse(videos.get(position).getSrc().getDestination());
+						initializePlayer();
+					}
 
-				@Override public void onNothingSelected(AdapterView<?> parent)
-				{
-				}
-			});
+					@Override public void onNothingSelected(AdapterView<?> parent)
+					{
+					}
+				});
+			}
 		}
+
+		clearStartPosition();
 	}
 
 	@Override
