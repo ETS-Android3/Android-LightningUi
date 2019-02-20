@@ -7,15 +7,16 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
-import at.huber.youtubeExtractor.VideoMeta;
-import at.huber.youtubeExtractor.YouTubeExtractor;
-import at.huber.youtubeExtractor.YtFile;
+
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.model.property.VideoProperty;
+import com.cube.storm.ui.view.LanguageAdapter;
 import com.cube.storm.util.lib.resolver.Resolver;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -31,8 +32,14 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+
+import at.huber.youtubeExtractor.VideoMeta;
+import at.huber.youtubeExtractor.YouTubeExtractor;
+import at.huber.youtubeExtractor.YtFile;
 
 /**
  * Video player used to play videos from assets/file/http URI streams.
@@ -43,6 +50,8 @@ import java.util.List;
 public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 {
 	public static final String EXTRA_VIDEO = "extra_video";
+	public static final String EXTRA_OTHER_VIDEOS = "extra_other_video";
+	public static final String EXTRA_VIDEO_INDEX = "extra_video_index";
 
 	/**
 	 * Priority list of Youtube itag formats to attempt to retrieve
@@ -70,6 +79,8 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	private boolean startAutoPlay;
 	private int startWindow;
 	private long startPosition;
+	private Spinner videoLanguages;
+	private int videoIndex;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -82,6 +93,8 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		progressBar = findViewById(R.id.progress);
 		playerView.requestFocus();
 
+		videoLanguages = findViewById(R.id.videos);
+
 		if (savedInstanceState != null)
 		{
 			startAutoPlay = savedInstanceState.getBoolean(KEY_AUTO_PLAY);
@@ -90,9 +103,35 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 			String uriString = savedInstanceState.getString(KEY_URI);
 			uri = uriString != null ? Uri.parse(uriString) : null;
 		}
-		else
+
+		if (this.uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null)
 		{
-			clearStartPosition();
+			VideoProperty videoProperty = (VideoProperty)getIntent().getSerializableExtra(EXTRA_VIDEO);
+			this.uri = Uri.parse(videoProperty.getSrc().getDestination());
+		}
+
+		if (getIntent().hasExtra(EXTRA_OTHER_VIDEOS) && getIntent().getExtras().getSerializable(EXTRA_OTHER_VIDEOS) != null && getIntent().hasExtra(EXTRA_VIDEO_INDEX))
+		{
+			final ArrayList<VideoProperty> videos = (ArrayList<VideoProperty>)getIntent().getSerializableExtra(EXTRA_OTHER_VIDEOS);
+			ArrayList<String> locales = loadLocales(videos);
+
+			videoLanguages.setVisibility(View.VISIBLE);
+			videoLanguages.setAdapter(new LanguageAdapter(locales));
+			videoLanguages.setSelection(getIntent().getIntExtra(EXTRA_VIDEO_INDEX, 0));
+			videoLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+			{
+				@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+				{
+					releasePlayer();
+					clearStartPosition();
+					uri = Uri.parse(videos.get(position).getSrc().getDestination());
+					initializePlayer();
+				}
+
+				@Override public void onNothingSelected(AdapterView<?> parent)
+				{
+				}
+			});
 		}
 	}
 
@@ -175,6 +214,34 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		initializePlayer();
 	}
 
+	private ArrayList<String> loadLocales(ArrayList<VideoProperty> videos)
+	{
+		ArrayList<String> locales = new ArrayList<String>();
+
+		if (videos != null)
+		{
+			for (int index = 0; index < videos.size(); index++)
+			{
+				String languageSuffix = videos.get(index).getLocale();
+
+				if (languageSuffix.toLowerCase().contains("he"))
+				{
+					languageSuffix = languageSuffix.replace("he", "iw");
+				}
+				else if (languageSuffix.toLowerCase().contains("id"))
+				{
+					languageSuffix = languageSuffix.replace("id", "in");
+				}
+				else if (languageSuffix.toLowerCase().contains("yi"))
+				{
+					languageSuffix = languageSuffix.replace("yi", "ji");
+				}
+				locales.add(new Locale(languageSuffix.split("_")[1]).getDisplayLanguage());
+			}
+		}
+		return locales;
+	}
+
 	private void initializePlayer()
 	{
 		if (player == null)
@@ -184,12 +251,6 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 			playerView.setPlayer(player);
 			playerView.setUseController(true);
 			playerView.setPlaybackPreparer(this);
-
-			if (this.uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null)
-			{
-				VideoProperty videoProperty = (VideoProperty) getIntent().getSerializableExtra(EXTRA_VIDEO);
-				this.uri = Uri.parse(videoProperty.getSrc().getDestination());
-			}
 
 			boolean isResolved = false;
 			boolean isMediaSourceReady = false;

@@ -20,6 +20,7 @@ import com.cube.storm.ui.view.Populator;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +75,7 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 
 				String defaultLanguageUri = UiSettings.getInstance().getDefaultLanguageUri();
 				VideoProperty videoToShow = videoList.get(0);
+				int videoIndex = -1;
 				if (defaultLanguageUri != null)
 				{
 					// TODO: Some of this locale logic is duplicated with the language library - move to utils
@@ -84,6 +86,7 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 							videoToShow = videoProperty;
 							break;
 						}
+						videoIndex++;
 					}
 				}
 
@@ -101,6 +104,8 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 				if (video != null)
 				{
 					video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
+					video.putExtra(VideoPlayerActivity.EXTRA_OTHER_VIDEOS, (Serializable)videoList);
+					video.putExtra(VideoPlayerActivity.EXTRA_VIDEO_INDEX, videoIndex);
 					v.getContext().startActivity(video);
 				}
 			}
