@@ -67,6 +67,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	private static final String KEY_POSITION = "position";
 	private static final String KEY_AUTO_PLAY = "auto_play";
 	private static final String KEY_URI = "playing_uri";
+	private static final String KEY_INDEX= "playing_video_index";
 
 	private PlayerView playerView;
 	private ProgressBar progressBar;
@@ -80,7 +81,10 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	private int startWindow;
 	private long startPosition;
 	private Spinner videoLanguages;
-	private int videoIndex;
+	private int videoIndex = -1;
+	ArrayList<VideoProperty> videos;
+	ArrayList<String> locales;
+	private VideoProperty videoProperty;
 
 
 	@Override
@@ -93,12 +97,16 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		playerView = findViewById(R.id.player_view);
 		progressBar = findViewById(R.id.progress);
 		playerView.requestFocus();
-
 		videoLanguages = findViewById(R.id.videos);
-		if (this.uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null)
+
+		if (uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null &&
+			getIntent().hasExtra(EXTRA_OTHER_VIDEOS) && getIntent().getExtras().getSerializable(EXTRA_OTHER_VIDEOS) != null)
 		{
-			VideoProperty videoProperty = (VideoProperty)getIntent().getSerializableExtra(EXTRA_VIDEO);
-			this.uri = Uri.parse(videoProperty.getSrc().getDestination());
+			videoProperty = (VideoProperty)getIntent().getSerializableExtra(EXTRA_VIDEO);
+			uri = Uri.parse(videoProperty.getSrc().getDestination());
+			videos = (ArrayList<VideoProperty>)getIntent().getSerializableExtra(EXTRA_OTHER_VIDEOS);
+			locales = loadLocales(videos);
+			videoIndex = videos.indexOf(videoProperty);
 		}
 
 		if (savedInstanceState != null)
@@ -108,37 +116,33 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 			startPosition = savedInstanceState.getLong(KEY_POSITION);
 			String uriString = savedInstanceState.getString(KEY_URI);
 			uri = uriString != null ? Uri.parse(uriString) : null;
+			videoIndex = savedInstanceState.getInt(KEY_INDEX);
 		}
 		else
 		{
 			clearStartPosition();
 		}
 
-		if (getIntent().hasExtra(EXTRA_OTHER_VIDEOS) && getIntent().getExtras().getSerializable(EXTRA_OTHER_VIDEOS) != null && getIntent().hasExtra(EXTRA_VIDEO_INDEX))
+		if (videos != null && videos.size() > 1)
 		{
-			final ArrayList<VideoProperty> videos = (ArrayList<VideoProperty>)getIntent().getSerializableExtra(EXTRA_OTHER_VIDEOS);
-			ArrayList<String> locales = loadLocales(videos);
-
-			if (videos.size() > 1)
+			videoLanguages.setVisibility(View.VISIBLE);
+			videoLanguages.setAdapter(new LanguageAdapter(locales));
+			videoLanguages.setSelection(videoIndex, false);
+			videoLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 			{
-				videoLanguages.setVisibility(View.VISIBLE);
-				videoLanguages.setAdapter(new LanguageAdapter(locales));
-				videoLanguages.setSelection(getIntent().getIntExtra(EXTRA_VIDEO_INDEX, 0), false);
-				videoLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+				@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 				{
-					@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-					{
-						releasePlayer();
-						clearStartPosition();
-						uri = Uri.parse(videos.get(position).getSrc().getDestination());
-						initializePlayer();
-					}
+					releasePlayer();
+					clearStartPosition();
+					uri = Uri.parse(videos.get(position).getSrc().getDestination());
+					videoIndex = position;
+					initializePlayer();
+				}
 
-					@Override public void onNothingSelected(AdapterView<?> parent)
-					{
-					}
-				});
-			}
+				@Override public void onNothingSelected(AdapterView<?> parent)
+				{
+				}
+			});
 		}
 	}
 
@@ -206,6 +210,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		outState.putInt(KEY_WINDOW, startWindow);
 		outState.putLong(KEY_POSITION, startPosition);
 		outState.putString(KEY_URI, uri != null ? uri.toString() : "");
+		outState.putInt(KEY_INDEX, videoIndex);
 	}
 
 	@Override
