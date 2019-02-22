@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-
+import android.widget.Toast;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
@@ -20,7 +20,9 @@ import com.cube.storm.ui.view.Populator;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.VideoListItem} in the adapter
@@ -63,25 +65,44 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 		{
 			@Override public void onClick(View v)
 			{
-				ArrayList<VideoProperty> arrayList = new ArrayList<VideoProperty>();
-				arrayList.addAll(model.getVideos());
+				List<VideoProperty> videoList = new ArrayList<>(model.getVideos());
+
+				if (videoList.isEmpty())
+				{
+					Toast.makeText(itemView.getContext(), "Could not load video", Toast.LENGTH_LONG).show();
+					return;
+				}
+
+				String defaultLanguageUri = UiSettings.getInstance().getDefaultLanguageUri();
+				VideoProperty videoToShow = videoList.get(0);
+				if (defaultLanguageUri != null)
+				{
+					// TODO: Some of this locale logic is duplicated with the language library - move to utils
+					for (VideoProperty videoProperty : model.getVideos())
+					{
+						if (defaultLanguageUri.contains(videoProperty.getLocale()))
+						{
+							videoToShow = videoProperty;
+							break;
+						}
+					}
+				}
 
 				for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
 				{
-					eventHook.onViewLinkedClicked(itemView, model, arrayList.get(0).getSrc());
+					eventHook.onViewLinkedClicked(itemView, model, videoToShow.getSrc());
 				}
 
 				VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
 				pageDescriptor.setType("content");
-				pageDescriptor.setSrc(arrayList.get(0).getSrc().getDestination());
+				pageDescriptor.setSrc(videoToShow.getSrc().getDestination());
 
 				Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(v.getContext(), pageDescriptor);
 
 				if (video != null)
 				{
-					video.putExtra(VideoPlayerActivity.EXTRA_FILE_NAME,  UiSettings.getInstance().getDefaultLanguageUri());
-					video.putExtra(VideoPlayerActivity.EXTRA_VIDEOS, arrayList);
-
+					video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
+					video.putExtra(VideoPlayerActivity.EXTRA_OTHER_VIDEOS, (Serializable)videoList);
 					v.getContext().startActivity(video);
 				}
 			}
