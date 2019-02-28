@@ -140,7 +140,7 @@ public class LinkHandler
 	 *
 	 * @return True if the uri is a youtube video, false if not
 	 */
-	public boolean isYoutubeVideo(@Nullable Uri uri)
+	public static boolean isYoutubeVideo(@Nullable Uri uri)
 	{
 		if (uri == null || uri.getHost() == null)
 		{

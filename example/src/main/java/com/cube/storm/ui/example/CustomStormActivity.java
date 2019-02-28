@@ -11,7 +11,7 @@ import com.cube.storm.ui.activity.StormActivity;
  */
 public class CustomStormActivity extends StormActivity
 {
-	@Override protected void onCreate(Bundle savedInstanceState)
+	@Override public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 

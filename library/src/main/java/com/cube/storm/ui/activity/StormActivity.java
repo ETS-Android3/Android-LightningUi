@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
-
+import android.widget.Toolbar;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.data.FragmentIntent;
@@ -27,9 +27,12 @@ public class StormActivity extends AppCompatActivity implements StormInterface
 	@Override public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 		setContentView(getLayoutResource());
+
+		if (getSupportActionBar() != null)
+		{
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		if (savedInstanceState == null)
 		{
