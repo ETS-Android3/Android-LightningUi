@@ -10,6 +10,10 @@ android {
 		targetSdkVersion rootProject.ext.targetSdkVersion
 	}
 
+	compileOptions {
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+
 	lintOptions {
 		abortOnError false
 	}
@@ -23,16 +27,18 @@ dependencies {
 	implementation "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
 	implementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
 
-	compileOnly 'org.projectlombok:lombok:1.18.2'
-	annotationProcessor 'org.projectlombok:lombok:1.18.2'
+	implementation 'com.google.android.exoplayer:exoplayer:2.9.0'
+	implementation 'com.github.HaarigerHarald:android-youtubeExtractor:401678756fd264394232502e5e0d114c96b03abd'
 
 	implementation 'com.google.code.gson:gson:2.8.2'
 	implementation 'net.callumtaylor:asynchttpclient:2.1'
 
 	implementation 'com.3sidedcube.storm:util:1.0.0'
-	implementation 'com.3sidedcube.storm:exoplayer:1.0.1'
 
 	implementation 'com.3sidedcube.util:universal-image-loader:2.1.2'
+
+	compileOnly 'org.projectlombok:lombok:1.18.2'
+	annotationProcessor 'org.projectlombok:lombok:1.18.2'
 }
 
 //apply from: '../gradle/sonatype.gradle'

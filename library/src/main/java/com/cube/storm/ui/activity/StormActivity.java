@@ -3,10 +3,12 @@ package com.cube.storm.ui.activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.Toast;
-
+import android.widget.Toolbar;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.data.FragmentIntent;
@@ -21,11 +23,16 @@ public class StormActivity extends AppCompatActivity implements StormInterface
 {
 	public static final String EXTRA_URI = "stormui.uri";
 
-	@Override protected void onCreate(Bundle savedInstanceState)
+
+	@Override public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
 		setContentView(getLayoutResource());
+
+		if (getSupportActionBar() != null)
+		{
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		if (savedInstanceState == null)
 		{
@@ -39,6 +46,25 @@ public class StormActivity extends AppCompatActivity implements StormInterface
 				onLoadFail();
 			}
 		}
+	}
+
+	@Override public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (item.getItemId() == android.R.id.home)
+		{
+			try
+			{
+				NavUtils.navigateUpFromSameTask(this);
+			}
+			catch (Exception e)
+			{
+				finish();
+			}
+
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override public int getLayoutResource()

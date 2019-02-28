@@ -1,187 +1,112 @@
 package com.cube.storm.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
+import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.Spinner;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
+import at.huber.youtubeExtractor.VideoMeta;
+import at.huber.youtubeExtractor.YouTubeExtractor;
+import at.huber.youtubeExtractor.YtFile;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.lib.helper.YouTubeHelper;
-import com.cube.storm.ui.lib.parser.DefaultRendererBuilder;
+import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.model.property.VideoProperty;
-import com.cube.storm.ui.view.VideoControllerView;
-import com.cube.storm.ui.view.player.ExoMediaPlayer;
-import com.cube.storm.ui.view.player.ExoMediaPlayer.RendererBuilder;
 import com.cube.storm.util.lib.resolver.Resolver;
-import com.google.android.exoplayer.ExoPlayer;
-import com.google.android.exoplayer.VideoSurfaceView;
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackPreparer;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.dash.DashMediaSource;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Video player used to play videos from assets/file/http URI streams.
- * <p/>
- * Can take either a single URI extra using the key {@link StormActivity#EXTRA_URI} or an array list of
- * {@link com.cube.storm.ui.model.property.VideoProperty} using the key {@link #EXTRA_VIDEOS}. The default
- * video that gets played is the one that matches the current locale of the device, based on the {@link com.cube.storm.ui.model.property.VideoProperty#getLocale()} property
- * of the model.
  *
  * @author Alan Le Fournis
  * @project LightningUi
  */
-public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, ExoMediaPlayer.Listener
+public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 {
-	public static final String EXTRA_VIDEOS = "extra_videos";
-	public static final String EXTRA_FILE_NAME = "extra_file_name";
-	public static final String SELECTED_ITEM = "selected_item";
+	public static final String EXTRA_VIDEO = "extra_video";
 
-	private ExoMediaPlayer player;
+	/**
+	 * Priority list of Youtube itag formats to attempt to retrieve
+	 * <p>
+	 * See http://en.wikipedia.org/wiki/YouTube#Quality_and_formats
+	 * <p>
+	 * TODO: In future can add DASH media sources
+	 */
+	private static final List<Integer> YOUTUBE_ITAG_PREFERENCE = Arrays.asList(22, 18, 43, 5, 36, 17);
 
-	private VideoControllerView videoControllerView;
-	private View shutterView;
-	private VideoSurfaceView surfaceView;
-	private Spinner videoChooser;
+	// Saved instance state keys.
+	private static final String KEY_WINDOW = "window";
+	private static final String KEY_POSITION = "position";
+	private static final String KEY_AUTO_PLAY = "auto_play";
+	private static final String KEY_URI = "playing_uri";
 
-	private Uri contentUri;
+	private PlayerView playerView;
+	private ProgressBar progressBar;
 
-	private boolean autoPlay = true;
-	private boolean playerNeedsPrepare;
+	private DataSource.Factory dataSourceFactory;
+	private SimpleExoPlayer player;
+	private MediaSource mediaSource;
 
-	protected VideoProperty[] otherVideos;
-	private int playCount = 0;
-	private String fileName;
+	private Uri uri;
+	private boolean startAutoPlay;
+	private int startWindow;
+	private long startPosition;
 
-	@Override protected void onCreate(Bundle savedInstanceState)
+	@Override
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "storm-video-player"));
 		setContentView(R.layout.activity_video_player);
 
-		videoChooser = (Spinner)findViewById(R.id.videos);
-		View root = findViewById(R.id.root);
-		shutterView = findViewById(R.id.shutter);
-		surfaceView = (VideoSurfaceView) findViewById(R.id.surface_view);
+		playerView = findViewById(R.id.player_view);
+		progressBar = findViewById(R.id.progress);
+		playerView.requestFocus();
 
-		root.setOnTouchListener(new OnTouchListener()
+		if (savedInstanceState != null)
 		{
-			@Override
-			public boolean onTouch(View view, MotionEvent arg1)
-			{
-				if (arg1.getAction() == MotionEvent.ACTION_DOWN)
-				{
-					toggleControlsVisibility();
-				}
-				return true;
-			}
-		});
-
-		videoControllerView = new VideoControllerView(this);
-		videoControllerView.setAnchorView((FrameLayout)findViewById(R.id.root));
-
-		surfaceView.getHolder().addCallback(this);
-		Bundle bundle = getIntent().getExtras();
-		fileName = bundle.getString(EXTRA_FILE_NAME);
-
-		if (getIntent().hasExtra(EXTRA_VIDEOS) && bundle.getSerializable(EXTRA_VIDEOS) != null)
-		{
-			ArrayList<VideoProperty> array = (ArrayList<VideoProperty>)bundle.getSerializable(EXTRA_VIDEOS);
-			otherVideos = new VideoProperty[array.size()];
-
-			for (int index = 0; index < otherVideos.length; index++)
-			{
-				otherVideos[index] = array.get(index);
-			}
-
-			if (otherVideos != null && otherVideos.length > 0)
-			{
-				String[] locales = new String[otherVideos.length];
-				int selectedIndex = -1;
-
-				for (int index = 0; index < locales.length; index++)
-				{
-					String languageSuffix = otherVideos[index].getLocale();
-
-					if (languageSuffix.toLowerCase().contains("he"))
-					{
-						languageSuffix = languageSuffix.replace("he", "iw");
-					}
-					else if (languageSuffix.toLowerCase().contains("id"))
-					{
-						languageSuffix = languageSuffix.replace("id", "in");
-					}
-					else if (languageSuffix.toLowerCase().contains("yi"))
-					{
-						languageSuffix = languageSuffix.replace("yi", "ji");
-					}
-
-					if (fileName.contains(otherVideos[index].getLocale()))
-					{
-						selectedIndex = index;
-					}
-
-					locales[index] = languageSuffix;
-				}
-
-				if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_ITEM))
-				{
-					selectedIndex = savedInstanceState.getInt(SELECTED_ITEM);
-					contentUri = Uri.parse(otherVideos[selectedIndex].getSrc().getDestination());
-				}
-				else if (selectedIndex == -1)
-				{
-					selectedIndex = 0;
-					contentUri = Uri.parse(otherVideos[0].getSrc().getDestination());
-				}
-				else
-				{
-					contentUri = Uri.parse(otherVideos[selectedIndex].getSrc().getDestination());
-				}
-
-
-				ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, locales);
-
-				videoChooser.setVisibility(View.VISIBLE);
-				videoChooser.setAdapter(adapter);
-				videoChooser.setSelection(selectedIndex);
-				videoChooser.setOnItemSelectedListener(new OnItemSelectedListener()
-				{
-					@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-					{
-						if (playCount++ > 0)
-						{
-							contentUri = Uri.parse(otherVideos[position].getSrc().getDestination());
-							autoPlay = true;
-
-							if (player != null)
-							{
-								player.release();
-								player = null;
-							}
-
-							preparePlayer();
-						}
-					}
-
-					@Override public void onNothingSelected(AdapterView<?> parent)
-					{
-					}
-				});
-			}
+			startAutoPlay = savedInstanceState.getBoolean(KEY_AUTO_PLAY);
+			startWindow = savedInstanceState.getInt(KEY_WINDOW);
+			startPosition = savedInstanceState.getLong(KEY_POSITION);
+			String uriString = savedInstanceState.getString(KEY_URI);
+			uri = uriString != null ? Uri.parse(uriString) : null;
 		}
-		else if (getIntent().hasExtra(StormActivity.EXTRA_URI) && bundle.getString(StormActivity.EXTRA_URI) != null)
+		else
 		{
-			videoChooser.setVisibility(View.GONE);
-			contentUri = Uri.parse(bundle.getString(StormActivity.EXTRA_URI));
+			clearStartPosition();
+		}
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		if (Util.SDK_INT > 23)
+		{
+			initializePlayer();
+			if (playerView != null)
+			{
+				playerView.onResume();
+			}
 		}
 	}
 
@@ -189,195 +114,219 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	public void onResume()
 	{
 		super.onResume();
-		preparePlayer();
+		if (Util.SDK_INT <= 23 || player == null)
+		{
+			initializePlayer();
+			if (playerView != null)
+			{
+				playerView.onResume();
+			}
+		}
 	}
 
-	@Override protected void onPause()
+	@Override
+	public void onPause()
 	{
 		super.onPause();
-		releasePlayer();
-	}
-
-	@Override protected void onDestroy()
-	{
-		super.onDestroy();
-		releasePlayer();
+		if (Util.SDK_INT <= 23)
+		{
+			if (playerView != null)
+			{
+				playerView.onPause();
+			}
+			releasePlayer();
+		}
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState)
+	public void onStop()
 	{
-		savedInstanceState.putInt(SELECTED_ITEM, videoChooser.getSelectedItemPosition());
-		super.onSaveInstanceState(savedInstanceState);
-	}
-
-	/**
-	 * Prepares the player by creating a renderer. If the renderer is null, then prevent the player from
-	 * being created (possibly being streamed from an AsyncTask)
-	 */
-	private void preparePlayer()
-	{
-		if (player == null)
+		super.onStop();
+		if (Util.SDK_INT > 23)
 		{
-			RendererBuilder builder = getRendererBuilder();
-
-			if (builder == null)
+			if (playerView != null)
 			{
-				return;
+				playerView.onPause();
 			}
-			else
-			{
-				player = new ExoMediaPlayer(builder);
-				player.addListener(this);
-
-				playerNeedsPrepare = true;
-				videoControllerView.setMediaPlayer(player.getPlayerControl());
-				videoControllerView.setEnabled(true);
-			}
+			releasePlayer();
 		}
-
-		if (playerNeedsPrepare)
-		{
-			player.prepare();
-			playerNeedsPrepare = false;
-		}
-
-		player.setSurface(surfaceView.getHolder().getSurface());
-		maybeStartPlayback();
-	}
-
-	private void prepareYoutubePlayer(RendererBuilder rendererBuilder)
-	{
-		if (player == null)
-		{
-			if (rendererBuilder == null)
-			{
-				return;
-			}
-			else
-			{
-				player = new ExoMediaPlayer(rendererBuilder);
-				player.addListener(this);
-
-				playerNeedsPrepare = true;
-				videoControllerView.setMediaPlayer(player.getPlayerControl());
-				videoControllerView.setEnabled(true);
-			}
-		}
-
-		if (playerNeedsPrepare)
-		{
-			player.prepare();
-			playerNeedsPrepare = false;
-		}
-
-		player.setSurface(surfaceView.getHolder().getSurface());
-		maybeStartPlayback();
-	}
-
-	/**
-	 * Start playback if player is configure and autoplay equals true
-	 */
-	private void maybeStartPlayback()
-	{
-		if (autoPlay && (player.getSurface().isValid() || player.getSelectedTrackIndex(ExoMediaPlayer.TYPE_VIDEO) == ExoMediaPlayer.DISABLED_TRACK))
-		{
-			player.setPlayWhenReady(true);
-		}
-	}
-
-	/**
-	 * Get the renderer builder according to the uri
-	 *
-	 * @return the renderer builder
-	 */
-	private RendererBuilder getRendererBuilder()
-	{
-		if (contentUri.getScheme().equals("assets"))
-		{
-			return new DefaultRendererBuilder(this, contentUri);
-		}
-		else if (contentUri.getScheme().equals("file"))
-		{
-			File f = new File(contentUri.getPath());
-
-			if (!f.exists())
-			{
-				videoFailed();
-				return null;
-			}
-
-			return new DefaultRendererBuilder(this, contentUri);
-		}
-		else if (isYoutubeVideo(contentUri))
-		{
-			YouTubeHelper.getStreamingUrl(contentUri.toString(), new YouTubeHelper.Callback()
-			{
-				@Override public void onStreamingUrlFetched(String streamingUrl)
-				{
-					prepareYoutubePlayer(new DefaultRendererBuilder(VideoPlayerActivity.this, Uri.parse(streamingUrl)));
-				}
-
-				@Override public void onFailed(String failMessage)
-				{
-					videoFailed();
-				}
-			});
-
-			return null;
-		}
-		else
-		{
-			Resolver fallbackResolver = UiSettings.getInstance().getUriResolvers().get(contentUri.getScheme());
-
-			if (fallbackResolver != null)
-			{
-				contentUri = fallbackResolver.resolveUri(contentUri);
-				return getRendererBuilder();
-			}
-			else
-			{
-				videoFailed();
-				return null;
-			}
-		}
-	}
-
-	public void videoFailed()
-	{
-		Toast.makeText(this, "Failed to load video", Toast.LENGTH_LONG).show();
-		finish();
 	}
 
 	@Override
-	public void onStateChanged(boolean playWhenReady, int playbackState)
+	public void onSaveInstanceState(Bundle outState)
 	{
-		if (playbackState == ExoPlayer.STATE_ENDED)
+		updateStartPosition();
+		outState.putBoolean(KEY_AUTO_PLAY, startAutoPlay);
+		outState.putInt(KEY_WINDOW, startWindow);
+		outState.putLong(KEY_POSITION, startPosition);
+		outState.putString(KEY_URI, uri != null ? uri.toString() : "");
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event)
+	{
+		// See whether the player view wants to handle media or DPAD keys events.
+		return playerView.dispatchKeyEvent(event) || super.dispatchKeyEvent(event);
+	}
+
+	@Override
+	public void preparePlayback()
+	{
+		initializePlayer();
+	}
+
+	private void initializePlayer()
+	{
+		if (player == null)
 		{
-			showControls();
+			player = ExoPlayerFactory.newSimpleInstance(this);
+			player.setPlayWhenReady(startAutoPlay);
+			playerView.setPlayer(player);
+			playerView.setUseController(true);
+			playerView.setPlaybackPreparer(this);
+
+			if (this.uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null)
+			{
+				VideoProperty videoProperty = (VideoProperty) getIntent().getSerializableExtra(EXTRA_VIDEO);
+				this.uri = Uri.parse(videoProperty.getSrc().getDestination());
+			}
+
+			boolean isResolved = false;
+			boolean isMediaSourceReady = false;
+
+			// Recursively attempt to resolve a uri
+			// This recursion is to support Storm uri resolvers - usually we will only iterate once
+			while (uri != null && uri.getScheme() != null && !isResolved)
+			{
+				switch (uri.getScheme())
+				{
+					case "assets":
+					{
+						uri = Uri.parse(uri.toString().replace("assets://", "asset:///"));
+						isResolved = true;
+						isMediaSourceReady = true;
+						break;
+					}
+					case "file":
+					{
+						isResolved = true;
+						isMediaSourceReady = true;
+						break;
+					}
+					case "http":
+					case "https":
+					{
+						isResolved = true;
+						if (LinkHandler.isYoutubeVideo(uri))
+						{
+							isMediaSourceReady = false;
+							extractRawYoutubeUri();
+						}
+						else
+						{
+							isMediaSourceReady = true;
+						}
+						break;
+					}
+					default:
+					{
+						Resolver resolver = UiSettings.getInstance().getUriResolvers().get(uri.getScheme());
+						if (resolver != null)
+						{
+							String scheme = uri.getScheme();
+							uri = resolver.resolveUri(uri);
+							if (uri != null && scheme.equals(uri.getScheme()))
+							{
+								// avoid infinite recursion
+								isResolved = true;
+								isMediaSourceReady = true;
+							}
+						}
+						else
+						{
+							// We're not sure what the uri is but may as well try it anyway
+							isResolved = true;
+							isMediaSourceReady = true;
+						}
+						break;
+					}
+				}
+			}
+
+			if (isMediaSourceReady)
+			{
+				initialiseMediaSource();
+			}
 		}
 	}
 
-	/**
-	 * Show video player controls
-	 */
-	private void showControls()
+	@SuppressLint("StaticFieldLeak")
+	private void extractRawYoutubeUri()
 	{
-		videoControllerView.show(0);
+		new YouTubeExtractor(this)
+		{
+			@Override
+			public void onExtractionComplete(
+				SparseArray<YtFile> ytFiles,
+				VideoMeta vMeta
+			)
+			{
+				if (ytFiles != null)
+				{
+					for (Integer itag : YOUTUBE_ITAG_PREFERENCE)
+					{
+						YtFile file = ytFiles.get(itag);
+						if (file != null)
+						{
+							VideoPlayerActivity.this.uri = Uri.parse(ytFiles.get(itag).getUrl());
+							break;
+						}
+					}
+					initialiseMediaSource();
+				}
+			}
+		}.extract(uri.toString(), true, true);
 	}
 
-	/**
-	 * Hide or show video player control
-	 */
-	private void toggleControlsVisibility()
+	private void initialiseMediaSource()
 	{
-		if (videoControllerView.isShowing())
+		progressBar.setVisibility(View.GONE);
+
+		if (uri != null)
 		{
-			videoControllerView.hide();
+			mediaSource = buildMediaSource(uri);
 		}
 		else
 		{
-			videoControllerView.show(0);
+			Toast.makeText(this, "Could not load video.", Toast.LENGTH_LONG).show();
+			finish();
+		}
+
+		boolean haveStartPosition = startWindow != C.INDEX_UNSET;
+		if (haveStartPosition)
+		{
+			player.seekTo(startWindow, startPosition);
+		}
+		player.prepare(mediaSource, !haveStartPosition, false);
+	}
+
+	private MediaSource buildMediaSource(Uri uri)
+	{
+		@C.ContentType int type = Util.inferContentType(uri);
+		switch (type)
+		{
+			case C.TYPE_DASH:
+				return new DashMediaSource.Factory(dataSourceFactory).createMediaSource(uri);
+			case C.TYPE_SS:
+				return new SsMediaSource.Factory(dataSourceFactory).createMediaSource(uri);
+			case C.TYPE_HLS:
+				return new HlsMediaSource.Factory(dataSourceFactory).createMediaSource(uri);
+			case C.TYPE_OTHER:
+				return new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(uri);
+			default:
+			{
+				throw new IllegalStateException("Unsupported type: " + type);
+			}
 		}
 	}
 
@@ -385,52 +334,27 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 	{
 		if (player != null)
 		{
+			updateStartPosition();
 			player.release();
 			player = null;
+			mediaSource = null;
 		}
 	}
 
-	/**
-	 * boolean to know if it's a youtube link or not
-	 *
-	 * @param uri
-	 * @return the boolean
-	 */
-	public boolean isYoutubeVideo(Uri uri)
-	{
-		return (uri.getHost().endsWith("youtube.com") && uri.getQueryParameter("v") != null) || (uri.getHost().endsWith("youtu.be") && uri.getPathSegments().size() > 0);
-	}
-
-	@Override public void surfaceCreated(SurfaceHolder holder)
+	private void updateStartPosition()
 	{
 		if (player != null)
 		{
-			player.setSurface(holder.getSurface());
-			maybeStartPlayback();
+			startAutoPlay = player.getPlayWhenReady();
+			startWindow = player.getCurrentWindowIndex();
+			startPosition = Math.max(0, player.getContentPosition());
 		}
 	}
 
-	@Override public void surfaceDestroyed(SurfaceHolder holder)
+	private void clearStartPosition()
 	{
-		if (player != null)
-		{
-			player.blockingClearSurface();
-		}
-	}
-
-	@Override public void onError(Exception e)
-	{
-
-	}
-
-	@Override public void onVideoSizeChanged(int width, int height)
-	{
-		shutterView.setVisibility(View.GONE);
-		surfaceView.setVideoWidthHeightRatio(height == 0 ? 1 : (float) width / height);
-	}
-
-	@Override public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
-	{
-
+		startAutoPlay = true;
+		startWindow = C.INDEX_UNSET;
+		startPosition = C.TIME_UNSET;
 	}
 }
