@@ -441,40 +441,38 @@
 		},
 		{
 			"class": "VideoListItem",
-			"id": 1207689,
-			"pageId": 1142998,
-			"tag": "",
 			"image": {
 				"class": "Image",
-				"id": 1207690,
-				"pageId": 1142998,
-				"tag": "",
 				"src": {
 					"class": "ImageDescriptor",
-					"id": 1207691,
-					"pageId": 1142998,
-					"tag": "",
-					"x0.75": "cache:\/\/content\/1453322725223_471114232_resize_x0.75.jpg",
-					"x1": "cache:\/\/content\/1453322725223_471114232_resize_x1.jpg",
-					"x1.5": "cache:\/\/content\/1453322725223_471114232_resize_x1.5.jpg",
-					"x2": "cache:\/\/content\/1453322725223_471114232_resize_x2.jpg"
+					"x0.75": "cache:\/\/content\/141501992968_hammer_x0.75.jpg",
+					"x1": "cache:\/\/content\/141501992968_hammer_x1.jpg",
+					"x1.5": "cache:\/\/content\/141501992968_hammer_x1.5.jpg",
+					"x2": "cache:\/\/content\/141501992968_hammer_x2.jpg"
 				}
 			},
-			"restrictions": [
-			],
 			"videos": [
 				{
 					"class": "Video",
-					"id": 1207692,
-					"pageId": 1142998,
-					"tag": "",
 					"locale": "usa_en",
 					"src": {
 						"class": "InternalLink",
 						"destination": "cache:\/\/content\/1382017805708_app1poisoning.mp4",
 						"title": {
 							"class": "Text",
-							"content": "2g8ch"
+							"content": "2g8ps"
+						}
+					}
+				},
+				{
+					"class": "Video",
+					"locale": "usa_es",
+					"src": {
+						"class": "ExternalLink",
+						"destination": "https:\/\/www.youtube.com\/watch?v=AQHpBYPC6Xo",
+						"title": {
+							"class": "Text",
+							"content": "2g8pv"
 						}
 					}
 				}
