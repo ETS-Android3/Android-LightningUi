@@ -115,6 +115,13 @@ public class DefaultIntentProvider extends IntentProvider
 					{
 						String videoId = videoIdMatcher.group(1);
 						intent = YouTubeStandalonePlayer.createVideoIntent((Activity)context, youtubeApiKey, videoId, 0, true, false);
+
+					}
+					
+					if (intent == null || context.getPackageManager().resolveActivity(intent, 0) == null)
+					{
+						intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse(pageDescriptor.getSrc()));
 					}
 				}
 			}
