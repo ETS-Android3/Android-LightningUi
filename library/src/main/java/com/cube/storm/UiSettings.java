@@ -209,6 +209,13 @@ public class UiSettings
 		private Context context;
 
 		/**
+		 * Flag to indicate whether the caller has explicitly decided whether or not to use the YouTube SDK
+		 *
+		 * If null is passed as the YouTube SDK value then the YouTube extractor lib will need to be included in the calling project (see gradle)
+		 */
+		private boolean isYouTubeAPIKeyInitialised = false;
+
+		/**
 		 * Default constructor
 		 */
 		public Builder(Context context)
@@ -581,7 +588,7 @@ public class UiSettings
 		public Builder youtubeApiKey(@Nullable String youtubeApiKey)
 		{
 			construct.youtubeApiKey = youtubeApiKey;
-
+			isYouTubeAPIKeyInitialised = true;
 			return this;
 		}
 
@@ -593,6 +600,11 @@ public class UiSettings
 		 */
 		public UiSettings build()
 		{
+			if (!isYouTubeAPIKeyInitialised)
+			{
+				throw new IllegalStateException("Please explicitly pass a YouTube API key (or null). If null, please include the YouTube extractor dependency in your project to support YouTube videos.");
+			}
+
 			if (construct.getIntentProviders().size() == 0)
 			{
 				registerIntentProvider(new DefaultIntentProvider());
