@@ -1,14 +1,15 @@
 package com.cube.storm.ui.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
-import android.widget.Toolbar;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.data.FragmentIntent;
@@ -48,15 +49,41 @@ public class StormActivity extends AppCompatActivity implements StormInterface
 		}
 	}
 
+	/**
+	 * See https://developer.android.com/training/implementing-navigation/ancestral
+	 *
+	 * @return Boolean indicating whether the press was handled (always true currently)
+	 */
 	@Override public boolean onOptionsItemSelected(MenuItem item)
 	{
 		if (item.getItemId() == android.R.id.home)
 		{
 			try
 			{
-				NavUtils.navigateUpFromSameTask(this);
+				Intent upIntent = NavUtils.getParentActivityIntent(this);
+
+				if (upIntent == null)
+				{
+					finish();
+					return true;
+				}
+
+				if (NavUtils.shouldUpRecreateTask(this, upIntent))
+				{
+					// This activity is NOT part of this app's task, so create a new task
+					// when navigating up, with a synthesized back stack.
+					TaskStackBuilder.create(this)
+					                // Add all of this activity's parents to the back stack
+					                .addNextIntentWithParentStack(upIntent)
+					                // Navigate up to the closest parent
+					                .startActivities();
+				}
+				else
+				{
+					finish();
+				}
 			}
-			catch (Exception e)
+			catch (Exception ex)
 			{
 				finish();
 			}

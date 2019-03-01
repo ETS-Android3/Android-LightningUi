@@ -3,7 +3,7 @@ package com.cube.storm;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-
+import android.support.annotation.Nullable;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
 import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
@@ -38,6 +38,8 @@ import com.cube.storm.util.lib.resolver.Resolver;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.handlers.SchemeHandler;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -46,9 +48,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * This is the entry point class of the library. To enable the use of the library, you must instantiate
@@ -141,6 +140,11 @@ public class UiSettings
 	 * The gson builder class used to build all of the storm objects from json/string/binary
 	 */
 	@Getter @Setter private ViewBuilder viewBuilder;
+
+	/**
+	 * (Optional) API key to use in order to play videos using the standalone Youtube-supported player
+	 */
+	@Getter @Setter private String youtubeApiKey;
 
 	/**
 	 * Processor class used to process strings as part of {@link com.cube.storm.ui.model.property.TextProperty}
@@ -561,6 +565,22 @@ public class UiSettings
 		public Builder viewAdapter(@NonNull Class<? extends StormListAdapter> adapterClass)
 		{
 			construct.viewAdapter = adapterClass;
+
+			return this;
+		}
+
+		/**
+		 * Sets the YouTube API key to use in order to play youtube videos with the supported standalone player
+		 *
+		 * If not set, the internal player will be used using an unsupported non-public API, which is hacky and not guaranteed to work
+		 *
+		 * @param youtubeApiKey
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder youtubeApiKey(@Nullable String youtubeApiKey)
+		{
+			construct.youtubeApiKey = youtubeApiKey;
 
 			return this;
 		}

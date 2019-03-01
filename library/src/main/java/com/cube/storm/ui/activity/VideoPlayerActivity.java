@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.handler.LinkHandler;
@@ -36,10 +36,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
-import at.huber.youtubeExtractor.VideoMeta;
-import at.huber.youtubeExtractor.YouTubeExtractor;
-import at.huber.youtubeExtractor.YtFile;
 
 /**
  * Video player used to play videos from assets/file/http URI streams.
@@ -293,7 +289,16 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 						if (LinkHandler.isYoutubeVideo(uri))
 						{
 							isMediaSourceReady = false;
-							extractRawYoutubeUri();
+							try
+							{
+								Class.forName("at.huber.youtubeExtractor.YouTubeExtractor");
+								extractRawYoutubeUri();
+							}
+							catch (ClassNotFoundException ex)
+							{
+								Log.w("3SC", "Cannot play " + uri + ". Ensure the Storm app either has an API key or a dependency on the youtube extractor");
+								Toast.makeText(this, "Cannot play YouTube video", Toast.LENGTH_LONG).show();
+							}
 						}
 						else
 						{
@@ -336,19 +341,19 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	@SuppressLint("StaticFieldLeak")
 	private void extractRawYoutubeUri()
 	{
-		new YouTubeExtractor(this)
+		new at.huber.youtubeExtractor.YouTubeExtractor(this)
 		{
 			@Override
 			public void onExtractionComplete(
-				SparseArray<YtFile> ytFiles,
-				VideoMeta vMeta
+				SparseArray<at.huber.youtubeExtractor.YtFile> ytFiles,
+				at.huber.youtubeExtractor.VideoMeta vMeta
 			)
 			{
 				if (ytFiles != null)
 				{
 					for (Integer itag : YOUTUBE_ITAG_PREFERENCE)
 					{
-						YtFile file = ytFiles.get(itag);
+						at.huber.youtubeExtractor.YtFile file = ytFiles.get(itag);
 						if (file != null)
 						{
 							VideoPlayerActivity.this.uri = Uri.parse(ytFiles.get(itag).getUrl());
