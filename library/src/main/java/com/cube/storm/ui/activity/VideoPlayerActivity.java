@@ -244,7 +244,16 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 				{
 					languageSuffix = languageSuffix.replace("yi", "ji");
 				}
-				locales.add(new Locale(languageSuffix.split("_")[1]).getDisplayLanguage());
+
+				String[] languageCode = languageSuffix.split("_");
+				if (languageCode.length == 2)
+				{
+					locales.add(new Locale(languageCode[1]).getDisplayLanguage());
+				}
+				else
+				{
+					locales.add(new Locale(languageCode[0]).getDisplayLanguage());
+				}
 			}
 		}
 		return locales;
