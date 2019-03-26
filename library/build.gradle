@@ -20,6 +20,8 @@ android {
 }
 
 dependencies {
+    implementation files('lib/YouTubeAndroidPlayerApi.jar')
+
 	implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
 	implementation "com.android.support:customtabs:${rootProject.ext.supportLibVersion}"
 	implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
@@ -28,7 +30,7 @@ dependencies {
 	implementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
 
 	implementation 'com.google.android.exoplayer:exoplayer:2.9.0'
-	implementation 'com.github.HaarigerHarald:android-youtubeExtractor:401678756fd264394232502e5e0d114c96b03abd'
+	compileOnly 'com.github.HaarigerHarald:android-youtubeExtractor:401678756fd264394232502e5e0d114c96b03abd'
 
 	implementation 'com.google.code.gson:gson:2.8.2'
 	implementation 'net.callumtaylor:asynchttpclient:2.1'

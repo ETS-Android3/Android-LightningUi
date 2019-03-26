@@ -1,11 +1,11 @@
 package com.cube.storm.ui.lib.provider;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.activity.StormWebActivity;
@@ -13,6 +13,7 @@ import com.cube.storm.ui.activity.VideoPlayerActivity;
 import com.cube.storm.ui.data.FragmentIntent;
 import com.cube.storm.ui.fragment.StormFragment;
 import com.cube.storm.ui.fragment.StormTabbedFragment;
+import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.descriptor.PageDescriptor;
@@ -22,6 +23,10 @@ import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.PageCollection;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This is the factory class which is used by Storm to decide which activity/fragments to instantiate
@@ -32,6 +37,8 @@ import com.cube.storm.ui.model.page.TabbedPageCollection;
  */
 public class DefaultIntentProvider extends IntentProvider
 {
+	public static Pattern YOUTUBE_VIDEO_ID_REGEX = Pattern.compile("v=([^&]+)");
+
 	/**
 	 * Loads a fragment intent from a page descriptor by finding the model of the page type defined in {@link com.cube.storm.ui.model.descriptor.PageDescriptor#getType()}
 	 * <p/>
@@ -95,10 +102,34 @@ public class DefaultIntentProvider extends IntentProvider
 
 		// Fallback to default resolution
 		if (pageDescriptor instanceof VideoPageDescriptor
-		|| UiSettings.getInstance().getLinkHandler().isYoutubeVideo(Uri.parse(pageDescriptor.getSrc()))
-		|| UiSettings.getInstance().getLinkHandler().isVideo(Uri.parse(pageDescriptor.getSrc())))
+		    || LinkHandler.isYoutubeVideo(Uri.parse(pageDescriptor.getSrc()))
+		    || LinkHandler.isVideo(Uri.parse(pageDescriptor.getSrc())))
 		{
-			intent = new Intent(context, VideoPlayerActivity.class);
+			if (LinkHandler.isYoutubeVideo(Uri.parse(pageDescriptor.getSrc())) && context instanceof Activity)
+			{
+				String youtubeApiKey = UiSettings.getInstance().getYoutubeApiKey();
+				if (youtubeApiKey != null)
+				{
+					Matcher videoIdMatcher = YOUTUBE_VIDEO_ID_REGEX.matcher(pageDescriptor.getSrc());
+					if (videoIdMatcher.find())
+					{
+						String videoId = videoIdMatcher.group(1);
+						intent = YouTubeStandalonePlayer.createVideoIntent((Activity)context, youtubeApiKey, videoId, 0, true, false);
+
+					}
+					
+					if (intent == null || context.getPackageManager().resolveActivity(intent, 0) == null)
+					{
+						intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse(pageDescriptor.getSrc()));
+					}
+				}
+			}
+
+			if (intent == null)
+			{
+				intent = new Intent(context, VideoPlayerActivity.class);
+			}
 		}
 		else if (pageDescriptor instanceof WebPageDescriptor)
 		{

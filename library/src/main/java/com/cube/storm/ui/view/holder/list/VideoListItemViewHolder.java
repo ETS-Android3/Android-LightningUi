@@ -20,6 +20,7 @@ import com.cube.storm.ui.view.Populator;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,7 +101,11 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 
 				if (video != null)
 				{
-					video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
+					if (video.getComponent() != null && video.getComponent().getClassName().equals(VideoPlayerActivity.class.getName()))
+					{
+						video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
+						video.putExtra(VideoPlayerActivity.EXTRA_OTHER_VIDEOS, (Serializable)videoList);
+					}
 					v.getContext().startActivity(video);
 				}
 			}
