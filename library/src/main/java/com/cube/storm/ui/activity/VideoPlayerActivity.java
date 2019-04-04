@@ -268,7 +268,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		{
 			player = ExoPlayerFactory.newSimpleInstance(this);
 			player.setPlayWhenReady(startAutoPlay);
-			if (videos != null && videoIndex > 0 && videoIndex < videos.size() && videos.get(videoIndex).isRepeatMode())
+			if (videos != null && videoIndex >= 0 && videoIndex < videos.size() && videos.get(videoIndex).isRepeatMode())
 			{
 				player.setRepeatMode(REPEAT_MODE_ONE);
 			}
