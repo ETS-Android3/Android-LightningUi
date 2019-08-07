@@ -11,8 +11,8 @@ import com.cube.storm.ui.activity.StormActivity;
 import com.cube.storm.ui.activity.StormWebActivity;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
 import com.cube.storm.ui.data.FragmentIntent;
+import com.cube.storm.ui.fragment.StormBottomTabsFragment;
 import com.cube.storm.ui.fragment.StormFragment;
-import com.cube.storm.ui.fragment.StormTabbedFragment;
 import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.lib.resolver.ViewResolver;
 import com.cube.storm.ui.model.Model;
@@ -70,7 +70,7 @@ public class DefaultIntentProvider extends IntentProvider
 			}
 			else if (TabbedPageCollection.class == pageType)
 			{
-				intent = new FragmentIntent(StormTabbedFragment.class);
+				intent = new FragmentIntent(StormBottomTabsFragment.class);
 			}
 		}
 
@@ -117,7 +117,7 @@ public class DefaultIntentProvider extends IntentProvider
 						intent = YouTubeStandalonePlayer.createVideoIntent((Activity)context, youtubeApiKey, videoId, 0, true, false);
 
 					}
-					
+
 					if (intent == null || context.getPackageManager().resolveActivity(intent, 0) == null)
 					{
 						intent = new Intent(Intent.ACTION_VIEW);
