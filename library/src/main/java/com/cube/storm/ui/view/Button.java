@@ -16,7 +16,7 @@ import com.cube.storm.ui.model.property.LinkProperty;
  * @author Callum Taylor
  * @Project LightningUi
  */
-public class Button extends android.widget.Button
+public class Button extends android.support.v7.widget.AppCompatButton
 {
 	private ButtonProperty buttonProperty;
 
@@ -33,11 +33,6 @@ public class Button extends android.widget.Button
 	public Button(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context, attrs, defStyleAttr);
-	}
-
-	public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-	{
-		super(context, attrs, defStyleAttr, defStyleRes);
 	}
 
 	public void populate(final ButtonProperty button)

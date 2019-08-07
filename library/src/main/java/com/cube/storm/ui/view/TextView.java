@@ -17,7 +17,7 @@ import com.cube.storm.ui.model.property.TextProperty;
  * @author Callum Taylor
  * @Project LightningUi
  */
-public class TextView extends android.widget.TextView
+public class TextView extends android.support.v7.widget.AppCompatTextView
 {
 	public TextView(Context context)
 	{
@@ -32,11 +32,6 @@ public class TextView extends android.widget.TextView
 	public TextView(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context, attrs, defStyleAttr);
-	}
-
-	public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-	{
-		super(context, attrs, defStyleAttr, defStyleRes);
 	}
 
 	public void populate(TextProperty text)

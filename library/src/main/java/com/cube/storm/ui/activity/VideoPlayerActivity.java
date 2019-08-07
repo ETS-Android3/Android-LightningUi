@@ -1,9 +1,9 @@
 package com.cube.storm.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -46,7 +46,7 @@ import static com.google.android.exoplayer2.Player.REPEAT_MODE_ONE;
  * @author Alan Le Fournis
  * @project LightningUi
  */
-public class VideoPlayerActivity extends Activity implements PlaybackPreparer
+public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPreparer
 {
 	public static final String EXTRA_VIDEO = "extra_video";
 	public static final String EXTRA_OTHER_VIDEOS = "extra_other_video";
@@ -204,6 +204,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
+		super.onSaveInstanceState(outState);
 		updateStartPosition();
 		outState.putBoolean(KEY_AUTO_PLAY, startAutoPlay);
 		outState.putInt(KEY_WINDOW, startWindow);

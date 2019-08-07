@@ -31,7 +31,7 @@ import java.util.List;
  * @author Tim Matthews
  * @Project LightningUi
  */
-public class ImageView extends android.widget.ImageView
+public class ImageView extends android.support.v7.widget.AppCompatImageView
 {
 	/**
 	 * Listener alerted whenever the animation frame changes.
