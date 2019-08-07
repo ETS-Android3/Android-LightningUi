@@ -157,7 +157,7 @@ public class LinkHandler
 	 *
 	 * @return True if the uri is a video, false if not
 	 */
-	public boolean isVideo(@Nullable Uri uri)
+	public static boolean isVideo(@Nullable Uri uri)
 	{
 		if (uri == null || uri.getHost() == null)
 		{
