@@ -1,7 +1,6 @@
 package com.cube.storm.ui.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,14 +27,7 @@ import lombok.Getter;
  */
 public class StormBottomTabsFragment extends StormTabbedFragment implements AHBottomNavigation.OnTabSelectedListener
 {
-	/**
-	 * The Storm descriptor src of the tab that should be selected on startup
-	 */
-	private static final String EXTRA_START_TAB_SRC = "extra_start_tab_src";
-
 	@Getter protected AHBottomNavigation bottomNavigation;
-	protected String startTabBarItemSrc;
-	protected int startTabBarItemIndex = 0;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -44,31 +36,17 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 		return view;
 	}
 
-	@Override public void onActivityCreated(Bundle savedInstanceState)
-	{
-		Intent intent = getActivity().getIntent();
-		if (intent != null)
-		{
-			startTabBarItemSrc = intent.getStringExtra(EXTRA_START_TAB_SRC);
-		}
-		super.onActivityCreated(savedInstanceState);
-		bottomNavigation.setCurrentItem(startTabBarItemIndex);
-		onPageSelected(startTabBarItemIndex);
-	}
-
 	protected void loadPages(@NonNull TabbedPageCollection collection)
 	{
 		super.loadPages(collection);
 
 		// Create a bottom tab item for every item in the adapter
-		int idx = 0;
 		for (FragmentPackage fragmentPackage : pageAdapter.getPages())
 		{
 			PageDescriptor pageDescriptor = fragmentPackage.getPageDescriptor();
 			if (pageDescriptor instanceof TabbedPageDescriptor)
 			{
-				addTabBarItemToBottomTabs(idx, (TabbedPageDescriptor)pageDescriptor);
-				++idx;
+				addTabBarItemToBottomTabs((TabbedPageDescriptor)pageDescriptor);
 			}
 		}
 
@@ -76,13 +54,8 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 		bottomNavigation.setOnTabSelectedListener(this);
 	}
 
-	private void addTabBarItemToBottomTabs(int index, TabbedPageDescriptor descriptor)
+	private void addTabBarItemToBottomTabs(TabbedPageDescriptor descriptor)
 	{
-		if (startTabBarItemSrc != null && startTabBarItemSrc.equals(descriptor.getSrc()))
-		{
-			startTabBarItemIndex = index;
-		}
-
 		final Resources resources = getResources();
 		final int iconWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, resources.getDisplayMetrics());
 		final String iconSrc = ImageHelper.getImageSrc(descriptor.getTabBarItem().getImage(), iconWidth, iconWidth);
@@ -130,5 +103,12 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 		}
 
 		return true;
+	}
+
+	@Override
+	public void switchToTab(int index)
+	{
+		super.switchToTab(index);
+		bottomNavigation.setCurrentItem(index);
 	}
 }
