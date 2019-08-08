@@ -108,7 +108,6 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 	@Override
 	public void switchToTab(int index)
 	{
-		super.switchToTab(index);
 		bottomNavigation.setCurrentItem(index);
 	}
 }
