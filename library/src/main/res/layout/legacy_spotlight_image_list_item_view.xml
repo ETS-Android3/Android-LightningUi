@@ -19,7 +19,7 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:layout_centerInParent="true"
-		app:tabBackground="@drawable/spotlight_image_list_item_indicator"
+		app:tabBackground="@drawable/legacy_spotlight_image_list_item_indicator"
 		app:tabGravity="center"
 		app:tabIndicatorHeight="0dp"
 	/>

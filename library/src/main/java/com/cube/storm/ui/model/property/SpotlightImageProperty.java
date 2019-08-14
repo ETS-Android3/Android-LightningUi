@@ -17,6 +17,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 public class SpotlightImageProperty extends AnimationFrame
 {
-	protected TextProperty text;
+	protected TextProperty text; // legacy field
+	protected TextProperty category;
+	protected TextProperty title;
+	protected TextProperty description;
 	protected LinkProperty link;
 }
