@@ -118,11 +118,10 @@ public class StormSpotlightAdapter extends PagerAdapter
 			{
 				textContainer.setVisibility(View.GONE);
 			}
-
-			// category.populate(spotlightItem.getCategory(), spotlightItem.getLink());
-			// category.setText("Latest Innovations");
-			// title.setText("Alexa can save your family");
-			// description.setText("Introducing the American Red Cross Hurricane Alerts Skill for Alexa!");
+			else
+			{
+				textContainer.setVisibility(View.VISIBLE);
+			}
 
 			view.setOnClickListener(new View.OnClickListener()
 			{
