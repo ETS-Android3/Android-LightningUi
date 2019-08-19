@@ -32,6 +32,8 @@ public class AnimationListItem extends ListItem
 
 	@Deprecated protected ArrayList<AnimationFrame> images;
 
+	protected String accessibilityLabel;
+
 	@Nullable
 	public AnimationImageProperty getAnimation()
 	{

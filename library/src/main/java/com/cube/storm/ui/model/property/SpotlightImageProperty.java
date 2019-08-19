@@ -18,5 +18,8 @@ import lombok.experimental.Accessors;
 public class SpotlightImageProperty extends AnimationFrame
 {
 	protected TextProperty text;
+
+	protected String accessibilityLabel;
+
 	protected LinkProperty link;
 }

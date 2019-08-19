@@ -28,6 +28,8 @@ public class ImageListItem extends TitleListItem
 
 	protected ArrayList<ImageProperty> image;
 
+	protected String accessibilityLabel;
+
 	@Override public int describeContents()
 	{
 		return 0;
