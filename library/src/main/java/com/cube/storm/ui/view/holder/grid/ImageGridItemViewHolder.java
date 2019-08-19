@@ -48,7 +48,7 @@ public class ImageGridItemViewHolder extends GridViewHolder<ImageGridItem>
 	{
 		itemView.setOnClickListener(null);
 
-		image.populate(model.getImage(), progress);
+		image.populate(model.getImage(), null, progress);
 
 		if (link != null)
 		{
