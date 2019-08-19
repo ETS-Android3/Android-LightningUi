@@ -19,7 +19,7 @@ public class SpotlightImageProperty extends AnimationFrame
 {
 	protected TextProperty text;
 
-	protected String accessibilityLabel;
+	protected TextProperty accessibilityLabel;
 
 	protected LinkProperty link;
 }

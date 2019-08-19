@@ -18,6 +18,7 @@ import com.cube.storm.ui.model.property.AnimationFrame;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
+import com.cube.storm.ui.model.property.TextProperty;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -105,7 +106,7 @@ public class ImageView extends android.widget.ImageView
 	 * @param frames
 	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
 	 */
-	public void populate(@Nullable final AnimationImageProperty frames, @Nullable final String accessibilityLabel)
+	public void populate(@Nullable final AnimationImageProperty frames, @Nullable final TextProperty accessibilityLabel)
 	{
 		populate(frames, accessibilityLabel, null);
 	}
@@ -117,7 +118,7 @@ public class ImageView extends android.widget.ImageView
 	 * @param imageProperty If null, the current image is cleared and all pending animation tasks are cancelled.
 	 * @param listener
 	 */
-	public void populate(@Nullable final AnimationImageProperty imageProperty, @Nullable final String accessibilityLabel, @Nullable final OnAnimationFrameChangeListener listener)
+	public void populate(@Nullable final AnimationImageProperty imageProperty, @Nullable final TextProperty accessibilityLabel, @Nullable final OnAnimationFrameChangeListener listener)
 	{
 		// Cancel all current loading tasks
 		populate((ArrayList<ImageProperty>)null);
@@ -242,7 +243,7 @@ public class ImageView extends android.widget.ImageView
 	 * @param image
 	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
 	 */
-	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final String accessibilityLabel)
+	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final TextProperty accessibilityLabel)
 	{
 		populate(image, accessibilityLabel, null);
 	}
@@ -255,7 +256,7 @@ public class ImageView extends android.widget.ImageView
 	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
 	 * @param progress
 	 */
-	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final String accessibilityLabel, @Nullable final ProgressBar progress)
+	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final TextProperty accessibilityLabel, @Nullable final ProgressBar progress)
 	{
 		populate(image, accessibilityLabel, progress, null);
 	}
@@ -270,7 +271,7 @@ public class ImageView extends android.widget.ImageView
 	 * @param listener
 	 *      If provided then the listener will receive callbacks at each stage of the image frame being loaded
 	 */
-	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final String accessibilityLabel, @Nullable final ProgressBar progress, @Nullable final ImageLoadingListener listener)
+	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final TextProperty accessibilityLabel, @Nullable final ProgressBar progress, @Nullable final ImageLoadingListener listener)
 	{
 		// If image size isnt calculated yet, wait till it has
 		if (getWidth() == 0 && getHeight() == 0 && image != null && getVisibility() != GONE && UiSettings.getInstance().getContentSize() == ContentSize.AUTO)
@@ -313,14 +314,16 @@ public class ImageView extends android.widget.ImageView
 	 */
 	private void populateFrame(
 		@Nullable final ArrayList<ImageProperty> image,
-		@Nullable final String accessibilityLabel,
+		@Nullable final TextProperty accessibilityLabel,
 		@Nullable final ProgressBar progress,
 		@Nullable final ImageLoadingListener listener
 	)
 	{
-		if(!TextUtils.isEmpty(accessibilityLabel))
+		// Set accessibility label (content description) on images
+		String accessibilityLabelText = UiSettings.getInstance().getTextProcessor().process(accessibilityLabel);
+		if(!TextUtils.isEmpty(accessibilityLabelText))
 		{
-			setContentDescription(accessibilityLabel);
+			setContentDescription(accessibilityLabelText);
 		}
 		else
 		{

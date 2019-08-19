@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.cube.storm.ui.model.property.AnimationFrame;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
+import com.cube.storm.ui.model.property.TextProperty;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class AnimationListItem extends ListItem
 
 	@Deprecated protected ArrayList<AnimationFrame> images;
 
-	protected String accessibilityLabel;
+	protected TextProperty accessibilityLabel;
 
 	@Nullable
 	public AnimationImageProperty getAnimation()
