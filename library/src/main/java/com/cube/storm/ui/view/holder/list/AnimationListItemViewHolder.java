@@ -51,7 +51,6 @@ public class AnimationListItemViewHolder extends ViewHolder<AnimationListItem>
 		{
 			this.model = model;
 			image.populate(model.getAnimation(), model.getAccessibilityLabel());
-			// image.populate(model.getAnimation(), model.getAccessibilityLabel());
 		}
 	}
 }
