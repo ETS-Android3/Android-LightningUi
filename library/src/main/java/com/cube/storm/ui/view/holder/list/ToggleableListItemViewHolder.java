@@ -77,12 +77,14 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 					toggleContainer.setTag(true);
 					toggleContainer.setVisibility(View.VISIBLE);
 					expandIcon.setImageResource(R.drawable.ic_collapse);
+					embeddedLinksContainer.setVisibility(View.VISIBLE);
 				}
 				else
 				{
 					toggleContainer.setTag(false);
 					toggleContainer.setVisibility(View.GONE);
 					expandIcon.setImageResource(R.drawable.ic_expand);
+					embeddedLinksContainer.setVisibility(View.GONE);
 				}
 			}
 		});
