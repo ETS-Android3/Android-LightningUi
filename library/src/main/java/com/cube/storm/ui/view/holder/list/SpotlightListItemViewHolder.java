@@ -64,5 +64,11 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		{
 			indicator.setVisibility(View.VISIBLE);
 		}
+		/**
+		 * Need to set the number of the items, so the {@link WrapContentViewPager }
+		 * will calculate the highest height and set for all the views the same height.
+		 * Otherwise, each view will have different height
+		 */
+		viewPager.setOffscreenPageLimit(spotlightAdapter.getCount());
 	}
 }

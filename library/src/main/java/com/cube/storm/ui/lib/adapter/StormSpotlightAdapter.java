@@ -106,6 +106,7 @@ public class StormSpotlightAdapter extends PagerAdapter
 
 			imageView.populate(spotlightItem.getImage());
 			category.populate(spotlightItem.getCategory());
+			category.setVisibility(View.VISIBLE);
 			title.populate(spotlightItem.getTitle());
 			description.populate(spotlightItem.getDescription());
 
