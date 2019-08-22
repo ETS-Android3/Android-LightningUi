@@ -57,6 +57,7 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
 
 		toggleContainer.setVisibility(View.GONE);
+		embeddedLinksContainer.setVisibility(View.GONE);
 
 		if (toggleContainer.getTag() != null)
 		{
