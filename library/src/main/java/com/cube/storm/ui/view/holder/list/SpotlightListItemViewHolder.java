@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.adapter.StormSpotlightAdapter;
 import com.cube.storm.ui.model.list.SpotlightListItem;
+import com.cube.storm.ui.view.WrapContentViewPager;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
@@ -36,7 +37,7 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		}
 	}
 
-	protected ViewPager viewPager;
+	protected WrapContentViewPager viewPager;
 	protected TabLayout indicator;
 	protected StormSpotlightAdapter spotlightAdapter = new StormSpotlightAdapter();
 
@@ -44,11 +45,11 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 	{
 		super(view);
 		viewPager = view.findViewById(R.id.viewPager);
-		int pageMargin = (int)(8 * view.getResources().getDisplayMetrics().density); // 8dp space between items
-		viewPager.setPageMargin(pageMargin);
 
 		indicator = view.findViewById(R.id.indicator);
 		viewPager.setAdapter(spotlightAdapter);
+		viewPager.setClipToPadding(false);
+		viewPager.setPadding(40,0,40,0);
 		indicator.setupWithViewPager(viewPager, true);
 	}
 
