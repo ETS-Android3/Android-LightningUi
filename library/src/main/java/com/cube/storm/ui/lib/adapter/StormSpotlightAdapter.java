@@ -104,7 +104,7 @@ public class StormSpotlightAdapter extends PagerAdapter
 			TextView title = view.findViewById(R.id.title);
 			TextView description = view.findViewById(R.id.description);
 
-			imageView.populate(spotlightItem.getImage());
+			imageView.populate(spotlightItem.getImage(), spotlightItem.getAccessibilityLabel());
 			category.populate(spotlightItem.getCategory());
 			title.populate(spotlightItem.getTitle());
 			description.populate(spotlightItem.getDescription());

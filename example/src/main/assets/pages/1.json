@@ -21,6 +21,10 @@
 						"x1.5": "assets://content/hairy_fish_test_image.jpg",
 						"x2": "assets://content/hairy_fish_test_image.jpg"
 					},
+					"accessibilityLabel": {
+						"class": "Text",
+						"content": "This is an image of a fish"
+					},
 					"category": {
 						"class": "Text",
 						"content": "Category"
@@ -145,6 +149,29 @@
 						"class": "Text",
 						"content": "2fg84"
 					}
+				},
+				{
+					"class": "SpotlightImage",
+					"delay": 4000,
+					"link": {
+						"class": "InternalLink",
+						"destination": "cache:\/\/pages\/925712.json",
+						"title": {
+							"class": "Text",
+							"content": "2fg86"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+						"x1": "assets://content/1415019799016_plugin_x1.png",
+						"x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"accessibilityLabel": {
+						"class": "Text",
+						"content": "This is an image of a fish"
+					}
 				}
 			]
 		},
@@ -168,6 +195,10 @@
 						"x1": "assets://content/141501992968_hammer_x1.png",
 						"x1.5": "assets://content/141501992968_hammer_x1.5.png",
 						"x2": "assets://content/141501992968_hammer_x2.png"
+					},
+					"accessibilityLabel": {
+						"class": "Text",
+						"content": "This is an image of a fish"
 					},
 					"category": {
 						"class": "Text",

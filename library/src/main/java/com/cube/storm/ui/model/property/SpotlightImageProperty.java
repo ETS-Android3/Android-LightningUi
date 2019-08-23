@@ -23,6 +23,7 @@ public class SpotlightImageProperty extends AnimationFrame
 	protected TextProperty category;
 	protected TextProperty title;
 	protected TextProperty description;
+	protected TextProperty accessibilityLabel;
 	protected LinkProperty link;
 
 	@Nullable

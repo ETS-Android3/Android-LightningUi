@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -17,6 +18,7 @@ import com.cube.storm.ui.model.property.AnimationFrame;
 import com.cube.storm.ui.model.property.AnimationImageProperty;
 import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
+import com.cube.storm.ui.model.property.TextProperty;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -99,13 +101,24 @@ public class ImageView extends android.widget.ImageView
 	}
 
 	/**
+	 * Alternately display each of a sequence of Storm animation frames.
+	 *
+	 * @param frames
+	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
+	 */
+	public void populate(@Nullable final AnimationImageProperty frames, @Nullable final TextProperty accessibilityLabel)
+	{
+		populate(frames, accessibilityLabel, null);
+	}
+
+	/**
 	 * Alternately display each of a sequence of Storm animation frames, alerting an optional listener whenever the
 	 * frame changes.
 	 *
 	 * @param imageProperty If null, the current image is cleared and all pending animation tasks are cancelled.
 	 * @param listener
 	 */
-	public void populate(@Nullable final AnimationImageProperty imageProperty, @Nullable final OnAnimationFrameChangeListener listener)
+	public void populate(@Nullable final AnimationImageProperty imageProperty, @Nullable final TextProperty accessibilityLabel, @Nullable final OnAnimationFrameChangeListener listener)
 	{
 		// Cancel all current loading tasks
 		populate((ArrayList<ImageProperty>)null);
@@ -124,7 +137,7 @@ public class ImageView extends android.widget.ImageView
 				@Override public void run()
 				{
 					AnimationFrame frame = imageProperty.getFrames().get(frameIndex % imageProperty.getFrames().size());
-					populateFrame(frame.getImage(), null, null);
+					populateFrame(frame.getImage(), accessibilityLabel, null, null);
 
 					if (listener != null)
 					{
@@ -194,8 +207,8 @@ public class ImageView extends android.widget.ImageView
 
 				@Override public void run()
 				{
-					AnimationFrame frame = frames.get(frameIndex % frames.size());
-					populateFrame(frame.getImage(), null, null);
+					SpotlightImageProperty frame = frames.get(frameIndex % frames.size());
+					populateFrame(frame.getImage(), frame.getAccessibilityLabel(), null, null);
 
 					if (listener != null)
 					{
@@ -225,6 +238,17 @@ public class ImageView extends android.widget.ImageView
 	}
 
 	/**
+	 * Load and display the specified image asynchronously.
+	 *
+	 * @param image
+	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
+	 */
+	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final TextProperty accessibilityLabel)
+	{
+		populate(image, accessibilityLabel, null);
+	}
+
+	/**
 	 * Load and display the specified image asynchronously, with an optional progress bar visible until the image is
 	 * loaded.
 	 *
@@ -232,9 +256,9 @@ public class ImageView extends android.widget.ImageView
 	 * 		If null, the current image is cleared and all pending animation tasks are cancelled.
 	 * @param progress
 	 */
-	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress)
+	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final TextProperty accessibilityLabel, @Nullable final ProgressBar progress)
 	{
-		populate(image, progress, null);
+		populate(image, accessibilityLabel, progress, null);
 	}
 
 	/**
@@ -247,7 +271,7 @@ public class ImageView extends android.widget.ImageView
 	 * @param listener
 	 *      If provided then the listener will receive callbacks at each stage of the image frame being loaded
 	 */
-	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress, @Nullable final ImageLoadingListener listener)
+	public void populate(@Nullable final ArrayList<ImageProperty> image, @Nullable final TextProperty accessibilityLabel, @Nullable final ProgressBar progress, @Nullable final ImageLoadingListener listener)
 	{
 		// If image size isnt calculated yet, wait till it has
 		if (getWidth() == 0 && getHeight() == 0 && image != null && getVisibility() != GONE && UiSettings.getInstance().getContentSize() == ContentSize.AUTO)
@@ -261,11 +285,11 @@ public class ImageView extends android.widget.ImageView
 					if (getWidth() == 0 && getHeight() == 0)
 					{
 						// fuck android
-						populateFrame(image, progress, listener);
+						populateFrame(image, accessibilityLabel, progress, listener);
 						return false;
 					}
 
-					populate(image, progress, listener);
+					populate(image, accessibilityLabel, progress, listener);
 					return false;
 				}
 			});
@@ -279,7 +303,7 @@ public class ImageView extends android.widget.ImageView
 			animator.removeCallbacks(displayNextFrame);
 		}
 
-		populateFrame(image, progress, listener);
+		populateFrame(image, accessibilityLabel, progress, listener);
 	}
 
 	/**
@@ -288,8 +312,24 @@ public class ImageView extends android.widget.ImageView
 	 * @param image
 	 * @param progress
 	 */
-	private void populateFrame(@Nullable final ArrayList<ImageProperty> image, @Nullable final ProgressBar progress, @Nullable final ImageLoadingListener listener)
+	private void populateFrame(
+		@Nullable final ArrayList<ImageProperty> image,
+		@Nullable final TextProperty accessibilityLabel,
+		@Nullable final ProgressBar progress,
+		@Nullable final ImageLoadingListener listener
+	)
 	{
+		// Set accessibility label (content description) on images
+		String accessibilityLabelText = UiSettings.getInstance().getTextProcessor().process(accessibilityLabel);
+		if(!TextUtils.isEmpty(accessibilityLabelText))
+		{
+			setContentDescription(accessibilityLabelText);
+		}
+		else
+		{
+			setContentDescription(null);
+		}
+
 		UiSettings.getInstance().getImageLoader().cancelDisplayTask(this);
 
 		if (image != null && image.size() > 0)
