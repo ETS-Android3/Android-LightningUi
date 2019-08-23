@@ -106,16 +106,13 @@ public class StormSpotlightAdapter extends PagerAdapter
 
 			imageView.populate(spotlightItem.getImage());
 			category.populate(spotlightItem.getCategory());
-			category.setVisibility(View.VISIBLE);
 			title.populate(spotlightItem.getTitle());
 			description.populate(spotlightItem.getDescription());
 
 			// Hide text container under spotlight image if no text to populate
-			Processor<TextProperty, String> textProcessor = UiSettings.getInstance().getTextProcessor();
-			String categoryString = textProcessor.process(spotlightItem.getCategory());
-			String titleString = textProcessor.process(spotlightItem.getTitle());
-			String descriptionString = textProcessor.process(spotlightItem.getDescription());
-			if (TextUtils.isEmpty(categoryString) && TextUtils.isEmpty(titleString) && TextUtils.isEmpty(descriptionString))
+			if (category.getVisibility() != View.VISIBLE &&
+				title.getVisibility() != View.VISIBLE &&
+				description.getVisibility() != View.VISIBLE)
 			{
 				textContainer.setVisibility(View.GONE);
 			}
@@ -123,6 +120,8 @@ public class StormSpotlightAdapter extends PagerAdapter
 			{
 				textContainer.setVisibility(View.VISIBLE);
 			}
+			// Keep text aligned across all spotlights. This must be done after the visibility check above.
+			category.setVisibility(View.VISIBLE);
 
 			view.setOnClickListener(new View.OnClickListener()
 			{
