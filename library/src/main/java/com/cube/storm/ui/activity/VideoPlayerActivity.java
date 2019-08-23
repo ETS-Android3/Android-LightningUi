@@ -1,9 +1,9 @@
 package com.cube.storm.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.handler.LinkHandler;
@@ -37,13 +38,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static com.google.android.exoplayer2.Player.REPEAT_MODE_ONE;
+
 /**
  * Video player used to play videos from assets/file/http URI streams.
  *
  * @author Alan Le Fournis
  * @project LightningUi
  */
-public class VideoPlayerActivity extends Activity implements PlaybackPreparer
+public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPreparer
 {
 	public static final String EXTRA_VIDEO = "extra_video";
 	public static final String EXTRA_OTHER_VIDEOS = "extra_other_video";
@@ -63,7 +66,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	private static final String KEY_POSITION = "position";
 	private static final String KEY_AUTO_PLAY = "auto_play";
 	private static final String KEY_URI = "playing_uri";
-	private static final String KEY_INDEX= "playing_video_index";
+	private static final String KEY_INDEX = "playing_video_index";
 
 	private PlayerView playerView;
 	private ProgressBar progressBar;
@@ -201,6 +204,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
+		super.onSaveInstanceState(outState);
 		updateStartPosition();
 		outState.putBoolean(KEY_AUTO_PLAY, startAutoPlay);
 		outState.putInt(KEY_WINDOW, startWindow);
@@ -265,6 +269,10 @@ public class VideoPlayerActivity extends Activity implements PlaybackPreparer
 		{
 			player = ExoPlayerFactory.newSimpleInstance(this);
 			player.setPlayWhenReady(startAutoPlay);
+			if (videos != null && videoIndex >= 0 && videoIndex < videos.size() && videos.get(videoIndex).isRepeatMode())
+			{
+				player.setRepeatMode(REPEAT_MODE_ONE);
+			}
 			playerView.setPlayer(player);
 			playerView.setUseController(true);
 			playerView.setPlaybackPreparer(this);

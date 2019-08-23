@@ -27,6 +27,7 @@ public class VideoListItem extends ImageListItem
 	{ this.className = CLASS_NAME; }
 
 	protected Collection<? extends VideoProperty> videos;
+	protected long duration = 0;
 
 	@Override public int describeContents()
 	{

@@ -62,13 +62,13 @@ public class ImageHelper
 	}
 
 	@Nullable
-	public static String getImageSrc(@NonNull List<? extends ImageProperty> images)
+	public static String getImageSrc(@Nullable List<? extends ImageProperty> images)
 	{
 		return getImageSrc(images, 0, 0);
 	}
 
 	@Nullable
-	public static String getImageSrc(@NonNull List<? extends ImageProperty> images, int width, int height)
+	public static String getImageSrc(@Nullable List<? extends ImageProperty> images, int width, int height)
 	{
 		ImageProperty imageProperty = getImageProperty(images, width, height);
 
@@ -81,20 +81,20 @@ public class ImageHelper
 	}
 
 	@Nullable
-	public static ImageProperty getImageProperty(@NonNull List<? extends ImageProperty> images)
+	public static ImageProperty getImageProperty(@Nullable List<? extends ImageProperty> images)
 	{
 		return getImageProperty(images, 0, 0);
 	}
 
 	@Nullable
-	public static ImageProperty getImageProperty(@NonNull List<? extends ImageProperty> images, int width, int height)
+	public static ImageProperty getImageProperty(@Nullable List<? extends ImageProperty> images, int width, int height)
 	{
-		Collections.sort(images, new ImagePropertyComparator());
-
-		if (images.size() == 0)
+		if (images == null || images.size() == 0)
 		{
 			return null;
 		}
+
+		Collections.sort(images, new ImagePropertyComparator());
 
 		if ((width == 0 && height == 0) || UiSettings.getInstance().getContentSize() != ContentSize.AUTO)
 		{
