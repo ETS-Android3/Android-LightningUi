@@ -113,7 +113,10 @@ public class StormFragment extends Fragment implements StormInterface
 
 	public void setTitle()
 	{
-		if (page.getTitle() != null)
+		// Only set the title of the parent activity if this fragment is a direct child of that activity
+		boolean isDirectChildOfActivity = getParentFragment() == null;
+
+		if (isDirectChildOfActivity && page.getTitle() != null)
 		{
 			String title = UiSettings.getInstance().getTextProcessor().process(getPage().getTitle());
 

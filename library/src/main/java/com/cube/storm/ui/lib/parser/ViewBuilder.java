@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.model.App;
+import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
 import com.cube.storm.ui.model.property.TextProperty;
@@ -222,7 +223,19 @@ public abstract class ViewBuilder
 
 		if (pageData != null)
 		{
-			return build(pageData, TabbedPageCollection.class);
+			TabbedPageCollection tabbedPageCollection = build(pageData, TabbedPageCollection.class);
+
+			if (tabbedPageCollection != null && tabbedPageCollection.getPages() != null)
+			{
+				int idx = 0;
+				for (TabbedPageDescriptor tabbedPageDescriptor : tabbedPageCollection.getPages())
+				{
+					tabbedPageDescriptor.setTabIndex(idx);
+					++idx;
+				}
+			}
+
+			return tabbedPageCollection;
 		}
 
 		return null;

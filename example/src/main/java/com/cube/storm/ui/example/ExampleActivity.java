@@ -1,17 +1,16 @@
 package com.cube.storm.ui.example;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
+import android.support.v7.app.AppCompatActivity;
 import com.cube.storm.UiSettings;
 
 /**
  * @author Callum Taylor
  * @project LightningUtil
  */
-public class ExampleActivity extends Activity
+public class ExampleActivity extends AppCompatActivity
 {
 	@Override protected void onCreate(Bundle savedInstanceState)
 	{

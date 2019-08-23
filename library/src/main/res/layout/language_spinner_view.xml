@@ -18,9 +18,9 @@
 		android:textColor="@android:color/black" />
 
 	<ImageView android:layout_width="30dp"
-		android:layout_height="30dp"
-		android:id="@+id/arrow_down"
-		android:layout_gravity="center"
-		android:layout_marginLeft="6dp"
-		android:src="@drawable/drop" />
+	           android:layout_height="30dp"
+	           android:id="@+id/arrow_down"
+	           android:layout_gravity="center"
+	           android:layout_marginLeft="6dp"
+	           app:srcCompat="@drawable/drop" />
 </LinearLayout>
