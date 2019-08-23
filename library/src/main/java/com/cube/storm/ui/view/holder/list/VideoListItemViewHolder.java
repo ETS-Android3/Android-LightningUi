@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
@@ -22,7 +21,6 @@ import com.cube.storm.ui.view.Populator;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -120,7 +118,6 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 					if (video.getComponent() != null && video.getComponent().getClassName().equals(VideoPlayerActivity.class.getName()))
 					{
 						video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
-						video.putExtra(VideoPlayerActivity.EXTRA_OTHER_VIDEOS, (Serializable)videoList);
 					}
 					v.getContext().startActivity(video);
 				}

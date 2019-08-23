@@ -3,21 +3,19 @@ package com.cube.storm.ui.activity;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.handler.LinkHandler;
 import com.cube.storm.ui.model.property.VideoProperty;
-import com.cube.storm.ui.view.LanguageAdapter;
 import com.cube.storm.util.lib.resolver.Resolver;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -25,18 +23,21 @@ import com.google.android.exoplayer2.PlaybackPreparer;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.ui.TrackSelectionView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.exoplayer2.video.VideoListener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import static com.google.android.exoplayer2.Player.REPEAT_MODE_ONE;
 
@@ -46,11 +47,9 @@ import static com.google.android.exoplayer2.Player.REPEAT_MODE_ONE;
  * @author Alan Le Fournis
  * @project LightningUi
  */
-public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPreparer
+public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPreparer, View.OnClickListener
 {
 	public static final String EXTRA_VIDEO = "extra_video";
-	public static final String EXTRA_OTHER_VIDEOS = "extra_other_video";
-	public static final String EXTRA_VIDEO_INDEX = "extra_video_index";
 
 	/**
 	 * Priority list of Youtube itag formats to attempt to retrieve
@@ -66,7 +65,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 	private static final String KEY_POSITION = "position";
 	private static final String KEY_AUTO_PLAY = "auto_play";
 	private static final String KEY_URI = "playing_uri";
-	private static final String KEY_INDEX = "playing_video_index";
+	private static final String KEY_TRACK_SELECTOR_PARAMETERS = "track_selector_parameters";
 
 	private PlayerView playerView;
 	private ProgressBar progressBar;
@@ -74,17 +73,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 	private DataSource.Factory dataSourceFactory;
 	private SimpleExoPlayer player;
 	private MediaSource mediaSource;
+	private DefaultTrackSelector trackSelector;
 
 	private Uri uri;
 	private boolean startAutoPlay;
 	private int startWindow;
 	private long startPosition;
-	private Spinner videoLanguages;
-	private int videoIndex = -1;
-	ArrayList<VideoProperty> videos;
-	ArrayList<String> locales;
-	private VideoProperty videoProperty;
-
+	private ImageButton closedCaptionsButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -93,20 +88,21 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 		dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "storm-video-player"));
 		setContentView(R.layout.activity_video_player);
 
+		closedCaptionsButton = findViewById(R.id.cc_button);
+		closedCaptionsButton.setOnClickListener(this);
 		playerView = findViewById(R.id.player_view);
 		progressBar = findViewById(R.id.progress);
 		playerView.requestFocus();
-		videoLanguages = findViewById(R.id.videos);
 
-		if (uri == null && getIntent().hasExtra(EXTRA_VIDEO) && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null &&
-			getIntent().hasExtra(EXTRA_OTHER_VIDEOS) && getIntent().getExtras().getSerializable(EXTRA_OTHER_VIDEOS) != null)
+		if (uri == null
+		    && getIntent().hasExtra(EXTRA_VIDEO)
+		    && getIntent().getExtras().getSerializable(EXTRA_VIDEO) != null)
 		{
-			videoProperty = (VideoProperty)getIntent().getSerializableExtra(EXTRA_VIDEO);
+			VideoProperty videoProperty = (VideoProperty) getIntent().getSerializableExtra(EXTRA_VIDEO);
 			uri = Uri.parse(videoProperty.getSrc().getDestination());
-			videos = (ArrayList<VideoProperty>)getIntent().getSerializableExtra(EXTRA_OTHER_VIDEOS);
-			locales = loadLocales(videos);
-			videoIndex = videos.indexOf(videoProperty);
 		}
+
+		trackSelector = new DefaultTrackSelector();
 
 		if (savedInstanceState != null)
 		{
@@ -115,33 +111,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 			startPosition = savedInstanceState.getLong(KEY_POSITION);
 			String uriString = savedInstanceState.getString(KEY_URI);
 			uri = uriString != null ? Uri.parse(uriString) : null;
-			videoIndex = savedInstanceState.getInt(KEY_INDEX);
+
+			DefaultTrackSelector.Parameters initialTrackSelectorParameters = savedInstanceState.getParcelable(KEY_TRACK_SELECTOR_PARAMETERS);
+			if (initialTrackSelectorParameters != null)
+			{
+				trackSelector.setParameters(initialTrackSelectorParameters);
+			}
 		}
 		else
 		{
+
+			trackSelector.setParameters(new DefaultTrackSelector.ParametersBuilder().build());
 			clearStartPosition();
-		}
-
-		if (videos != null && videos.size() > 1)
-		{
-			videoLanguages.setVisibility(View.VISIBLE);
-			videoLanguages.setAdapter(new LanguageAdapter(locales));
-			videoLanguages.setSelection(videoIndex, false);
-			videoLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-			{
-				@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-				{
-					releasePlayer();
-					clearStartPosition();
-					uri = Uri.parse(videos.get(position).getSrc().getDestination());
-					videoIndex = position;
-					initializePlayer();
-				}
-
-				@Override public void onNothingSelected(AdapterView<?> parent)
-				{
-				}
-			});
 		}
 	}
 
@@ -210,7 +191,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 		outState.putInt(KEY_WINDOW, startWindow);
 		outState.putLong(KEY_POSITION, startPosition);
 		outState.putString(KEY_URI, uri != null ? uri.toString() : "");
-		outState.putInt(KEY_INDEX, videoIndex);
+		outState.putParcelable(KEY_TRACK_SELECTOR_PARAMETERS, trackSelector.getParameters());
 	}
 
 	@Override
@@ -223,56 +204,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 	@Override
 	public void preparePlayback()
 	{
-		initializePlayer();
-	}
-
-	private ArrayList<String> loadLocales(ArrayList<VideoProperty> videos)
-	{
-		ArrayList<String> locales = new ArrayList<String>();
-
-		if (videos != null)
-		{
-			for (int index = 0; index < videos.size(); index++)
-			{
-				String languageSuffix = videos.get(index).getLocale();
-
-				if (languageSuffix.toLowerCase().contains("he"))
-				{
-					languageSuffix = languageSuffix.replace("he", "iw");
-				}
-				else if (languageSuffix.toLowerCase().contains("id"))
-				{
-					languageSuffix = languageSuffix.replace("id", "in");
-				}
-				else if (languageSuffix.toLowerCase().contains("yi"))
-				{
-					languageSuffix = languageSuffix.replace("yi", "ji");
-				}
-
-				String[] languageCode = languageSuffix.split("_");
-				if (languageCode.length == 2)
-				{
-					locales.add(new Locale(languageCode[1]).getDisplayLanguage());
-				}
-				else
-				{
-					locales.add(new Locale(languageCode[0]).getDisplayLanguage());
-				}
-			}
-		}
-		return locales;
+		player.retry();
 	}
 
 	private void initializePlayer()
 	{
 		if (player == null)
 		{
-			player = ExoPlayerFactory.newSimpleInstance(this);
+			player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 			player.setPlayWhenReady(startAutoPlay);
-			if (videos != null && videoIndex >= 0 && videoIndex < videos.size() && videos.get(videoIndex).isRepeatMode())
-			{
-				player.setRepeatMode(REPEAT_MODE_ONE);
-			}
+			player.setRepeatMode(REPEAT_MODE_ONE);
 			playerView.setPlayer(player);
 			playerView.setUseController(true);
 			playerView.setPlaybackPreparer(this);
@@ -348,6 +289,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 				}
 			}
 
+			// When the video starts playing get whether or not it has a caption index
+			player.addVideoListener(new VideoListener()
+			{
+				@Override
+				public void onRenderedFirstFrame()
+				{
+					closedCaptionsButton.setVisibility(getCaptionRendererIndex() != null ? View.VISIBLE : View.GONE);
+				}
+			});
+
 			if (isMediaSourceReady)
 			{
 				initialiseMediaSource();
@@ -402,7 +353,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 		{
 			player.seekTo(startWindow, startPosition);
 		}
+
 		player.prepare(mediaSource, !haveStartPosition, false);
+
+		player.addVideoListener(new VideoListener()
+		{
+			@Override
+			public int hashCode()
+			{
+				return super.hashCode();
+			}
+		});
 	}
 
 	private MediaSource buildMediaSource(Uri uri)
@@ -451,5 +412,70 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 		startAutoPlay = true;
 		startWindow = C.INDEX_UNSET;
 		startPosition = C.TIME_UNSET;
+	}
+
+	@Override
+	public void onClick(View view)
+	{
+		if (view == closedCaptionsButton)
+		{
+			Integer captionsRendererIdx = getCaptionRendererIndex();
+
+			if (captionsRendererIdx == null)
+			{
+				return;
+			}
+
+			showTrackSelectorDialog(captionsRendererIdx);
+		}
+	}
+
+	/**
+	 * Determines whether the currently playing media has a caption renderer and returns its index
+	 * in the MappedTrackInfo object if it does
+	 *
+	 * @return
+	 *  A valid index into the current mapped track info, or null
+	 */
+	@Nullable
+	private Integer getCaptionRendererIndex()
+	{
+		MappingTrackSelector.MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+
+		if (mappedTrackInfo == null)
+		{
+			return null;
+		}
+
+		for (int rendererIndex = 0; rendererIndex < mappedTrackInfo.getRendererCount(); rendererIndex++)
+		{
+			int trackType = mappedTrackInfo.getRendererType(rendererIndex);
+			TrackGroupArray trackGroupArray = mappedTrackInfo.getTrackGroups(rendererIndex);
+			boolean isCaptionRenderer = trackType == C.TRACK_TYPE_TEXT;
+			if (isCaptionRenderer && trackGroupArray.length > 0)
+			{
+				return rendererIndex;
+			}
+		}
+
+		return null;
+	}
+
+	private void showTrackSelectorDialog(int rendererIndex)
+	{
+		MappingTrackSelector.MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+
+		if (mappedTrackInfo == null)
+		{
+			return;
+		}
+
+		View rootView = getLayoutInflater().inflate(R.layout.exo_track_selection_dialog, null, false);
+		TrackSelectionView trackSelectionView = rootView.findViewById(R.id.exo_track_selection_view);
+		trackSelectionView.setShowDisableOption(true);
+		trackSelectionView.setAllowAdaptiveSelections(false);
+		trackSelectionView.init(trackSelector, rendererIndex);
+
+		TrackSelectionView.getDialog(this, "", trackSelector, rendererIndex).first.show();
 	}
 }
