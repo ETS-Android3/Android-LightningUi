@@ -479,6 +479,33 @@
 			]
 		},
 		{
+			"class": "VideoListItem",
+			"image": {
+				"class": "Image",
+				"src": {
+					"class": "ImageDescriptor",
+					"x0.75": "cache:\/\/content\/141501992968_hammer_x0.75.jpg",
+					"x1": "cache:\/\/content\/141501992968_hammer_x1.jpg",
+					"x1.5": "cache:\/\/content\/141501992968_hammer_x1.5.jpg",
+					"x2": "cache:\/\/content\/141501992968_hammer_x2.jpg"
+				}
+			},
+			"videos": [
+				{
+					"class": "Video",
+					"locale": "usa_en",
+					"src": {
+						"class": "InternalLink",
+						"destination": "cache:\/\/content\/video_with_captions.mp4",
+						"title": {
+							"class": "Text",
+							"content": "2g8ps"
+						}
+					}
+				}
+			]
+		},
+		{
 			"class": "SpotlightListItem",
 			"images": [
 				{
