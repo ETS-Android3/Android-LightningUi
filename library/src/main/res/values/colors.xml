@@ -5,4 +5,6 @@
 	<color name="activate_text_color">#FF666666</color>
 	<color name="deactivate_text_color">#FFCCCCCC</color>
 	<color name="transparent">#00000000</color>
+	<color name="borderGrey">#c2c2c2</color>
+	<color name="spotlightIndicatorLightGrey">#aeaeae</color>
 </resources>

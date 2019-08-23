@@ -5,10 +5,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.cube.storm.ui.R;
-import com.cube.storm.ui.lib.adapter.StormSpotlightAdapter;
+import com.cube.storm.ui.lib.adapter.LegacyStormSpotlightAdapter;
 import com.cube.storm.ui.model.list.SpotlightListItem;
-import com.cube.storm.ui.view.WrapContentViewPager;
+import com.cube.storm.ui.model.property.SpotlightImageProperty;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
@@ -26,36 +27,57 @@ import com.cube.storm.ui.view.holder.ViewHolderFactory;
  * @author Matt Allen
  * @Project LightningUi
  */
-public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
+public class LegacySpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 {
 	public static class Factory extends ViewHolderFactory
 	{
-		@Override public SpotlightListItemViewHolder createViewHolder(ViewGroup parent)
+		@Override public LegacySpotlightListItemViewHolder createViewHolder(ViewGroup parent)
 		{
-			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.spotlight_image_list_item_view, parent, false);
-			return new SpotlightListItemViewHolder(view);
+			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.legacy_spotlight_image_list_item_view, parent, false);
+			return new LegacySpotlightListItemViewHolder(view);
 		}
 	}
 
-	protected WrapContentViewPager viewPager;
+	protected ViewPager viewPager;
 	protected TabLayout indicator;
-	protected StormSpotlightAdapter spotlightAdapter = new StormSpotlightAdapter();
+	protected LegacyStormSpotlightAdapter spotlightAdapter = new LegacyStormSpotlightAdapter();
+	private Runnable viewPagerTransition = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			if (viewPager.getCurrentItem() < spotlightAdapter.getCount() - 1)
+			{
+				viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+			}
+			else
+			{
+				viewPager.setCurrentItem(0);
+			}
+		}
+	};
 
-	public SpotlightListItemViewHolder(View view)
+	public LegacySpotlightListItemViewHolder(View view)
 	{
 		super(view);
 		viewPager = view.findViewById(R.id.viewPager);
-
 		indicator = view.findViewById(R.id.indicator);
 		viewPager.setAdapter(spotlightAdapter);
-		viewPager.setClipToPadding(false);
-		viewPager.setPadding(40,0,40,0);
 		indicator.setupWithViewPager(viewPager, true);
+		viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+		{
+			@Override
+			public void onPageSelected(int position)
+			{
+				scheduleNextTransition();
+			}
+		});
 	}
 
 	@Override public void populateView(final SpotlightListItem model)
 	{
 		spotlightAdapter.setSpotlightListItem(model);
+		scheduleNextTransition();
 
 		if (spotlightAdapter.getCount() <= 1)
 		{
@@ -65,11 +87,19 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		{
 			indicator.setVisibility(View.VISIBLE);
 		}
-		/**
-		 * Need to set the number of the items, so the {@link WrapContentViewPager }
-		 * will calculate the highest height and set for all the views the same height.
-		 * Otherwise, each view will have different height
-		 */
-		viewPager.setOffscreenPageLimit(spotlightAdapter.getCount());
+	}
+
+	private void scheduleNextTransition()
+	{
+		int currentIndex = viewPager.getCurrentItem();
+		SpotlightImageProperty currentItem = spotlightAdapter.getItem(currentIndex);
+
+		if (currentItem == null || spotlightAdapter.getCount() <= 1)
+		{
+			return;
+		}
+
+		viewPager.removeCallbacks(viewPagerTransition);
+		viewPager.postDelayed(viewPagerTransition, currentItem.getDelay());
 	}
 }

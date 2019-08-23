@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
+	android:layout_height="192dp"
 	android:orientation="vertical"
 >
-	<com.cube.storm.ui.view.WrapContentViewPager
+
+	<android.support.v4.view.ViewPager
 		android:id="@+id/viewPager"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -15,11 +16,12 @@
 	<android.support.design.widget.TabLayout
 		android:id="@+id/indicator"
 		android:layout_width="wrap_content"
-		android:layout_height="10dp"
-		app:tabBackground="@drawable/spotlight_image_list_item_indicator"
-		android:layout_gravity="center"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerInParent="true"
+		app:tabBackground="@drawable/legacy_spotlight_image_list_item_indicator"
+		app:tabGravity="center"
 		app:tabIndicatorHeight="0dp"
-		android:padding="1dp"
-		android:layout_margin="1dp"
 	/>
-</LinearLayout>
+
+</RelativeLayout>
