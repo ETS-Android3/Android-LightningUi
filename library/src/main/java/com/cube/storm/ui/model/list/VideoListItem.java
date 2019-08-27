@@ -4,6 +4,7 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.VideoProperty;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class VideoListItem extends ImageListItem
 
 	{ this.className = CLASS_NAME; }
 
-	protected Collection<? extends VideoProperty> videos;
+	protected Collection<? extends VideoProperty> videos = new ArrayList<VideoProperty>();
 
 	@Override public int describeContents()
 	{
