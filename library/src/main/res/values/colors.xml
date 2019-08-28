@@ -8,8 +8,8 @@
 	<color name="borderGrey">#c2c2c2</color>
 	<color name="spotlightIndicatorLightGrey">#aeaeae</color>
 	<color name="headingText">#6d6d6d</color>
-	<color name="badgeLabelBackground">#ed1b2e</color>
-	<color name="badgeImageBorder">#0a000000</color>
+	<color name="collectionItemLabelBackground">#ed1b2e</color>
+	<color name="collectionItemImageBorder">#0a000000</color>
 	<color name="collectionItemActive">#FFFFFF</color>
 	<color name="collectionItemInactive">#6D6D6D</color>
 </resources>

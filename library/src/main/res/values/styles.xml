@@ -19,6 +19,5 @@
 	</style>
 	<style name="CollectionItemLabel.Active">
 		<item name="android:textColor">@color/collectionItemActive</item>
-		<item name="android:background">@drawable/collection_item_label_background</item>
 	</style>
 </resources>
