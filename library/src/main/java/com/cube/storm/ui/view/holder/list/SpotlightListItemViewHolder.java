@@ -49,7 +49,6 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		indicator = view.findViewById(R.id.indicator);
 		viewPager.setAdapter(spotlightAdapter);
 		viewPager.setClipToPadding(false);
-		viewPager.setPadding(40,0,40,0);
 		indicator.setupWithViewPager(viewPager, true);
 	}
 
