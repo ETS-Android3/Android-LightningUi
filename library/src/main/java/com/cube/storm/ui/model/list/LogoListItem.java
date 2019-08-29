@@ -2,7 +2,10 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.LinkProperty;
+
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,11 +21,13 @@ import lombok.experimental.Accessors;
  */
 @NoArgsConstructor @AllArgsConstructor
 @Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
-public class LogoListItem extends ImageListItem
+public class LogoListItem extends TitleListItem
 {
 	public static String CLASS_NAME = "LogoListItem";
 
 	{ this.className = CLASS_NAME; }
+
+	protected ArrayList<ImageProperty> image;
 
 	protected LinkProperty link;
 

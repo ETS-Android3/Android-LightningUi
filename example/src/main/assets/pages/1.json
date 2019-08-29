@@ -1,6 +1,396 @@
 {
 	"children": [
 		{
+			"class": "CollectionListItem",
+				"cells": [
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/141501992968_hammer_x2.png",
+								"x1": "assets://content/141501992968_hammer_x2.png",
+								"x1.5": "assets://content/141501992968_hammer_x2.png",
+								"x2": "assets://content/141501992968_hammer_x2.png"
+							}
+						},
+						"identifier": "ARC_STORM-1-1",
+						"overlay": {
+							"class": "Text",
+							"content": "2qc8i a awd adadadadawd awdawdawd"
+						}
+					},
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/hairy_fish_test_image.jpg",
+								"x1": "assets://content/hairy_fish_test_image.jpg",
+								"x1.5": "assets://content/hairy_fish_test_image.jpg",
+								"x2": "assets://content/hairy_fish_test_image.jpg"
+							}
+						},
+						"identifier": "ARC_STORM-1-7",
+						"overlay": {
+							"class": "Text",
+							"content": "2qc92"
+						}
+					},
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/hairy_fish_test_image.jpg",
+								"x1": "assets://content/hairy_fish_test_image.jpg",
+								"x1.5": "assets://content/hairy_fish_test_image.jpg",
+								"x2": "assets://content/hairy_fish_test_image.jpg"
+							}
+						},
+						"identifier": "ARC_STORM-1-9",
+						"overlay": {
+							"class": "Text",
+							"content": "2qc9i"
+						}
+					},
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/hairy_fish_test_image.jpg",
+								"x1": "assets://content/hairy_fish_test_image.jpg",
+								"x1.5": "assets://content/hairy_fish_test_image.jpg",
+								"x2": "assets://content/hairy_fish_test_image.jpg"
+							}
+						},
+						"identifier": "ARC_STORM-1-10",
+						"overlay": {
+							"class": "Text",
+							"content": "2qca2"
+						}
+					},
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/hairy_fish_test_image.jpg",
+								"x1": "assets://content/hairy_fish_test_image.jpg",
+								"x1.5": "assets://content/hairy_fish_test_image.jpg",
+								"x2": "assets://content/hairy_fish_test_image.jpg"
+							}
+						},
+						"identifier": "ARC_STORM-1-11",
+						"overlay": {
+							"class": "Text",
+							"content": "2qcai"
+						}
+					},
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/hairy_fish_test_image.jpg",
+								"x1": "assets://content/hairy_fish_test_image.jpg",
+								"x1.5": "assets://content/hairy_fish_test_image.jpg",
+								"x2": "assets://content/hairy_fish_test_image.jpg"
+							}
+						},
+						"identifier": "ARC_STORM-1-12",
+						"overlay": {
+							"class": "Text",
+							"content": "2qcb2"
+						}
+					},
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/hairy_fish_test_image.jpg",
+								"x1": "assets://content/hairy_fish_test_image.jpg",
+								"x1.5": "assets://content/hairy_fish_test_image.jpg",
+								"x2": "assets://content/hairy_fish_test_image.jpg"
+							}
+						},
+						"identifier": "ARC_STORM-1-2",
+						"overlay": {
+							"class": "Text",
+							"content": "2qcbi"
+						}
+					},
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/hairy_fish_test_image.jpg",
+								"x1": "assets://content/hairy_fish_test_image.jpg",
+								"x1.5": "assets://content/hairy_fish_test_image.jpg",
+								"x2": "assets://content/hairy_fish_test_image.jpg"
+							}
+						},
+						"identifier": "ARC_STORM-1-3",
+						"overlay": {
+							"class": "Text",
+							"content": "2qcc2"
+						}
+					},
+					{
+						"class": "AppCollectionItem",
+						"icon": {
+							"class": "Image",
+							"src": {
+								"class": "ImageDescriptor",
+								"x0.75": "assets://content/hairy_fish_test_image.jpg",
+								"x1": "assets://content/hairy_fish_test_image.jpg",
+								"x1.5": "assets://content/hairy_fish_test_image.jpg",
+								"x2": "assets://content/hairy_fish_test_image.jpg"
+							}
+						},
+						"identifier": "ARC_STORM-1-8",
+						"overlay": {
+							"class": "Text",
+							"content": "2qcci"
+						}
+					}
+			],
+			"footer": {
+				"class": "Text",
+				"content": "2frte"
+			},
+			"header": {
+				"class": "Text",
+				"content": "2frtc"
+			}
+		},
+		{
+			"class": "SpotlightListItem",
+			"images": [
+				{
+					"class": "SpotlightImage",
+					"delay": 5000,
+					"link": {
+						"class": "ExternalLink",
+						"destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+						"title": {
+							"class": "Text",
+							"content": "2u92u"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/hairy_fish_test_image.jpg",
+						"x1": "assets://content/hairy_fish_test_image.jpg",
+						"x1.5": "assets://content/hairy_fish_test_image.jpg",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"accessibilityLabel": {
+						"class": "Text",
+						"content": "This is an image of a fish"
+					},
+					"category": {
+						"class": "Text",
+						"content": "Category"
+					},
+					"title": {
+						"class": "Text",
+						"content": "Title"
+					},
+					"description": {
+						"class": "Text",
+						"content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+					}
+				},
+				{
+					"class": "SpotlightImage",
+					"delay": 4000,
+					"link": {
+						"class": "InternalLink",
+						"destination": "cache:\/\/pages\/911494.json",
+						"title": {
+							"class": "Text",
+							"content": "2f92j"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/hairy_fish_test_image.jpg",
+						"x1": "assets://content/hairy_fish_test_image.jpg",
+						"x1.5": "assets://content/hairy_fish_test_image.jpg",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"category": {
+						"class": "Text",
+						"content": "Category"
+					},
+					"title": {
+						"class": "Text",
+						"content": "Title"
+					},
+					"description": {
+						"class": "Text",
+						"content": "Only 1 Lorem Ipsum"
+					},
+					"text": {
+						"class": "Text",
+						"content": "2egjb"
+					}
+				},
+				{
+					"class": "SpotlightImage",
+					"delay": 4000,
+					"link": {
+						"class": "InternalLink",
+						"destination": "cache:\/\/pages\/925712.json",
+						"title": {
+							"class": "Text",
+							"content": "2fg86"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+						"x1": "assets://content/1415019799016_plugin_x1.png",
+						"x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"category": {
+						"class": "Text",
+						"content": "Category"
+					},
+					"title": {
+						"class": "Text",
+						"content": "Title"
+					},
+					"text": {
+						"class": "Text",
+						"content": "2fg84"
+					}
+				},
+				{
+					"class": "SpotlightImage",
+					"delay": 4000,
+					"link": {
+						"class": "InternalLink",
+						"destination": "cache:\/\/pages\/925712.json",
+						"title": {
+							"class": "Text",
+							"content": "2fg86"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+						"x1": "assets://content/1415019799016_plugin_x1.png",
+						"x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"title": {
+						"class": "Text",
+						"content": "Just the Title"
+					}
+				},
+				{
+					"class": "SpotlightImage",
+					"delay": 4000,
+					"link": {
+						"class": "InternalLink",
+						"destination": "cache:\/\/pages\/925712.json",
+						"title": {
+							"class": "Text",
+							"content": "2fg86"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+						"x1": "assets://content/1415019799016_plugin_x1.png",
+						"x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"text": {
+						"class": "Text",
+						"content": "2fg84"
+					}
+				},
+				{
+					"class": "SpotlightImage",
+					"delay": 4000,
+					"link": {
+						"class": "InternalLink",
+						"destination": "cache:\/\/pages\/925712.json",
+						"title": {
+							"class": "Text",
+							"content": "2fg86"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/1415019799016_plugin_x0.75.png",
+						"x1": "assets://content/1415019799016_plugin_x1.png",
+						"x1.5": "assets://content/1415019799016_plugin_x1.5.png",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"accessibilityLabel": {
+						"class": "Text",
+						"content": "This is an image of a fish"
+					}
+				}
+			]
+		},
+		{
+			"class": "SpotlightListItem",
+			"images": [
+				{
+					"class": "SpotlightImage",
+					"delay": 5000,
+					"link": {
+						"class": "ExternalLink",
+						"destination": "https:\/\/www.redcrossblood.org\/missingtypes?cid=missingtypes&med=referral&source=cfrspotlightimage",
+						"title": {
+							"class": "Text",
+							"content": "2u92u"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/141501992968_hammer_x0.75.png",
+						"x1": "assets://content/141501992968_hammer_x1.png",
+						"x1.5": "assets://content/141501992968_hammer_x1.5.png",
+						"x2": "assets://content/141501992968_hammer_x2.png"
+					},
+					"accessibilityLabel": {
+						"class": "Text",
+						"content": "This is an image of a fish"
+					},
+					"category": {
+						"class": "Text",
+						"content": "Category"
+					},
+					"title": {
+						"class": "Text",
+						"content": "Title"
+					},
+					"description": {
+						"class": "Text",
+						"content": "Description"
+					}
+				}
+			]
+		},
+		{
 			"children": [
 				{
 					"class": "TextListItem",
@@ -473,6 +863,33 @@
 						"title": {
 							"class": "Text",
 							"content": "2g8pv"
+						}
+					}
+				}
+			]
+		},
+		{
+			"class": "VideoListItem",
+			"image": {
+				"class": "Image",
+				"src": {
+					"class": "ImageDescriptor",
+					"x0.75": "cache:\/\/content\/141501992968_hammer_x0.75.jpg",
+					"x1": "cache:\/\/content\/141501992968_hammer_x1.jpg",
+					"x1.5": "cache:\/\/content\/141501992968_hammer_x1.5.jpg",
+					"x2": "cache:\/\/content\/141501992968_hammer_x2.jpg"
+				}
+			},
+			"videos": [
+				{
+					"class": "Video",
+					"locale": "usa_en",
+					"src": {
+						"class": "InternalLink",
+						"destination": "cache:\/\/content\/video_with_captions.mp4",
+						"title": {
+							"class": "Text",
+							"content": "2g8ps"
 						}
 					}
 				}

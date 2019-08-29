@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,10 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.list.SpotlightListItem;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
+import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.TextView;
+import com.cube.storm.util.lib.processor.Processor;
 
 public class StormSpotlightAdapter extends PagerAdapter
 {
@@ -95,10 +98,30 @@ public class StormSpotlightAdapter extends PagerAdapter
 		final SpotlightImageProperty spotlightItem = getItem(position);
 		if (spotlightItem != null)
 		{
+			View textContainer = view.findViewById(R.id.text_container);
 			ImageView imageView = view.findViewById(R.id.image_view);
-			TextView textView = view.findViewById(R.id.text_ticker);
-			imageView.populate(spotlightItem.getImage());
-			textView.populate(spotlightItem.getText(), spotlightItem.getLink());
+			TextView category = view.findViewById(R.id.category);
+			TextView title = view.findViewById(R.id.title);
+			TextView description = view.findViewById(R.id.description);
+
+			imageView.populate(spotlightItem.getImage(), spotlightItem.getAccessibilityLabel());
+			category.populate(spotlightItem.getCategory());
+			title.populate(spotlightItem.getTitle());
+			description.populate(spotlightItem.getDescription());
+
+			// Hide text container under spotlight image if no text to populate
+			if (category.getVisibility() != View.VISIBLE &&
+				title.getVisibility() != View.VISIBLE &&
+				description.getVisibility() != View.VISIBLE)
+			{
+				textContainer.setVisibility(View.GONE);
+			}
+			else
+			{
+				textContainer.setVisibility(View.VISIBLE);
+			}
+			// Keep text aligned across all spotlights. This must be done after the visibility check above.
+			category.setVisibility(View.VISIBLE);
 
 			view.setOnClickListener(new View.OnClickListener()
 			{
