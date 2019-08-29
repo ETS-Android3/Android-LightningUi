@@ -3,6 +3,7 @@ package com.cube.storm.ui.model.list;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.property.ImageProperty;
+import com.cube.storm.ui.model.property.TextProperty;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,8 @@ public class ImageListItem extends TitleListItem
 	{ this.className = CLASS_NAME; }
 
 	protected ArrayList<ImageProperty> image;
+
+	protected TextProperty accessibilityLabel;
 
 	@Override public int describeContents()
 	{

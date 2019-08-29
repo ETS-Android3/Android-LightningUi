@@ -1,5 +1,7 @@
 package com.cube.storm.ui.model.property;
 
+import android.support.annotation.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +19,21 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
 public class SpotlightImageProperty extends AnimationFrame
 {
-	protected TextProperty text;
+	@Deprecated protected TextProperty text; // legacy field
+	protected TextProperty category;
+	protected TextProperty title;
+	protected TextProperty description;
+	protected TextProperty accessibilityLabel;
 	protected LinkProperty link;
+
+	@Nullable
+	public TextProperty getTitle()
+	{
+		if (title == null && text != null)
+		{
+			return text;
+		}
+
+		return title;
+	}
 }

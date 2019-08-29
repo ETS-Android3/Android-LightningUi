@@ -58,7 +58,7 @@ public class StandardGridItemViewHolder extends GridViewHolder<StandardGridItem>
 		link = model.getLink();
 		image.setVisibility(View.GONE);
 
-		image.populate(model.getImage(), progress);
+		image.populate(model.getImage(), null, progress);
 
 		title.populate(model.getTitle());
 		description.populate(model.getDescription());

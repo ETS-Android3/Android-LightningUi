@@ -62,7 +62,7 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 	@Override public void populateView(final VideoListItem model)
 	{
 		this.model = model;
-		image.populate(model.getImage(), progress);
+		image.populate(model.getImage(), null, progress);
 
 		if (model.getDuration() > 0)
 		{
