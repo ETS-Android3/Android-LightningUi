@@ -1,6 +1,23 @@
 {
 	"children": [
 		{
+			"class": "ImageListItem",
+			"image": {
+				"class": "Image",
+				"accessibilityLabel": {
+					"class": "Text",
+					"content": "test test test"
+				},
+				"src": {
+					"class": "ImageDescriptor",
+					"x0.75": "assets://content/hairy_fish_test_image.jpg",
+					"x1": "assets://content/hairy_fish_test_image.jpg",
+					"x1.5": "assets://content/hairy_fish_test_image.jpg",
+					"x2": "assets://content/hairy_fish_test_image.jpg"
+				}
+			}
+		},
+		{
 			"class": "CollectionListItem",
 				"cells": [
 					{

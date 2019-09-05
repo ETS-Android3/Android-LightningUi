@@ -324,10 +324,12 @@ public class ImageView extends android.support.v7.widget.AppCompatImageView
 		if(!TextUtils.isEmpty(accessibilityLabelText))
 		{
 			setContentDescription(accessibilityLabelText);
+			setFocusable(true);
 		}
 		else
 		{
 			setContentDescription(null);
+			setFocusable(false);
 		}
 
 		UiSettings.getInstance().getImageLoader().cancelDisplayTask(this);
