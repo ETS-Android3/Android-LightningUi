@@ -335,10 +335,12 @@ public class ImageView extends android.support.v7.widget.AppCompatImageView
 			if (!TextUtils.isEmpty(accessibilityLabelText))
 			{
 				setContentDescription(accessibilityLabelText);
+				setFocusable(true);
 			}
 			else
 			{
 				setContentDescription(null);
+				setFocusable(false);
 			}
 
 			ImageHelper.displayImage(this, image, new SimpleImageLoadingListener()
@@ -395,6 +397,7 @@ public class ImageView extends android.support.v7.widget.AppCompatImageView
 			setImageBitmap(null);
 			setVisibility(View.GONE);
 			setContentDescription(null);
+			setFocusable(false);
 		}
 	}
 }
