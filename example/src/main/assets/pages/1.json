@@ -649,6 +649,37 @@
 			}
 		},
 		{
+			"class": "AnimationListItem",
+			"accessibilityLabel": {
+				"class": "Text",
+				"content": "animated image caption"
+			},
+			"images": [
+				{
+					"class": "AnimationImage",
+					"delay": 1000,
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/hairy_fish_test_image.jpg",
+						"x1": "assets://content/hairy_fish_test_image.jpg",
+						"x1.5": "assets://content/hairy_fish_test_image.jpg",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					}
+				},
+				{
+					"class": "AnimationImage",
+					"delay": 1000,
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/hairy_fish_test_image.jpg",
+						"x1": "assets://content/hairy_fish_test_image.jpg",
+						"x1.5": "assets://content/hairy_fish_test_image.jpg",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					}
+				}
+			]
+		},
+		{
 			"children": [
 				{
 					"annotation": "1",
