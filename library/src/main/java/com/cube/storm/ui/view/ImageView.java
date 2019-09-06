@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
-
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.data.ContentSize;
 import com.cube.storm.ui.lib.helper.ImageHelper;
@@ -314,26 +313,34 @@ public class ImageView extends android.support.v7.widget.AppCompatImageView
 	 */
 	private void populateFrame(
 		@Nullable final ArrayList<ImageProperty> image,
-		@Nullable final TextProperty accessibilityLabel,
+		@Nullable TextProperty accessibilityLabel,
 		@Nullable final ProgressBar progress,
 		@Nullable final ImageLoadingListener listener
 	)
 	{
-		// Set accessibility label (content description) on images
-		String accessibilityLabelText = UiSettings.getInstance().getTextProcessor().process(accessibilityLabel);
-		if(!TextUtils.isEmpty(accessibilityLabelText))
-		{
-			setContentDescription(accessibilityLabelText);
-		}
-		else
-		{
-			setContentDescription(null);
-		}
-
 		UiSettings.getInstance().getImageLoader().cancelDisplayTask(this);
 
 		if (image != null && image.size() > 0)
 		{
+			if (accessibilityLabel == null)
+			{
+				// no explicit accessibility label provided. See if the images themselves have one...
+				// we will choose an image to take the label from arbitrarily
+				// all the images have the same label anyway for all Storm apps using the LegacyImageViewProcessor
+				accessibilityLabel = image.get(0).getAccessibilityLabel();
+			}
+
+			// Set accessibility label (content description) on images
+			String accessibilityLabelText = UiSettings.getInstance().getTextProcessor().process(accessibilityLabel);
+			if (!TextUtils.isEmpty(accessibilityLabelText))
+			{
+				setContentDescription(accessibilityLabelText);
+			}
+			else
+			{
+				setContentDescription(null);
+			}
+
 			ImageHelper.displayImage(this, image, new SimpleImageLoadingListener()
 			{
 				@Override public void onLoadingStarted(String imageUri, View view)
@@ -387,6 +394,7 @@ public class ImageView extends android.support.v7.widget.AppCompatImageView
 		{
 			setImageBitmap(null);
 			setVisibility(View.GONE);
+			setContentDescription(null);
 		}
 	}
 }
