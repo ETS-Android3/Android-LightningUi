@@ -39,7 +39,6 @@ import com.google.android.exoplayer2.video.VideoListener;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.util.TypedValue.COMPLEX_UNIT_SP;
 import static com.google.android.exoplayer2.Player.REPEAT_MODE_ONE;
 
 /**
@@ -94,8 +93,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 		playerView = findViewById(R.id.player_view);
 		progressBar = findViewById(R.id.progress);
 		playerView.requestFocus();
-
-		playerView.getSubtitleView().setFixedTextSize(COMPLEX_UNIT_SP, 10f);
 
 		if (uri == null
 		    && getIntent().hasExtra(EXTRA_VIDEO)
