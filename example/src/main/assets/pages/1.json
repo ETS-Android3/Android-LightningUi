@@ -197,6 +197,89 @@
 			"images": [
 				{
 					"class": "SpotlightImage",
+					"accessibilityLabel": {
+						"class": "Text",
+						"content": "Mental Health"
+					},
+					"category": {
+						"class": "Text",
+						"content": "2ummg"
+					},
+					"delay": 5000,
+					"description": {
+						"class": "Text",
+						"content": "Introducing being confused by seemingly random events and ..."
+					},
+					"link": {
+						"class": "ExternalLink",
+						"destination": "https:\/\/google.com",
+						"title": {
+							"class": "Text",
+							"content": "2umma"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/hairy_fish_test_image.jpg",
+						"x1": "assets://content/hairy_fish_test_image.jpg",
+						"x1.5": "assets://content/hairy_fish_test_image.jpg",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"text": {
+						"class": "Text",
+						"content": "2umm8"
+					},
+					"title": {
+						"class": "Text",
+						"content": "How to cope with confusion"
+					}
+				},
+				{
+					"class": "SpotlightImage",
+					"accessibilityLabel": {
+						"class": "Text",
+						"content": "2ummq"
+					},
+					"category": {
+						"class": "Text",
+						"content": "2umn5"
+					},
+					"delay": 5000,
+					"description": {
+						"class": "Text",
+						"content": "Introducing being confused by seemingly random events."
+					},
+					"link": {
+						"class": "ExternalLink",
+						"destination": "https:\/\/www.google.com",
+						"title": {
+							"class": "Text",
+							"content": "2ummv"
+						}
+					},
+					"src": {
+						"class": "ImageDescriptor",
+						"x0.75": "assets://content/hairy_fish_test_image.jpg",
+						"x1": "assets://content/hairy_fish_test_image.jpg",
+						"x1.5": "assets://content/hairy_fish_test_image.jpg",
+						"x2": "assets://content/hairy_fish_test_image.jpg"
+					},
+					"text": {
+						"class": "Text",
+						"content": "2ummt"
+					},
+					"title": {
+						"class": "Text",
+						"content": "How to cope with"
+					}
+				}
+			]
+		},
+		{
+			"class": "SpotlightListItem",
+			"images": [
+				{
+					"class": "SpotlightImage",
 					"delay": 5000,
 					"link": {
 						"class": "ExternalLink",
