@@ -23,6 +23,7 @@ public class ImageProperty extends Property
 	protected String mime;
 	protected long size;
 	protected String locale;
+	protected TextProperty accessibilityLabel;
 
 	@Override public int describeContents()
 	{
