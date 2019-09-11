@@ -1,16 +1,14 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
-
 import com.cube.storm.ui.model.property.ImageProperty;
-
-import java.util.ArrayList;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.util.ArrayList;
 
 /**
  * A view model with an image property

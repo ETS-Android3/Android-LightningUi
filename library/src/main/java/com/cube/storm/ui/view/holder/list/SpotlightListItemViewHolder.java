@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.adapter.StormSpotlightAdapter;
 import com.cube.storm.ui.model.list.SpotlightListItem;
-import com.cube.storm.ui.model.property.SpotlightImageProperty;
+import com.cube.storm.ui.view.WrapContentViewPager;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
@@ -37,46 +37,24 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		}
 	}
 
-	protected ViewPager viewPager;
+	protected WrapContentViewPager viewPager;
 	protected TabLayout indicator;
 	protected StormSpotlightAdapter spotlightAdapter = new StormSpotlightAdapter();
-	private Runnable viewPagerTransition = new Runnable()
-	{
-		@Override
-		public void run()
-		{
-			if (viewPager.getCurrentItem() < spotlightAdapter.getCount() - 1)
-			{
-				viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-			}
-			else
-			{
-				viewPager.setCurrentItem(0);
-			}
-		}
-	};
 
 	public SpotlightListItemViewHolder(View view)
 	{
 		super(view);
 		viewPager = view.findViewById(R.id.viewPager);
+
 		indicator = view.findViewById(R.id.indicator);
 		viewPager.setAdapter(spotlightAdapter);
+		viewPager.setClipToPadding(false);
 		indicator.setupWithViewPager(viewPager, true);
-		viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-		{
-			@Override
-			public void onPageSelected(int position)
-			{
-				scheduleNextTransition();
-			}
-		});
 	}
 
 	@Override public void populateView(final SpotlightListItem model)
 	{
 		spotlightAdapter.setSpotlightListItem(model);
-		scheduleNextTransition();
 
 		if (spotlightAdapter.getCount() <= 1)
 		{
@@ -86,19 +64,11 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		{
 			indicator.setVisibility(View.VISIBLE);
 		}
-	}
-
-	private void scheduleNextTransition()
-	{
-		int currentIndex = viewPager.getCurrentItem();
-		SpotlightImageProperty currentItem = spotlightAdapter.getItem(currentIndex);
-
-		if (currentItem == null || spotlightAdapter.getCount() <= 1)
-		{
-			return;
-		}
-
-		viewPager.removeCallbacks(viewPagerTransition);
-		viewPager.postDelayed(viewPagerTransition, currentItem.getDelay());
+		/**
+		 * Need to set the number of the items, so the {@link WrapContentViewPager }
+		 * will calculate the highest height and set for all the views the same height.
+		 * Otherwise, each view will have different height
+		 */
+		viewPager.setOffscreenPageLimit(spotlightAdapter.getCount());
 	}
 }
