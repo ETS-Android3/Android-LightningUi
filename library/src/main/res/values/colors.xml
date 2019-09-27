@@ -12,4 +12,5 @@
 	<color name="collectionItemImageBorder">#0a000000</color>
 	<color name="collectionItemActive">#FFFFFF</color>
 	<color name="collectionItemInactive">#6D6D6D</color>
+	<color name="description_text">#8C000000</color>
 </resources>
