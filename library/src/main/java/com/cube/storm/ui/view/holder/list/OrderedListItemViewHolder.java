@@ -53,7 +53,7 @@ public class OrderedListItemViewHolder extends ViewHolder<OrderedListItem>
 		{
 			annotation.setText(model.getAnnotation());
 
-			// ARCFA-237 dont't read square root symbol in screen reader
+			// ARCFA-237 don't read square root symbol in screen reader
 			if (model.getAnnotation().equals("\u221a"))
 			{
 				annotation.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
