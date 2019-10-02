@@ -52,6 +52,8 @@
 			android:textColor="@color/description_text"
 			android:textSize="14sp"
 			android:fontFamily="sans-serif-regular"
+			android:focusable="true"
+			android:focusableInTouchMode="true"
 		/>
 	</LinearLayout>
 
