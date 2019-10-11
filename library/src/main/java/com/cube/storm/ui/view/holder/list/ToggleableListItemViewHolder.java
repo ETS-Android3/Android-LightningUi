@@ -76,9 +76,13 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 		toggleContainer.setVisibility(View.GONE);
 		embeddedLinksContainer.setVisibility(View.GONE);
 
-		if (toggleContainer.getTag() != null)
+		if (toggleContainer.getTag() != null && (Boolean)toggleContainer.getTag())
 		{
-			toggleContainer.setVisibility((Boolean)toggleContainer.getTag() ? View.VISIBLE : View.GONE);
+			toggleContainer.setVisibility(View.VISIBLE);
+			if (!TextUtils.isEmpty(titleText))
+			{
+				title.setContentDescription(titleText +  ". Description expanded");
+			}
 		}
 
 		itemView.setOnClickListener(new OnClickListener()
