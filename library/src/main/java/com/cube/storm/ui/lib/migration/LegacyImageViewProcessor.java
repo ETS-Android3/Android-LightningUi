@@ -3,7 +3,7 @@ package com.cube.storm.ui.lib.migration;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cube.storm.UiSettings;

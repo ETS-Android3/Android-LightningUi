@@ -2,7 +2,7 @@ package com.cube.storm.ui.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +20,7 @@ import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
 import com.cube.storm.ui.view.AdapterLinearLayout;
 
+import androidx.viewpager.widget.ViewPager;
 import lombok.Getter;
 
 /**
@@ -170,7 +171,7 @@ public class StormStaticFragment extends Fragment implements StormInterface
 	}
 
 	/**
-	 * Called automatically from {@link #onStart()} for single fragments, or from {@link android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected(int)}
+	 * Called automatically from {@link #onStart()} for single fragments, or from {@link ViewPager.OnPageChangeListener#onPageSelected(int)}
 	 */
 	public void onPageOpened()
 	{

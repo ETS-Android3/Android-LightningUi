@@ -1,6 +1,6 @@
 package com.cube.storm.ui.lib.resolver;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;

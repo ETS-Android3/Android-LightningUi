@@ -2,11 +2,6 @@ package com.cube.storm.ui.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +19,12 @@ import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.Page;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 import lombok.Getter;
 
 /**
@@ -176,7 +177,7 @@ public class StormFragment extends Fragment implements StormInterface
 	}
 
 	/**
-	 * Called automatically from {@link #onStart()} for single fragments, or from {@link android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected(int)}
+	 * Called automatically from {@link #onStart()} for single fragments, or from {@link ViewPager.OnPageChangeListener#onPageSelected(int)}
 	 */
 	public void onPageOpened()
 	{

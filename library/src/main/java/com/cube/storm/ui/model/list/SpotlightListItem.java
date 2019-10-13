@@ -1,7 +1,7 @@
 package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
 
