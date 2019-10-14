@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,8 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.list.SpotlightListItem;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
-import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.TextView;
-import com.cube.storm.util.lib.processor.Processor;
 
 public class StormSpotlightAdapter extends PagerAdapter
 {
