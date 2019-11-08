@@ -20,9 +20,9 @@
 			android:orientation="vertical"
 			android:background="@drawable/spotlight_border"
 		>
-			<com.cube.storm.ui.view.ImageView
+			<com.cube.storm.ui.view.SpotlightImageView
 				android:layout_width="match_parent"
-				android:layout_height="136dp"
+				android:layout_height="0dp"
 				android:id="@+id/image_view"
 				android:scaleType="centerCrop"
 				tools:src="@drawable/lightbox_icon_forward"
