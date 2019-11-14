@@ -95,7 +95,7 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		for (int index = 0; index < count; index++)
 		{
 			// "selected" is already added to content description.
-			String description = "tab " + index + " of " + count;
+			String description = "tab " + (index + 1) + " of " + count;
 			indicator.getTabAt(index).setContentDescription(description);
 		}
 	}
