@@ -112,10 +112,15 @@ public class StormSpotlightAdapter extends PagerAdapter
 				description.getVisibility() != View.VISIBLE)
 			{
 				textContainer.setVisibility(View.GONE);
+				textContainer.setFocusable(false);
+				textContainer.setClickable(false);
 			}
 			else
 			{
 				textContainer.setVisibility(View.VISIBLE);
+				textContainer.setFocusable(true); // lets talkback focus navigate onto spotlight text
+				textContainer.setClickable(spotlightItem.getLink() != null); // announces that spotlight is clickable "Double-tap to activate"
+				imageView.setClickable(spotlightItem.getLink() != null); // announces that image is clickable "Double-tap to activate"
 			}
 			// Keep text aligned across all spotlights. This must be done after the visibility check above.
 			category.setVisibility(View.VISIBLE);

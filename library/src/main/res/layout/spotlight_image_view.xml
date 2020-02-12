@@ -54,6 +54,7 @@
 					android:lineSpacingExtra="9sp"
 					android:textAllCaps="true"
 					android:visibility="gone"
+					tools:visibility="visible"
 					tools:text="Latest Innovations"
 				/>
 				<com.cube.storm.ui.view.TextView
@@ -66,6 +67,7 @@
 					android:textStyle="normal"
 					android:textColor="#000000"
 					android:visibility="gone"
+					tools:visibility="visible"
 					tools:text="Alexa can save your family"
 				/>
 				<com.cube.storm.ui.view.TextView
@@ -79,6 +81,7 @@
 					android:textColor="#6d6d6d"
 					android:lineSpacingExtra="5sp"
 					android:visibility="gone"
+					tools:visibility="visible"
 					tools:text="Introducing the American Red Cross Hurricane Alerts Skill for Alexa!"
 				/>
 			</LinearLayout>
