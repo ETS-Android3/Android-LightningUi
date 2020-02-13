@@ -19,7 +19,10 @@
 			android:id="@+id/spotlight_container"
 			android:orientation="vertical"
 			android:background="@drawable/spotlight_border"
+			android:focusable="true"
 		>
+			<!-- ARCEM-1464: android:focusable="true" here ^ so that
+			talkback users focus all spotlight text as one item-->
 			<com.cube.storm.ui.view.SpotlightImageView
 				android:layout_width="match_parent"
 				android:layout_height="0dp"

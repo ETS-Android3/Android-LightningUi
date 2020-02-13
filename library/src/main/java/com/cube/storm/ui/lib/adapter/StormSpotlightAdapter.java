@@ -112,20 +112,15 @@ public class StormSpotlightAdapter extends PagerAdapter
 				description.getVisibility() != View.VISIBLE)
 			{
 				textContainer.setVisibility(View.GONE);
-				textContainer.setFocusable(false);
-				textContainer.setClickable(false);
 			}
 			else
 			{
 				textContainer.setVisibility(View.VISIBLE);
-				textContainer.setFocusable(true); // lets talkback focus navigate onto spotlight text
-				textContainer.setClickable(spotlightItem.getLink() != null); // announces that spotlight is clickable "Double-tap to activate"
-				imageView.setClickable(spotlightItem.getLink() != null); // announces that image is clickable "Double-tap to activate"
 			}
 			// Keep text aligned across all spotlights. This must be done after the visibility check above.
 			category.setVisibility(View.VISIBLE);
 
-			view.setOnClickListener(new View.OnClickListener()
+			View.OnClickListener spotlightClickListener = new View.OnClickListener()
 			{
 				@Override public void onClick(View v)
 				{
@@ -136,7 +131,10 @@ public class StormSpotlightAdapter extends PagerAdapter
 						eventHook.onViewLinkedClicked(v, spotlightListItem, spotlightItem.getLink());
 					}
 				}
-			});
+			};
+			// ARCEM-1464: text container and image both need to be announced with clickable role (for talkback users)
+			imageView.setOnClickListener(spotlightClickListener);
+			textContainer.setOnClickListener(spotlightClickListener);
 		}
 
 		// Set the item's hashcode as the view tag so we can identify the original item from the view
