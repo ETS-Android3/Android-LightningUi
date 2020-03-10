@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
@@ -22,9 +23,10 @@ import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
-import lombok.Getter;
 
 import java.util.ArrayList;
+
+import lombok.Getter;
 
 /**
  * Base storm fragment that hosts a collection of {@link ListPage} or {@link GridPage}
@@ -42,8 +44,8 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 	@Getter protected StormPageAdapter pageAdapter;
 	@Getter protected ViewPager viewPager;
 
-	private String startTabBarItemSrc;
-	private int startTabBarItemIndex = 0;
+	protected String startTabBarItemSrc;
+	protected int startTabBarItemIndex = 0;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
