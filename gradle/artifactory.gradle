@@ -105,8 +105,8 @@ afterEvaluate { project ->
 	}
 
 	task androidSourcesJar(type: Jar) {
-		classifier = 'sources'
-		baseName = POM_ARTIFACT_ID
+		archiveClassifier.set("sources")
+		archiveBaseName.set(POM_ARTIFACT_ID)
 		from android.sourceSets.main.java.srcDirs
 	}
 
