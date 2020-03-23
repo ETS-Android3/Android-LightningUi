@@ -1,7 +1,6 @@
 package com.cube.storm.ui.model.descriptor;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.cube.storm.ui.model.TabBarItem;
 
@@ -19,7 +18,7 @@ import lombok.experimental.Accessors;
  */
 @NoArgsConstructor @AllArgsConstructor
 @Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
-public class TabbedPageDescriptor extends PageDescriptor implements Parcelable
+public class TabbedPageDescriptor extends PageDescriptor
 {
 	public static String CLASS_NAME = "TabbedPageDescriptor";
 
@@ -28,26 +27,6 @@ public class TabbedPageDescriptor extends PageDescriptor implements Parcelable
 	protected TabBarItem tabBarItem;
 	protected int tabIndex = 0;
 
-	private TabbedPageDescriptor(Parcel in)
-	{
-		tabIndex = in.readInt();
-	}
-
-	public static final Creator<TabbedPageDescriptor> CREATOR = new Creator<TabbedPageDescriptor>()
-	{
-		@Override
-		public TabbedPageDescriptor createFromParcel(Parcel in)
-		{
-			return new TabbedPageDescriptor(in);
-		}
-
-		@Override
-		public TabbedPageDescriptor[] newArray(int size)
-		{
-			return new TabbedPageDescriptor[size];
-		}
-	};
-
 	@Override public int describeContents()
 	{
 		return 0;
@@ -55,6 +34,6 @@ public class TabbedPageDescriptor extends PageDescriptor implements Parcelable
 
 	@Override public void writeToParcel(Parcel dest, int flags)
 	{
-		dest.writeInt(tabIndex);
+		// Empty
 	}
 }

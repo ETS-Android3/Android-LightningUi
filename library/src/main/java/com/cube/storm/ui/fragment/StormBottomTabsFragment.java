@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -65,6 +64,11 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 		return view;
 	}
 
+	/**
+	 * Loads no more than 5 elements, and calls addTabBarItemToBottomTabs method
+	 *
+	 * @param collection All pages available
+	 */
 	protected void loadPages(@NonNull TabbedPageCollection collection)
 	{
 		super.loadPages(collection);
@@ -88,7 +92,7 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 
 	protected void setAccentColorFromBottomNavigation()
 	{
-		bottomNavigation.setAccentColor(ResourcesCompat.getColor(getResources(), R.color.arc_red, null));
+		bottomNavigation.setAccentColor(ResourcesCompat.getColor(getResources(), R.color.main_red, null));
 	}
 
 	private void addTabBarItemToBottomTabs(TabbedPageDescriptor descriptor)
@@ -116,10 +120,15 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 		}
 	}
 
+	/**
+	 * Creates menu items if the number of pages is greater than 5
+	 *
+	 * @param menu The current menu
+	 * @param inflater the MenuInflater class to inflate the menu
+	 */
 	@Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		super.onCreateOptionsMenu(menu, inflater);
-		// It will only create a menu item if the number of pages is greater than 5
 		if (viewPager.getAdapter() != null && viewPager.getAdapter().getCount() > MAX_BOTTOM_TABS)
 		{
 			for (int iterator = MAX_BOTTOM_TABS; iterator < pageAdapter.getPages().size(); iterator++)
@@ -150,6 +159,13 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 		return R.layout.tabbed_page_bottom_fragment_view;
 	}
 
+	/**
+	 * Calls the content description update and changes the section title
+	 *
+	 * @param position Position of the tab
+	 * @param wasSelected Selected tab
+	 * @return
+	 */
 	@Override
 	public boolean onTabSelected(int position, boolean wasSelected)
 	{
@@ -169,35 +185,29 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 		return true;
 	}
 
+	/**
+	 * This method set the content descriptions for all items from the bottom navigation menu.
+	 * Check if the current tab is selected to update the content description comment
+	 */
 	private void setTabItemContentDescriptions()
 	{
-		// Wait for view to be layed out
-		ViewTreeObserver vto = bottomNavigation.getViewTreeObserver();
-		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+		if (viewPager.getAdapter() == null)
 		{
-			@Override
-			public void onGlobalLayout()
+			return;
+		}
+		int tabCount = bottomNavigation.getItemsCount();
+		int maxElements = Math.min(viewPager.getAdapter().getCount(), MAX_BOTTOM_TABS);
+		for (int bottomTabIdx = 0; bottomTabIdx < maxElements; bottomTabIdx++)
+		{
+			View tab = bottomNavigation.getViewAtPosition(bottomTabIdx);
+			if (tab != null)
 			{
-				// remove layout listener
-				bottomNavigation.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-				if (viewPager.getAdapter() == null)
-				{
-					return;
-				}
-				int tabCount = bottomNavigation.getItemsCount();
-				int maxElements = Math.min(viewPager.getAdapter().getCount(), MAX_BOTTOM_TABS);
-				for (int bottomTabIdx = 0; bottomTabIdx < maxElements; bottomTabIdx++)
-				{
-					View tab = bottomNavigation.getViewAtPosition(bottomTabIdx);
-					if (tab != null)
-					{
-						String tabContentDescription = String.format(getString(R.string.tab_selected), tabTitles.get(bottomTabIdx), bottomTabIdx + 1, tabCount);
-						tab.setContentDescription(tabContentDescription);
-						tab.setFocusable(true);
-					}
-				}
+				String formatString = bottomNavigation.getCurrentItem() == bottomTabIdx ? getString(R.string.bottom_navigation_tab_selected) : getString(R.string.bottom_navigation_tab);
+				String tabContentDescription = String.format(formatString, tabTitles.get(bottomTabIdx), bottomTabIdx + 1, tabCount);
+				tab.setContentDescription(tabContentDescription);
+				tab.setFocusable(true);
 			}
-		});
+		}
 	}
 
 	@Override

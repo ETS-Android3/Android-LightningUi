@@ -68,6 +68,11 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 		switchToTab(INITIAL_TAB);
 	}
 
+	/**
+	 * Adds the fragmentPages to the adapter and populates the viewpager
+	 *
+	 * @param collection All the elements to load
+	 */
 	protected void loadPages(@NonNull TabbedPageCollection collection)
 	{
 		pageAdapter = new StormPageAdapter(getActivity(), getChildFragmentManager());
@@ -117,7 +122,7 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 
 	@Override public void onLoadFail()
 	{
-		if (getActivity() != null)
+		if (getActivity() == null)
 		{
 			return;
 		}
