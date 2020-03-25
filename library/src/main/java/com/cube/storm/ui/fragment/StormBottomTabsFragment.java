@@ -83,7 +83,6 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 			}
 		}
 
-		setTabItemContentDescriptions();
 		viewPager.setCurrentItem(selectedTab, true);
 		bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 		bottomNavigation.setOnTabSelectedListener(this);
@@ -202,7 +201,7 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 			View tab = bottomNavigation.getViewAtPosition(bottomTabIdx);
 			if (tab != null)
 			{
-				String formatString = bottomNavigation.getCurrentItem() == bottomTabIdx ? getString(R.string.bottom_navigation_tab_selected) : getString(R.string.bottom_navigation_tab);
+				String formatString = selectedTab == bottomTabIdx ? getString(R.string.bottom_navigation_tab_selected) : getString(R.string.bottom_navigation_tab);
 				String tabContentDescription = String.format(formatString, tabTitles.get(bottomTabIdx), bottomTabIdx + 1, tabCount);
 				tab.setContentDescription(tabContentDescription);
 				tab.setFocusable(true);
