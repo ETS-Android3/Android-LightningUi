@@ -83,6 +83,7 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 			}
 		}
 
+		setTabItemContentDescriptions();
 		viewPager.setCurrentItem(selectedTab, true);
 		bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 		bottomNavigation.setOnTabSelectedListener(this);
