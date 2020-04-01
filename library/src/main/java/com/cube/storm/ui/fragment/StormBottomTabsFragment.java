@@ -36,7 +36,7 @@ import lombok.Getter;
 /**
  * Renders a Storm TabbedPageCollection as a bottom tabs view.
  */
-public class StormBottomTabsFragment extends StormTabbedFragment implements AHBottomNavigation.OnTabSelectedListener
+public class StormBottomTabsFragment extends StormTabbedFragment implements AHBottomNavigation.OnTabSelectedListener, AHBottomNavigation.OnLayoutChangeListener
 {
 	private static final String EXTRA_SELECTED_TAB = "selectedTab";
 	public static final int MAX_BOTTOM_TABS = 5;
@@ -83,10 +83,10 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 			}
 		}
 
-		setTabItemContentDescriptions();
 		viewPager.setCurrentItem(selectedTab, true);
 		bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 		bottomNavigation.setOnTabSelectedListener(this);
+		bottomNavigation.addOnLayoutChangeListener(this);
 		setAccentColorFromBottomNavigation();
 	}
 
@@ -171,7 +171,6 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 	{
 		viewPager.setCurrentItem(position);
 		selectedTab = position;
-		setTabItemContentDescriptions();
 
 		if (getActivity() != null && ((AppCompatActivity)getActivity()).getSupportActionBar() != null)
 		{    //Hide the back arrow in the main activity
@@ -185,19 +184,20 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 		return true;
 	}
 
+	// When the bottomNavigation layout change, set the tab item content descriptions for every tab
+	@Override public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
+	{
+		setTabItemContentDescriptions();
+	}
+
 	/**
 	 * This method set the content descriptions for all items from the bottom navigation menu.
 	 * Check if the current tab is selected to update the content description comment
 	 */
 	private void setTabItemContentDescriptions()
 	{
-		if (viewPager.getAdapter() == null)
-		{
-			return;
-		}
 		int tabCount = bottomNavigation.getItemsCount();
-		int maxElements = Math.min(viewPager.getAdapter().getCount(), MAX_BOTTOM_TABS);
-		for (int bottomTabIdx = 0; bottomTabIdx < maxElements; bottomTabIdx++)
+		for (int bottomTabIdx = 0; bottomTabIdx < tabCount; bottomTabIdx++)
 		{
 			View tab = bottomNavigation.getViewAtPosition(bottomTabIdx);
 			if (tab != null)
