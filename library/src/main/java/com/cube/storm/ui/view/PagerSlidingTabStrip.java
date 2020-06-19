@@ -24,7 +24,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
@@ -247,15 +246,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 			@SuppressWarnings("deprecation") @SuppressLint("NewApi") @Override
 			public void onGlobalLayout()
 			{
-				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-				{
-					getViewTreeObserver().removeGlobalOnLayoutListener(this);
-				}
-				else
-				{
-					getViewTreeObserver().removeOnGlobalLayoutListener(this);
-				}
-
+				getViewTreeObserver().removeOnGlobalLayoutListener(this);
 				currentPosition = pager.getCurrentItem();
 				scrollToChild(currentPosition, 0);
 			}
@@ -343,20 +334,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
 				// pre-ICS-build
 				if (textAllCaps)
 				{
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-					{
-						tab.setAllCaps(true);
-					}
-					else
-					{
-						tab.setText(tab.getText().toString().toUpperCase(locale));
-					}
+					tab.setAllCaps(true);
 				}
 			}
 			else if (v instanceof ImageButton)
 			{
 				ImageButton tab = (ImageButton)v;
-				tab.setSelected(tabSwitch && i == 0 ? true : false);
+				tab.setSelected(tabSwitch && i == 0);
 			}
 		}
 	}

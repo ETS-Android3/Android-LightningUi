@@ -2,7 +2,10 @@
 
 <resources>
 	<color name="background_tab_pressed">#6633B5E5</color>
-	<color name="activate_text_color">#FF666666</color>
-	<color name="deactivate_text_color">#FFCCCCCC</color>
 	<color name="transparent">#00000000</color>
+	<color name="borderGrey">#c2c2c2</color>
+	<color name="spotlightIndicatorLightGrey">#767676</color>
+	<color name="main_red">#E71324</color>
+	<color name="collectionItemInactive">#6D6D6D</color>
+	<color name="description_text">#8C000000</color>
 </resources>

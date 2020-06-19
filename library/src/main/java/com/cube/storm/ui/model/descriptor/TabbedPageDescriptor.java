@@ -25,6 +25,7 @@ public class TabbedPageDescriptor extends PageDescriptor
 	{ this.className = CLASS_NAME; }
 
 	protected TabBarItem tabBarItem;
+	protected int tabIndex = 0;
 
 	@Override public int describeContents()
 	{
@@ -33,6 +34,6 @@ public class TabbedPageDescriptor extends PageDescriptor
 
 	@Override public void writeToParcel(Parcel dest, int flags)
 	{
-
+		// Empty
 	}
 }

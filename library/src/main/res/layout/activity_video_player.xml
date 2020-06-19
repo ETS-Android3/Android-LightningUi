@@ -21,16 +21,17 @@
 		android:visibility="visible"
 	/>
 
-	<Spinner
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:background="@color/transparent"
-		android:id="@+id/videos"
-		android:visibility="gone"
+	<ImageButton
+		android:layout_width="24dp"
+		android:layout_height="24dp"
+		android:src="@drawable/ic_closed_caption_white_24dp"
+		android:id="@+id/cc_button"
+		android:visibility="visible"
 		android:layout_marginRight="10dp"
 		android:layout_marginTop="20dp"
 		android:layout_gravity="right|end"
 		android:layout_marginEnd="10dp"
+		android:contentDescription="@string/closed_captions"
+		android:tint="@android:color/white"
 	/>
-
 </FrameLayout>

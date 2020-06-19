@@ -29,9 +29,12 @@ import java.util.Map;
  * Register this in your {@link com.cube.storm.UiSettings.Builder} by using the following code
  * <pre>registerType(new TypeToken<ArrayList<ImageProperty>>(){}.getType(), new LegacyImageViewProcessor())</pre>
  *
+ * Deprecated: This can be removed - it is unlikely Storm will ever be upgraded to use the "new" structure this processor bridges to.
+ *
  * @author Callum Taylor
  * @project LightningUi
  */
+@Deprecated
 public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImageProperty>>
 {
 	@NonNull @Override public JsonElement preInflate(JsonElement json)
@@ -52,6 +55,13 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 
 			if (src != null)
 			{
+				JsonElement accessibilityLabelObj = null;
+
+				if (json.getAsJsonObject().has("accessibilityLabel"))
+				{
+					accessibilityLabelObj = json.getAsJsonObject().get("accessibilityLabel");
+				}
+
 				for (Map.Entry<String, JsonElement> stringJsonElementEntry : src.entrySet())
 				{
 					if (!stringJsonElementEntry.getKey().equals("class"))
@@ -113,6 +123,7 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 						newImage.addProperty("class", ImageProperty.CLASS_NAME);
 						newImage.add("src", newImageSrc);
 						newImage.add("dimensions", newImageDimensions);
+						newImage.add("accessibilityLabel", accessibilityLabelObj);
 
 						formatted.add(newImage);
 					}

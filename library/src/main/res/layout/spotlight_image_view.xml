@@ -1,31 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:id="@+id/spotlight_container"
+	android:layout_height="wrap_content"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 >
-	<com.cube.storm.ui.view.ImageView
+	<android.support.v7.widget.CardView
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:id="@+id/image_view"
-		android:scaleType="centerCrop"
-	/>
-
-	<com.cube.storm.ui.view.TextView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:padding="8dp"
-		android:id="@+id/text_ticker"
-		android:textSize="24sp"
-		android:textColor="#ffffffff"
-		android:shadowColor="#ff000000"
-		android:shadowDx="1"
-		android:shadowDy="1"
-		android:shadowRadius="2"
-		android:textStyle="bold"
-		android:layout_gravity="center"
-		android:gravity="center"
-	/>
-</FrameLayout>
+		android:layout_height="wrap_content"
+		android:layout_margin="12dp"
+		app:cardCornerRadius="8dp"
+	>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/spotlight_container"
+			android:orientation="vertical"
+			android:background="@drawable/spotlight_border"
+			android:focusable="true"
+		>
+			<!-- ARCEM-1464: android:focusable="true" here ^ so that
+			talkback users focus all spotlight text as one item-->
+			<com.cube.storm.ui.view.SpotlightImageView
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:id="@+id/image_view"
+				android:scaleType="centerCrop"
+				tools:src="@drawable/lightbox_icon_forward"
+			/>
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="0.5dp"
+				android:background="@color/borderGrey"
+			/>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/text_container"
+				android:orientation="vertical"
+				android:paddingTop="12dp"
+				android:paddingBottom="16dp"
+				android:paddingLeft="16dp"
+				android:paddingRight="16dp"
+			>
+				<com.cube.storm.ui.view.TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/category"
+					android:textSize="11sp"
+					android:fontFamily="sans-serif"
+					android:textStyle="bold"
+					android:textColor="#6d6d6d"
+					android:letterSpacing="0.09"
+					android:lineSpacingExtra="9sp"
+					android:textAllCaps="true"
+					android:visibility="gone"
+					tools:visibility="visible"
+					tools:text="Latest Innovations"
+				/>
+				<com.cube.storm.ui.view.TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/title"
+					android:layout_marginTop="2dp"
+					android:textSize="20sp"
+					android:fontFamily="sans-serif-medium"
+					android:textStyle="normal"
+					android:textColor="#000000"
+					android:visibility="gone"
+					tools:visibility="visible"
+					tools:text="Alexa can save your family"
+				/>
+				<com.cube.storm.ui.view.TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/description"
+					android:layout_marginTop="2dp"
+					android:textSize="15sp"
+					android:fontFamily="sans-serif"
+					android:textStyle="normal"
+					android:textColor="#6d6d6d"
+					android:lineSpacingExtra="5sp"
+					android:visibility="gone"
+					tools:visibility="visible"
+					tools:text="Introducing the American Red Cross Hurricane Alerts Skill for Alexa!"
+				/>
+			</LinearLayout>
+		</LinearLayout>
+	</android.support.v7.widget.CardView>
+</LinearLayout>

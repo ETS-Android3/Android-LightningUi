@@ -102,11 +102,7 @@ public class StormWebActivity extends AppCompatActivity implements OnClickListen
 		settings.setBuiltInZoomControls(true);
 		settings.setLoadWithOverviewMode(true);
 		settings.setUseWideViewPort(true);
-
-		if (Build.VERSION.SDK_INT >= 11)
-		{
-			settings.setDisplayZoomControls(false);
-		}
+		settings.setDisplayZoomControls(false);
 
 		final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
 		webView.setWebViewClient(new WebViewClient());

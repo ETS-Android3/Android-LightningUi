@@ -2,6 +2,7 @@ package com.cube.storm.ui.model.list;
 
 import android.os.Parcel;
 
+import com.cube.storm.ui.model.property.ImageProperty;
 import com.cube.storm.ui.model.property.VideoProperty;
 
 import java.util.ArrayList;
@@ -21,13 +22,16 @@ import lombok.experimental.Accessors;
  */
 @NoArgsConstructor @AllArgsConstructor
 @Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
-public class VideoListItem extends ImageListItem
+public class VideoListItem extends TitleListItem
 {
 	public static String CLASS_NAME = "VideoListItem";
 
 	{ this.className = CLASS_NAME; }
 
-	protected Collection<? extends VideoProperty> videos = new ArrayList<VideoProperty>();
+	protected ArrayList<ImageProperty> image;
+
+	protected Collection<? extends VideoProperty> videos;
+	protected long duration = 0;
 
 	@Override public int describeContents()
 	{

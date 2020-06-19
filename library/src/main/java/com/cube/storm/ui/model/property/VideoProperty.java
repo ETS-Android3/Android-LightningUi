@@ -24,6 +24,7 @@ public class VideoProperty extends Property
 
 	protected String locale;
 	protected DestinationLinkProperty src;
+	protected boolean repeatMode = false;
 
 	@Override public int describeContents()
 	{

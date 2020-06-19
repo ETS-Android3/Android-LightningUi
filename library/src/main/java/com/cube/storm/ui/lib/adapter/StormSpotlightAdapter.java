@@ -95,12 +95,32 @@ public class StormSpotlightAdapter extends PagerAdapter
 		final SpotlightImageProperty spotlightItem = getItem(position);
 		if (spotlightItem != null)
 		{
+			View textContainer = view.findViewById(R.id.text_container);
 			ImageView imageView = view.findViewById(R.id.image_view);
-			TextView textView = view.findViewById(R.id.text_ticker);
-			imageView.populate(spotlightItem.getImage());
-			textView.populate(spotlightItem.getText(), spotlightItem.getLink());
+			TextView category = view.findViewById(R.id.category);
+			TextView title = view.findViewById(R.id.title);
+			TextView description = view.findViewById(R.id.description);
 
-			view.setOnClickListener(new View.OnClickListener()
+			imageView.populate(spotlightItem.getImage(), spotlightItem.getAccessibilityLabel());
+			category.populate(spotlightItem.getCategory());
+			title.populate(spotlightItem.getTitle());
+			description.populate(spotlightItem.getDescription());
+
+			// Hide text container under spotlight image if no text to populate
+			if (category.getVisibility() != View.VISIBLE &&
+				title.getVisibility() != View.VISIBLE &&
+				description.getVisibility() != View.VISIBLE)
+			{
+				textContainer.setVisibility(View.GONE);
+			}
+			else
+			{
+				textContainer.setVisibility(View.VISIBLE);
+			}
+			// Keep text aligned across all spotlights. This must be done after the visibility check above.
+			category.setVisibility(View.VISIBLE);
+
+			View.OnClickListener spotlightClickListener = new View.OnClickListener()
 			{
 				@Override public void onClick(View v)
 				{
@@ -111,7 +131,10 @@ public class StormSpotlightAdapter extends PagerAdapter
 						eventHook.onViewLinkedClicked(v, spotlightListItem, spotlightItem.getLink());
 					}
 				}
-			});
+			};
+			// ARCEM-1464: text container and image both need to be announced with clickable role (for talkback users)
+			imageView.setOnClickListener(spotlightClickListener);
+			textContainer.setOnClickListener(spotlightClickListener);
 		}
 
 		// Set the item's hashcode as the view tag so we can identify the original item from the view

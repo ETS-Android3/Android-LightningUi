@@ -40,6 +40,6 @@ public class ImageListItemViewHolder extends ViewHolder<ImageListItem>
 
 	@Override public void populateView(final ImageListItem model)
 	{
-		image.populate(model.getImage(), progress);
+		image.populate(model.getImage(), null, progress);
 	}
 }

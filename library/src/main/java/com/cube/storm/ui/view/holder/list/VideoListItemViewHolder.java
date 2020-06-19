@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cube.storm.UiSettings;
@@ -22,9 +23,10 @@ import com.cube.storm.ui.view.Populator;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * View holder for {@link com.cube.storm.ui.model.list.VideoListItem} in the adapter
@@ -44,6 +46,7 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 	}
 
 	protected ImageView image;
+	protected TextView durationTime;
 	protected ProgressBar progress;
 	protected LinearLayout embeddedLinksContainer;
 	protected VideoListItem model;
@@ -53,6 +56,7 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 		super(view);
 
 		image = (ImageView)view.findViewById(R.id.image);
+		durationTime = (TextView)view.findViewById(R.id.duration_time);
 		progress = (ProgressBar)view.findViewById(R.id.progress);
 		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
 	}
@@ -60,7 +64,17 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 	@Override public void populateView(final VideoListItem model)
 	{
 		this.model = model;
-		image.populate(model.getImage(), progress);
+		image.populate(model.getImage(), null, progress);
+
+		if (model.getDuration() > 0)
+		{
+			String ms = String.format(Locale.US, "%02d:%02d",
+				TimeUnit.MILLISECONDS.toMinutes(model.getDuration()) % TimeUnit.HOURS.toMinutes(1),
+				TimeUnit.MILLISECONDS.toSeconds(model.getDuration()) % TimeUnit.MINUTES.toSeconds(1));
+			durationTime.setText(ms);
+			durationTime.setVisibility(View.VISIBLE);
+		}
+
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
 
 		itemView.setOnClickListener(new OnClickListener()
@@ -105,12 +119,7 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 
 					if (video != null)
 					{
-						if (video.getComponent() != null && video.getComponent().getClassName().equals(VideoPlayerActivity.class.getName()))
-						{
-							video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
-							video.putExtra(VideoPlayerActivity.EXTRA_OTHER_VIDEOS, (Serializable)videoList);
-						}
-						v.getContext().startActivity(video);
+						video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
 					}
 				}
 				catch (Exception e)
