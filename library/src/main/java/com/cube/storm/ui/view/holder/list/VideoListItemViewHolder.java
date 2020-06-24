@@ -119,7 +119,11 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 
 					if (video != null)
 					{
-						video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
+						if (video.getComponent() != null && video.getComponent().getClassName().equals(VideoPlayerActivity.class.getName()))
+						{
+							video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
+						}
+						v.getContext().startActivity(video);
 					}
 				}
 				catch (Exception e)

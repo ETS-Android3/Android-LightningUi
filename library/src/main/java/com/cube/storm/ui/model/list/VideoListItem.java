@@ -30,7 +30,7 @@ public class VideoListItem extends TitleListItem
 
 	protected ArrayList<ImageProperty> image;
 
-	protected Collection<? extends VideoProperty> videos;
+	protected Collection<? extends VideoProperty> videos = new ArrayList<VideoProperty>();
 	protected long duration = 0;
 
 	@Override public int describeContents()
