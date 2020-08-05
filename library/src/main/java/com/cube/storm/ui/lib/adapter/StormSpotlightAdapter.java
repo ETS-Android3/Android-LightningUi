@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,8 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.EventHook;
 import com.cube.storm.ui.model.list.SpotlightListItem;
 import com.cube.storm.ui.model.property.SpotlightImageProperty;
-import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.ui.view.ImageView;
 import com.cube.storm.ui.view.TextView;
-import com.cube.storm.util.lib.processor.Processor;
 
 public class StormSpotlightAdapter extends PagerAdapter
 {
@@ -123,7 +120,7 @@ public class StormSpotlightAdapter extends PagerAdapter
 			// Keep text aligned across all spotlights. This must be done after the visibility check above.
 			category.setVisibility(View.VISIBLE);
 
-			view.setOnClickListener(new View.OnClickListener()
+			View.OnClickListener spotlightClickListener = new View.OnClickListener()
 			{
 				@Override public void onClick(View v)
 				{
@@ -134,7 +131,10 @@ public class StormSpotlightAdapter extends PagerAdapter
 						eventHook.onViewLinkedClicked(v, spotlightListItem, spotlightItem.getLink());
 					}
 				}
-			});
+			};
+			// ARCEM-1464: text container and image both need to be announced with clickable role (for talkback users)
+			imageView.setOnClickListener(spotlightClickListener);
+			textContainer.setOnClickListener(spotlightClickListener);
 		}
 
 		// Set the item's hashcode as the view tag so we can identify the original item from the view

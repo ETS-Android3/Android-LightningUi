@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -93,6 +94,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 		playerView = findViewById(R.id.player_view);
 		progressBar = findViewById(R.id.progress);
 		playerView.requestFocus();
+
+		// ARCFA-239 Don't hide video controls when screen reader is on
+		AccessibilityManager am = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
+		if (am != null && am.isEnabled())
+		{
+			playerView.setControllerAutoShow(false);
+			playerView.setControllerShowTimeoutMs(Integer.MAX_VALUE);
+			playerView.showController();
+		}
 
 		if (uri == null
 		    && getIntent().hasExtra(EXTRA_VIDEO)

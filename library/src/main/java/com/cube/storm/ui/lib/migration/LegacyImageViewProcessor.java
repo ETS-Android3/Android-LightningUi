@@ -55,11 +55,11 @@ public class LegacyImageViewProcessor extends ViewProcessor<ArrayList<ImagePrope
 
 			if (src != null)
 			{
-				JsonObject accessibilityLabelObj = null;
+				JsonElement accessibilityLabelObj = null;
 
 				if (json.getAsJsonObject().has("accessibilityLabel"))
 				{
-					accessibilityLabelObj = json.getAsJsonObject().getAsJsonObject("accessibilityLabel");
+					accessibilityLabelObj = json.getAsJsonObject().get("accessibilityLabel");
 				}
 
 				for (Map.Entry<String, JsonElement> stringJsonElementEntry : src.entrySet())

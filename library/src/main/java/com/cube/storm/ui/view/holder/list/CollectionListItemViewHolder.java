@@ -11,6 +11,7 @@ import com.cube.storm.ui.R;
 import com.cube.storm.ui.model.list.collection.CollectionItem;
 import com.cube.storm.ui.model.list.collection.CollectionListItem;
 import com.cube.storm.ui.view.Populator;
+import com.cube.storm.ui.view.TextView;
 import com.cube.storm.ui.view.ViewClickable;
 import com.cube.storm.ui.view.holder.ViewHolder;
 import com.cube.storm.ui.view.holder.ViewHolderFactory;
@@ -37,6 +38,8 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 
 	protected LinearLayout linearLayout;
 	protected LinearLayout embeddedLinksContainer;
+	protected TextView header;
+	protected TextView footer;
 
 	public CollectionListItemViewHolder(View view)
 	{
@@ -44,6 +47,8 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 
 		linearLayout = (LinearLayout)view.findViewById(R.id.view_container);
 		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
+		header = (TextView)view.findViewById(R.id.header);
+		footer = (TextView)view.findViewById(R.id.footer);
 	}
 
 	@Override public void populateView(CollectionListItem model)
@@ -61,6 +66,9 @@ public class CollectionListItemViewHolder extends ViewHolder<CollectionListItem>
 				views.add(subView);
 			}
 		}
+
+		footer.populate(model.getFooter());
+		header.populate(model.getHeader());
 
 		linearLayout.removeAllViews();
 

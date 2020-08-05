@@ -1,7 +1,6 @@
 package com.cube.storm.ui.view.holder.list;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,5 +69,34 @@ public class SpotlightListItemViewHolder extends ViewHolder<SpotlightListItem>
 		 * Otherwise, each view will have different height
 		 */
 		viewPager.setOffscreenPageLimit(spotlightAdapter.getCount());
+
+
+		updateSpotlightIndicatorContentDescriptions();
+		indicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
+		{
+			@Override public void onTabSelected(TabLayout.Tab tab)
+			{
+				updateSpotlightIndicatorContentDescriptions();
+			}
+
+			@Override public void onTabUnselected(TabLayout.Tab tab)
+			{
+			}
+
+			@Override public void onTabReselected(TabLayout.Tab tab)
+			{
+			}
+		});
+	}
+
+	protected void updateSpotlightIndicatorContentDescriptions()
+	{
+		int count = indicator.getTabCount();
+		for (int index = 0; index < count; index++)
+		{
+			// "selected" is already added to content description.
+			String description = "tab " + (index + 1) + " of " + count;
+			indicator.getTabAt(index).setContentDescription(description);
+		}
 	}
 }

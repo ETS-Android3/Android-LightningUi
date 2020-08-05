@@ -33,6 +33,7 @@ public class StormActivity extends AppCompatActivity implements StormInterface
 		if (getSupportActionBar() != null)
 		{
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setHomeActionContentDescription("Navigate back to main screen");
 		}
 
 		if (savedInstanceState == null)

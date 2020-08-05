@@ -1,6 +1,5 @@
 package com.cube.storm.ui.fragment;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.StormActivity;
@@ -22,9 +22,10 @@ import com.cube.storm.ui.model.descriptor.TabbedPageDescriptor;
 import com.cube.storm.ui.model.page.GridPage;
 import com.cube.storm.ui.model.page.ListPage;
 import com.cube.storm.ui.model.page.TabbedPageCollection;
-import lombok.Getter;
 
 import java.util.ArrayList;
+
+import lombok.Getter;
 
 /**
  * Base storm fragment that hosts a collection of {@link ListPage} or {@link GridPage}
@@ -34,16 +35,10 @@ import java.util.ArrayList;
  */
 public abstract class StormTabbedFragment extends Fragment implements StormInterface, ViewPager.OnPageChangeListener
 {
-	/**
-	 * The Storm descriptor src of the tab that should be selected on startup
-	 */
-	private static final String EXTRA_START_TAB_SRC = "extra_start_tab_src";
+	public static final int INITIAL_TAB = 0;
 
 	@Getter protected StormPageAdapter pageAdapter;
 	@Getter protected ViewPager viewPager;
-
-	private String startTabBarItemSrc;
-	private int startTabBarItemIndex = 0;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -55,11 +50,9 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 	@Override public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-
-		Intent intent = getActivity().getIntent();
-		if (intent != null)
+		if (getActivity() == null || getArguments() == null)
 		{
-			startTabBarItemSrc = intent.getStringExtra(EXTRA_START_TAB_SRC);
+			return;
 		}
 
 		if (getArguments().containsKey(StormActivity.EXTRA_URI))
@@ -72,9 +65,14 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 			onLoadFail();
 		}
 
-		switchToTab(startTabBarItemIndex);
+		switchToTab(INITIAL_TAB);
 	}
 
+	/**
+	 * Adds the fragmentPages to the adapter and populates the viewpager
+	 *
+	 * @param collection All the elements to load
+	 */
 	protected void loadPages(@NonNull TabbedPageCollection collection)
 	{
 		pageAdapter = new StormPageAdapter(getActivity(), getChildFragmentManager());
@@ -82,14 +80,8 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 
 		if (collection.getPages() != null)
 		{
-			int index = 0;
 			for (TabbedPageDescriptor tabbedPageDescriptor : collection.getPages())
 			{
-				if (startTabBarItemSrc != null && startTabBarItemSrc.equals(tabbedPageDescriptor.getSrc()))
-				{
-					startTabBarItemIndex = index;
-				}
-
 				FragmentIntent fragmentIntent = UiSettings.getInstance().getIntentFactory().getFragmentIntentForPageDescriptor(tabbedPageDescriptor);
 
 				if (fragmentIntent != null)
@@ -97,8 +89,6 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 					FragmentPackage fragmentPackage = new FragmentPackage(fragmentIntent, tabbedPageDescriptor);
 					fragmentPages.add(fragmentPackage);
 				}
-
-				++index;
 			}
 		}
 
@@ -132,18 +122,18 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 
 	@Override public void onLoadFail()
 	{
+		if (getActivity() == null)
+		{
+			return;
+		}
 		Toast.makeText(getActivity(), "Failed to load page", Toast.LENGTH_SHORT).show();
 		getActivity().finish();
 	}
 
 	@Override
-	public void onPageScrolled(
-		int index,
-		float v,
-		int i1
-	)
+	public void onPageScrolled(int index, float v, int i1)
 	{
-
+		// Empty
 	}
 
 	@Override
@@ -171,7 +161,7 @@ public abstract class StormTabbedFragment extends Fragment implements StormInter
 	@Override
 	public void onPageScrollStateChanged(int index)
 	{
-
+		// Empty
 	}
 
 	public void switchToTab(int index)

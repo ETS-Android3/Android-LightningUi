@@ -15,6 +15,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/checkbox"
+		android:focusable="false"
 		android:clickable="false"
 		android:layout_alignParentRight="true"
 	/>
@@ -41,7 +42,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/description"
-			android:textColor="#89000000"
+			android:textColor="@color/description_text"
 			android:textSize="14sp"
 			android:fontFamily="sans-serif-regular"
 			android:visibility="gone"
