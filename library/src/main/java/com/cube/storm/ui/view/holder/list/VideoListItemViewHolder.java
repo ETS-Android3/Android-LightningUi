@@ -1,6 +1,7 @@
 package com.cube.storm.ui.view.holder.list;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.activity.VideoPlayerActivity;
@@ -79,47 +81,55 @@ public class VideoListItemViewHolder extends ViewHolder<VideoListItem>
 		{
 			@Override public void onClick(View v)
 			{
-				List<VideoProperty> videoList = new ArrayList<>(model.getVideos());
-
-				if (videoList.isEmpty())
+				try
 				{
-					Toast.makeText(itemView.getContext(), "Could not load video", Toast.LENGTH_LONG).show();
-					return;
-				}
+					List<VideoProperty> videoList = new ArrayList<>(model.getVideos());
 
-				String defaultLanguageUri = UiSettings.getInstance().getDefaultLanguageUri();
-				VideoProperty videoToShow = videoList.get(0);
-				if (defaultLanguageUri != null)
-				{
-					// TODO: Some of this locale logic is duplicated with the language library - move to utils
-					for (VideoProperty videoProperty : model.getVideos())
+					if (videoList.isEmpty())
 					{
-						if (defaultLanguageUri.contains(videoProperty.getLocale()))
+						Toast.makeText(itemView.getContext(), "Video is not available", Toast.LENGTH_LONG).show();
+						return;
+					}
+
+					String defaultLanguageUri = UiSettings.getInstance().getDefaultLanguageUri();
+					VideoProperty videoToShow = videoList.get(0);
+					if (defaultLanguageUri != null)
+					{
+						// TODO: Some of this locale logic is duplicated with the language library - move to utils
+						for (VideoProperty videoProperty : model.getVideos())
 						{
-							videoToShow = videoProperty;
-							break;
+							if (defaultLanguageUri.contains(videoProperty.getLocale()))
+							{
+								videoToShow = videoProperty;
+								break;
+							}
 						}
 					}
-				}
 
-				for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
-				{
-					eventHook.onViewLinkedClicked(itemView, model, videoToShow.getSrc());
-				}
-
-				VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
-				pageDescriptor.setType("content");
-				pageDescriptor.setSrc(videoToShow.getSrc().getDestination());
-
-				Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(v.getContext(), pageDescriptor);
-
-				if (video != null)
-				{
-					if (video.getComponent() != null && video.getComponent().getClassName().equals(VideoPlayerActivity.class.getName()))
+					for (EventHook eventHook : UiSettings.getInstance().getEventHooks())
 					{
-						video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
+						eventHook.onViewLinkedClicked(itemView, model, videoToShow.getSrc());
 					}
-					v.getContext().startActivity(video);
+
+					VideoPageDescriptor pageDescriptor = new VideoPageDescriptor();
+					pageDescriptor.setType("content");
+					pageDescriptor.setSrc(videoToShow.getSrc().getDestination());
+
+					Intent video = UiSettings.getInstance().getIntentFactory().getIntentForPageDescriptor(v.getContext(), pageDescriptor);
+
+					if (video != null)
+					{
+						if (video.getComponent() != null && video.getComponent().getClassName().equals(VideoPlayerActivity.class.getName()))
+						{
+							video.putExtra(VideoPlayerActivity.EXTRA_VIDEO, videoToShow);
+						}
+						v.getContext().startActivity(video);
+					}
+				}
+				catch (Exception e)
+				{
+					Log.e(getClass().getName(), "Error: " + e.getMessage());
+					Toast.makeText(itemView.getContext(), "Could not load video", Toast.LENGTH_LONG).show();
 				}
 			}
 		});

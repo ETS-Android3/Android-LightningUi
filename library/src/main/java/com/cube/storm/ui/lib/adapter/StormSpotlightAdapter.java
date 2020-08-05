@@ -120,7 +120,7 @@ public class StormSpotlightAdapter extends PagerAdapter
 			// Keep text aligned across all spotlights. This must be done after the visibility check above.
 			category.setVisibility(View.VISIBLE);
 
-			view.setOnClickListener(new View.OnClickListener()
+			View.OnClickListener spotlightClickListener = new View.OnClickListener()
 			{
 				@Override public void onClick(View v)
 				{
@@ -131,7 +131,10 @@ public class StormSpotlightAdapter extends PagerAdapter
 						eventHook.onViewLinkedClicked(v, spotlightListItem, spotlightItem.getLink());
 					}
 				}
-			});
+			};
+			// ARCEM-1464: text container and image both need to be announced with clickable role (for talkback users)
+			imageView.setOnClickListener(spotlightClickListener);
+			textContainer.setOnClickListener(spotlightClickListener);
 		}
 
 		// Set the item's hashcode as the view tag so we can identify the original item from the view

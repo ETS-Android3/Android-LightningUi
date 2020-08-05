@@ -4,6 +4,7 @@ import android.os.Parcel;
 
 import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.property.LinkProperty;
+import com.cube.storm.ui.model.property.TextProperty;
 
 import java.util.Collection;
 
@@ -20,15 +21,19 @@ import lombok.experimental.Accessors;
  * @project LightningUi
  */
 @NoArgsConstructor @AllArgsConstructor
-@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper=false)
+@Accessors(chain = true) @Data @EqualsAndHashCode(callSuper = false)
 public class CollectionListItem extends ListItem
 {
 	public static String CLASS_NAME = "CollectionListItem";
 
-	{ this.className = CLASS_NAME; }
+	{
+		this.className = CLASS_NAME;
+	}
 
 	protected Collection<CollectionItem> cells;
 	protected Collection<LinkProperty> embeddedLinks;
+	protected TextProperty header;
+	protected TextProperty footer;
 
 	@Override public int describeContents()
 	{
