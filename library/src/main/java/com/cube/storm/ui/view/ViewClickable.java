@@ -1,6 +1,6 @@
 package com.cube.storm.ui.view;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.cube.storm.ui.model.Model;
 

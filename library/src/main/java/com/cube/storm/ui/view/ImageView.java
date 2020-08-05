@@ -3,8 +3,8 @@ package com.cube.storm.ui.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -32,7 +32,7 @@ import java.util.List;
  * @author Tim Matthews
  * @Project LightningUi
  */
-public class ImageView extends android.support.v7.widget.AppCompatImageView
+public class ImageView extends androidx.appcompat.widget.AppCompatImageView
 {
 	/**
 	 * Listener alerted whenever the animation frame changes.
