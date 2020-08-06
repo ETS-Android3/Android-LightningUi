@@ -32,15 +32,15 @@ dependencies {
 
 	implementation 'com.google.android.material:material:1.2.0'
 
-	implementation 'com.aurelhubert:ahbottomnavigation:2.2.0'
+	implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
 
-	implementation 'com.google.android.exoplayer:exoplayer:2.9.0'
+	implementation 'com.google.android.exoplayer:exoplayer:2.11.7'
 	implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v1.7.0'
 
 	implementation 'com.google.code.gson:gson:2.8.6'
 	implementation 'net.callumtaylor:asynchttpclient:2.1'
 
-	implementation 'com.3sidedcube.storm:util:1.0.0'
+	implementation 'com.3sidedcube.storm:util:1.1.0-SNAPSHOT'
 
 	implementation 'com.3sidedcube.util:universal-image-loader:2.1.2'
 

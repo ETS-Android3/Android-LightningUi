@@ -3,8 +3,6 @@ package com.cube.storm.ui.activity;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -13,6 +11,8 @@ import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.R;
 import com.cube.storm.ui.lib.handler.LinkHandler;
@@ -31,7 +31,7 @@ import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.ui.TrackSelectionView;
+import com.google.android.exoplayer2.ui.TrackSelectionDialogBuilder;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -480,12 +480,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 			return;
 		}
 
-		View rootView = getLayoutInflater().inflate(R.layout.exo_track_selection_dialog, null, false);
-		TrackSelectionView trackSelectionView = rootView.findViewById(R.id.exo_track_selection_view);
-		trackSelectionView.setShowDisableOption(true);
-		trackSelectionView.setAllowAdaptiveSelections(false);
-		trackSelectionView.init(trackSelector, rendererIndex);
-
-		TrackSelectionView.getDialog(this, "", trackSelector, rendererIndex).first.show();
+		new TrackSelectionDialogBuilder(this, "", trackSelector, rendererIndex)
+			.setShowDisableOption(true)
+			.setAllowAdaptiveSelections(false)
+			.build()
+			.show();
 	}
 }
