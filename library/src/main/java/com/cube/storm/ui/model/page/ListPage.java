@@ -3,7 +3,9 @@ package com.cube.storm.ui.model.page;
 import android.os.Parcel;
 
 import com.cube.storm.ui.model.list.ListItem;
+import com.cube.storm.ui.model.list.VideoListItem;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +27,8 @@ public class ListPage extends Page
 	public static String CLASS_NAME = "ListPage";
 
 	{ this.className = CLASS_NAME; }
+
+	protected ArrayList<VideoListItem> audio;
 
 	/**
 	 * The array list of children {@link com.cube.storm.ui.model.list.ListItem}
