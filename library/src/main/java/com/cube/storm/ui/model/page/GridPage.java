@@ -5,6 +5,7 @@ import android.os.Parcel;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.grid.Grid;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +34,11 @@ public class GridPage extends Page
 	protected Grid grid;
 
 	@Override public Collection<? extends Model> getChildren()
+	{
+		return null;
+	}
+
+	@Override public ArrayList<? extends Model> getAudio()
 	{
 		return null;
 	}

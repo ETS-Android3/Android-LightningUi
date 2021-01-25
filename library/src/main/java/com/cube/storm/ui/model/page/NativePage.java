@@ -5,6 +5,7 @@ import android.os.Parcel;
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +28,11 @@ public class NativePage extends Page
 	{ this.className = CLASS_NAME; }
 
 	@Override public Collection<? extends Model> getChildren()
+	{
+		return null;
+	}
+
+	@Override public ArrayList<? extends Model> getAudio()
 	{
 		return null;
 	}
