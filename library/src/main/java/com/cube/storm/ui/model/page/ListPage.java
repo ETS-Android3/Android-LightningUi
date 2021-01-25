@@ -25,7 +25,6 @@ import lombok.experimental.Accessors;
 public class ListPage extends Page
 {
 	public static String CLASS_NAME = "ListPage";
-	public static final String ENGLISH_LANGUAGE_CODE = "en";
 
 	{
 		this.className = CLASS_NAME;
@@ -60,12 +59,12 @@ public class ListPage extends Page
 			videoProperty = audio.iterator().next();
 			String[] localeArray = videoProperty.getLocale().split("_");
 
-			if (Locale.getDefault().getLanguage().equals(new Locale(localeArray[1]).getLanguage()))
+			if (localeArray[1] != null && Locale.getDefault().getLanguage().equals(new Locale(localeArray[1]).getLanguage()))
 			{
 				return videoProperty;
 			}
 
-			if (ENGLISH_LANGUAGE_CODE.equals(new Locale(localeArray[1]).getLanguage()))
+			if (localeArray[1] != null && Locale.ENGLISH.getLanguage().equals(new Locale(localeArray[1]).getLanguage()))
 			{
 				auxVideoProperty = videoProperty;
 			}
