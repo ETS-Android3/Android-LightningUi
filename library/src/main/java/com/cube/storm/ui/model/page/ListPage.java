@@ -25,6 +25,7 @@ import lombok.experimental.Accessors;
 public class ListPage extends Page
 {
 	public static String CLASS_NAME = "ListPage";
+	public static final String ENGLISH_LANGUAGE_CODE = "en";
 
 	{
 		this.className = CLASS_NAME;
@@ -37,10 +38,12 @@ public class ListPage extends Page
 
 	/**
 	 * Returns the audio file for the user's current locale.
+	 * In case storm has audios and the current locale is not supported,
+	 * it will send the english audio by default.
 	 * The storm locale always have the format "usa_en" so
 	 * it will split the string to check the language
 	 *
-	 * @return The audio file
+	 * @return The audio file if it exists
 	 */
 	public VideoProperty getCurrentLanguageAudioFile()
 	{
@@ -50,6 +53,7 @@ public class ListPage extends Page
 		}
 
 		VideoProperty videoProperty;
+		VideoProperty auxVideoProperty = null;
 
 		while (audio.iterator().hasNext())
 		{
@@ -60,8 +64,13 @@ public class ListPage extends Page
 			{
 				return videoProperty;
 			}
+
+			if (ENGLISH_LANGUAGE_CODE.equals(new Locale(localeArray[1]).getLanguage()))
+			{
+				auxVideoProperty = videoProperty;
+			}
 		}
-		return null;
+		return auxVideoProperty;
 	}
 
 	/**
