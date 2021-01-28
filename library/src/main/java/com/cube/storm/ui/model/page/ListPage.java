@@ -30,6 +30,11 @@ public class ListPage extends Page
 		this.className = CLASS_NAME;
 	}
 
+	public ListPage(Collection<ListItem> children)
+	{
+		this.children = children;
+	}
+
 	/**
 	 * The array list of audios {@link VideoProperty}
 	 */
