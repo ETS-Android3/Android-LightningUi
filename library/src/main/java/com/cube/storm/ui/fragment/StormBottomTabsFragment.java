@@ -5,10 +5,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,6 +27,10 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import lombok.Getter;
 
 /**
@@ -72,7 +72,7 @@ public class StormBottomTabsFragment extends StormTabbedFragment implements AHBo
 	protected void loadPages(@NonNull TabbedPageCollection collection)
 	{
 		super.loadPages(collection);
-		int maxElements = Math.min(collection.getPages().size(), MAX_BOTTOM_TABS);
+		int maxElements = Math.min(pageAdapter.getPages().size(), MAX_BOTTOM_TABS);
 		// It creates a bottom tab element for 5 adapter items or less
 		for (int bottomTabIdx = 0; bottomTabIdx < maxElements; bottomTabIdx++)
 		{
