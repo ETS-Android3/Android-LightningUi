@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -50,7 +52,7 @@ public class ListPage extends Page
 	 *
 	 * @return The audio file if it exists
 	 */
-	public VideoProperty getCurrentLanguageAudioFile()
+	@Nullable public VideoProperty getCurrentLanguageAudioFile()
 	{
 		if (audio == null)
 		{
