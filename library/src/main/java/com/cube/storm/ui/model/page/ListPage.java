@@ -6,6 +6,7 @@ import com.cube.storm.ui.model.list.ListItem;
 import com.cube.storm.ui.model.property.VideoProperty;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Locale;
 
 import lombok.AllArgsConstructor;
@@ -59,9 +60,11 @@ public class ListPage extends Page
 		VideoProperty videoProperty;
 		VideoProperty auxVideoProperty = null;
 
-		while (audio.iterator().hasNext())
+		Iterator<VideoProperty> iterator = audio.iterator();
+
+		while (iterator.hasNext())
 		{
-			videoProperty = audio.iterator().next();
+			videoProperty = iterator.next();
 			String[] localeArray = videoProperty.getLocale().split("_");
 
 			if (localeArray[1] != null && Locale.getDefault().getLanguage().equals(new Locale(localeArray[1]).getLanguage()))
