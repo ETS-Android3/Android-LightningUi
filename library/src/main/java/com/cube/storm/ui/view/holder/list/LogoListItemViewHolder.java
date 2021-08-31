@@ -57,7 +57,7 @@ public class LogoListItemViewHolder extends ViewHolder<LogoListItem>
 						eventHook.onViewLinkedClicked(itemView, model, model.getLink());
 					}
 
-					linkTitle.callOnClick();
+					UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), model.getLink());
 				}
 			});
 		}
