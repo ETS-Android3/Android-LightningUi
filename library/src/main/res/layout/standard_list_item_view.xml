@@ -22,8 +22,9 @@
 	/>
 
 	<LinearLayout
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
+		android:layout_weight="1"
 		android:orientation="vertical"
 		android:layout_gravity="center_vertical"
 	>
@@ -58,14 +59,6 @@
 		/>
 	</LinearLayout>
 
-	<!-- View for spacing chevron ImageView to the end -->
-	<View
-		android:layout_width="0dp"
-		android:layout_height="0dp"
-		android:layout_weight="1"
-		android:importantForAccessibility="no"
-		android:visibility="invisible"/>
-
 	<ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -74,5 +67,6 @@
 		android:layout_gravity="center_vertical"
 		android:importantForAccessibility="no"
 		android:visibility="gone"
-		android:layout_marginStart="16dp"/>
+		android:layout_marginStart="16dp"
+	/>
 </LinearLayout>
