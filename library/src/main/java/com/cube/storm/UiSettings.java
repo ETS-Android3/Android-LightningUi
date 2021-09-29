@@ -606,7 +606,7 @@ public class UiSettings
 		 *
 		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
 		 */
-		public Builder chevronSpec(ChevronSpec spec)
+		public Builder chevronSpec(@NonNull ChevronSpec spec)
 		{
 			construct.chevronSpec = spec;
 			return this;
