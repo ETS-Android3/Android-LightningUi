@@ -53,6 +53,10 @@ public abstract class ChevronSpec
 		{
 			@Override public boolean shouldChevronShow(StandardListItem model)
 			{
+				if(model == null)
+				{
+					return false;
+				}
 				LinkProperty link = model.getLink();
 				return link != null && (
 					(link instanceof DestinationLinkProperty && !TextUtils.isEmpty(((DestinationLinkProperty)link).getDestination()))
