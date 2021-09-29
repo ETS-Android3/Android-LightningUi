@@ -73,6 +73,6 @@
 		android:src="@drawable/ic_chevron"
 		android:layout_gravity="center_vertical"
 		android:importantForAccessibility="no"
-		android:visibility="visible"
+		android:visibility="gone"
 		android:layout_marginStart="16dp"/>
 </LinearLayout>
