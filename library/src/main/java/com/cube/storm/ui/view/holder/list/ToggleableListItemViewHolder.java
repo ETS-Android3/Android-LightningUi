@@ -54,6 +54,7 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 
 	@Override public void populateView(final ToggleableListItem model)
 	{
+		setIsRecyclable(false);
 		//ARCFA-229 Toggleable items announce expanded state.
 		if (model.getTitle() != null)
 		{
