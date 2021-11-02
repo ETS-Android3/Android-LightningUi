@@ -74,17 +74,8 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 		description.populate(model.getDescription());
 		Populator.populate(embeddedLinksContainer, model.getEmbeddedLinks());
 
-		toggleContainer.setVisibility(View.GONE);
-		embeddedLinksContainer.setVisibility(View.GONE);
-
-		if (toggleContainer.getTag() != null && (Boolean)toggleContainer.getTag())
-		{
-			toggleContainer.setVisibility(View.VISIBLE);
-			if (!TextUtils.isEmpty(titleText))
-			{
-				title.setContentDescription(titleText +  ". Description expanded");
-			}
-		}
+		// Use model field instead of View#getTag() which is always null
+		expandContainer(model.getExpanded(), model);
 
 		itemView.setOnClickListener(new OnClickListener()
 		{
@@ -95,23 +86,36 @@ public class ToggleableListItemViewHolder extends ViewHolder<ToggleableListItem>
 					eventHook.onViewClicked(itemView, model);
 				}
 
-				if (toggleContainer.getVisibility() == View.GONE)
-				{
-					toggleContainer.setTag(true);
-					toggleContainer.setVisibility(View.VISIBLE);
-					expandIcon.setImageResource(R.drawable.ic_collapse);
-					embeddedLinksContainer.setVisibility(View.VISIBLE);
-					title.setContentDescription(titleText + ". Description expanded");
-				}
-				else
-				{
-					toggleContainer.setTag(false);
-					toggleContainer.setVisibility(View.GONE);
-					expandIcon.setImageResource(R.drawable.ic_expand);
-					embeddedLinksContainer.setVisibility(View.GONE);
-					title.setContentDescription(titleText + ". Description collapsed");
-				}
+				// Invert expansion state when clicked
+				expandContainer(!model.getExpanded(), model);
 			}
 		});
+	}
+
+	/**
+	 * Expands a {@link ToggleableListItem} and retains it's expanded state for
+	 * redrawing the view when scrolling
+	 *
+	 * @param expand true to expand, false to collapse
+	 * @param model the model with which to persist the expanded state
+	 */
+	private void expandContainer(boolean expand, ToggleableListItem model)
+	{
+		toggleContainer.setTag(expand);
+		model.setExpanded(expand);
+		if (expand)
+		{
+			toggleContainer.setVisibility(View.VISIBLE);
+			expandIcon.setImageResource(R.drawable.ic_collapse);
+			embeddedLinksContainer.setVisibility(View.VISIBLE);
+			title.setContentDescription(titleText + ". Description expanded");
+		}
+		else
+		{
+			toggleContainer.setVisibility(View.GONE);
+			expandIcon.setImageResource(R.drawable.ic_expand);
+			embeddedLinksContainer.setVisibility(View.GONE);
+			title.setContentDescription(titleText + ". Description collapsed");
+		}
 	}
 }
