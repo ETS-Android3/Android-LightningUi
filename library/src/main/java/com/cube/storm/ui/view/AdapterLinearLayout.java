@@ -1,7 +1,7 @@
 package com.cube.storm.ui.view;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;

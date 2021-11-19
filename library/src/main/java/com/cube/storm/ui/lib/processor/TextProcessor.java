@@ -1,6 +1,6 @@
 package com.cube.storm.ui.lib.processor;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.cube.storm.ui.model.property.TextProperty;
 import com.cube.storm.util.lib.processor.Processor;

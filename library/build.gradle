@@ -22,23 +22,24 @@ android {
 dependencies {
     implementation files('lib/YouTubeAndroidPlayerApi.jar')
 
-	implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-	implementation "com.android.support:customtabs:${rootProject.ext.supportLibVersion}"
-	implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
-	implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
-	implementation "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
-	implementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
-	implementation "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}"
+	// androidx libs
+	implementation 'androidx.annotation:annotation:1.1.0'
+	implementation 'androidx.appcompat:appcompat:1.1.0'
+	implementation 'androidx.browser:browser:1.2.0'
+	implementation 'androidx.cardview:cardview:1.0.0'
+	implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+	implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
-	implementation 'com.aurelhubert:ahbottomnavigation:2.2.0'
+	implementation 'com.google.android.material:material:1.2.0'
 
-	implementation 'com.google.android.exoplayer:exoplayer:2.9.0'
+	implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
+
+	implementation 'com.google.android.exoplayer:exoplayer:2.11.7'
 	implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v1.7.0'
 
-	implementation 'com.google.code.gson:gson:2.8.5'
-	implementation 'net.callumtaylor:asynchttpclient:2.1'
+	implementation 'com.google.code.gson:gson:2.8.6'
 
-	implementation 'com.3sidedcube.storm:util:1.0.0'
+	implementation 'com.3sidedcube.storm:util:1.1.0-SNAPSHOT'
 
 	implementation 'com.3sidedcube.util:universal-image-loader:2.1.2'
 

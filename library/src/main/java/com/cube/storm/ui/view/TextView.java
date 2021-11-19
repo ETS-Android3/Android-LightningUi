@@ -1,7 +1,7 @@
 package com.cube.storm.ui.view;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -17,7 +17,7 @@ import com.cube.storm.ui.model.property.TextProperty;
  * @author Callum Taylor
  * @Project LightningUi
  */
-public class TextView extends android.support.v7.widget.AppCompatTextView
+public class TextView extends androidx.appcompat.widget.AppCompatTextView
 {
 	public TextView(Context context)
 	{

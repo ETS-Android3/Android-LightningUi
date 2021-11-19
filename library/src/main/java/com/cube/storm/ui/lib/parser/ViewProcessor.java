@@ -1,6 +1,6 @@
 package com.cube.storm.ui.lib.parser;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.cube.storm.UiSettings;
 import com.cube.storm.util.lib.processor.GsonProcessor;

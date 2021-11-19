@@ -1,6 +1,6 @@
 package com.cube.storm.ui.lib.helper;
 
-import android.support.v7.widget.RecyclerView.RecycledViewPool;
+import androidx.recyclerview.widget.RecyclerView.RecycledViewPool;
 
 /**
  * RecycledViewPoolHelper

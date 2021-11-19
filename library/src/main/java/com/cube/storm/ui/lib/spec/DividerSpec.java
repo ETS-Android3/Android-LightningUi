@@ -1,6 +1,6 @@
 package com.cube.storm.ui.lib.spec;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.cube.storm.ui.model.Model;
 import com.cube.storm.ui.model.list.ListItem;
