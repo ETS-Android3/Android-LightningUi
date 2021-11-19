@@ -1,6 +1,6 @@
 package com.cube.storm.ui.view.holder;
 
-import android.support.v7.widget.StaggeredGridLayoutManager.LayoutParams;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager.LayoutParams;
 import android.view.View;
 
 import com.cube.storm.ui.model.grid.GridItem;

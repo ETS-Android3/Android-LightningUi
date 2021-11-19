@@ -2,8 +2,8 @@ package com.cube.storm.ui.example;
 
 import android.app.Application;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.example.provider.CustomIntentProvider;
 import com.cube.storm.ui.fragment.StormStaticFragment;

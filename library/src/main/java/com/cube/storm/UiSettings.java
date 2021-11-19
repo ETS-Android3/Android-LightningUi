@@ -2,8 +2,8 @@ package com.cube.storm;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.cube.storm.ui.controller.adapter.StormListAdapter;
 import com.cube.storm.ui.controller.downloader.StormSchemeHandler;
 import com.cube.storm.ui.data.ContentSize;
@@ -21,6 +21,7 @@ import com.cube.storm.ui.lib.resolver.AppResolver;
 import com.cube.storm.ui.lib.resolver.IntentResolver;
 import com.cube.storm.ui.lib.resolver.IntentResolverMap;
 import com.cube.storm.ui.lib.resolver.ViewResolver;
+import com.cube.storm.ui.lib.spec.ChevronSpec;
 import com.cube.storm.ui.lib.spec.DividerSpec;
 import com.cube.storm.ui.lib.spec.ListDividerSpec;
 import com.cube.storm.ui.model.App;
@@ -182,6 +183,11 @@ public class UiSettings
 	 * Default language Uri
 	 */
 	@Getter @Setter private String defaultLanguageUri = "";
+	
+	/**
+	 * Chevron spec to use for {@link com.cube.storm.ui.view.holder.list.StandardListItemViewHolder}s throughout the app
+	 */
+	@Getter @Setter private ChevronSpec chevronSpec;
 
 	/**
 	 * Sets the app model of the content
@@ -260,6 +266,7 @@ public class UiSettings
 
 			viewBuilder(new ViewBuilder(){});
 			dividerSpec(new ListDividerSpec());
+			chevronSpec(ChevronSpec.noChevronSpec());
 		}
 
 		/**
@@ -589,6 +596,19 @@ public class UiSettings
 		{
 			construct.youtubeApiKey = youtubeApiKey;
 			isYouTubeAPIKeyInitialised = true;
+			return this;
+		}
+		
+		/**
+		 * Sets the app to display chevrons on StandardListItemView if the link matches the correct criteria
+		 *
+		 * If not set, StandardListItemView will not display with chevrons
+		 *
+		 * @return The {@link com.cube.storm.UiSettings.Builder} instance for chaining
+		 */
+		public Builder chevronSpec(@NonNull ChevronSpec spec)
+		{
+			construct.chevronSpec = spec;
 			return this;
 		}
 

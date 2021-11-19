@@ -1,6 +1,6 @@
 package com.cube.storm.ui.model.property;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -16,7 +16,7 @@ import com.cube.storm.ui.model.property.LinkProperty;
  * @author Callum Taylor
  * @Project LightningUi
  */
-public class Button extends android.support.v7.widget.AppCompatButton
+public class Button extends androidx.appcompat.widget.AppCompatButton
 {
 	private ButtonProperty buttonProperty;
 

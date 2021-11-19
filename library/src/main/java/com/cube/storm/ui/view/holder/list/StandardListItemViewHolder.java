@@ -39,6 +39,7 @@ public class StandardListItemViewHolder extends ViewHolder<StandardListItem>
 	protected TextView description;
 	protected LinkProperty link;
 	protected LinearLayout embeddedLinksContainer;
+	protected android.widget.ImageView chevron;
 
 	public StandardListItemViewHolder(View view)
 	{
@@ -48,6 +49,7 @@ public class StandardListItemViewHolder extends ViewHolder<StandardListItem>
 		title = (TextView)view.findViewById(R.id.title);
 		description = (TextView)view.findViewById(R.id.description);
 		embeddedLinksContainer = (LinearLayout)view.findViewById(R.id.embedded_links_container);
+		chevron = (android.widget.ImageView)view.findViewById(R.id.chevron);
 	}
 
 	@Override public void populateView(final StandardListItem model)
@@ -76,6 +78,18 @@ public class StandardListItemViewHolder extends ViewHolder<StandardListItem>
 					UiSettings.getInstance().getLinkHandler().handleLink(image.getContext(), link);
 				}
 			});
+		}
+		
+		if (chevron != null)
+		{
+			if(UiSettings.getInstance().getChevronSpec().shouldChevronShow(model))
+			{
+				chevron.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				chevron.setVisibility(View.GONE);
+			}
 		}
 	}
 }

@@ -25,4 +25,5 @@ public abstract class Page extends Model
 	protected String name;
 
 	public abstract Collection<? extends Model> getChildren();
+	public abstract Collection<? extends Model> getAudio();
 }
