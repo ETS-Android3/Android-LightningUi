@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="closed_captions">Closed captions</string>
+	<string name="close_video">Close video</string>
 	<string name="bottom_navigation_tab">%1$s tab. %2$d of %3$d.</string>
 	<string name="bottom_navigation_tab_selected">%1$s tab. %2$d of %3$d selected.</string>
 </resources>
