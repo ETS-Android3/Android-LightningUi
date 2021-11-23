@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -81,6 +82,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 	private int startWindow;
 	private long startPosition;
 	private ImageButton closedCaptionsButton;
+	private ImageView closeVideoButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -90,7 +92,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 		setContentView(R.layout.activity_video_player);
 
 		closedCaptionsButton = findViewById(R.id.cc_button);
+		closeVideoButton = findViewById(R.id.close_button);
 		closedCaptionsButton.setOnClickListener(this);
+		closeVideoButton.setOnClickListener(this);
 		playerView = findViewById(R.id.player_view);
 		progressBar = findViewById(R.id.progress);
 		playerView.requestFocus();
@@ -437,6 +441,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements PlaybackPr
 			}
 
 			showTrackSelectorDialog(captionsRendererIdx);
+		}
+		else if (view == closeVideoButton)
+		{
+			finish();
 		}
 	}
 

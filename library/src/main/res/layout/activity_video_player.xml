@@ -21,6 +21,17 @@
 		android:visibility="visible"
 	/>
 
+	<ImageView
+		android:layout_width="24dp"
+		android:layout_height="24dp"
+		android:id="@+id/close_button"
+		android:src="@drawable/ic_close"
+		android:layout_gravity="top|start"
+		android:layout_marginTop="20dp"
+		android:layout_marginStart="10dp"
+		android:contentDescription="@string/close_video"
+		android:tint="@android:color/white" />
+
 	<ImageButton
 		android:layout_width="24dp"
 		android:layout_height="24dp"
