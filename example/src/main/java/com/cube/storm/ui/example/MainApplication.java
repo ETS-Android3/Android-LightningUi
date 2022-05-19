@@ -1,9 +1,10 @@
 package com.cube.storm.ui.example;
 
-import android.app.Application;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.multidex.MultiDexApplication;
+
 import com.cube.storm.UiSettings;
 import com.cube.storm.ui.example.provider.CustomIntentProvider;
 import com.cube.storm.ui.fragment.StormStaticFragment;
@@ -19,7 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class MainApplication extends Application
+public class MainApplication extends MultiDexApplication
 {
 	@Override public void onCreate()
 	{
