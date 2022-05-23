@@ -1,5 +1,9 @@
 #Release notes
 
+##v1.6.0 23/05/2022
+
+- Removed jCenter
+
 ##v0.2 2014/11/12
 
 - Added URI resolver setting
