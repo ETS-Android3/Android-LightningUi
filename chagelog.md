@@ -1,5 +1,10 @@
 #Release notes
 
+##v1.7.0 24/05/2022
+
+- Bumps storm:util to version 1.2.0
+- Adds guava dependency to stop resolution errors with exoplayer
+
 ##v1.6.0 23/05/2022
 
 - Removed jCenter
